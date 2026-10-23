@@ -723,7 +723,7 @@
   @media (max-width: 640px) { #capLog .clBody { grid-template-columns:1fr; } #capLog .lgList { display:flex; flex-wrap:wrap; gap:4px; } #capLog .lgList button { width:auto; margin:0; font-size:10.5px; } }
 </style>
 </head>
-<body data-build="cosmicrow-v11b">
+<body data-build="cosmicrow-v11b1">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -1274,7 +1274,7 @@
 
 <script>
 (() => {
-  // node_modules/three/build/three.module.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/build/three.module.js
   /**
    * @license
    * Copyright 2010-2023 Three.js Authors
@@ -8919,8 +8919,8 @@
     let isAnimating = false;
     let animationLoop = null;
     let requestId = null;
-    function onAnimationFrame(time, frame) {
-      animationLoop(time, frame);
+    function onAnimationFrame(time, frame2) {
+      animationLoop(time, frame2);
       requestId = context.requestAnimationFrame(onAnimationFrame);
     }
     return {
@@ -11809,30 +11809,30 @@
   function WebGLObjects(gl, geometries, attributes, info) {
     let updateMap = /* @__PURE__ */ new WeakMap();
     function update(object) {
-      const frame = info.render.frame;
+      const frame2 = info.render.frame;
       const geometry = object.geometry;
       const buffergeometry = geometries.get(object, geometry);
-      if (updateMap.get(buffergeometry) !== frame) {
+      if (updateMap.get(buffergeometry) !== frame2) {
         geometries.update(buffergeometry);
-        updateMap.set(buffergeometry, frame);
+        updateMap.set(buffergeometry, frame2);
       }
       if (object.isInstancedMesh) {
         if (object.hasEventListener("dispose", onInstancedMeshDispose) === false) {
           object.addEventListener("dispose", onInstancedMeshDispose);
         }
-        if (updateMap.get(object) !== frame) {
+        if (updateMap.get(object) !== frame2) {
           attributes.update(object.instanceMatrix, gl.ARRAY_BUFFER);
           if (object.instanceColor !== null) {
             attributes.update(object.instanceColor, gl.ARRAY_BUFFER);
           }
-          updateMap.set(object, frame);
+          updateMap.set(object, frame2);
         }
       }
       if (object.isSkinnedMesh) {
         const skeleton = object.skeleton;
-        if (updateMap.get(skeleton) !== frame) {
+        if (updateMap.get(skeleton) !== frame2) {
           skeleton.update();
-          updateMap.set(skeleton, frame);
+          updateMap.set(skeleton, frame2);
         }
       }
       return buffergeometry;
@@ -16407,9 +16407,9 @@
       return isWebGL2 && renderTarget.samples > 0 && extensions.has("WEBGL_multisampled_render_to_texture") === true && renderTargetProperties.__useRenderToTexture !== false;
     }
     function updateVideoTexture(texture) {
-      const frame = info.render.frame;
-      if (_videoTextures.get(texture) !== frame) {
-        _videoTextures.set(texture, frame);
+      const frame2 = info.render.frame;
+      if (_videoTextures.get(texture) !== frame2) {
+        _videoTextures.set(texture, frame2);
         texture.update();
       }
     }
@@ -16706,18 +16706,18 @@
       }
       return this;
     }
-    update(inputSource, frame, referenceSpace) {
+    update(inputSource, frame2, referenceSpace) {
       let inputPose = null;
       let gripPose = null;
       let handPose = null;
       const targetRay = this._targetRay;
       const grip = this._grip;
       const hand = this._hand;
-      if (inputSource && frame.session.visibilityState !== "visible-blurred") {
+      if (inputSource && frame2.session.visibilityState !== "visible-blurred") {
         if (hand && inputSource.hand) {
           handPose = true;
           for (const inputjoint of inputSource.hand.values()) {
-            const jointPose = frame.getJointPose(inputjoint, referenceSpace);
+            const jointPose = frame2.getJointPose(inputjoint, referenceSpace);
             const joint = this._getHandJoint(hand, inputjoint);
             if (jointPose !== null) {
               joint.matrix.fromArray(jointPose.transform.matrix);
@@ -16749,7 +16749,7 @@
           }
         } else {
           if (grip !== null && inputSource.gripSpace) {
-            gripPose = frame.getPose(inputSource.gripSpace, referenceSpace);
+            gripPose = frame2.getPose(inputSource.gripSpace, referenceSpace);
             if (gripPose !== null) {
               grip.matrix.fromArray(gripPose.transform.matrix);
               grip.matrix.decompose(grip.position, grip.rotation, grip.scale);
@@ -16770,7 +16770,7 @@
           }
         }
         if (targetRay !== null) {
-          inputPose = frame.getPose(inputSource.targetRaySpace, referenceSpace);
+          inputPose = frame2.getPose(inputSource.targetRaySpace, referenceSpace);
           if (inputPose === null && gripPose !== null) {
             inputPose = gripPose;
           }
@@ -17254,9 +17254,9 @@ void main() {
         return depthSensing.texture !== null;
       };
       let onAnimationFrameCallback = null;
-      function onAnimationFrame(time, frame) {
-        pose = frame.getViewerPose(customReferenceSpace || referenceSpace);
-        xrFrame = frame;
+      function onAnimationFrame(time, frame2) {
+        pose = frame2.getViewerPose(customReferenceSpace || referenceSpace);
+        xrFrame = frame2;
         if (pose !== null) {
           const views = pose.views;
           if (glBaseLayer !== null) {
@@ -17317,13 +17317,13 @@ void main() {
           const inputSource = controllerInputSources[i];
           const controller = controllers[i];
           if (inputSource !== null && controller !== void 0) {
-            controller.update(inputSource, frame, customReferenceSpace || referenceSpace);
+            controller.update(inputSource, frame2, customReferenceSpace || referenceSpace);
           }
         }
         depthSensing.render(renderer, cameraXR);
-        if (onAnimationFrameCallback) onAnimationFrameCallback(time, frame);
-        if (frame.detectedPlanes) {
-          scope.dispatchEvent({ type: "planesdetected", data: frame });
+        if (onAnimationFrameCallback) onAnimationFrameCallback(time, frame2);
+        if (frame2.detectedPlanes) {
+          scope.dispatchEvent({ type: "planesdetected", data: frame2 });
         }
         xrFrame = null;
       }
@@ -17665,10 +17665,10 @@ void main() {
       }
       const webglProgram = program.program;
       state.updateUBOMapping(uniformsGroup, webglProgram);
-      const frame = info.render.frame;
-      if (updateList[uniformsGroup.id] !== frame) {
+      const frame2 = info.render.frame;
+      if (updateList[uniformsGroup.id] !== frame2) {
         updateBufferData(uniformsGroup);
-        updateList[uniformsGroup.id] = frame;
+        updateList[uniformsGroup.id] = frame2;
       }
     }
     function createBuffer(uniformsGroup) {
@@ -24842,7 +24842,7 @@ void main() {
     }
   }
 
-  // node_modules/three/examples/jsm/shaders/CopyShader.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/CopyShader.js
   var CopyShader = {
     name: "CopyShader",
     uniforms: {
@@ -24882,7 +24882,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/Pass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/Pass.js
   var Pass = class {
     constructor() {
       this.isPass = true;
@@ -24926,7 +24926,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/ShaderPass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/ShaderPass.js
   var ShaderPass = class extends Pass {
     constructor(shader, textureID) {
       super();
@@ -24966,7 +24966,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/MaskPass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/MaskPass.js
   var MaskPass = class extends Pass {
     constructor(scene, camera) {
       super();
@@ -25023,7 +25023,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/EffectComposer.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/EffectComposer.js
   var EffectComposer = class {
     constructor(renderer, renderTarget) {
       this.renderer = renderer;
@@ -25145,7 +25145,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/RenderPass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/RenderPass.js
   var RenderPass = class extends Pass {
     constructor(scene, camera, overrideMaterial = null, clearColor = null, clearAlpha = null) {
       super();
@@ -25196,7 +25196,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
   var LuminosityHighPassShader = {
     name: "LuminosityHighPassShader",
     shaderID: "luminosityHighPass",
@@ -25251,7 +25251,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
   var UnrealBloomPass = class _UnrealBloomPass extends Pass {
     constructor(resolution, strength, radius, threshold) {
       super();
@@ -25507,7 +25507,7 @@ void main() {
   UnrealBloomPass.BlurDirectionX = new Vector2(1, 0);
   UnrealBloomPass.BlurDirectionY = new Vector2(0, 1);
 
-  // node_modules/three/examples/jsm/shaders/OutputShader.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/OutputShader.js
   var OutputShader = {
     name: "OutputShader",
     uniforms: {
@@ -25591,7 +25591,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/OutputPass.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/OutputPass.js
   var OutputPass = class extends Pass {
     constructor() {
       super();
@@ -25638,7 +25638,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/misc/Timer.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/misc/Timer.js
   var Timer = class {
     constructor() {
       this._previousTime = 0;
@@ -25695,7 +25695,7 @@ void main() {
     if (document.hidden === false) this.reset();
   }
 
-  // node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
+  // ../../../workspace/cosmicrow/src/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
   function mergeGeometries(geometries, useGroups = false) {
     const isIndexed = geometries[0].index !== null;
     const attributesUsed = new Set(Object.keys(geometries[0].attributes));
@@ -25968,6 +25968,94 @@ void main() {
     };
   }
 
+  // input/csafe.js
+  var F = { EXT: 240, START: 241, STOP: 242, STUFF: 243 };
+  var CMD = { GETSTATUS: 128, RESET: 129, GOIDLE: 130, GOINUSE: 133, GOFINISHED: 134, GOREADY: 135, SETPMCFG: 118 };
+  var PM = { SET_WORKOUTTYPE: 1, SET_WORKOUTDURATION: 3, SET_RESTDURATION: 4, SET_SPLITDURATION: 5, SET_SCREENSTATE: 19, CONFIGURE_WORKOUT: 20, SET_INTERVALTYPE: 23, SET_WORKOUTINTERVALCOUNT: 24 };
+  var WORKOUT = { JUSTROW_SPLITS: 1, FIXEDDIST_SPLITS: 3, FIXEDTIME_SPLITS: 5, FIXEDTIME_INTERVAL: 6, FIXEDDIST_INTERVAL: 7, VARIABLE_INTERVAL: 8 };
+  var INTERVAL = { TIME: 0, DIST: 1 };
+  var DUR = { TIME: 0, DIST: 128 };
+  var SCREEN = { TYPE_WORKOUT: 1, PREPARE_TO_ROW: 1, TERMINATE: 2 };
+  var PREV = { 0: "ok", 1: "reject", 2: "bad", 3: "not ready" };
+  var WSTATE = { WAITTOBEGIN: 0, WORKOUTROW: 1, COUNTDOWNPAUSE: 2, INTERVALREST: 3, WORKOUTEND: 10, TERMINATE: 11, WORKOUTLOGGED: 12, REARM: 13 };
+  var u32be = (v) => [v >>> 24 & 255, v >>> 16 & 255, v >>> 8 & 255, v & 255];
+  var u16be = (v) => [v >>> 8 & 255, v & 255];
+  var pmCmd = (cmd, data = []) => [cmd, data.length, ...data];
+  var duration = (type, value) => [type, ...u32be(Math.round(value))];
+  var setPmCfg = (...cmds) => {
+    const body = cmds.flat();
+    return [CMD.SETPMCFG, body.length, ...body];
+  };
+  var stuff = (bytes) => bytes.flatMap((b) => (b & 252) === 240 ? [F.STUFF, b & 3] : [b]);
+  function frame(contents) {
+    const ck = contents.reduce((a, b) => a ^ b, 0);
+    return [F.START, ...stuff(contents), ...stuff([ck]), F.STOP];
+  }
+  function unframe(bytes) {
+    const a = [...bytes];
+    if (a[0] !== F.START && a[0] !== F.EXT) return null;
+    const end = a.lastIndexOf(F.STOP);
+    if (end < 2) return null;
+    const raw = a.slice(a[0] === F.EXT ? 3 : 1, end), un = [];
+    for (let i = 0; i < raw.length; i++) un.push(raw[i] === F.STUFF ? 240 + (raw[++i] & 3) : raw[i]);
+    const ck = un.pop(), contents = un, ok = contents.reduce((x, y) => x ^ y, 0) === ck, st = contents[0];
+    return { contents, ok, status: st, toggle: st >> 7, prev: PREV[st >> 4 & 3], state: st & 15 };
+  }
+  var splitDist = (m) => Math.min(m, Math.max(100, Math.round(m / 5)));
+  var splitTime = (s) => Math.min(s, 5400, Math.max(20, Math.round(s / 5)));
+  var clampRest = (s) => Math.max(0, Math.min(595, Math.round(s || 0)));
+  function workoutFrames(w) {
+    if (!w || w.arcade || w.comet || w.kind === "calm" || w.kind === "free" || !w.segs || !w.segs.length) return null;
+    const terminate = frame(setPmCfg(pmCmd(PM.SET_SCREENSTATE, [SCREEN.TYPE_WORKOUT, SCREEN.TERMINATE])));
+    const prepare = pmCmd(PM.SET_SCREENSTATE, [SCREEN.TYPE_WORKOUT, SCREEN.PREPARE_TO_ROW]);
+    if (w.kind === "distance") {
+      const m = Math.round(w.segs[0].value);
+      if (m < 100 || m > 999999) return null;
+      return { summary: `${m} m`, frames: [terminate, frame(setPmCfg(
+        pmCmd(PM.SET_WORKOUTTYPE, [WORKOUT.FIXEDDIST_SPLITS]),
+        pmCmd(PM.SET_WORKOUTDURATION, duration(DUR.DIST, m)),
+        pmCmd(PM.SET_SPLITDURATION, duration(DUR.DIST, splitDist(m))),
+        pmCmd(PM.CONFIGURE_WORKOUT, [1]),
+        prepare
+      ))] };
+    }
+    if (w.kind === "time") {
+      const s = Math.round(w.segs[0].value);
+      if (s < 20 || s > 35999) return null;
+      return { summary: `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`, frames: [terminate, frame(setPmCfg(
+        pmCmd(PM.SET_WORKOUTTYPE, [WORKOUT.FIXEDTIME_SPLITS]),
+        pmCmd(PM.SET_WORKOUTDURATION, duration(DUR.TIME, s * 100)),
+        pmCmd(PM.SET_SPLITDURATION, duration(DUR.TIME, splitTime(s) * 100)),
+        pmCmd(PM.CONFIGURE_WORKOUT, [1]),
+        prepare
+      ))] };
+    }
+    if (w.kind === "intervals") {
+      const segs = w.segs.slice(0, 30);
+      const frames = [terminate];
+      for (let i = 0; i < segs.length; i++) {
+        const g = segs[i], dist = g.type === "distance", v = Math.round(g.value);
+        if (dist ? v < 100 : v < 20) return null;
+        const cmds = [pmCmd(PM.SET_WORKOUTINTERVALCOUNT, [i])];
+        if (i === 0) cmds.push(pmCmd(PM.SET_WORKOUTTYPE, [WORKOUT.VARIABLE_INTERVAL]));
+        cmds.push(
+          pmCmd(PM.SET_INTERVALTYPE, [dist ? INTERVAL.DIST : INTERVAL.TIME]),
+          pmCmd(PM.SET_WORKOUTDURATION, dist ? duration(DUR.DIST, v) : duration(DUR.TIME, v * 100)),
+          pmCmd(PM.SET_RESTDURATION, u16be(clampRest(g.rest))),
+          pmCmd(PM.CONFIGURE_WORKOUT, [1])
+        );
+        frames.push(frame(setPmCfg(...cmds)));
+      }
+      frames.push(frame(setPmCfg(prepare)));
+      const d0 = segs[0];
+      const same = segs.every((g) => g.type === d0.type && g.value === d0.value && (g.rest || 0) === (d0.rest || 0));
+      return { summary: same ? `${segs.length} \xD7 ${d0.type === "distance" ? d0.value + " m" : d0.value + " s"}${d0.rest ? ` / ${d0.rest} s rest` : ""}` : `${segs.length} intervals`, frames };
+    }
+    return null;
+  }
+  var statusFrame = () => frame([CMD.GETSTATUS]);
+  var goInUseFrame = () => frame([CMD.GOINUSE]);
+
   // input/pm5Protocol.js
   var pmUuid = (hex4) => `ce06${hex4}-43e5-11e4-916c-0800200c9a66`;
   var PM5_CHARS = ["0031", "0032", "0035", "003d"];
@@ -26054,6 +26142,15 @@ void main() {
       this._sync(_PM5Source.u24(dv, 0) / 100, _PM5Source.u24(dv, 3) / 10);
       const drag = dv.getUint8(18);
       this.dragFactor = drag > 0 ? drag : null;
+      const ws = dv.getUint8(8), prev = this.workoutState;
+      this.workoutState = ws;
+      this.intervalType = dv.getUint8(7);
+      this.pmWorkoutType = dv.getUint8(6);
+      if (ws === WSTATE.WORKOUTROW || ws >= 3 && ws <= 9) this._rowed = true;
+      if (this.programmed && this._rowed && !this._endSent && prev !== ws && (ws === WSTATE.WORKOUTEND || ws === WSTATE.TERMINATE || ws === WSTATE.WORKOUTLOGGED)) {
+        this._endSent = true;
+        if (this.onWorkoutEnd) this.onWorkoutEnd(ws);
+      }
       this._lastPacket = performance.now();
     }
     _additional(dv) {
@@ -26126,8 +26223,9 @@ void main() {
         this._baseT += Math.max(0, this._rawT - this._offT);
         this._offT = 0;
       }
+      if (t > this._rawT + 1e-3) this._tAdv = performance.now();
       this._rawT = t;
-      this.elapsedS = Math.max(0, this._baseT + t - this._offT);
+      this.elapsedS = Math.max(0, this._baseT + t - this._offT) + (this._restAcc || 0);
     }
     _syncD(d) {
       if (!this._seen) {
@@ -26151,12 +26249,47 @@ void main() {
       this.visualM = 0;
       this.elapsedS = 0;
       this.strokeCount = 0;
+      this._restAcc = 0;
+    }
+    /**
+     * Program the game's workout on the PM5 (like ErgData): fixed distance / fixed time / intervals via CSAFE on the control service.
+     * Resolves { ok: true, summary } or { ok: false, reason } (then the PM5 simply stays in Just Row and the game scores it as before).
+     */
+    async programWorkout(w) {
+      this.programmed = false;
+      this._endSent = false;
+      this._rowed = false;
+      const plan = workoutFrames(w);
+      if (!plan) return { ok: false, reason: "justrow" };
+      if (!this.connected || !this.transport.csafe || !this.transport.ctrl) return { ok: false, reason: "This PM5 connection has no control channel" };
+      try {
+        for (let i = 0; i < plan.frames.length; i++) {
+          const r = unframe(await this.transport.csafe(plan.frames[i]));
+          if (i > 0 && r && r.prev !== "ok") return { ok: false, reason: `PM5 ${r.prev} (step ${i})` };
+          if (i === 0) await new Promise((res) => setTimeout(res, this.screenDelayMs == null ? 600 : this.screenDelayMs));
+        }
+        const st = unframe(await this.transport.csafe(statusFrame()));
+        if (!st || !st.ok || st.prev !== "ok") return { ok: false, reason: `PM5 rejected the workout (${st ? st.prev : "no answer"})` };
+        try {
+          await this.transport.csafe(goInUseFrame());
+        } catch (e) {
+        }
+        this.programmed = true;
+        this.programSummary = plan.summary;
+        return { ok: true, summary: plan.summary };
+      } catch (e) {
+        return { ok: false, reason: e.message || "PM5 did not answer" };
+      }
     }
     snapshot() {
       return makeSnapshot(this);
     }
     /** visuals only: glide between packets, then ease onto the PM5 distance (never used for scoring) */
     update(dt) {
+      if (this.programmed && this.workoutState === WSTATE.INTERVALREST && performance.now() - (this._tAdv || 0) > 600) {
+        this._restAcc = (this._restAcc || 0) + dt;
+        this.elapsedS += dt;
+      }
       if (performance.now() - this._lastPacket > 3e3) this.speedMps *= Math.max(0, 1 - dt * 2);
       this.visualM += this.speedMps * dt;
       const err = this.distanceM - this.visualM;
@@ -26200,7 +26333,56 @@ void main() {
         this.sampleRate = 500;
         console.warn("PM5 sample rate write failed", e);
       }
+      this.ctrl = null;
+      try {
+        const cs = await server.getPrimaryService(pmUuid("0020"));
+        const rx = await cs.getCharacteristic(pmUuid("0021")), tx = await cs.getCharacteristic(pmUuid("0022"));
+        this._rxBuf = [];
+        this._waiters = [];
+        tx.addEventListener("characteristicvaluechanged", (e) => this._ctrlNotify(e.target.value));
+        await tx.startNotifications();
+        this.ctrl = { rx, tx };
+      } catch (e) {
+        console.warn("PM5 control service unavailable (workouts cannot be programmed)", e);
+      }
       return this.device.name;
+    }
+    /** response notifications may be split over several 20-byte packets: collect until the stop flag */
+    _ctrlNotify(dv) {
+      for (let i = 0; i < dv.byteLength; i++) {
+        const b = dv.getUint8(i);
+        if (b === 241 || b === 240) this._rxBuf = [];
+        this._rxBuf.push(b);
+        if (b === 242 && this._rxBuf.length > 2) {
+          const fr = this._rxBuf;
+          this._rxBuf = [];
+          const w = this._waiters.shift();
+          if (w) w(fr);
+        }
+      }
+    }
+    /** send one CSAFE frame (in 20-byte writes) and wait for the PM5's response frame */
+    async csafe(bytes, timeoutMs = 1500) {
+      if (!this.ctrl) throw new Error("PM5 control service not available");
+      const resp = new Promise((res, rej) => {
+        const t = setTimeout(() => {
+          const i = this._waiters.indexOf(fn);
+          if (i >= 0) this._waiters.splice(i, 1);
+          rej(new Error("PM5 did not answer"));
+        }, timeoutMs);
+        const fn = (fr) => {
+          clearTimeout(t);
+          res(fr);
+        };
+        this._waiters.push(fn);
+      });
+      for (let i = 0; i < bytes.length; i += 20) {
+        const part = new Uint8Array(bytes.slice(i, i + 20));
+        const ch = this.ctrl.rx;
+        if (ch.writeValueWithResponse) await ch.writeValueWithResponse(part);
+        else await ch.writeValue(part);
+      }
+      return resp;
     }
     disconnect() {
       if (this.device && this.device.gatt.connected) this.device.gatt.disconnect();
@@ -28677,6 +28859,89 @@ void main() {
     return { id: "coach-" + Date.now().toString(36), name: String(name).slice(0, 60), desc: String(desc).slice(0, 300), weeks, custom: true };
   }
 
+  // savefile.js
+  var isIOS = () => typeof navigator !== "undefined" && (/iPad|iPhone|iPod/.test(navigator.userAgent) || navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var isBluefy = () => typeof navigator !== "undefined" && /Bluefy/i.test(navigator.userAgent);
+  var isTouchMobile = () => isIOS() || typeof navigator !== "undefined" && /Android|Mobile/i.test(navigator.userAgent);
+  function dataUrlBlob(url) {
+    const [head, b64] = url.split(","), type = (head.match(/data:([^;]+)/) || [])[1] || "application/octet-stream", bin = atob(b64), u8 = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    return new Blob([u8], { type });
+  }
+  var textDataUrl = (text, type) => `data:${type};charset=utf-8,` + encodeURIComponent(text);
+  function anchorDownload(href, name) {
+    const a = document.createElement("a");
+    a.href = href;
+    a.download = name;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => a.remove(), 1500);
+  }
+  function showSaveSheet(name, { text = null, imageUrl = null, type = "text/plain" }) {
+    let el = document.getElementById("saveSheet");
+    if (!el) {
+      el = document.createElement("div");
+      el.id = "saveSheet";
+      el.className = "overlay";
+      el.style.zIndex = 70;
+      document.body.appendChild(el);
+    }
+    el.classList.remove("hidden");
+    const esc2 = (s) => String(s).replace(/[&<>"]/g, (c2) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c2]);
+    const href = imageUrl || textDataUrl(text, type);
+    el.innerHTML = `<div class="panel" style="max-width:min(94vw,720px);text-align:center"><div class="tag" style="margin:0 0 6px">Save ${esc2(name)}</div>
+    ${imageUrl ? `<img src="${imageUrl}" alt="${esc2(name)}" style="max-width:100%;max-height:60vh;border-radius:8px"><div class="note" style="margin:8px 0">Press and hold the picture, then <b>Save to Photos</b> (or Share).</div>` : `<textarea readonly style="width:100%;height:42vh;font:11px monospace;background:#050318;color:#cfefff;border:1px solid rgba(63,246,255,0.4)">${esc2(text)}</textarea>
+         <div class="note" style="margin:8px 0">Your browser can't download files here. Copy the text, or open it in a new tab and use Share \u203A Save to Files.</div>`}
+    <div class="row" style="justify-content:center">${text != null ? '<button id="ssCopy">Copy</button>' : ""}<a href="${href}" target="_blank" rel="noopener" download="${esc2(name)}"><button>Open in new tab</button></a><button id="ssClose">Close</button></div></div>`;
+    const c = el.querySelector("#ssCopy");
+    if (c) c.onclick = () => {
+      (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject()).then(() => {
+        c.textContent = "Copied \u2713";
+      }).catch(() => {
+        const t = el.querySelector("textarea");
+        t.select();
+        try {
+          document.execCommand("copy");
+          c.textContent = "Copied \u2713";
+        } catch (e) {
+        }
+      });
+    };
+    el.querySelector("#ssClose").onclick = () => el.classList.add("hidden");
+    return el;
+  }
+  function saveFile(name, data, type = "text/plain", { title = "CosmicRow", text = "", imageUrl = null, preferShare = isTouchMobile() } = {}) {
+    const blob = data instanceof Blob ? data : new Blob([data], { type });
+    if (preferShare && typeof File !== "undefined" && navigator.canShare && navigator.share) {
+      for (const t of [type, "text/plain"]) {
+        if (t === "text/plain" && data instanceof Blob) break;
+        let f;
+        try {
+          f = new File([blob], name, { type: t });
+        } catch (e) {
+          break;
+        }
+        let can = false;
+        try {
+          can = navigator.canShare({ files: [f] });
+        } catch (e) {
+        }
+        if (can) return navigator.share({ files: [f], title, text: text || name }).then(() => "shared").catch((e) => e && e.name === "AbortError" ? "cancelled" : fallback());
+      }
+    }
+    return Promise.resolve(fallback());
+    function fallback() {
+      if (isIOS() && (isBluefy() || preferShare)) {
+        return showSaveSheet(name, typeof data === "string" ? { text: data, type } : { imageUrl }), "sheet";
+      }
+      const url = URL.createObjectURL(blob);
+      anchorDownload(url, name);
+      setTimeout(() => URL.revokeObjectURL(url), 8e3);
+      return "downloaded";
+    }
+  }
+
   // history.js
   var KEY5 = "cosmicrow.history.v1";
   var MAX_ROWS = 150;
@@ -28857,14 +29122,7 @@ ${pts}
 `;
   }
   function download(name, text, type = "text/plain") {
-    const url = URL.createObjectURL(new Blob([text], { type }));
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = name;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 4e3);
+    return saveFile(name, text, type);
   }
   function simForceCurve(wattsAvg = 180, spm = 24, n = 32, seed = 1) {
     const peak = 160 + Math.pow(Math.max(30, wattsAvg), 0.62) * 13 / Math.max(0.7, spm / 24) ** 0.3, out = [];
@@ -30023,29 +30281,9 @@ ${pts}
     }
     g.restore();
   }
-  function posterBlob(cv) {
-    return new Promise((res) => cv.toBlob((b) => res(b), "image/png"));
-  }
   async function sharePoster(cv, file = "cosmicrow.png", { mobile = false, text = "" } = {}) {
-    const blob = await posterBlob(cv), f = typeof File !== "undefined" ? new File([blob], file, { type: "image/png" }) : null;
-    if (mobile && f && navigator.canShare && navigator.canShare({ files: [f] })) {
-      try {
-        await navigator.share({ files: [f], title: "CosmicRow", text: `${text ? text + " - " : ""}CosmicRow ${GAME_URL}` });
-        return "shared";
-      } catch (e) {
-        if (e && e.name === "AbortError") return "cancelled";
-      }
-    }
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = file;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(() => {
-      URL.revokeObjectURL(a.href);
-      a.remove();
-    }, 1e3);
-    return "downloaded";
+    const url = cv.toDataURL("image/png"), blob = dataUrlBlob(url);
+    return saveFile(file, blob, "image/png", { text: `${text ? text + " - " : ""}CosmicRow ${GAME_URL}`, imageUrl: url, preferShare: mobile || isIOS() });
   }
 
   // flags.js
@@ -31039,7 +31277,7 @@ ${pts}
   var fmtKm = (m) => (Math.round(m / 100) / 10).toLocaleString("en-US") + " KM";
   var downsampleHist = (h, n) => h.length <= n ? h.slice() : Array.from({ length: n }, (_, i) => h[Math.round(i * (h.length - 1) / (n - 1))]);
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-v11b";
+  var BUILD_ID = "cosmicrow-v11b1";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -32873,6 +33111,11 @@ ${pts}
       this.sim.setFeel(this.ship.def.feel);
       this.pm5 = new PM5Source(new WebBluetoothTransport(), (msg) => this.setPmStatus(msg));
       this.sim.speedScale = machineById(this.machine).speedScale;
+      this.pm5.onWorkoutEnd = () => {
+        if (this.state === "race" && this.source === this.pm5) setTimeout(() => {
+          if (this.state === "race" && this.source === this.pm5) this.finish();
+        }, 500);
+      };
       this.pm5.onErgType = (t) => {
         const m = ergFromType(t);
         this._pmErg = m;
@@ -32964,7 +33207,7 @@ ${pts}
         const c = this._recoverCheckpoint();
         if (c) setTimeout(() => this.toast(`Saved your unfinished ${c.name}: ${(c.dist / 1e3).toFixed(2)} km in ${fmtTime(c.time)} (Profile \u203A History)`, 7e3), 1200);
       }
-      window.CosmicRowLib = { parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, rowBand, bandThresholds, wattsFromPace, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady, effortParams: SynthAudio.effortParams };
+      window.CosmicRowLib = { saveFile, parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, rowBand, bandThresholds, wattsFromPace, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady, effortParams: SynthAudio.effortParams };
     }
     get target() {
       const w = this.workout;
@@ -34246,12 +34489,25 @@ ${pts}
       }
     }
     /** RACE / Play: optional story screen first, then the race. w = explicit workout (arcade), else the Training selection */
+    /** program the PM5 with the race's workout (v11b1). Failure = small notice, the PM5 stays in Just Row and the game scores as before. */
+    _pmProgram(w) {
+      const tok = this._pmTok = (this._pmTok || 0) + 1;
+      this.pm5.programWorkout(w).then((r) => {
+        if (tok !== this._pmTok) return;
+        this._pmProg = r;
+        if (r.ok) {
+          this.setPmStatus(`PM5 connected - programmed: ${r.summary}`);
+          if (this.state === "race" || this.state === "loading") this.hud.flash(`PM5 SET \xB7 ${r.summary.toUpperCase()}`);
+        } else if (r.reason !== "justrow") this.toast(`PM5 stays in Just Row (${r.reason}) - the game still scores your row.`, 5e3);
+      });
+    }
     startRace(w) {
       if (this.state === "race" || this.state === "loading") return;
       const wk = w && w.segs ? w : this.selectedWorkout();
       if (!wk) return;
       this.workout = wk;
       this.audio.init();
+      if (this.source === this.pm5 && this.pm5.connected) this._pmProgram(wk);
       if (this.opts.story === "off") this._beginRace();
       else this._showLoading();
     }
@@ -34837,11 +35093,12 @@ ${pts}
         const d = /* @__PURE__ */ new Date(), z = (n) => String(n).padStart(2, "0");
         return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}${z(d.getSeconds())}`;
       })()}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      this._lastPhoto = { w: W, h: H, bytes: url.length, filter: this.photo.filter };
-      this.toast("Photo saved (PNG)", 2e3);
+      this._lastPhotoName = a.download;
+      saveFile(a.download, dataUrlBlob(url), "image/png", { imageUrl: url, text: "CosmicRow photo" }).then((r) => {
+        this._lastPhoto.how = r;
+        if (r !== "cancelled") this.toast(r === "shared" ? "Photo shared \u2713" : r === "sheet" ? "Press and hold the photo to save it" : "Photo saved (PNG)", 2200);
+      });
+      this._lastPhoto = { w: W, h: H, bytes: url.length, filter: this.photo.filter, name: a.download };
       return this._lastPhoto;
     }
     /* ---------- erg classes ---------- */
@@ -36401,7 +36658,7 @@ ${pts}
       $("posterSave").textContent = IS_MOBILE ? "Share" : "Download PNG";
       if (share) {
         const d = this._posterData, r = await sharePoster(cv, `cosmicrow-${localDate()}.png`, { mobile: IS_MOBILE, text: `${d.score || d.time} \xB7 ${d.stage}` });
-        $("posterNote").textContent = r === "shared" ? "Shared \u2713" : r === "downloaded" ? "Saved as a PNG \u2713" : "";
+        $("posterNote").textContent = r === "shared" ? "Shared \u2713" : r === "downloaded" ? "Saved as a PNG \u2713" : r === "sheet" ? "Press and hold the poster to save it" : "";
       }
     }
     /** 3/4 hero render of your current ship (with its glow tier) into a 2D canvas with a transparent background */

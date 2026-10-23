@@ -3,7 +3,29 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>CosmicRow</title>
+<title>CosmicRow – neon space rowing for your Concept2</title>
+<meta name="description" content="Free 3D arcade game in your browser. Connect your PM5 and race through neon space.">
+<meta name="theme-color" content="#0a0420">
+<link rel="canonical" href="https://klamintson.github.io/cosmicrow-play/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CosmicRow">
+<meta property="og:title" content="CosmicRow – neon space rowing for your Concept2">
+<meta property="og:description" content="Free 3D arcade game in your browser. Connect your PM5 and race through neon space.">
+<meta property="og:url" content="https://klamintson.github.io/cosmicrow-play/">
+<meta property="og:image" content="https://klamintson.github.io/cosmicrow-play/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CosmicRow: a neon spaceship racing over a synthwave grid toward a striped sun">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CosmicRow – neon space rowing for your Concept2">
+<meta name="twitter:description" content="Free 3D arcade game in your browser. Connect your PM5 and race through neon space.">
+<meta name="twitter:image" content="https://klamintson.github.io/cosmicrow-play/og.jpg">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="512x512" href="favicon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <!--
   CosmicRow - browser prototype (rebuild of the Unity project)
   Developed by Johan K. Jacobsen.
@@ -491,8 +513,14 @@
   #olEmoFeed { min-height:18px; } #olEmoFeed .emo.feed { position:static; transform:none; display:inline-block; font-size:12.5px; margin:2px 10px 0 0; animation:fadeIn .3s; color:#ffd9f6; text-shadow:none; }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   .emorow label.chk { font-size:11px; margin-left:6px; }
-  .posterp canvas { width:min(64vw, 40vh); height:auto; display:block; margin:0 auto 10px; border:1px solid rgba(63,246,255,0.6); box-shadow:0 0 24px rgba(255,63,216,0.35); }
+  .posterp canvas { width:min(70vw, 56vh); height:auto; display:block; margin:0 auto 10px; border:1px solid rgba(63,246,255,0.6); box-shadow:0 0 24px rgba(255,63,216,0.35); }
   #posterBox { z-index:46; }
+  #clHr.nohr { opacity:0.45; }
+  /* ---- v10: weekly sprint board ---- */
+  .wkTable { width:100%; border-collapse:collapse; margin-top:8px; font-size:14px; }
+  .wkTable td { padding:5px 8px; border-bottom:1px solid rgba(63,246,255,0.14); }
+  .wkTable td.r { color:#ff3fd8; font-weight:800; width:2.4em; } .wkTable td.t { text-align:right; color:#3ff6ff; font-variant-numeric:tabular-nums; font-weight:700; }
+  .wkTable tr.me td { background:rgba(255,63,216,0.12); } .wkTable td.s { color:rgba(200,220,255,0.6); font-size:12px; }
   #calTests { align-items:stretch; } .caltest { flex:1 1 200px; display:flex; flex-direction:column; gap:6px; padding:8px 10px; border:1px solid rgba(63,246,255,0.3); background:rgba(63,246,255,0.04); }
   .caltest b { color:#fff; letter-spacing:0.08em; } .caltest span { font-size:11px; opacity:0.8; text-transform:none; letter-spacing:0.02em; line-height:1.4; }
   table.caltab td { padding:3px 8px; font-size:12px; } table.caltab td:nth-child(2n) { color:#fff; font-weight:700; }
@@ -533,9 +561,109 @@
   #cockpit .engGlow { position:absolute; z-index:3; bottom:0; width:26vw; height:60vh; opacity:var(--engA, 0); background:radial-gradient(ellipse at bottom, var(--eng, #3fd0ff) 0%, transparent 70%); mix-blend-mode:screen; transition:opacity .4s; }
   #cockpit .engGlow.l { left:-6vw; } #cockpit .engGlow.r { right:-6vw; }
   #cockpit .ceng { position:absolute; left:50%; transform:translateX(-50%); bottom:calc(clamp(130px,34vh,280px) + 6px); font-size:11px; letter-spacing:0.22em; color:var(--eng, #3fd0ff); text-shadow:0 0 8px var(--eng, #3fd0ff); }
+
+  /* ---------- v10 main menu (chrome logo, vertical list, ship on a platform at the right) ---------- */
+  #title { align-items:stretch; justify-content:stretch; background:linear-gradient(90deg, rgba(3,2,14,0.82) 0%, rgba(3,2,14,0.5) 34%, rgba(3,2,14,0) 58%); }
+  .home.menu10 { position:absolute; inset:0; width:auto; padding:0; text-align:left; }
+  .menu10 .mleft { position:absolute; left:clamp(18px,4vw,56px); top:clamp(14px,5vh,48px); width:min(470px, 46vw); }
+  .menu10 h1.logo.chrome { margin:0; padding:0 0.12em 0 0.02em; font-size:clamp(40px,6.4vw,84px); font-style:italic; font-weight:900; letter-spacing:0.02em;
+    background:linear-gradient(180deg,#ffffff 0%,#dfe6f5 30%,#6e7891 48%,#f3f6ff 54%,#b7c2dc 72%,#ffffff 100%); -webkit-background-clip:text; background-clip:text; color:transparent;
+    -webkit-text-stroke:1.5px rgba(255,90,230,0.85); filter:drop-shadow(0 0 6px rgba(255,63,216,0.75)) drop-shadow(0 0 18px rgba(63,208,255,0.45)); text-shadow:none; animation:none; }
+  .menu10 .logobar { height:2px; width:92%; margin:4px 0 6px; background:linear-gradient(90deg,#3fd0ff,#ff3fd8 55%,rgba(255,63,216,0)); box-shadow:0 0 12px #ff3fd8; }
+  .menu10 .tag { margin:0 0 clamp(8px,2.4vh,22px); letter-spacing:0.32em; }
+  .mlist { display:flex; flex-direction:column; gap:2px; }
+  .mlist button.mi { position:relative; display:flex; align-items:baseline; gap:12px; width:100%; text-align:left; padding:clamp(6px,1.25vh,11px) 14px; border:0; border-left:2px solid transparent; border-radius:0; background:transparent; box-shadow:none; color:#bff6ff; text-transform:uppercase; }
+  .mlist button.mi .chev { color:#3ff6ff; font-size:18px; width:12px; text-shadow:0 0 8px #3ff6ff; }
+  .mlist button.mi b, .mlist button.mi .rl { font-size:clamp(15px,2.1vh,20px); font-weight:600; letter-spacing:0.28em; color:#e9fbff; text-shadow:0 0 10px rgba(63,246,255,0.6); white-space:nowrap; }
+  .mlist button.mi small, .mlist button.mi .rs { font-size:10.5px; letter-spacing:0.05em; text-transform:none; color:#9feaff; opacity:0.65; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+  .mlist button.mi.sel, .mlist button.mi:hover, .mlist button.mi:focus-visible { background:linear-gradient(90deg, rgba(255,63,216,0.42), rgba(255,63,216,0.12) 70%, rgba(255,63,216,0)); border-left-color:#ff3fd8; box-shadow:0 0 22px rgba(255,63,216,0.25); outline:none; }
+  .mlist button.mi.sel .chev, .mlist button.mi:hover .chev { color:#fff; }
+  .mlist button#startBtn .rl { font-size:clamp(18px,2.7vh,26px); font-weight:800; color:#fff; }
+  .menu10 .setup { justify-content:flex-start; margin:2px 0 0 40px; }
+  .menu10 .pbline { margin:2px 0 6px 40px; text-align:left; min-height:12px; }
+  .xpPanel { position:absolute; right:clamp(16px,4vw,56px); top:clamp(16px,13vh,110px); width:min(250px,30vw); padding:12px 16px 12px; border:1px solid rgba(63,208,255,0.6); background:rgba(4,14,30,0.55); box-shadow:0 0 18px rgba(63,208,255,0.25), inset 0 0 18px rgba(63,208,255,0.08); }
+  .xpPanel .xpn { display:flex; justify-content:space-between; font-size:18px; letter-spacing:0.3em; color:#dffbff; text-shadow:0 0 10px #3fd0ff; text-transform:uppercase; }
+  .xpPanel .star { color:#3ff6ff; } .xpPanel .xpl { margin-top:8px; padding-top:8px; border-top:1px solid rgba(63,208,255,0.3); font-size:11px; letter-spacing:0.12em; color:#9feaff; }
+  .xpPanel .xpbar { height:8px; margin-top:7px; border:1px solid rgba(63,208,255,0.55); } .xpPanel .xpbar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#1fb8ff,#3ff6ff); box-shadow:0 0 10px #3ff6ff; }
+  .xpPanel .xps { margin-top:6px; font-size:10px; color:#c9b8ff; letter-spacing:0.05em; }
+  .mbottom { position:absolute; left:0; right:0; bottom:0; display:flex; align-items:center; gap:14px; padding:10px clamp(16px,4vw,56px); border-top:1px solid rgba(63,208,255,0.25); background:rgba(3,4,16,0.72); font-size:11px; letter-spacing:0.1em; color:#9feaff; }
+  .mbottom .icon { background:transparent; border-color:rgba(63,208,255,0.3); white-space:nowrap; } .mbottom > * { white-space:nowrap; flex:none; }
+  .mbottom .pm5st { display:flex; align-items:center; gap:7px; text-transform:uppercase; }
+  .mbottom .pm5st .ring { width:13px; height:13px; border:2px solid #3ff6ff; border-radius:50%; display:inline-block; }
+  .mbottom .pm5st .dot { width:8px; height:8px; border-radius:50%; background:#5a6a80; display:inline-block; } .mbottom .pm5st.on .dot { background:#4dff9c; box-shadow:0 0 8px #4dff9c; }
+  .mbottom .sep { width:1px; height:20px; background:rgba(63,208,255,0.3); } .mbottom .music { color:#bcd; letter-spacing:0.08em; }
+  .mbottom .hint { margin:0 0 0 auto; font-size:10px; opacity:0.6; }
+  @media (max-width: 900px) { .mbottom .hint { display:none; } }
+  @media (max-width: 700px), (max-aspect-ratio: 1/1) {
+    #title { background:linear-gradient(0deg, rgba(3,2,14,0.88) 0%, rgba(3,2,14,0.62) 55%, rgba(3,2,14,0.1) 100%); }
+    .menu10 .mleft { left:12px; right:12px; width:auto; top:auto; bottom:52px; } .menu10 h1.logo.chrome { font-size:38px; } .menu10 .tag { display:none; }
+    .mlist button.mi { padding:5px 10px; } .mlist button.mi small { display:none; } .xpPanel { top:10px; right:10px; width:170px; padding:8px 10px; } .xpPanel .xpn { font-size:13px; }
+    .mbottom { padding:7px 10px; gap:8px; font-size:9.5px; } .mbottom .sep { display:none; }
+  }
+  @media (max-width: 520px) { .mbottom { flex-wrap:wrap; row-gap:6px; padding-right:70px; } .menu10 .mleft { bottom:86px; } }
+  @media (max-height: 520px) and (min-aspect-ratio: 1/1) { .menu10 h1.logo.chrome { font-size:34px; } .menu10 .tag { display:none; } .mlist button.mi { padding:3px 12px; } .mlist button.mi small { display:none; } .menu10 .mleft { top:8px; }
+    .menu10 #pbLine { display:none; } .menu10 .setup { display:flex; flex-wrap:nowrap; align-items:center; gap:8px; margin:1px 0 2px 12px; } .menu10 .setup .chipb { padding:2px 9px; font-size:9.5px; margin:0; white-space:nowrap; flex:none; } .menu10 .shipline { font-size:10.5px; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .menu10 .logobar { margin:2px 0 4px; } }
+
+  /* ---------- v10 clean chase HUD (edges only, middle clear); cockpit keeps the detailed dashboard ---------- */
+  #cleanHud { display:none; position:absolute; inset:0; font-family:inherit; }
+  #hud.clean #cleanHud { display:block; }
+  #hud.clean .holo.top, #hud.clean .holo.left, #hud.clean .holo.right, #hud.clean #powerWrap, #hud.clean #chipHr { display:none !important; }
+  #cleanHud .ch { position:absolute; color:#e9fbff; }
+  #cleanHud .cv { font-size:clamp(26px,4.6vh,42px); font-weight:500; letter-spacing:0.02em; line-height:1.05; text-shadow:0 0 14px rgba(63,246,255,0.55); white-space:nowrap; }
+  #cleanHud .cv small { font-size:0.42em; margin-left:4px; color:#bff6ff; opacity:0.85; }
+  #cleanHud .cl { font-size:10px; letter-spacing:0.3em; color:#bfe9ff; opacity:0.85; padding-top:5px; margin-bottom:12px; border-top:2px solid #ff3fd8; box-shadow:0 -6px 10px -8px #ff3fd8; display:inline-block; min-width:110px; }
+  #cleanHud .tl { left:clamp(14px,2.6vw,34px); top:clamp(12px,2.4vh,26px); }
+  #cleanHud .tr { right:clamp(14px,2.6vw,34px); top:clamp(12px,2.4vh,26px); text-align:right; } #cleanHud .tr .cl { text-align:right; }
+  #cleanHud .csub { font-size:12px; letter-spacing:0.12em; color:#9feaff; opacity:0.8; margin-top:-6px; }
+  #cleanHud .tc { left:50%; top:clamp(16px,3.4vh,34px); width:min(440px,40vw); transform:translateX(-50%); }
+  #cleanHud .cbar { height:7px; border-radius:4px; background:rgba(63,208,255,0.12); border:1px solid rgba(63,208,255,0.35); overflow:hidden; }
+  #cleanHud .cbar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#1fb8ff,#3ff6ff); box-shadow:0 0 10px #3ff6ff; border-radius:4px; }
+  #cleanHud .cmarks { position:relative; height:0; }
+  #cleanHud .cmarks b { position:absolute; top:-24px; transform:translateX(-50%); font-size:12px; color:#3ff6ff; text-shadow:0 0 8px #3ff6ff; transition:left 0.2s linear; }
+  #cleanHud .cmarks b.ghost { color:#ff3fd8; text-shadow:0 0 8px #ff3fd8; } #cleanHud .cmarks b.pace { color:#ffd24d; text-shadow:0 0 8px #ffd24d; } #cleanHud .cmarks b.rival { color:#c9b8ff; font-size:9px; top:-20px; opacity:0.8; }
+  #cleanHud .crep { text-align:center; font-size:11px; letter-spacing:0.18em; color:#bfe9ff; margin-top:8px; opacity:0.85; min-height:12px; }
+  #cleanHud .bl { left:clamp(14px,2.6vw,34px); bottom:clamp(14px,3vh,30px); }
+  #cleanHud .br { right:clamp(14px,2.6vw,34px); bottom:clamp(18px,4vh,40px); display:flex; align-items:center; gap:10px; padding:9px 18px; border-radius:24px; border:1.5px solid var(--hz,#ff4fd8); background:rgba(10,6,24,0.55); box-shadow:0 0 16px color-mix(in srgb, var(--hz,#ff4fd8) 45%, transparent); font-size:18px; }
+  #cleanHud .br.hidden { display:none; } #cleanHud .br .heart { color:var(--hz,#ff4fd8); font-size:20px; text-shadow:0 0 10px var(--hz,#ff4fd8); }
+  #cleanHud .br b { color:var(--hz,#ff4fd8); font-weight:600; letter-spacing:0.08em; } #cleanHud .br .ps { width:1px; height:20px; background:rgba(255,255,255,0.3); } #cleanHud .br small { font-size:12px; opacity:0.8; }
+  #hud.clean #srcBadge { top:auto; bottom:clamp(14px,3vh,30px); right:auto; left:50%; transform:translateX(-50%); opacity:0.6; }
+  #hud.clean #chips { top:auto; bottom:clamp(120px,20vh,170px); }
+  @media (min-width: 641px) { #cleanHud .br { bottom:clamp(62px,10vh,84px); } }
+  @media (max-width: 640px) { #hud.clean #srcBadge { bottom:auto; top:128px; } }
+  #hud.clean #fcCard { bottom:clamp(170px,30vh,250px); }
+  @media (max-width: 640px) { #cleanHud .tc { top:auto; bottom:12px; width:44vw; } #cleanHud .cv { font-size:24px; } #cleanHud .cl { min-width:70px; font-size:8.5px; margin-bottom:6px; } #cleanHud .br { bottom:auto; top:84px; padding:5px 11px; font-size:14px; } #cleanHud .bl { bottom:44px; } }
+
+  /* ---------- Comet Tail HUD ---------- */
+  #cometHud { position:absolute; left:50%; top:clamp(52px,9vh,80px); transform:translateX(-50%); text-align:center; padding:8px 18px 10px; min-width:240px; border:1px solid rgba(255,224,120,0.5); border-radius:10px; background:rgba(10,8,26,0.5); box-shadow:0 0 18px rgba(255,210,90,0.2); }
+  #cometHud.hidden { display:none; } #cometHud .k { font-size:10px; letter-spacing:0.3em; color:#ffe9a8; }
+  #cometHud .cmBig { font-size:34px; color:#fff6d8; text-shadow:0 0 14px #ffd24d; line-height:1.1; } #cometHud .cmBig small { font-size:14px; opacity:0.8; }
+  #cometHud .cmBest { font-size:11px; letter-spacing:0.18em; color:#ffd59a; }
+  #cometHud .cmGauge { position:relative; height:8px; margin:8px 0 5px; border-radius:4px; background:linear-gradient(90deg, rgba(63,208,255,0.35), rgba(255,255,255,0.08) 40%, rgba(255,255,255,0.08) 60%, rgba(255,79,139,0.35)); }
+  #cometHud .cmGauge .band { position:absolute; left:calc(50% - 16.7%); width:33.3%; top:-2px; bottom:-2px; border:1px solid #ffd24d; border-radius:4px; box-shadow:0 0 8px #ffd24d; }
+  #cometHud .cmGauge b { position:absolute; top:-5px; width:4px; height:18px; margin-left:-2px; background:#fff; box-shadow:0 0 8px #fff; border-radius:2px; transition:left 0.25s; left:50%; }
+  #cometHud.in { border-color:#ffd24d; box-shadow:0 0 26px rgba(255,210,90,0.5); } #cometHud .cmTxt { font-size:10.5px; letter-spacing:0.12em; color:#d9f6ff; }
+  #cometHud.slow .cmTxt, #cometHud.fast .cmTxt { color:#ff9bc2; }
+
+  /* ---------- Captain's Log: retro terminal story screens ---------- */
+  #capLog { position:fixed; inset:0; z-index:46; display:flex; align-items:center; justify-content:center; background:rgba(2,3,10,0.72); backdrop-filter:blur(2px); }
+  #capLog.hidden { display:none; }
+  #capLog .clPanel { position:relative; width:min(860px,94vw); max-height:88vh; overflow:auto; padding:18px 22px 20px; border:1px solid rgba(77,255,156,0.55); background:linear-gradient(180deg, rgba(4,16,12,0.94), rgba(2,8,8,0.96)); box-shadow:0 0 30px rgba(77,255,156,0.2), inset 0 0 40px rgba(77,255,156,0.06);
+    font-family:'Courier New', ui-monospace, monospace; color:#b8ffd8; }
+  #capLog .clPanel::after { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.18) 0 1px, transparent 1px 3px); }
+  #capLog .clHead { display:flex; gap:14px; align-items:center; border-bottom:1px dashed rgba(77,255,156,0.4); padding-bottom:8px; letter-spacing:0.2em; }
+  #capLog .clK { color:#4dff9c; text-shadow:0 0 8px #4dff9c; } #capLog #cplShip { color:#fff; } #capLog #cplClose { margin-left:auto; }
+  #capLog .lgCap { margin:8px 0 12px; font-size:13px; color:#ffe9a8; letter-spacing:0.12em; }
+  #capLog .clBody { display:grid; grid-template-columns:230px 1fr; gap:18px; }
+  #capLog .lgList button { display:block; width:100%; text-align:left; margin:0 0 6px; padding:7px 10px; font-family:inherit; font-size:12px; letter-spacing:0.06em; text-transform:none; color:#b8ffd8; background:rgba(77,255,156,0.06); border:1px solid rgba(77,255,156,0.3); border-radius:0; }
+  #capLog .lgList button.sel { background:rgba(77,255,156,0.2); border-color:#4dff9c; color:#fff; } #capLog .lgList button.lock { opacity:0.45; }
+  #capLog .lgT { font-size:16px; color:#4dff9c; letter-spacing:0.16em; text-shadow:0 0 8px #4dff9c; margin-bottom:10px; }
+  #capLog .lgTxt { font-size:15px; line-height:1.6; min-height:120px; color:#e6fff0; white-space:pre-wrap; } #capLog .lgTxt.typing::after { content:'█'; color:#4dff9c; animation:blink 1s steps(1) infinite; }
+  #capLog .lgNote { margin-top:12px; font-size:11px; color:#8fd8b0; letter-spacing:0.08em; }
+  @media (max-width: 640px) { #capLog .clBody { grid-template-columns:1fr; } #capLog .lgList { display:flex; flex-wrap:wrap; gap:4px; } #capLog .lgList button { width:auto; margin:0; font-size:10.5px; } }
 </style>
 </head>
-<body data-build="cosmicrow-v9c-pm5">
+<body data-build="cosmicrow-v10">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -551,6 +679,13 @@
     <div class="tline hidden" id="tline"></div>
     <div class="repline hidden" id="hRep"></div>
     <div class="racebar hidden" id="raceBar"><div class="line"></div></div>
+  </div>
+  <div id="cleanHud">
+    <div class="ch tl"><div class="cv"><span id="clSplit">--:--</span><small>/500m</small></div><div class="cl">SPLIT TIME</div></div>
+    <div class="ch tr"><div class="cv"><span id="clDist">0</span><small id="clDistU"> m</small></div><div class="cl" id="clDistK">DISTANCE</div><div class="csub" id="clTime">0:00.0</div></div>
+    <div class="ch tc"><div class="cbar"><i id="clProg"></i></div><div class="cmarks" id="clMarks"><b class="me" id="clMe">▲</b></div><div class="crep" id="clRep"></div></div>
+    <div class="ch bl"><div class="cv"><span id="clSpm">--</span><small>spm</small></div><div class="cl">STROKE RATE</div><div class="cv"><span id="clW">--</span><small>W</small></div><div class="cl">POWER</div></div>
+    <div class="ch br hidden" id="clHr"><span class="heart">♥</span><b id="clBand">--</b><span class="ps"></span><span id="clBpm">--</span><small>bpm</small></div>
   </div>
   <div id="rivalTags"></div>
   <div id="fcCard" class="hidden"><div class="k">FORCE CURVE · PM5</div><canvas id="hFc" width="220" height="70"></canvas><div class="fcTxt" id="hFcTxt"></div></div>
@@ -573,6 +708,8 @@
   <div id="rowHint">PRESS SPACE / TAP TO ROW</div>
   <div id="srcBadge">KEYBOARD</div>
   <div id="flash">500 M</div>
+  <div id="cometHud" class="hidden"><div class="k">☄ COMET TAIL</div><div class="cmBig"><span id="cmTail">0</span><small> m</small></div><div class="cmBest">BEST <b id="cmBest">0</b> m</div>
+    <div class="cmGauge"><i class="band"></i><b id="cmMark"></b></div><div class="cmTxt" id="cmTxt">4-STROKE AVG -- · TARGET --</div></div>
   <div id="arcHud" class="hidden">
     <div class="ascore"><div class="k">SCORE</div><div class="v" id="aScore">0</div><div class="am" id="aMult">×1</div></div>
     <div class="ashield"><div class="k">SHIELDS</div><div id="aShields"><i></i><i></i><i></i></div></div>
@@ -612,6 +749,7 @@
     <div class="glock hidden" id="gLock"></div>
     <div class="gbody"><div class="gstats" id="gStats"></div><div id="gSwatches"></div></div>
     <div class="gbtns"><button id="gPrev" aria-label="Previous ship">◀</button><button class="big" id="gSelect">Select</button><button id="gNext" aria-label="Next ship">▶</button><button id="gBack">Back</button></div>
+    <div class="row" style="justify-content:center;margin-top:6px"><button class="small" id="gLog">📜 Captain's Log</button><span class="note" id="gLogN"></span></div>
   </div>
 </div>
 
@@ -620,26 +758,31 @@
 
 <!-- Main screen: just the big choices -->
 <div id="title" class="overlay">
-  <div class="home">
-    <div class="hicons">
-      <button class="icon" id="inChip" title="Rowing input (Settings › Input)">⚡ <span id="inChipT">Keyboard</span></button>
+  <div class="home menu10">
+    <div class="mleft">
+      <h1 class="logo chrome" data-t="COSMICROW">COSMICROW</h1>
+      <div class="logobar"></div>
+      <div class="tag">Row through the neon void</div>
+      <nav class="mlist" id="mainMenu">
+        <button class="mi sel" id="startBtn"><span class="chev">›</span><span class="rl">Race</span><span class="rs" id="raceSub">2000 m</span></button>
+        <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
+        <div class="pbline" id="pbLine"></div>
+        <button class="mi" id="arcadeBtn"><span class="chev">›</span><b>Games</b><small>Laser Run · Comet Tail</small></button>
+        <button class="mi" id="trainingBtn"><span class="chev">›</span><b>Training</b><small>Workouts · intervals · WOD · ghosts · pace boats · weekly sprint</small></button>
+        <button class="mi" id="onlineBtn"><span class="chev">›</span><b>Online</b><small>Live races</small></button>
+        <button class="mi" id="garageBtn"><span class="chev">›</span><b>Hangar</b><small>Ships · colours · captain's log</small></button>
+        <button class="mi" id="profileBtn"><span class="chev">›</span><b>Profile</b><small>Stats · history · leagues</small></button>
+        <button class="mi" id="settingsBtn"><span class="chev">›</span><b>Settings</b><small>Audio · view · input</small></button>
+      </nav>
+    </div>
+    <div class="xpPanel" id="mXp"><div class="xpn"><span id="mXpShip">AURORA</span><span class="star">✦</span></div><div class="xpl" id="mXpLine">XP 0 / 100</div><div class="xpbar"><i id="mXpBar"></i></div><div class="xps" id="mXpSub"></div></div>
+    <div class="mbottom">
+      <button class="icon pm5st" id="inChip" title="Rowing input (Settings › Input)"><span class="ring"></span> <span id="inChipT">Keyboard</span> <span class="dot"></span> <span id="pmStateT">PM5 NOT CONNECTED</span></button>
+      <span class="sep"></span><span class="music">Music: Johan K. Jacobsen</span><span class="sep"></span>
       <button class="icon" id="lbChip" title="Concept2 Logbook (Settings › Logbook)">📘 Logbook</button>
       <button class="icon" id="aboutBtn" title="About">ⓘ</button>
+      <span class="hint" id="keyHint">SPACE / tap = stroke · ↑↓ + Enter = menu · C = camera · M = mute · ESC = back</span>
     </div>
-    <h1 class="logo">CosmicRow</h1>
-    <div class="tag">Row through the neon void</div>
-    <button class="racebtn" id="startBtn"><span class="rl">▶ Race</span><span class="rs" id="raceSub">2000 m</span></button>
-    <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
-    <div class="pbline" id="pbLine"></div>
-    <div class="hgrid">
-      <button class="hbtn" id="trainingBtn"><b>Training</b><small>Workouts · plans · opponents</small></button>
-      <button class="hbtn" id="onlineBtn"><b>Online</b><small>Live races</small></button>
-      <button class="hbtn" id="arcadeBtn"><b>Arcade</b><small>Laser Run</small></button>
-      <button class="hbtn" id="profileBtn"><b>Profile</b><small>Stats · leagues · clubs</small></button>
-      <button class="hbtn" id="garageBtn"><b>Garage</b><small>Ships &amp; colours</small></button>
-      <button class="hbtn" id="settingsBtn"><b>Settings</b><small>Audio · view · input</small></button>
-    </div>
-    <div class="hint" id="keyHint">SPACE / tap = stroke &nbsp;·&nbsp; C = camera &nbsp;·&nbsp; M = mute &nbsp;·&nbsp; ESC = back / end</div>
   </div>
 </div>
 
@@ -653,6 +796,7 @@
         <button data-sec="plans"><b>Plans</b><small id="trPlanS">Multi-week programmes</small></button>
         <button data-sec="wod"><b>Today's WOD</b><small>Concept2</small></button>
         <button data-sec="daily"><b>Daily</b><small id="trDailyS">Challenge &amp; streak</small></button>
+        <button data-sec="weekly"><b>Weekly sprint</b><small id="trWeekS">One distance · leaderboard</small></button>
         <button data-sec="opponents"><b>Opponents</b><small>Ghost · pace · rivals</small></button>
         <button data-sec="zones"><b>Zones &amp; Calm</b><small>Stroke rate · relax</small></button>
         <button data-sec="calib"><b>Calibration</b><small id="trCalS">Fitness test</small></button>
@@ -688,13 +832,22 @@
         <section class="msec" data-sec="wod">
           <div class="card"><div class="infobox" id="wodBox">Loading today's Concept2 Workout of the Day…</div><div class="row"><button class="pick" id="pickWod" data-pick="wod">Row today's WOD</button></div></div>
         </section>
+        <section class="msec" data-sec="weekly">
+          <div class="card"><div class="infobox" id="weeklyBox"></div><div class="row"><button class="pick" id="pickWeekly" data-pick="weekly">Take the weekly sprint</button></div></div>
+          <div class="card"><div class="ct">This week's board</div><div class="seg" id="wkSrc"><button data-w="local" class="sel">This device</button><button data-w="online">Online</button></div>
+            <table class="wkTable" id="wkTable"></table><div class="note" id="wkNote"></div></div>
+        </section>
         <section class="msec" data-sec="daily">
           <div class="card"><div class="infobox" id="dailyBox"></div><div class="row"><button class="pick" id="pickDaily" data-pick="daily">Take the challenge</button></div></div>
         </section>
         <section class="msec" data-sec="opponents">
           <div class="card"><div class="ct">👻 Ghost</div><label class="chk"><input type="checkbox" id="optGhost"> Race a ghost of my best run of the same workout</label><div class="note" id="ghostNote"></div></div>
           <div class="card"><div class="ct">⛵ Pace boat</div><label class="chk"><input type="checkbox" id="optPace"> A steady pace boat at <input type="text" id="optPaceSplit" value="2:00" size="5" inputmode="numeric"> /500m</label>
-            <div class="row presets" id="paceP"><button data-ps="105">1:45</button><button data-ps="115">1:55</button><button data-ps="120">2:00</button><button data-ps="125">2:05</button><button data-ps="135">2:15</button></div></div>
+            <div class="row presets" id="paceP"><button data-ps="105">1:45</button><button data-ps="115">1:55</button><button data-ps="120">2:00</button><button data-ps="125">2:05</button><button data-ps="135">2:15</button></div>
+            <div class="ct" style="margin-top:10px">🏁 Race plan <span class="note">(distance pieces)</span></div>
+            <div class="seg" id="pacePlanBtns"><button data-pp="split">Steady split</button><button data-pp="even">Even</button><button data-pp="fast">Fast start</button><button data-pp="neg">Negative split</button></div>
+            <div class="row"><label>Target time <input type="text" id="optPaceTarget" value="6:30" size="7" inputmode="numeric"></label> <span class="note" id="pacePlanD">for 2000 m</span></div>
+            <div class="note" id="pacePlanNote"></div></div>
           <div class="card"><div class="ct">🚀 Race field</div>
             <div class="seg" id="fieldBtns"><button data-f="off">Off</button><button data-f="rivals">Rivals</button><button data-f="pace">Pace boats</button></div>
             <div class="row"><label class="chk">How many <select id="optRivals"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
@@ -730,7 +883,7 @@
   <div class="mpanel">
     <div class="mhead"><button class="back" id="arBack">◀ Back</button><div class="mtitle">Arcade</div><div class="msub">Rowing games</div></div>
     <div class="mwrap">
-      <nav class="mtabs" id="arTabs"><button data-sec="laserrun"><b>Laser Run</b><small>Shoot for points</small></button><button data-sec="soon" class="dim"><b>More games</b><small>Coming later</small></button></nav>
+      <nav class="mtabs" id="arTabs"><button data-sec="laserrun"><b>Laser Run</b><small>Shoot for points</small></button><button data-sec="comet"><b>Comet Tail</b><small>Hold your split</small></button></nav>
       <div class="mbody">
         <section class="msec" data-sec="laserrun">
           <div class="arcTop">
@@ -747,7 +900,12 @@
             <div class="ct" style="margin-top:8px">Level <span class="note" id="arcLevelNote"></span></div><div class="seg" id="arcLevels"></div></div>
           <div class="card"><div class="ct">High scores <span class="note" id="arcHsKey"></span></div><table class="sum hs" id="arcHs"></table></div>
         </section>
-        <section class="msec" data-sec="soon"><div class="card"><div class="infobox">More rowing games will land here. Laser Run is the first.</div></div></section>
+        <section class="msec" data-sec="comet">
+          <div class="card"><div class="ct">☄ Comet Tail</div><div class="infobox" style="margin:0">Hold your <b>target split</b> and your ship grows a glowing tail. Drift off pace and it slowly shrinks. Judged on the average of your <b>last 4 strokes</b>, band ±1 s. <b>Longest tail wins.</b> Rounds are 5 minutes.</div></div>
+          <div class="card"><div class="ct">Target split</div><div class="row presets" id="cometP"></div>
+            <div class="row"><label>Custom <input type="text" id="cometTarget" value="2:00" size="6" inputmode="numeric"> /500m</label></div></div>
+          <div class="card"><div class="ct">Longest tails <span class="note" id="cometHsKey"></span></div><table class="hs" id="cometHs"></table></div>
+        </section>
       </div>
     </div>
     <div class="mfoot"><div class="modeline" id="arcLine"></div><div class="fbtns"><button class="big" id="arcPlay">Play ▶</button></div></div>
@@ -889,7 +1047,8 @@
           <div class="card"><div class="ct">Music</div><div class="row" id="musicBtns"></div>
             <div class="row"><label class="chk vol">Volume <input type="range" id="volSlider" min="0" max="100" step="1"></label></div>
             <div class="row"><button class="small" id="repeatBtn">🔁 Then: loop track</button><button class="small" id="nextBtn">⏭ Next track</button></div>
-            <label class="chk"><input type="checkbox" id="optThemes"> Stage themes: Sunset Drive plays <b>Neon Horizon</b></label><div class="note" id="themeNote"></div></div>
+            <label class="chk"><input type="checkbox" id="optThemes"> Stage themes: Sunset Drive plays <b>Neon Horizon</b>, Skálavík 3026 plays <b>Skálhøvdi Calling</b>; menus and Calm mode play <b>Skálhøvdi Calling (v2)</b></label>
+            <label class="chk"><input type="checkbox" id="optMusicFx" checked> Music follows effort: the filter opens and the bass and volume rise with your stroke rate and watts (any track)</label><div class="note" id="themeNote"></div></div>
           <div class="card"><div class="ct">Sound</div><label class="chk"><input type="checkbox" id="optMute"> Mute everything (M)</label></div>
         </section>
         <section class="msec" data-sec="view">
@@ -900,6 +1059,7 @@
             <label class="chk"><input type="checkbox" data-t="watts"> Watts</label><label class="chk"><input type="checkbox" data-t="speed"> Speed</label></div></div>
           <div class="card"><div class="ct">Colours</div><div class="seg" id="palBtns"><button data-p="std">Standard</button><button data-p="cb">Colour-blind safe</button></div>
             <div class="note">Colour-blind safe swaps green / amber / red for yellow / blue / vermilion in zones, gaps and the target timeline (text labels stay).</div></div>
+          <div class="card"><div class="ct">🖥 Chase-view HUD</div><div class="seg" id="hudStyleBtns"><button data-hs="clean">Clean (edges)</button><button data-hs="classic">Classic (panels)</button></div><div class="note">Cockpit view always keeps the detailed dashboard.</div></div>
           <div class="card"><div class="ct">🔥 Afterburner</div><label class="chk"><input type="checkbox" id="optHrFlame"> Afterburner shows HR zone</label>
             <label class="chk"><input type="checkbox" id="optHrFlameEst"> No strap: estimate the zone from pace vs your threshold / 2k PB</label>
             <div class="note">With a heart-rate strap connected, your engine flame, glow and trail take the colour of your HR zone (same colours as the HR chip), blending smoothly between zones. Without a strap the flame keeps your Garage colour (unless the estimate is on). Rivals keep their own colours.</div></div>
@@ -994,9 +1154,14 @@
   </div>
 </div>
 
+<div id="capLog" class="hidden"><div class="clPanel">
+  <div class="clHead"><span class="clK">CAPTAIN'S LOG</span><span id="cplShip">AURORA</span><button class="small" id="cplClose">✕ Close</button></div>
+  <div class="lgCap" id="cplCap">Captain Elin Dal</div>
+  <div class="clBody"><nav class="lgList" id="cplList"></nav><div class="clRead"><div class="lgT" id="cplT"></div><div class="lgTxt" id="cplTxt"></div><div class="lgNote" id="cplNote"></div></div></div>
+</div></div>
 <div id="reveal" class="hidden"><div class="rvtop"><div class="rvk">NEW SHIP UNLOCKED</div><div class="rvname"><span id="rvNum">02</span> <b id="rvName">RAVEN</b></div><div class="rvline" id="rvLine"></div><div class="rvtier" id="rvTier"></div></div>
   <div class="rvbtns"><button class="big" id="rvFly">Fly it now ▶</button><button id="rvLater">Later</button></div></div>
-<div id="posterBox" class="overlay hidden"><div class="panel posterp"><canvas id="posterCv" width="1080" height="1350"></canvas>
+<div id="posterBox" class="overlay hidden"><div class="panel posterp"><canvas id="posterCv" width="1080" height="1080"></canvas>
   <div class="row"><button class="big" id="posterSave">Download / share</button><button id="posterClose">Close</button></div><div class="status" id="posterNote"></div></div></div>
 <div id="emoWheel" class="hidden"><button data-e="up" title="1">👍</button><button data-e="fire" title="2">🔥</button><button data-e="gg" title="3">GG</button></div>
 <div id="olCount" class="hidden"><div class="ot" id="olCountT">Race starts in</div><div class="on" id="olCountN">10</div><div class="os" id="olCountS">Get ready - strokes count from GO</div></div>
@@ -8600,10 +8765,10 @@
       }
       return this.intersectsSphere(_sphere$5);
     }
-    intersectsSprite(sprite) {
+    intersectsSprite(sprite2) {
       _sphere$5.center.set(0, 0, 0);
       _sphere$5.radius = 0.7071067811865476;
-      _sphere$5.applyMatrix4(sprite.matrixWorld);
+      _sphere$5.applyMatrix4(sprite2.matrixWorld);
       return this.intersectsSphere(_sphere$5);
     }
     intersectsSphere(sphere) {
@@ -23676,6 +23841,24 @@ void main() {
   var VectorKeyframeTrack = class extends KeyframeTrack {
   };
   VectorKeyframeTrack.prototype.ValueTypeName = "vector";
+  var Cache = {
+    enabled: false,
+    files: {},
+    add: function(key, file) {
+      if (this.enabled === false) return;
+      this.files[key] = file;
+    },
+    get: function(key) {
+      if (this.enabled === false) return;
+      return this.files[key];
+    },
+    remove: function(key) {
+      delete this.files[key];
+    },
+    clear: function() {
+      this.files = {};
+    }
+  };
   var LoadingManager = class {
     constructor(onLoad, onProgress, onError) {
       const scope = this;
@@ -23790,6 +23973,69 @@ void main() {
     }
   };
   Loader.DEFAULT_MATERIAL_NAME = "__DEFAULT";
+  var ImageLoader = class extends Loader {
+    constructor(manager) {
+      super(manager);
+    }
+    load(url, onLoad, onProgress, onError) {
+      if (this.path !== void 0) url = this.path + url;
+      url = this.manager.resolveURL(url);
+      const scope = this;
+      const cached = Cache.get(url);
+      if (cached !== void 0) {
+        scope.manager.itemStart(url);
+        setTimeout(function() {
+          if (onLoad) onLoad(cached);
+          scope.manager.itemEnd(url);
+        }, 0);
+        return cached;
+      }
+      const image = createElementNS("img");
+      function onImageLoad() {
+        removeEventListeners();
+        Cache.add(url, this);
+        if (onLoad) onLoad(this);
+        scope.manager.itemEnd(url);
+      }
+      function onImageError(event) {
+        removeEventListeners();
+        if (onError) onError(event);
+        scope.manager.itemError(url);
+        scope.manager.itemEnd(url);
+      }
+      function removeEventListeners() {
+        image.removeEventListener("load", onImageLoad, false);
+        image.removeEventListener("error", onImageError, false);
+      }
+      image.addEventListener("load", onImageLoad, false);
+      image.addEventListener("error", onImageError, false);
+      if (url.slice(0, 5) !== "data:") {
+        if (this.crossOrigin !== void 0) image.crossOrigin = this.crossOrigin;
+      }
+      scope.manager.itemStart(url);
+      image.src = url;
+      return image;
+    }
+  };
+  var TextureLoader = class extends Loader {
+    constructor(manager) {
+      super(manager);
+    }
+    load(url, onLoad, onProgress, onError) {
+      const texture = new Texture();
+      const loader = new ImageLoader(this.manager);
+      loader.setCrossOrigin(this.crossOrigin);
+      loader.setPath(this.path);
+      loader.load(url, function(image) {
+        texture.image = image;
+        texture.needsUpdate = true;
+        if (onLoad !== void 0) {
+          onLoad(texture);
+        }
+      }, onProgress, onError);
+      return texture;
+    }
+  };
   var Light = class extends Object3D {
     constructor(color, intensity = 1) {
       super();
@@ -24050,6 +24296,13 @@ void main() {
       this.target = source.target.clone();
       this.shadow = source.shadow.clone();
       return this;
+    }
+  };
+  var AmbientLight = class extends Light {
+    constructor(color, intensity) {
+      super(color, intensity);
+      this.isAmbientLight = true;
+      this.type = "AmbientLight";
     }
   };
   var Clock = class {
@@ -25845,7 +26098,8 @@ void main() {
     green: { name: "Green", hex: 2293642, css: "#22ff8a" },
     purple: { name: "Purple", hex: 11684863, css: "#b24bff" },
     orange: { name: "Orange", hex: 16742938, css: "#ff7a1a" },
-    gold: { name: "Gold", hex: 16762170, css: "#ffc53a" }
+    gold: { name: "Gold", hex: 16762170, css: "#ffc53a" },
+    magenta: { name: "Magenta", hex: 16728024, css: "#ff3fd8" }
   };
   var SHIPS = [
     {
@@ -25862,7 +26116,7 @@ void main() {
       id: "raven",
       num: "02",
       name: "Raven",
-      color: "red",
+      color: "purple",
       line1: "Aggressive and fast",
       line2: "Sharp lines, race oriented",
       stats: { accel: 4, stability: 2, glide: 3 },
@@ -25872,7 +26126,7 @@ void main() {
       id: "valkyrie",
       num: "03",
       name: "Valkyrie",
-      color: "orange",
+      color: "magenta",
       line1: "Powerful and heavy",
       line2: "Stable and strong presence",
       stats: { accel: 2, stability: 4, glide: 4 },
@@ -25892,7 +26146,7 @@ void main() {
       id: "titan",
       num: "05",
       name: "Titan",
-      color: "green",
+      color: "orange",
       line1: "Massive and imposing",
       line2: "For long distance rowing",
       stats: { accel: 1, stability: 5, glide: 4 },
@@ -25912,7 +26166,7 @@ void main() {
       id: "starrider",
       num: "07",
       name: "Star Rider",
-      color: "blue",
+      color: "gold",
       secret: true,
       line1: "A lone rider on a hover board of light",
       line2: "Secret - leaves a trail of stardust",
@@ -26070,8 +26324,7 @@ void main() {
         k.strip(g, [0.1, 0.17, -0.15], [2.1, 0.17, 1.25], 0.03, k.neonSoft);
       });
       k.plate(s, sym([[0, 1.5], [1.25, 1.6], [1.3, 2.45], [0, 2.45]]), 0.2, 0.62, k.hull2, "dim", 0.03);
-      k.engine(s, 0, 0, 2.55, 0.42, 0.9);
-      for (const sd of [-1, 1]) k.engine(s, sd * 0.82, -0.08, 2.45, 0.33, 0.85);
+      for (const sd of [-1, 1]) k.engine(s, sd * 0.56, -0.02, 2.5, 0.4, 0.95);
       k.strip(s, [-1.3, 0.24, 2.47], [1.3, 0.24, 2.47], 0.04);
     },
     /* 02 RAVEN - aggressive: needle nose, forward-spiked wings, canted fins, twin engines */
@@ -26279,7 +26532,62 @@ void main() {
     }
   };
   var SHIP_TIER = { aurora: 0, raven: 1, valkyrie: 2, nebula: 3, titan: 4, phoenix: 5, starrider: 6 };
+  var SHIP_SIG = {
+    aurora: "cyan hull lines",
+    raven: "violet trim",
+    valkyrie: "magenta/cyan trim + wingtip light trails",
+    nebula: "holo nebula canopy + purple mist",
+    titan: "orange vents + 4 afterburners",
+    phoenix: "fire-light wings + ember trail",
+    starrider: "white-gold star tips, engine light rings, star wake"
+  };
   var LOW_FX = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches;
+  var glowMat = (hex, mult = 2, op = 1) => new MeshBasicMaterial({ color: new Color(hex).multiplyScalar(mult), transparent: op < 1, opacity: op, blending: op < 1 ? AdditiveBlending : NormalBlending, depthWrite: op >= 1 });
+  function sprite(hex, size, op = 0.9) {
+    const m = new Mesh(new PlaneGeometry(size, size), new MeshBasicMaterial({ map: glowTex(), color: new Color(hex), transparent: true, opacity: op, blending: AdditiveBlending, depthWrite: false, side: DoubleSide }));
+    return m;
+  }
+  function starTex() {
+    if (starTex.t) return starTex.t;
+    const c = document.createElement("canvas");
+    c.width = c.height = 64;
+    const g = c.getContext("2d");
+    g.translate(32, 32);
+    const gr = g.createRadialGradient(0, 0, 0, 0, 0, 30);
+    gr.addColorStop(0, "rgba(255,255,255,1)");
+    gr.addColorStop(0.3, "rgba(255,230,150,0.9)");
+    gr.addColorStop(1, "rgba(255,200,80,0)");
+    g.fillStyle = gr;
+    g.beginPath();
+    for (let i = 0; i < 8; i++) {
+      const r = i % 2 ? 6 : 30, a = i / 8 * Math.PI * 2;
+      g.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+    }
+    g.closePath();
+    g.fill();
+    return starTex.t = new CanvasTexture(c);
+  }
+  function flameWingTex() {
+    if (flameWingTex.t) return flameWingTex.t;
+    const c = document.createElement("canvas");
+    c.width = 128;
+    c.height = 64;
+    const g = c.getContext("2d");
+    const gr = g.createLinearGradient(0, 0, 128, 0);
+    gr.addColorStop(0, "rgba(255,214,90,1)");
+    gr.addColorStop(0.3, "rgba(255,120,20,0.9)");
+    gr.addColorStop(0.7, "rgba(230,30,20,0.55)");
+    gr.addColorStop(1, "rgba(120,0,0,0)");
+    g.fillStyle = gr;
+    g.beginPath();
+    g.moveTo(0, 30);
+    for (let x = 0; x <= 128; x += 16) g.lineTo(x, 30 - (1 - x / 128) * 26 - Math.sin(x * 0.2) * 5);
+    g.lineTo(128, 34);
+    for (let x = 128; x >= 0; x -= 16) g.lineTo(x, 34 + (1 - x / 128) * 10);
+    g.closePath();
+    g.fill();
+    return flameWingTex.t = new CanvasTexture(c);
+  }
   function shieldMat(col) {
     return new ShaderMaterial({
       transparent: true,
@@ -26290,9 +26598,23 @@ void main() {
       fragmentShader: "uniform vec3 uCol; uniform float uI; uniform float uT; varying vec3 vN; varying vec3 vV; varying float vY; void main(){ float f = pow(1.0 - abs(dot(vN, vV)), 2.4); float band = step(0.93, fract(vY * 5.0 - uT * 0.6)) * 0.35; float a = (f * 0.9 + band * f) * uI; gl_FragColor = vec4(uCol * a, a); }"
     });
   }
-  function trail(group, out, z0, x, n, cols, size) {
+  function nebulaMat() {
+    return new ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: AdditiveBlending,
+      uniforms: { uT: { value: 0 }, uI: { value: 1 } },
+      vertexShader: "varying vec3 vN; varying vec3 vV; varying vec3 vP; void main(){ vec4 mv = modelViewMatrix * vec4(position,1.0); vN = normalize(normalMatrix * normal); vV = normalize(-mv.xyz); vP = position; gl_Position = projectionMatrix * mv; }",
+      fragmentShader: `uniform float uT; uniform float uI; varying vec3 vN; varying vec3 vV; varying vec3 vP;
+      void main(){ float f = pow(1.0 - abs(dot(vN, vV)), 2.0); float a = atan(vP.z, vP.x) + uT * 0.5; float r = length(vP.xz);
+        float sw = sin(a * 3.0 + r * 9.0 - uT * 1.3) * 0.5 + 0.5; float sw2 = sin(a * 5.0 - r * 14.0 + uT) * 0.5 + 0.5;
+        vec3 c = mix(vec3(0.35,0.08,0.7), vec3(0.95,0.45,1.0), sw * sw2) * (0.35 + 0.65 * sw);
+        float al = (0.28 + 0.5 * sw * sw2 + f * 0.8) * uI; gl_FragColor = vec4(c * al + vec3(0.8,0.6,1.0) * f * 0.5 * uI, al); }`
+    });
+  }
+  function trail(group, out, z0, x, n, cols, size, len = 9, y0 = 0, spread = 0.6) {
     const pos = new Float32Array(n * 3), col = new Float32Array(n * 3), seed = [];
-    for (let i = 0; i < n; i++) seed.push({ x: x + (Math.random() - 0.5) * 0.6, y: (Math.random() - 0.5) * 0.4, z: z0 + Math.random() * 9, v: 5 + Math.random() * 7, c: Math.random() });
+    for (let i = 0; i < n; i++) seed.push({ x: x + (Math.random() - 0.5) * spread, y: y0 + (Math.random() - 0.5) * 0.4, z: z0 + Math.random() * len, v: 5 + Math.random() * 7, c: Math.random() });
     const g = new BufferGeometry();
     g.setAttribute("position", new BufferAttribute(pos, 3));
     g.setAttribute("color", new BufferAttribute(col, 3));
@@ -26300,7 +26622,7 @@ void main() {
     pts.frustumCulled = false;
     group.add(pts);
     const a0 = new Color(cols[0]), b0 = new Color(cols[1]), a = a0.clone(), b = b0.clone(), tmp2 = new Color();
-    return (dt, thrust) => {
+    const fn = (dt, thrust) => {
       const tint = group.userData.tint, tm = group.userData.tintM || 0;
       if (tint) {
         a.copy(a0).lerp(tint, tm);
@@ -26313,12 +26635,12 @@ void main() {
         const p = seed[i];
         p.z += p.v * dt * (0.35 + thrust);
         p.y += (Math.random() - 0.5) * dt * 0.8;
-        if (p.z > z0 + 9) {
+        if (p.z > z0 + len) {
           p.z = z0 + Math.random() * 0.4;
-          p.y = (Math.random() - 0.5) * 0.3;
-          p.x = x + (Math.random() - 0.5) * 0.5;
+          p.y = y0 + (Math.random() - 0.5) * 0.3;
+          p.x = x + (Math.random() - 0.5) * spread * 0.8;
         }
-        const age2 = (p.z - z0) / 9;
+        const age2 = (p.z - z0) / len;
         pos[i * 3] = p.x * (1 + age2 * 0.4);
         pos[i * 3 + 1] = p.y + age2 * 0.25;
         pos[i * 3 + 2] = p.z;
@@ -26330,34 +26652,116 @@ void main() {
       g.attributes.position.needsUpdate = true;
       g.attributes.color.needsUpdate = true;
     };
+    fn.points = pts;
+    return fn;
+  }
+  var LADDER_EMISSIVE = [4, 6, 8, 10, 12, 14, 16];
+  var LADDER_TRAIL = [5, 8, 12, 13, 14, 16, 20];
+  var SIG_COL = { aurora: 4191999, raven: 10505215, valkyrie: 16728024, nebula: 13073919, titan: 16747034, phoenix: 16762170, starrider: 16769696 };
+  function ladderFill(k, group, out, id, tier, ticks, geo) {
+    const { cy, H, zf, zb, L, W } = geo, col = SIG_COL[id] || 4191999, m = glowMat(col, 2.2), P5 = LOW_FX ? 0.45 : 1;
+    for (let j = 0; out.fx.emissive < LADDER_EMISSIVE[tier] && j < 12; j++) for (const sd of [-1, 1]) {
+      out.fx.emissive++;
+      k.strip(group, [sd * W * (0.18 + 0.07 * (j % 4)), cy + H * (0.32 - 0.11 * (j % 5)), zf + L * (0.18 + 0.04 * j)], [sd * W * (0.55 + 0.06 * (j % 4)), cy + H * (0.32 - 0.11 * (j % 5)), zb - L * (0.12 + 0.03 * j)], 0.018, m);
+    }
+    if (out.fx.trailLen < LADDER_TRAIL[tier]) {
+      const xs = id === "aurora" ? [-0.56, 0.56] : [0], len = LADDER_TRAIL[tier];
+      for (const x of xs) ticks.push(trail(group, out, zb + 0.1, x, Math.round((22 + tier * 10) * P5), [col, 1718922], 0.22, len, cy - H * 0.05, 0.35));
+      out.fx.trailLen = len;
+    }
   }
   function tierFx(k, group, out, def) {
-    const tier = SHIP_TIER[def.id] || 0;
-    if (!tier) return;
+    const tier = SHIP_TIER[def.id] || 0, id = def.id;
     group.updateMatrixWorld(true);
-    const bb = new Box3().setFromObject(group), W = Math.max(0.8, bb.max.x), zb = bb.max.z, zf = bb.min.z, H = bb.max.y - bb.min.y, cy = (bb.max.y + bb.min.y) / 2;
+    const bb = new Box3().setFromObject(group), W = Math.max(0.8, bb.max.x), zb = bb.max.z, zf = bb.min.z, H = bb.max.y - bb.min.y, cy = (bb.max.y + bb.min.y) / 2, L = zb - zf;
     const ticks = [];
     let T = 0;
-    const baseL = k.lineBright.color.clone(), baseS = k.neonSoft.color.clone();
+    const P5 = LOW_FX ? 0.45 : 1;
+    out.fx = { tier, trailLen: 0, emissive: 0, engineGlow: 1 + tier * 0.1, sig: SHIP_SIG[id] || "" };
+    for (const f of k.flames) f.halo.scale.multiplyScalar(1 + tier * 0.1);
+    const em = (o) => {
+      out.fx.emissive++;
+      return o;
+    };
+    const lineAt = (sd, y, z0, z1, x0, x1, w, mat) => em(k.strip(group, [sd * x0, y, z0], [sd * x1, y, z1], w, mat));
+    if (id === "aurora") {
+      const m = glowMat(4191999, 2.2);
+      for (const sd of [-1, 1]) {
+        lineAt(sd, cy + H * 0.12, zf + L * 0.2, zb - L * 0.15, W * 0.22, W * 0.55, 0.025, m);
+        lineAt(sd, cy - H * 0.05, zf + L * 0.45, zb - L * 0.05, W * 0.35, W * 0.7, 0.02, m);
+      }
+      for (const f of k.flames) f.halo.material.color.set(4191999);
+    }
+    const geo = { cy, H, zf, zb, L, W };
+    if (!tier) {
+      ladderFill(k, group, out, id, 0, ticks, geo);
+      out.tick = /* @__PURE__ */ ((prev2) => (dt, th) => {
+        T += dt;
+        if (prev2) prev2(dt, th);
+        for (const f of ticks) f(dt, th);
+      })(out.tick);
+      out.tier = 0;
+      return;
+    }
+    const baseL = k.lineBright.color.clone(), baseS = k.neonSoft.color.clone(), amp = 0.3 + tier * 0.06;
     ticks.push(() => {
-      const p = 0.7 + 0.4 * Math.sin(T * 3.1);
+      const p = 0.75 + amp * Math.sin(T * 3.1);
       k.lineBright.color.copy(baseL).multiplyScalar(p);
-      k.neonSoft.color.copy(baseS).multiplyScalar(0.8 + 0.35 * Math.sin(T * 3.1 + 1.2));
+      k.neonSoft.color.copy(baseS).multiplyScalar(0.8 + amp * Math.sin(T * 3.1 + 1.2));
     });
-    if (tier >= 2 && def.id !== "starrider") for (const sd of [-1, 1]) {
+    if (id === "raven") {
+      const m = glowMat(10505215, 2.4);
+      for (const sd of [-1, 1]) {
+        lineAt(sd, cy + H * 0.2, zf + L * 0.1, zb - L * 0.25, W * 0.1, W * 0.75, 0.03, m);
+        lineAt(sd, cy - H * 0.1, zf + L * 0.35, zb - L * 0.1, W * 0.4, W * 0.95, 0.025, m);
+      }
+      const g1 = em(sprite(10505215, 2.2, 0.8));
+      g1.position.set(0, cy, zb + 0.3);
+      group.add(g1);
+      ticks.push(() => {
+        g1.material.opacity = 0.6 + 0.25 * Math.sin(T * 5);
+      });
+    }
+    if (tier >= 2 && id !== "starrider") for (const sd of [-1, 1]) {
       k.strip(group, [sd * W * 0.6, -0.05, zb - 1.3], [sd * (W + 0.28), -0.05, zb - 1], 0.1, k.hull2);
-      k.strip(group, [sd * (W + 0.28), 0.12, zb - 2], [sd * (W + 0.28), 0.12, zb - 0.6], 0.035, k.neon);
+      em(k.strip(group, [sd * (W + 0.28), 0.12, zb - 2], [sd * (W + 0.28), 0.12, zb - 0.6], 0.035, k.neon));
       k.engine(group, sd * (W + 0.28), -0.05, zb - 0.75, 0.2, 0.9, { sides: 8 });
     }
-    if (tier >= 3) {
+    if (id === "valkyrie") {
+      const mm = glowMat(16728024, 2.4), mc = glowMat(4191999, 2.2);
+      for (const sd of [-1, 1]) {
+        lineAt(sd, cy + H * 0.25, zf + L * 0.15, zb - L * 0.2, W * 0.15, W * 0.9, 0.035, mm);
+        lineAt(sd, cy + H * 0.25 - 0.09, zf + L * 0.18, zb - L * 0.18, W * 0.15, W * 0.9, 0.025, mc);
+        ticks.push(trail(group, out, zb - L * 0.35, sd * (W + 0.1), Math.round(40 * P5), [16728024, 4191999], 0.16, 12, cy + H * 0.3, 0.08));
+      }
+      out.fx.trailLen = 12;
+    }
+    if (tier >= 3 && id !== "nebula") {
       const m = shieldMat(k.col), sh = new Mesh(new SphereGeometry(1, LOW_FX ? 16 : 28, LOW_FX ? 10 : 16), m);
-      sh.scale.set(W * 1.35 + 0.4, Math.max(0.7, H * 0.95), (zb - zf) * 0.62);
+      sh.scale.set(W * 1.35 + 0.4, Math.max(0.7, H * 0.95), L * 0.62);
       sh.position.set(0, cy, (zb + zf) / 2);
       group.add(sh);
       ticks.push((dt, th) => {
         m.uniforms.uT.value = T;
-        m.uniforms.uI.value = 0.32 + 0.14 * Math.sin(T * 2.3) + 0.2 * th;
+        m.uniforms.uI.value = 0.22 + 0.1 * Math.sin(T * 2.3) + 0.2 * th;
       });
+    }
+    if (id === "nebula") {
+      const m = nebulaMat(), dome = em(new Mesh(new SphereGeometry(1, LOW_FX ? 20 : 36, LOW_FX ? 12 : 20, 0, Math.PI * 2, 0, Math.PI / 2), m));
+      dome.scale.set(W * 0.55, H * 0.75, L * 0.28);
+      dome.position.set(0, bb.max.y - H * 0.25, zf + L * 0.38);
+      group.add(dome);
+      const sh = new Mesh(new SphereGeometry(1, 20, 12), shieldMat(new Color(11684863)));
+      sh.scale.set(W * 1.3 + 0.3, Math.max(0.7, H * 0.9), L * 0.6);
+      sh.position.set(0, cy, (zb + zf) / 2);
+      group.add(sh);
+      ticks.push((dt, th) => {
+        m.uniforms.uT.value = T;
+        sh.material.uniforms.uT.value = T;
+        sh.material.uniforms.uI.value = 0.15 + 0.15 * th;
+      });
+      for (const x of [-W * 0.35, W * 0.35]) ticks.push(trail(group, out, zb, x, Math.round(50 * P5), [13073919, 5905050], 0.55, 13, cy - H * 0.1, 0.9));
+      out.fx.trailLen = 13;
     }
     if (tier >= 4) {
       const lights = [];
@@ -26377,27 +26781,91 @@ void main() {
         x.l.scale.setScalar(on ? 1.4 : 0.8);
       }));
     }
-    if (tier >= 5) {
-      const n = LOW_FX ? 36 : 90, cols = def.id === "phoenix" ? [16770155, 16722490] : [10479871, 13790207];
-      for (const x of def.id === "phoenix" ? [-0.35, 0.35] : [0]) ticks.push(trail(group, out, zb - 0.2, x, n, cols, def.id === "phoenix" ? 0.34 : 0.26));
+    if (id === "titan") {
+      const vm = glowMat(16747034, 2.6), vents = [];
+      for (const sd of [-1, 1]) for (let i = 0; i < 3; i++) {
+        const z = zf + L * (0.25 + i * 0.17);
+        vents.push(lineAt(sd, cy + H * 0.05, z, z + L * 0.07, W * 0.92, W * 0.97, 0.05, vm));
+      }
+      for (let i = 0; i < 4; i++) {
+        const gx = (i % 2 ? 1 : -1) * W * 0.3, gy = cy + (i < 2 ? 0.25 : -0.2) * H;
+        const s = em(sprite(16747034, 1.5, 0.85));
+        s.position.set(gx, gy, zb + 0.25);
+        group.add(s);
+        const c = new Mesh(new CircleGeometry(0.22, 16), glowMat(16760944, 2.5));
+        c.position.set(gx, gy, zb + 0.2);
+        group.add(c);
+        ticks.push((dt, th) => {
+          s.scale.setScalar(0.85 + 0.5 * th + 0.08 * Math.sin(T * 20 + i));
+        });
+      }
+      ticks.push(() => {
+        vm.color.setRGB(1, 0.54, 0.1).multiplyScalar(2 + 0.8 * Math.sin(T * 2.2));
+      });
+      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(50 * P5), [16756816, 16730640], 0.3, 14, cy, 1.4));
+      out.fx.trailLen = 14;
     }
-    if (tier >= 6) {
-      const ring = new Mesh(new TorusGeometry(1.9, 0.035, 6, 64), new MeshBasicMaterial({ color: new Color(14072063).multiplyScalar(2.2), transparent: true, opacity: 0.8, blending: AdditiveBlending, depthWrite: false }));
+    if (id === "phoenix") {
+      const wings = [];
+      for (const sd of [-1, 1]) {
+        const m = new MeshBasicMaterial({ map: flameWingTex(), transparent: true, blending: AdditiveBlending, depthWrite: false, side: DoubleSide, color: 16777215 });
+        const wg = em(new Mesh(new PlaneGeometry(L * 0.75, L * 0.32), m));
+        wg.rotation.set(-Math.PI / 2, 0, sd * 0.1 - Math.PI / 2);
+        wg.position.set(sd * (W * 0.75), cy + 0.05, zf + L * 0.62);
+        group.add(wg);
+        wings.push(wg);
+        const gl = glowMat(16762170, 2.6);
+        lineAt(sd, cy + H * 0.15, zf + L * 0.1, zb - L * 0.2, W * 0.15, W * 0.85, 0.03, gl);
+      }
+      ticks.push((dt, th) => wings.forEach((wg, i) => {
+        wg.material.opacity = 0.45 + 0.25 * th + 0.12 * Math.sin(T * 11 + i * 2);
+        wg.scale.set(1 + 0.08 * Math.sin(T * 7 + i), 1 + 0.12 * Math.sin(T * 9 + i), 1);
+      }));
+      for (const x of [-0.35, 0.35]) ticks.push(trail(group, out, zb - 0.2, x, Math.round(90 * P5), [16770155, 16722490], 0.34, 16));
+      out.fx.trailLen = 16;
+    }
+    if (id === "starrider") {
+      const gm = glowMat(16769696, 2.4);
+      for (const sd of [-1, 1]) lineAt(sd, cy - H * 0.3, zf + L * 0.1, zb - L * 0.1, W * 0.5, W * 0.85, 0.035, gm);
+      const stars = [];
+      for (const [x, z] of [[-W - 0.2, zb - L * 0.45], [W + 0.2, zb - L * 0.45], [0, zf - 0.2]]) {
+        const st = em(new Mesh(new PlaneGeometry(1.1, 1.1), new MeshBasicMaterial({ map: starTex(), transparent: true, blending: AdditiveBlending, depthWrite: false, side: DoubleSide })));
+        st.position.set(x, cy - H * 0.25, z);
+        group.add(st);
+        stars.push(st);
+      }
+      const rings = [];
+      for (let i = 0; i < 3; i++) {
+        const r = em(new Mesh(new TorusGeometry(0.5 + i * 0.18, 0.025, 6, 48), glowMat(i % 2 ? 16777215 : 16762170, 2.4, 0.85)));
+        r.position.set(0, cy - H * 0.3, zb + 0.4 + i * 0.45);
+        group.add(r);
+        rings.push(r);
+      }
+      ticks.push((dt, th) => {
+        stars.forEach((st, i) => {
+          st.rotation.z = T * (i % 2 ? 1.4 : -1.1);
+          st.scale.setScalar(0.85 + 0.3 * Math.sin(T * 4 + i * 2));
+        });
+        rings.forEach((r, i) => {
+          r.scale.setScalar(1 + 0.12 * Math.sin(T * 6 - i) + 0.25 * th);
+          r.material.opacity = 0.5 + 0.4 * th;
+        });
+      });
+      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(110 * P5), [16777215, 16762170], 0.28, 20, cy - H * 0.3, 1.2));
+      const tw = trail(group, out, zb + 0.4, 0, Math.round(40 * P5), [16773824, 10479871], 0.6, 20, cy - H * 0.2, 2.6);
+      tw.points.material.map = starTex();
+      ticks.push(tw);
+      out.fx.trailLen = 20;
+      const ring = new Mesh(new TorusGeometry(1.9, 0.035, 6, 64), glowMat(16767114, 2.2, 0.8));
       ring.position.set(0, 1.4, 0.2);
       ring.rotation.x = Math.PI / 2.4;
       group.add(ring);
-      const r2 = ring.clone();
-      r2.material = ring.material.clone();
-      r2.material.color = new Color(4191999).multiplyScalar(2);
-      r2.scale.setScalar(0.8);
-      group.add(r2);
       ticks.push(() => {
         ring.rotation.z = T * 0.9;
-        r2.rotation.z = -T * 1.3;
-        r2.rotation.y = Math.sin(T * 0.7) * 0.3;
-        ring.material.opacity = 0.55 + 0.3 * Math.sin(T * 2);
+        ring.material.opacity = 0.45 + 0.3 * Math.sin(T * 2);
       });
     }
+    ladderFill(k, group, out, id, tier, ticks, geo);
     const prev = out.tick;
     out.tick = (dt, thrust) => {
       T += dt;
@@ -26422,7 +26890,7 @@ void main() {
     const under = new PointLight(col.hex, 2.2, 7, 2);
     under.position.set(0, -1.3, 0);
     group.add(under);
-    return { group, flames: k.flames, nozzleLight, def, color: col, rider: out.rider || null, tick: out.tick || null, tier: out.tier || 0 };
+    return { group, flames: k.flames, nozzleLight, def, color: col, rider: out.rider || null, tick: out.tick || null, tier: out.tier || 0, fx: out.fx || null };
   }
   function disposeShip(ship) {
     ship.group.traverse((o) => {
@@ -26852,9 +27320,14 @@ void main() {
     // measured -15.3 LUFS -> matched to Cosmic Drift (-16)
     { id: "neonhorizon", name: "Neon Horizon", artist: "Johan K. Jacobsen", kind: "file", src: "music/NeonHorizon.mp3", gainDb: -0.9 },
     // measured -15.1 LUFS; theme of the Sunset Drive stage
-    { id: "drive", name: "Neon Drive", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 180 }
+    { id: "drive", name: "Neon Drive", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 180 },
+    { id: "skalhovdi", name: "Sk\xE1lh\xF8vdi Calling", artist: "Johan K. Jacobsen", kind: "file", src: "music/skalhovdi_3026.mp3", gainDb: -0.1 },
+    // Suno, 3:30, 128 bpm; measured -15.9 LUFS; theme of the Skálavík 3026 stage
+    { id: "skalhovdi2", name: "Sk\xE1lh\xF8vdi Calling (v2)", artist: "Johan K. Jacobsen", kind: "file", src: "music/skalhovdi_3026_v2.mp3", gainDb: 0.2 }
+    // calmer second version (~112 bpm): menu + Calm mode music; measured -16.2 LUFS
   ];
-  var STAGE_THEMES = { sunset: "neonhorizon" };
+  var STAGE_THEMES = { sunset: "neonhorizon", skalavik: "skalhovdi" };
+  var CALM_THEME = "skalhovdi2";
   var trackById = (id) => TRACKS.find((t) => t.id === id) || null;
 
   // workouts.js
@@ -27707,6 +28180,33 @@ void main() {
     }
     return out.slice(0, free);
   }
+  var RACE_PLANS = [{ id: "even", name: "Even" }, { id: "fast", name: "Fast start \xB7 settle \xB7 sprint" }, { id: "neg", name: "Negative split" }];
+  function racePlan(D, T, plan = "even") {
+    const a = T / D * 500, seg = (from, to, split) => ({ from, to, split });
+    if (plan === "fast") {
+      const e = Math.min(250, D / 4), s0 = a - 3, s1 = a + 1, tUsed = e * s0 / 500 + (D - 2 * e) * s1 / 500, sx = (T - tUsed) * 500 / e;
+      return [seg(0, e, s0), seg(e, D - e, s1), seg(D - e, D, sx)];
+    }
+    if (plan === "neg") {
+      const h = D / 2, s0 = a + 2, sx = (T - h * s0 / 500) * 500 / h;
+      return [seg(0, h, s0), seg(h, D, sx)];
+    }
+    return [seg(0, D, a)];
+  }
+  var planTime = (segs) => segs.reduce((t, g) => t + (g.to - g.from) * g.split / 500, 0);
+  function planDistanceAt(segs, t) {
+    let tt = 0;
+    for (const g of segs) {
+      const dt = (g.to - g.from) * g.split / 500;
+      if (t <= tt + dt) return g.from + (t - tt) * 500 / g.split;
+      tt += dt;
+    }
+    return segs.length ? segs[segs.length - 1].to : 0;
+  }
+  function defaultTarget(D, t2k = 390) {
+    const a = t2k / 4 + 5 * Math.log2(D / 2e3);
+    return Math.round(a * D / 500);
+  }
 
   // arcade.js
   var ARCADE_ROUNDS = [{ id: "r3", label: "3 min", s: 180 }, { id: "r5", label: "5 min", s: 300 }, { id: "r10", label: "10 min", s: 600 }, { id: "endless", label: "Endless", s: 0 }];
@@ -28097,6 +28597,10 @@ void main() {
     ],
     skalavik: [
       ["SK\xC1LAV\xCDK \xB7 YEAR 3026", "The old watch post on Sk\xE1lh\xF8vdi still stands guard \u2014 now a beacon calling ships home across the bay.", "Every Twelfth Night the Seal People rise from the sea, shed their skins and dance under the northern lights.", "Throw your stone on Fiskavar\xF0in for luck, pilot. Then row. The fastest ship reaches the harbour before the seals return to the waves."]
+    ],
+    ringway: [
+      ["RINGWAY // SATURN", "A road of light laid straight across the ice rings. Blocks the size of houses drift beside the lane - never on it.", "Cold blue at the start. Gold at the finish. Row the {ship} into the light."],
+      ["ICE LANE OPEN", "The giant fills half the sky. Its rings hum under the hull of the {ship}.", "Hold your line. The sun rises gold over the rings for those who reach the end."]
     ],
     sunset: [
       ["TIME CODE 19:84 // HORIZON LOCK", "On the western plains of Kaelis the sun never finishes setting. The old highway runs straight into it, a grid of light laid over the dust.", "The {ship} points its nose at the sun."],
@@ -28930,9 +29434,9 @@ ${pts}
       energy = dv.getUint16(i, true);
       i += 2;
     }
-    const rr = [];
-    if (flags & 16) for (; i + 1 < dv.byteLength; i += 2) rr.push(dv.getUint16(i, true) / 1024);
-    return { bpm, contact, energy, rr };
+    const rr2 = [];
+    if (flags & 16) for (; i + 1 < dv.byteLength; i += 2) rr2.push(dv.getUint16(i, true) / 1024);
+    return { bpm, contact, energy, rr: rr2 };
   }
   var HR_ZONES = [
     { z: 1, name: "Recovery", lo: 0.5, hi: 0.6, color: "#7fa8c0" },
@@ -29191,6 +29695,12 @@ ${pts}
     joinClub(p, code) {
       return this._j("/clubs/join", { id: p.id, member: p.name || "Rower", code });
     }
+    submitWeekly(p, week, d, time, ship) {
+      return this._j("/weekly/submit", { week, id: p.id, name: p.name || "Rower", d, time, ship });
+    }
+    weekly(week) {
+      return this._j(`/weekly?week=${encodeURIComponent(week)}`);
+    }
     clubMetres(p, code, m) {
       return this._j("/clubs/metres", { id: p.id, code, m });
     }
@@ -29384,122 +29894,262 @@ ${pts}
 
   // poster.js
   var POSTER_W = 1080;
-  var POSTER_H = 1350;
-  var PAL = { orbit: ["#05030f", "#26104f", "#3ff6ff"], city: ["#050318", "#5a1670", "#ff3fd8"], sunset: ["#0a0220", "#7a1a6e", "#ff8a3f"] };
+  var POSTER_H = 1080;
+  var GAME_URL = "https://klamintson.github.io/cosmicrow-play/";
+  var POSTER_CREDIT = "\xA9 Johan K. Jacobsen";
+  var PAL = {
+    orbit: ["#02040f", "#0a1f48", "#3ff6ff", "#e8fbff"],
+    city: ["#050318", "#4a0f5e", "#ff3fd8", "#3ff6ff"],
+    sunset: ["#0a0220", "#5a1270", "#ff8a3f", "#c46bff"],
+    skalavik: ["#020a0c", "#0c2a30", "#4dff9c", "#3ff6ff"],
+    ringway: ["#030a1a", "#173a6a", "#8fd8ff", "#ffc94d"]
+  };
   function drawPoster(cv, d) {
     cv.width = POSTER_W;
     cv.height = POSTER_H;
-    const g = cv.getContext("2d"), W = POSTER_W, H = POSTER_H, [c0, c1, acc] = PAL[d.stageId] || PAL.orbit;
-    const sky = g.createLinearGradient(0, 0, 0, H * 0.62);
+    const g = cv.getContext("2d"), W = POSTER_W, H = POSTER_H, [c0, c1, acc, acc2] = PAL[d.stageId] || PAL.orbit;
+    const hy = 640;
+    const sky = g.createLinearGradient(0, 0, 0, hy);
     sky.addColorStop(0, c0);
-    sky.addColorStop(0.75, c1);
-    sky.addColorStop(1, "#ff4f8b");
+    sky.addColorStop(1, c1);
     g.fillStyle = sky;
     g.fillRect(0, 0, W, H);
-    let s = 7;
+    let s = 11;
     const rnd = () => (s = s * 16807 % 2147483647) / 2147483647;
-    for (let i = 0; i < 220; i++) {
+    for (let i = 0; i < 240; i++) {
       g.fillStyle = `rgba(255,255,255,${0.2 + rnd() * 0.7})`;
-      g.fillRect(rnd() * W, rnd() * H * 0.5, rnd() < 0.1 ? 3 : 1.6, rnd() < 0.1 ? 3 : 1.6);
+      const z = rnd() < 0.08 ? 3 : 1.5;
+      g.fillRect(rnd() * W, rnd() * hy, z, z);
     }
-    const hy = H * 0.62, sr = 300, sx = W / 2, sy = hy - 70;
-    g.save();
-    g.beginPath();
-    g.arc(sx, sy, sr, 0, Math.PI * 2);
-    g.clip();
-    const sun = g.createLinearGradient(0, sy - sr, 0, sy + sr);
-    sun.addColorStop(0, "#ffe46b");
-    sun.addColorStop(0.55, "#ff8a3f");
-    sun.addColorStop(1, "#ff2a8a");
-    g.fillStyle = sun;
-    g.fillRect(sx - sr, sy - sr, sr * 2, sr * 2);
-    g.fillStyle = c1;
-    for (let k = 0; k < 7; k++) {
-      const y = sy + 30 + k * 38, h = 4 + k * 3.2;
-      g.fillRect(sx - sr, y, sr * 2, h);
-    }
-    g.restore();
-    g.shadowColor = "#ff4f8b";
-    g.shadowBlur = 80;
-    g.strokeStyle = "rgba(255,120,160,0.0)";
-    g.beginPath();
-    g.arc(sx, sy, sr, 0, Math.PI * 2);
-    g.stroke();
-    g.shadowBlur = 0;
-    g.strokeStyle = "rgba(180,120,255,0.8)";
-    g.lineWidth = 2;
-    g.beginPath();
-    const ridge = [[0, 40], [120, 130], [210, 60], [330, 170], [430, 90], [520, 30], [640, 120], [760, 50], [880, 160], [980, 70], [1080, 110]];
-    ridge.forEach(([x, h], i) => i ? g.lineTo(x, hy - h) : g.moveTo(x, hy - h));
-    g.lineTo(W, hy);
-    g.lineTo(0, hy);
-    g.closePath();
-    g.fillStyle = "#12041e";
-    g.fill();
-    g.stroke();
+    motif(g, d.stageId, W, hy, acc, acc2, c1, rnd);
     const gr = g.createLinearGradient(0, hy, 0, H);
-    gr.addColorStop(0, "#1a0630");
-    gr.addColorStop(1, "#05010d");
+    gr.addColorStop(0, "#10041f");
+    gr.addColorStop(1, "#030108");
     g.fillStyle = gr;
     g.fillRect(0, hy, W, H - hy);
+    g.save();
     g.strokeStyle = acc;
-    g.globalAlpha = 0.8;
     g.lineWidth = 2;
     g.shadowColor = acc;
-    g.shadowBlur = 12;
-    for (let i = -14; i <= 14; i++) {
+    g.shadowBlur = 10;
+    for (let i = -12; i <= 12; i++) {
+      g.globalAlpha = 0.35;
       g.beginPath();
-      g.moveTo(W / 2 + i * 14, hy);
-      g.lineTo(W / 2 + i * 150, H);
+      g.moveTo(W / 2 + i * 16, hy);
+      g.lineTo(W / 2 + i * 170, H);
       g.stroke();
     }
-    for (let k = 1; k < 14; k++) {
-      const y = hy + Math.pow(k / 13, 2.1) * (H - hy);
-      g.globalAlpha = 0.25 + 0.6 * k / 13;
+    for (let k = 1; k < 12; k++) {
+      const y = hy + Math.pow(k / 11, 2.1) * (H - hy);
+      g.globalAlpha = 0.12 + 0.4 * k / 11;
       g.beginPath();
       g.moveTo(0, y);
       g.lineTo(W, y);
       g.stroke();
     }
     g.globalAlpha = 1;
-    g.shadowBlur = 0;
-    const neon = (txt, x, y, size, col, weight = 800, align = "center", blur = 24) => {
+    g.lineWidth = 5;
+    g.shadowBlur = 22;
+    [[-1, acc], [1, acc]].forEach(([sd]) => {
+      g.beginPath();
+      g.moveTo(W / 2 + sd * 22, hy);
+      g.lineTo(W / 2 + sd * 420, H);
+      g.stroke();
+    });
+    g.restore();
+    if (d.shipImg) {
+      const iw = 860, ih = iw * d.shipImg.height / d.shipImg.width;
+      const sx = (W - iw) / 2, sy = 300 - ih * 0.12;
+      g.save();
+      const halo = g.createRadialGradient(W / 2, sy + ih * 0.55, 20, W / 2, sy + ih * 0.55, iw * 0.55);
+      halo.addColorStop(0, "rgba(0,0,0,0.5)");
+      halo.addColorStop(0.7, "rgba(0,0,0,0.18)");
+      halo.addColorStop(1, "rgba(0,0,0,0)");
+      g.fillStyle = halo;
+      g.fillRect(0, 0, W, H);
+      g.shadowColor = acc;
+      g.shadowBlur = 40;
+      g.drawImage(d.shipImg, sx, sy, iw, ih);
+      g.restore();
+    }
+    const neon = (txt, x, y, size, col, weight = 800, align = "center", blur = 24, ls = 0) => {
       g.font = `${weight} ${size}px "Segoe UI", Arial, sans-serif`;
       g.textAlign = align;
+      if ("letterSpacing" in g) g.letterSpacing = ls + "px";
       g.shadowColor = col;
       g.shadowBlur = blur;
       g.fillStyle = "#fff";
       g.fillText(txt, x, y);
       g.shadowBlur = blur / 2;
-      g.fillStyle = col;
-      g.globalAlpha = 0.35;
       g.fillText(txt, x, y);
+      g.shadowBlur = 0;
+      if ("letterSpacing" in g) g.letterSpacing = "0px";
+    };
+    g.save();
+    g.font = '900 96px "Segoe UI", Arial, sans-serif';
+    g.textAlign = "center";
+    if ("letterSpacing" in g) g.letterSpacing = "6px";
+    const ch = g.createLinearGradient(0, 40, 0, 130);
+    ch.addColorStop(0, "#ffffff");
+    ch.addColorStop(0.45, "#bfe9ff");
+    ch.addColorStop(0.5, "#4a2a7a");
+    ch.addColorStop(0.62, "#ff6fe0");
+    ch.addColorStop(1, "#ffffff");
+    g.shadowColor = "#ff3fd8";
+    g.shadowBlur = 34;
+    g.fillStyle = ch;
+    g.fillText("COSMICROW", W / 2, 128);
+    g.shadowBlur = 0;
+    g.lineWidth = 1.5;
+    g.strokeStyle = "rgba(63,246,255,0.8)";
+    g.strokeText("COSMICROW", W / 2, 128);
+    g.restore();
+    neon(String(d.title || "").toUpperCase().slice(0, 38), W / 2, 190, 34, acc, 700, "center", 16, 3);
+    const big = d.score || d.time || "--";
+    g.fillStyle = "rgba(3,1,10,0.62)";
+    rr(g, 120, 720, W - 240, 210, 26);
+    g.fill();
+    g.strokeStyle = acc;
+    g.lineWidth = 3;
+    g.shadowColor = acc;
+    g.shadowBlur = 18;
+    rr(g, 120, 720, W - 240, 210, 26);
+    g.stroke();
+    g.shadowBlur = 0;
+    if (d.place) neon(d.place, W / 2, 700, 54, "#ffe46b", 800, "center", 20);
+    neon(big, W / 2, 838, big.length > 9 ? 96 : 128, acc, 800, "center", 30);
+    const sub = d.score ? d.scoreSub || "" : `${d.split || "--"} /500m${d.spm ? " \xB7 " + d.spm + " spm" : ""}`;
+    if (sub) neon(sub, W / 2, 900, 38, "#ffffff", 600, "center", 10);
+    if (d.badge) neon(d.badge, W / 2, 978, 34, "#ffe46b", 700, "center", 16, 2);
+    neon(`${(d.ship || "").toUpperCase()}  \xB7  ${(d.stage || "").toUpperCase()}${d.name ? "  \xB7  " + d.name.toUpperCase() : ""}`, W / 2, d.badge ? 1018 : 990, 26, acc2, 600, "center", 10, 2);
+    neon(`${POSTER_CREDIT}   \xB7   ${GAME_URL.replace(/^https:\/\//, "").replace(/\/$/, "")}`, W / 2, 1056, 24, "#ff9fe8", 500, "center", 8);
+    g.save();
+    g.strokeStyle = acc;
+    g.lineWidth = 6;
+    g.shadowColor = acc;
+    g.shadowBlur = 26;
+    rr(g, 14, 14, W - 28, H - 28, 30);
+    g.stroke();
+    g.strokeStyle = "#ff3fd8";
+    g.lineWidth = 2;
+    g.shadowColor = "#ff3fd8";
+    rr(g, 26, 26, W - 52, H - 52, 24);
+    g.stroke();
+    g.restore();
+    return cv;
+  }
+  function rr(g, x, y, w, h, r) {
+    g.beginPath();
+    g.moveTo(x + r, y);
+    g.arcTo(x + w, y, x + w, y + h, r);
+    g.arcTo(x + w, y + h, x, y + h, r);
+    g.arcTo(x, y + h, x, y, r);
+    g.arcTo(x, y, x + w, y, r);
+    g.closePath();
+  }
+  function motif(g, id, W, hy, acc, acc2, c1, rnd) {
+    g.save();
+    if (id === "sunset") {
+      const sr = 230, sx = W / 2, sy = hy - 40;
+      g.beginPath();
+      g.arc(sx, sy, sr, 0, Math.PI * 2);
+      g.clip();
+      const sun = g.createLinearGradient(0, sy - sr, 0, sy + sr);
+      sun.addColorStop(0, "#ffe46b");
+      sun.addColorStop(0.55, "#ff8a3f");
+      sun.addColorStop(1, "#ff2a8a");
+      g.fillStyle = sun;
+      g.fillRect(sx - sr, sy - sr, sr * 2, sr * 2);
+      g.fillStyle = c1;
+      for (let k = 0; k < 6; k++) g.fillRect(sx - sr, sy + 20 + k * 34, sr * 2, 4 + k * 3);
+    } else if (id === "city") {
+      for (let x = 0; x < W; x += 54) {
+        const h = 80 + rnd() * 260;
+        g.fillStyle = "#0a0418";
+        g.fillRect(x, hy - h, 48, h);
+        g.fillStyle = rnd() < 0.5 ? acc : acc2;
+        g.globalAlpha = 0.8;
+        g.fillRect(x, hy - h, 48, 3);
+        g.globalAlpha = 0.35;
+        for (let y = hy - h + 14; y < hy - 8; y += 16) for (let wx = x + 6; wx < x + 44; wx += 10) if (rnd() < 0.4) g.fillRect(wx, y, 5, 7);
+        g.globalAlpha = 1;
+      }
+      g.strokeStyle = "rgba(255,90,220,0.45)";
+      g.lineWidth = 1.5;
+      for (let i = 0; i < 160; i++) {
+        const x = rnd() * W, y = rnd() * 1e3;
+        g.beginPath();
+        g.moveTo(x, y);
+        g.lineTo(x - 6, y + 30);
+        g.stroke();
+      }
+    } else if (id === "skalavik") {
+      for (let b = 0; b < 3; b++) {
+        g.globalAlpha = 0.35 - b * 0.08;
+        g.strokeStyle = b === 1 ? "#3ff6ff" : acc;
+        g.lineWidth = 50 - b * 12;
+        g.shadowColor = acc;
+        g.shadowBlur = 50;
+        g.beginPath();
+        for (let x = -40; x <= W + 40; x += 40) {
+          const y = 150 + b * 70 + Math.sin(x / 170 + b) * 50;
+          x < 0 ? g.moveTo(x, y) : g.lineTo(x, y);
+        }
+        g.stroke();
+      }
       g.globalAlpha = 1;
       g.shadowBlur = 0;
-    };
-    neon("COSMICROW", W / 2, 120, 92, "#ff3fd8");
-    neon(String(d.title || "").toUpperCase().slice(0, 34), W / 2, 196, 40, "#3ff6ff", 700);
-    if (d.place) neon(d.place, W / 2, 330, 120, "#ffe46b");
-    neon(d.time || "--", W / 2, hy + 150, 150, acc);
-    neon(`${d.split || "--"} /500m${d.spm ? " \xB7 " + d.spm + " spm" : ""}`, W / 2, hy + 230, 44, "#ffffff", 600);
-    if (d.badge) neon(d.badge, W / 2, hy + 300, 38, "#ffe46b", 700);
-    g.fillStyle = "rgba(5,1,13,0.7)";
-    g.fillRect(0, H - 120, W, 120);
-    neon(`${(d.name || "ROWER").toUpperCase()} \xB7 ${(d.ship || "").toUpperCase()} \xB7 ${(d.stage || "").toUpperCase()}`, W / 2, H - 66, 30, "#9feaff", 600, "center", 10);
-    neon(`${d.date || ""}  \xB7  klamintson.github.io/cosmicrow-play`, W / 2, H - 26, 22, "#ff9fe8", 500, "center", 6);
-    return cv;
+      g.fillStyle = "#04090a";
+      g.beginPath();
+      g.moveTo(0, hy);
+      [[0, 230], [160, 300], [300, 210], [420, 120], [W - 380, 140], [W - 220, 330], [W - 90, 260], [W, 300]].forEach(([x, h]) => g.lineTo(x, hy - h));
+      g.lineTo(W, hy);
+      g.closePath();
+      g.fill();
+      g.strokeStyle = "rgba(77,255,156,0.5)";
+      g.lineWidth = 2;
+      g.stroke();
+    } else {
+      const ring = id === "ringway", px2 = ring ? 250 : W - 230, py2 = ring ? 300 : 250, pr = ring ? 300 : 170;
+      const pg = g.createLinearGradient(px2 - pr, py2 - pr, px2 + pr, py2 + pr);
+      pg.addColorStop(0, ring ? "#ffe2a0" : "#bfe9ff");
+      pg.addColorStop(0.5, ring ? "#c99a5a" : "#4a6fd8");
+      pg.addColorStop(1, "#120a20");
+      g.fillStyle = pg;
+      g.beginPath();
+      g.arc(px2, py2, pr, 0, Math.PI * 2);
+      g.fill();
+      g.globalAlpha = 0.25;
+      g.fillStyle = "#ffffff";
+      for (let k = -3; k <= 3; k++) g.fillRect(px2 - pr, py2 + k * pr * 0.22, pr * 2, pr * 0.05);
+      g.globalAlpha = 1;
+      g.strokeStyle = ring ? "rgba(255,215,140,0.75)" : "rgba(170,240,255,0.7)";
+      g.lineWidth = ring ? 14 : 8;
+      g.shadowColor = ring ? acc2 : acc;
+      g.shadowBlur = 20;
+      g.beginPath();
+      g.ellipse(px2, py2, pr * 1.9, pr * 0.42, -0.25, 0, Math.PI * 2);
+      g.stroke();
+      if (ring) {
+        g.lineWidth = 4;
+        g.beginPath();
+        g.ellipse(px2, py2, pr * 2.25, pr * 0.52, -0.25, 0, Math.PI * 2);
+        g.stroke();
+      }
+    }
+    g.restore();
   }
   function posterBlob(cv) {
     return new Promise((res) => cv.toBlob((b) => res(b), "image/png"));
   }
-  async function sharePoster(cv, file = "cosmicrow-race.png") {
+  async function sharePoster(cv, file = "cosmicrow.png", { mobile = false, text = "" } = {}) {
     const blob = await posterBlob(cv), f = typeof File !== "undefined" ? new File([blob], file, { type: "image/png" }) : null;
-    if (f && navigator.canShare && navigator.canShare({ files: [f] })) {
+    if (mobile && f && navigator.canShare && navigator.canShare({ files: [f] })) {
       try {
-        await navigator.share({ files: [f], title: "CosmicRow", text: "My CosmicRow race" });
+        await navigator.share({ files: [f], title: "CosmicRow", text: `${text ? text + " - " : ""}CosmicRow ${GAME_URL}` });
         return "shared";
       } catch (e) {
-        return "cancelled";
+        if (e && e.name === "AbortError") return "cancelled";
       }
     }
     const a = document.createElement("a");
@@ -29514,7 +30164,59 @@ ${pts}
     return "downloaded";
   }
 
+  // weekly.js
+  var WEEKLY_DIST = [100, 250, 300, 350, 500, 750, 1e3];
+  var NAMES = { 100: "Rocket 100", 250: "Quarter Blast", 300: "Three Hundred Thunder", 350: "Light-speed 350", 500: "Sprint 500", 750: "Comet 750", 1e3: "Kilometre Dash" };
+  var KEY7 = "cosmicrow.weekly.v1";
+  function weeklyDistance(week) {
+    let h = 2166136261;
+    for (const c of "wk" + week) {
+      h ^= c.charCodeAt(0);
+      h = Math.imul(h, 16777619);
+    }
+    return WEEKLY_DIST[(h >>> 0) % WEEKLY_DIST.length];
+  }
+  function weeklySprint(week) {
+    const d = weeklyDistance(week);
+    return { ...wDistance(d), weekly: week, name: `${NAMES[d]} (${d} m)` };
+  }
+  function weeklyResetIn(now3 = /* @__PURE__ */ new Date()) {
+    const n = new Date(now3);
+    n.setHours(0, 0, 0, 0);
+    const day = n.getDay() || 7;
+    n.setDate(n.getDate() + 8 - day);
+    return n - now3;
+  }
+  function loadWeekly() {
+    try {
+      return JSON.parse(localStorage.getItem(KEY7) || "{}") || {};
+    } catch (e) {
+      return {};
+    }
+  }
+  function addWeeklyScore(week, row) {
+    const all = loadWeekly(), list = all[week] = all[week] || [];
+    list.push(row);
+    list.sort((a, b) => a.time - b.time);
+    all[week] = list.slice(0, 10);
+    for (const k of Object.keys(all).sort().slice(0, -12)) delete all[k];
+    localStorage.setItem(KEY7, JSON.stringify(all));
+    const i = all[week].indexOf(row);
+    return i < 0 ? 0 : i + 1;
+  }
+  function weeklyBoard(week) {
+    return (loadWeekly()[week] || []).slice();
+  }
+
+  // skalhovdi_shape.js
+  var SK_PHOTO = { W: 802, H: 438, HOR: 288, X0: 222, STEP: 3 };
+  var SK_PROFILE = [0, 0, 0.2, 1, 2, 3.2, 4.8, 6, 7, 7.8, 8.2, 9.2, 10.8, 12, 12.8, 13.2, 13.8, 14, 14.2, 15, 15.8, 16.2, 17, 17.8, 18.2, 19, 20, 21, 22, 23, 23.8, 24.2, 25, 26, 27, 28, 29, 30, 31, 32, 32.8, 33.2, 34, 35, 35.8, 36.2, 37, 38, 38.8, 39.2, 40, 41, 42, 43, 44.5, 46.8, 49, 51, 53.2, 55.8, 58.2, 60.5, 62.2, 64, 66, 67.8, 69.2, 71.2, 74, 76.8, 79, 81, 83, 85, 87, 88.8, 90.2, 92.2, 94.5, 96, 97, 98.2, 99.8, 101, 102, 103, 103.8, 104.5, 105.2, 106.2, 108.2, 110.2, 111.8, 113.2, 114.5, 115.5, 116.8, 118, 119, 120, 120.8, 121.2, 122, 123.2, 125, 126.8, 128.2, 130, 131.8, 132.8, 133, 133.2, 134, 135, 136, 137, 138, 139.5, 141.5, 143.2, 145, 146.8, 148, 149, 150, 151, 152.2, 153.8, 155, 156, 157, 158, 159.2, 161, 167, 174, 180, 196, 209, 211, 210.8, 209.5, 207.5, 208.5, 213, 215.8, 216.2, 216.8, 217, 217, 217, 217.2, 217.2, 217.2, 218.2, 219.2, 219.8, 220.2, 220.8, 221, 221, 221, 221.2, 221.8, 222.2, 222.8, 223, 223, 223, 223.2, 223.8, 224.2, 225.5, 228.2, 232, 235.8, 238.8, 241, 243.5, 246.8, 249.5, 251.2, 253, 254.8, 256.2, 257.8, 259.2, 260.8, 261.2, 261.5, 263, 264.2, 263.8, 261];
+  var SK_ROCK = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAABuCAAAAABHdgOxAAAMyElEQVR42u2aaXBc1ZXHz31bL6/3Ra1utaRWt6SWZMmWrM2WF6ykjAwYg4kXwEmYeCYUSUGKSkJShGQgTBIyVTNUIGStVKpmCNhkY7GDjW3MZmxsCY0sy1rdWlqLe7Vavb99PrRly2OQTSCyVPN+n95rXb26/3vOPfecey+AjIyMjIyMjIyMjIyMjIzMAkIWK66vIb64ddR9+3vsGCsueXugX3Ji7PSTKlBVbV+5TLN0hWjfkSRJ8j/kfnKK6RtsXrpCXMOSJEmS2HVekqRu23xNiUUtxGbOedgKAABRmq8ptqiFlNFzXnzxpWsR7eWgKr7/0+ySnSKmQ9JF+JGfOue3xaK2yLoWABDOj/vGuzpHhI9bCa3nF7tBjO9IEn/8B14tWuKr4Z0J7vAbG6639eIVotuD/3F/mmWXfH5CVBj/v6XImHLRZ7+XoObJgK0tpSNLJUFGZfOMuK4QWzreg0BmUZNfeNFQ2FJVgMhcKU/lXtWmJWqIJtL6f4Rh9BKygn32iZxTtityv1qrl5AhqDnP6tsNAKDGrV9x6PCSJgwhAFAVqJfEgjg3gxciCRGgsrJteqJikphiAABhGOFd7PFZlfnInIS0rBlrl+qyfsuUqVJh6RzPLHKLIKOEBESJAKAFAVyaOACA7kFzx4QyjHbfvX5D/08KA18truMXrRCTJwSgIjCTZka1flwAsAsMYBwUJiRQKHunmRhIfeHjI6EPXosFvQ2nFm0Oby4GXK9U6BA2m9kqMABYvoXCAQDIhqceVAMA3qRBNa++9HX9IrUIUTM2DZQzKDAgAeQ2tPScCBAeRIBtFhKbPnfubJQBSjGqdG4L7Nl1ZDEKwTSsGBbK23rCV/ycFTFM13yHNKlsNO94mHy/Zde5FZSoffr79lfvrt+3yHZR8NrCdmqldj9V/T9pyhnDpg1CXCOlcF1Mub0kdJp4ZPTQ6h2nt62YcdvyS7V1Xc8FN2+0F/5eM7nmBodfhJEEBxWTcQyTwIEnt64sfugHgWhdkee5U/qdqb8EHo98j/Myqpu7D9+7/oWOHV9+5h4PrzN1vP6wAQCk4XZzVT4OAJHMjbIITudNFXOKuyTDK0HsAX9/WzacLs8r0rxR2za57bxQS666y2zhMwnNBst/ub5sOH7TjmXH8n5rJX5oPZreks5+abBaDfzesW3uEAIJkBS+AUJIZ9JjtWx9UYfy0UP6Hk+ev9Z8OPtcwbqe+2u6Uiz7p/uWTzBcpTE6af+ixJAbeUU5tEhNYLubPOG0SHkzU/6miWd2fx5Sf1I3EqECYHBSlVpY19KzvOSsoZ27355c++/3WlZlHQoA8WiV7cLzI+LyolalJMGRA/9qhEDaDSDlOjdm1gQ/XEVjJEhjNg72/vmRCl8NriFA8htRUnWY+YIq8NTWBROCkXmJsseEVCC72RMIiOqo76wyGP9ZKQC3vz6aiJSbwssIAABJIAB4IESEAECM66Hd+K5mx1CihgKIv23vcGxsrzTimIiB8NJeVZmutR77cPCWhXItV7ndUHObcazTOebWnvnDd5/VFu/OInBDFsd1pwqM69D5CgIAgJdIACAAzhDLQMSkIPhdSNEb59pVhrRuuvnX9Ppn2FXs0RbeRCDv14gSGmFQX3p6YdYR0rUKMd9s7X6lu19xny70b9rqvCrNK7rVDvbVuH6csBrGmbzwNJ6hMDiF9ACQ7DMFTXo2gkV8HF98TneHVgVnSFojTryws3BmkyZmMYoBpcLhLmVn8vG+/b86uzAWMex8DX2nDI337KzAkj9/s6NyRNfn2NFKHCkf0mh6DQc+Z7Z3jcbX9uY3QOlInC3IHvndzTM3JQ7UO0+4de+Z1ZFTxve6dbt6PnQF/9PBNucnBsq4ySjJzHTe3jfTQT89U/vkwswRSmPfYvRFXNQmx2P8wbRKufPC+MY+a30LMXLG3/dPbT5lKkQ73WJ4JG+YezZaPXX8Zsteq6HCpaCJkC/lO++2kY7IOreBj/o1E/8y+Fz0icE/e0YtOtutR1+LM+knhncuhEWIWueq+t5H00Tx5tjP3m8W8WoMHf/823iq8OgeItaV92bT4YF7Vmtwce+bK9bYek9kh3jmfZ2iuC6I+10amtrPep/y5PMnT+ZVD0313Fv0wURG+7g/bkpO2q3PD6wnhCO/a/jRQliEcmX1itiwqL2pK66WijtQ+WhW8c+DNt94mFFDGrNoQuzWOzuGTX9bnRIsvp7iAQCA/PLJlDI7TXy9sktRYT1lHtee9VTtE6JhckigNMg1enN7L7QoBrRTIss7SxYq/JJ07MrKT2RyD7WWokMTpt3jB9I8AO74buTd7vUH00TT2CQAuH+857VtrnZNdiixIqUc4dLp2aoX4fzcz7kfuFG5ljHBAwIJoH7jsZMcvWYoW30sAxqT0UfbmQGRKB/JAICiIBkisMsnJIStONGvZrIqgQUC08V4ABzDdY5lpStvjBAEEgBUR2dP/zBzVs+Gc2UHhgTAFelcmUhFOYTzuABAmqdLYMXjup5v8WHG2581PGZy/jaESmuKSKfRTqAFzrVUPAcAQBMxABi8tDsihoG5WD6BCABi7iTa/u3Qy4MYQd5x6AIgkr+A6LEDL09rKt27e7jKtRppjRgsUFwamwWF5thc9i5cR2KmrAueFXkAZExnkUGpdOojDw4VOM2OC8svjQAGN0YIAIAalc1gvms5n6rlkcCzp6uAofHBauIM+VTLRKQh1Ix9vLcuOJWRioFp7uMN4QiWqMIt21dE/4Aao9ytWunE6FurbXXVGEdc3VsGFBKgBRSClY5nrqoORaSbQc4gTyj4DKZNYWWJMYC1EN+xPKb0qo57nEL84NS6Q2n+lPfOFx+99aO+e+ZdI7K24rMp/wJUhJ5R9mJQkihCqTMhuuC2cxMjg6ZH+6antk8Ouho6I7G9MQBcAJICwYIl3Gk2EUMKxthcmlAQ67ZenBYnmPWXQ5Q0Pkw6nYAy/2ghKJ8eEYBCZBKQwxnSe9fSM26l1ozY7FRUKdBjfxnVJFM2wF3Y2VA253AYrkzY0yKXr9L0prBVj3gLNQJ/6WqjNClcdWYYo9R/txCSV6imrymDNjzt+WIfXevPSN7GXeUBNcEEp/t7JlTDfCaSpkhB4ObGLyUj2TZhRZmWN+4ZdAhltPjw0D1rbpqzIzTm0F56uXDFptzfKwTdf7xguvPSlKU848mP8Ke2Dfs2jbw+RdLJr95bpQ33dZ8cjEW5S5OluualK4+VzdrWVkdoRTeeV24HSH0IPa1eTIqSWK77SZ4xXL50mlFgAABZBfo0QjT7J37SX3taAACFOeLc4n/9I25TUd6kH89NjYrH3pvp8/HM7F/wDAAiiLkBoDgVAVeV77x4H14drvUmMkMv334fDgBp5cX7cezFg7e5+A5+SfdphJjeqnzhAV4AAKXDmCqNfcBfIwPWR0XQ2yOJGqmTUPIlpfskvPl0CgCQwcZYh20DvDtAKk1lQ6b229MFBzjvWvMyX2uh9lrxaCZUTH0aIfQ3Y28MSQCANqsPSFnu+mIwbo/kkedwuvoUcAAUB6BEXrXyjDbEZyUAGs9SqDHYWIIaIHM22xZeaTBKXcuoq78kIQCQWF8KuRSk8rNZEClO+uTBWAAgRMK10zD8YooFANBnWCDMhd6SCrcrDwcAbjxfnfMn8mIfJ/RamEyx71Su57mhwt6y6POT3abG21pwAuCzuEE33zWkfNXoVSpxQluED/OrN7yYajac6ZjJTXfBUNS8ZnmBhKfO5g45SffsQLERpgQAQEtxWRI7yY32v2WkXR41eXfCZHKgf2iKoiqaSgAAlKu6rxJiqKPWHu7ETLpwWAB1RgQA0N21sarQhABESLKWOY35YJb+61YrASD6zlf8aKA+rO1MT9Upd23BFiTXIo3xq4MY3jjsQH1ZzGQ1VyTGdCXV/zHe9q33/rt+YsB8/zeuusofSqb77yDZMaMxq0bMdKDrF8nttorTvnqVR5lUOOyfadKI0ynh+mY5aFleaZG2Rw6Weswlkd/EbT98vhf3b7tLrakUopQRC4wN5K8rnvMvgpiIeGZXvO5unVRI2Y3YfLXap6Dmlt9HriFVlFBRA3u8qu2Qv2kfS3DqBjp7rMwfxzbl76GtLXlbGwECTxyTAnhB01eaL/dGuoAbIhZgEpbr3ar5RB6TN3nFe0E8Pv+qyWNZiYi5U/Ge0UkdkgQBkm+TlKAGEA8tu6Ws9E1DX1xjU7QkUretrdERs19je4NRw3JgZkDEZgAgRXIkdc3q+ZO4kjpxZVASwvO2V4hcbrB4AMDzA1f4YQERZwVHSCQs2rDhyinC+llt4Zz3FMVSJMjIyMjIyMjIyMjIyMjIyMjIyMgsWv4X/MsQHs9JfmUAAAAASUVORK5CYII=";
+
   // skalavik.js
+  var SK_S = 5.8;
+  var SK_ZC = -3e3;
+  var SK_XOFF = -480;
   function buildSkalavik(env, C) {
     const { TRACK_Y: TRACK_Y2, TRACK_HALF: TRACK_HALF2, LOOP_LENGTH: LOOP_LENGTH2, RECYCLE_Z: RECYCLE_Z2, IS_MOBILE: IS_MOBILE2, mulberry32: mulberry322, radialTexture: radialTexture2 } = C;
     const group = new Group();
@@ -29567,7 +30269,7 @@ ${pts}
       transparent: false,
       fog: false,
       extensions: { derivatives: true },
-      uniforms: { uOffset: { value: 0 }, uTime: { value: 0 }, uBay: { value: -1500 } },
+      uniforms: { uOffset: { value: 0 }, uTime: { value: 0 }, uBay: { value: -1e5 } },
       vertexShader: "varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position, 1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }",
       fragmentShader: `uniform float uOffset; uniform float uTime; uniform float uBay; varying vec3 vW;
       float h2(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -29599,48 +30301,66 @@ ${pts}
     ground.position.set(-1500, TRACK_Y2 - 0.35, -1400);
     ground.renderOrder = -5;
     group.add(ground);
-    const H = 380, gx = LOW ? 70 : 130, gz = LOW ? 70 : 130, X0 = 60, X1 = 2600, Z0 = -3600, Z1 = 300, W = X1 - X0, D = Z1 - Z0;
-    const mg = new PlaneGeometry(W, D, gx, gz);
-    mg.rotateX(-Math.PI / 2);
-    mg.translate(X0 + W / 2, 0, Z0 + D / 2);
-    const mp = mg.attributes.position, hr = mulberry322(77);
-    const bumps = Array.from({ length: 14 }, () => [X0 + 300 + hr() * (W - 300), Z0 + hr() * D, 90 + hr() * 220, (hr() - 0.35) * 45]);
-    K.cliffX = (z) => 300 + 0.25 * (z + 2600) + 30 * Math.sin(z / 170);
-    K.noseZ = (x) => -2650 - 0.1 * (x - 300) + 40 * Math.sin(x / 90);
-    const sm = (a, b, v) => {
-      const t = Math.min(1, Math.max(0, (v - a) / (b - a)));
-      return t * t * (3 - 2 * t);
+    const P5 = SK_PHOTO, PX_C = P5.W / 2 - SK_XOFF / SK_S, S = SK_S, ZC = SK_ZC;
+    const hAt = (px2) => {
+      const f = (px2 - P5.X0) / P5.STEP;
+      if (f <= 0) return 0;
+      const n = SK_PROFILE.length - 1;
+      if (f >= n) return SK_PROFILE[n] + (f - n) * P5.STEP * 0.04;
+      const i = Math.floor(f), t = f - i;
+      return SK_PROFILE[i] * (1 - t) + SK_PROFILE[i + 1] * t;
     };
-    for (let i = 0; i < mp.count; i++) {
-      const x = mp.getX(i), z = mp.getZ(i), d = x - K.cliffX(z);
-      const lo = 0.22 + 0.08 * Math.sin(z / 260);
-      let y = d < 0 ? H * lo * sm(-480, 0, d) : H * lo + H * (1 - lo) * Math.pow(sm(0, 70 + 30 * Math.sin(z / 120), d), 0.7);
-      for (const b of bumps) y += b[3] * Math.exp(-((x - b[0]) ** 2 + (z - b[1]) ** 2) / (b[2] * b[2])) * sm(-200, 0, d);
-      y *= sm(X0, X0 + 60, x);
-      const c = sm(K.noseZ(x) - 10, K.noseZ(x) + 60, z);
-      y = y * c - 30 * (1 - c);
-      mp.setY(i, y);
+    K.hAt = hAt;
+    K.S = S;
+    const U0 = P5.X0 - 6, U1 = P5.W + 260, NU = LOW ? 150 : 290, NV = LOW ? 26 : 44;
+    const pos = [], uvp = [], vv = [], idx = [];
+    for (let j = 0; j <= NV; j++) {
+      const t = j / NV, v = t * t;
+      for (let i = 0; i <= NU; i++) {
+        const u = U0 + (U1 - U0) * i / NU, h = hAt(u), depth = 120 + h * S * 0.95;
+        const y = h * S * Math.pow(1 - v, 1.6), z = ZC + v * depth, x = (u - PX_C) * S;
+        pos.push(x, y, z);
+        vv.push(v);
+        const dv = -ZC / Math.max(1, -ZC - v * depth);
+        uvp.push((PX_C + (u - PX_C) * dv) / P5.W, (P5.HOR - y / S * dv) / P5.H);
+      }
     }
+    for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) {
+      const a0 = j * (NU + 1) + i, b0 = a0 + 1, c0 = a0 + NU + 1, d0 = c0 + 1;
+      idx.push(a0, c0, b0, b0, c0, d0);
+    }
+    const mg = new BufferGeometry();
+    mg.setAttribute("position", new Float32BufferAttribute(pos, 3));
+    mg.setAttribute("aPhoto", new Float32BufferAttribute(uvp, 2));
+    mg.setAttribute("aV", new Float32BufferAttribute(vv, 1));
+    mg.setIndex(idx);
     mg.computeVertexNormals();
+    const rockTex = new TextureLoader().load(SK_ROCK);
+    rockTex.colorSpace = NoColorSpace;
+    const HMAX = 270 * S;
     K.mtnMat = new ShaderMaterial({
       fog: false,
       extensions: { derivatives: true },
-      uniforms: { uTime: { value: 0 }, uH: { value: H } },
-      vertexShader: "varying vec3 vP; varying vec3 vN; varying float vD; void main(){ vP = position; vN = normal; vec4 mv = modelViewMatrix * vec4(position, 1.0); vD = -mv.z; gl_Position = projectionMatrix * mv; }",
-      fragmentShader: `uniform float uTime; uniform float uH; varying vec3 vP; varying vec3 vN; varying float vD;
+      side: DoubleSide,
+      uniforms: { uTime: { value: 0 }, uH: { value: HMAX }, uRock: { value: rockTex } },
+      vertexShader: "attribute vec2 aPhoto; attribute float aV; varying vec3 vP; varying vec2 vPh; varying float vV; varying float vD; void main(){ vP = position; vPh = aPhoto; vV = aV; vec4 mv = modelViewMatrix * vec4(position, 1.0); vD = -mv.z; gl_Position = projectionMatrix * mv; }",
+      fragmentShader: `uniform float uTime; uniform float uH; uniform sampler2D uRock; varying vec3 vP; varying vec2 vPh; varying float vV; varying float vD;
       float line(float v, float w){ float f = abs(fract(v) - 0.5); float fw = fwidth(v); return 1.0 - smoothstep(w * fw, (w + 1.2) * fw, 0.5 - f); }
       void main(){
-        float h = clamp(vP.y / uH, 0.0, 1.2), steep = 1.0 - clamp(vN.y, 0.0, 1.0);
-        vec3 base = mix(vec3(0.015, 0.07, 0.035), vec3(0.04, 0.19, 0.08), clamp(vN.y, 0.0, 1.0)) * (0.75 + 0.35 * h);
-        base = mix(base, vec3(0.03, 0.03, 0.06), smoothstep(0.35, 0.8, steep));          // bare rock on the cliff
-        float contour = line(vP.y / 34.0, 0.6) * step(1.0, vP.y);                                          // height contours
-        float ribs = line(vP.z / 140.0 + sin(vP.x / 70.0) * 0.6, 0.3) * smoothstep(0.25, 0.6, steep) * 0.6; // down-slope ribs
-        vec3 cc = mix(vec3(0.15, 1.0, 0.55), vec3(0.25, 0.95, 1.0), smoothstep(0.0, 0.6, h)); cc = mix(cc, vec3(1.0, 0.3, 0.9), smoothstep(0.65, 1.0, h));
-        float pulse = 0.75 + 0.25 * sin(vP.y * 0.05 - uTime * 1.5);
-        vec3 col = base + cc * contour * 0.85 * pulse + mix(vec3(0.2, 0.9, 1.0), vec3(1.0, 0.3, 0.9), h) * ribs * 0.35;
-        float rim = (1.0 - smoothstep(0.0, 1.6 * fwidth(vP.y), abs(vP.y - uH * 0.95))) * step(0.5, h);    // neon rim along the plateau edge / cliff top
-        col += vec3(1.0, 0.35, 0.95) * rim * 2.4 + vec3(1.0, 0.35, 0.95) * exp(-abs(vP.y - uH * 0.95) * 0.07) * 0.3 * step(0.5, h);
-        float fog = 1.0 - exp(-vD * 0.00045); col = mix(col, vec3(0.13, 0.05, 0.25), fog * 0.6);
+        float h = clamp(vP.y / uH, 0.0, 1.2);
+        float rock = texture2D(uRock, vec2(vPh.x, 1.0 - vPh.y)).r;                                  // bare rock from the photo (cliff, shelf)
+        vec3 base = mix(vec3(0.012, 0.035, 0.05), vec3(0.02, 0.06, 0.085), h);                       // dark night slope
+        base = mix(base, vec3(0.004, 0.006, 0.014), rock * 0.85);
+        // flowing cyan contour streams, parallel to the skyline (as in the neon concept)
+        float s1 = vV * 15.0 + sin(vP.x * 0.0025 + vV * 4.0) * 0.55 + sin(vP.x * 0.0009) * 0.9;
+        float stream = line(s1, 0.25) * (1.0 - smoothstep(0.3, 0.8, rock) * 0.85) * smoothstep(0.0, 0.05, vV);
+        float pulse = 0.7 + 0.3 * sin(s1 * 0.8 - uTime * 1.2 + vP.x * 0.002);
+        vec3 cy = mix(vec3(0.15, 0.85, 1.0), vec3(0.35, 1.0, 1.0), h);
+        vec3 col = base + cy * stream * 0.75 * pulse;
+        // the skyline rim (crest row): bright cyan, a soft glow just below it
+        float rim = 1.0 - smoothstep(0.0, 0.006 + 2.5 * fwidth(vV), vV);
+        col += vec3(0.45, 1.0, 1.0) * rim * 2.6 + vec3(0.2, 0.8, 1.0) * exp(-vV * 60.0) * 0.35;
+        float fog = 1.0 - exp(-vD * 0.00028); col = mix(col, vec3(0.09, 0.03, 0.18), fog * 0.45);
         gl_FragColor = vec4(col, 1.0); }`
     });
     K.mtn = new Mesh(mg, K.mtnMat);
@@ -29649,17 +30369,45 @@ ${pts}
     K.mtnGroup = new Group();
     K.mtnGroup.add(K.mtn);
     group.add(K.mtnGroup);
+    {
+      const cp = [];
+      for (let i = 0; i <= NU; i++) {
+        const u = U0 + (U1 - U0) * i / NU;
+        cp.push((u - PX_C) * S, hAt(u) * S + 0.5, ZC - 0.5);
+      }
+      const cg2 = new BufferGeometry();
+      cg2.setAttribute("position", new Float32BufferAttribute(cp, 3));
+      const cl = new Line(cg2, new LineBasicMaterial({ color: new Color(8387839).multiplyScalar(1.6), transparent: true, opacity: 0.95, blending: AdditiveBlending, depthWrite: false, fog: false }));
+      cl.position.set(0, TRACK_Y2 - 0.5, 0);
+      cl.renderOrder = -5;
+      cl.frustumCulled = false;
+      K.mtnGroup.add(cl);
+      K.crest = cl;
+    }
     K.mtn.position.set(0, TRACK_Y2 - 0.5, 0);
-    const bz = -2420, bx = K.cliffX(bz) + 140, by = TRACK_Y2 + H + 2;
-    const post = new Mesh(new CylinderGeometry(3, 5, 22, 6), new MeshBasicMaterial({ color: 1706538, fog: false }));
-    post.position.set(bx, by + 8, bz);
+    {
+      const rg = new DodecahedronGeometry(1, 0), rm = new MeshBasicMaterial({ color: 329485, fog: false }), rr2 = mulberry322(88);
+      for (let i = 0; i < 26; i++) {
+        const u = P5.X0 - 150 + rr2() * 175, r = (6 + rr2() * 14) * S * 0.25, o = new Mesh(rg, rm);
+        o.scale.set(r * 2.2, r * (0.5 + rr2() * 0.5), r * 1.4);
+        o.position.set((u - PX_C) * S, TRACK_Y2 - r * 0.2, ZC + 160 + rr2() * 260);
+        K.mtnGroup.add(o);
+      }
+      const wl = new Mesh(new PlaneGeometry(175 * S, 6), new MeshBasicMaterial({ color: 4191999, transparent: true, opacity: 0.55, blending: AdditiveBlending, depthWrite: false, fog: false }));
+      wl.rotation.x = -Math.PI / 2;
+      wl.position.set((P5.X0 - 62 - PX_C) * S, TRACK_Y2 - 0.2, ZC + 300);
+      K.mtnGroup.add(wl);
+    }
+    const BU = 642, bx = (BU - PX_C) * S, by = TRACK_Y2 + hAt(BU) * S, bz = ZC + 4;
+    const post = new Mesh(new CylinderGeometry(4, 6, 26, 6), new MeshBasicMaterial({ color: 1706538, fog: false }));
+    post.position.set(bx, by + 10, bz);
     K.mtnGroup.add(post);
-    K.beacon = new Sprite(new SpriteMaterial({ map: radialTexture2("rgba(255,240,180,1)", "rgba(255,120,60,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
-    K.beacon.position.set(bx, by + 24, bz);
-    K.beacon.scale.set(90, 90, 1);
+    K.beacon = new Sprite(new SpriteMaterial({ map: radialTexture2("rgba(255,140,255,1)", "rgba(255,40,220,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
+    K.beacon.position.set(bx, by + 30, bz);
+    K.beacon.scale.set(150, 150, 1);
     K.mtnGroup.add(K.beacon);
-    const beam = new Mesh(new PlaneGeometry(6, 600).translate(0, 300, 0), new MeshBasicMaterial({ map: radialTexture2("rgba(255,220,150,0.35)", "rgba(255,220,150,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
-    beam.position.set(bx, by + 20, bz);
+    const beam = new Mesh(new PlaneGeometry(8, 700).translate(0, 350, 0), new MeshBasicMaterial({ map: radialTexture2("rgba(255,120,240,0.35)", "rgba(255,120,240,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
+    beam.position.set(bx, by + 24, bz);
     K.beam = beam;
     K.mtnGroup.add(beam);
     const HW = 4.6, HH = 3.2, HD = 6, R = HW / Math.sqrt(3) * 1.12;
@@ -29839,8 +30587,7 @@ ${pts}
     K.flowerMat.uniforms.uOffset.value = (K.flowerMat.uniforms.uOffset.value + units) % 900;
     K.flowerMat.uniforms.uTime.value = t;
     const p = Math.min(1, Math.max(0, K.prog));
-    K.mtnGroup.position.z = 750 * p;
-    K.groundMat.uniforms.uBay.value = -1500 + 750 * p;
+    K.mtnGroup.position.set(-500 * Math.pow(p, 1.5), 0, 1e3 * p);
     const b = 0.75 + 0.25 * Math.sin(t * 2.4);
     K.beacon.material.opacity = b;
     K.beam.material.opacity = 0.5 + 0.3 * Math.sin(t * 2.4);
@@ -29869,24 +30616,386 @@ ${pts}
     }
   }
 
+  // ringway.js
+  var ICE_MIN_X = 15;
+  var BLUE = { top: 132630, mid: 664400, hor: 6277375, bot: 198418, fog: 662586, ice: 10479871, ring: 8378623 };
+  var GOLD = { top: 787986, mid: 3808810, hor: 16760906, bot: 787976, fog: 2759188, ice: 16769696, ring: 16764778 };
+  function buildRingway(env, C) {
+    const { TRACK_Y: TRACK_Y2, LOOP_LENGTH: LOOP_LENGTH2, RECYCLE_Z: RECYCLE_Z2, IS_MOBILE: IS_MOBILE2, mulberry32: mulberry322, radialTexture: radialTexture2 } = C;
+    const group = new Group();
+    env.scene.add(group);
+    const rnd = mulberry322(6116);
+    const K = { group, prog: 0, ice: [], cA: new Color(), cB: new Color() };
+    const giantMat = new ShaderMaterial({
+      fog: false,
+      uniforms: { uTime: { value: 0 }, uTint: { value: new Color(BLUE.ring) }, uSun: { value: new Vector3(0.6, 0.35, 0.7).normalize() } },
+      vertexShader: "varying vec3 vN; varying vec3 vP; void main(){ vN = normalize(normalMatrix * normal); vP = position; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+      fragmentShader: `uniform float uTime; uniform vec3 uTint; uniform vec3 uSun; varying vec3 vN; varying vec3 vP;
+      float h(float x){ return fract(sin(x*91.7)*43758.5); }
+      void main(){ float lat = vP.y / 1200.0;
+        float b = sin(lat*38.0 + sin(lat*9.0)*1.6) * 0.5 + 0.5; float b2 = sin(lat*110.0 + uTime*0.02) * 0.5 + 0.5;
+        vec3 base = mix(vec3(0.95,0.78,0.52), vec3(0.62,0.45,0.32), b) * (0.82 + 0.18*b2);
+        base = mix(base, uTint, 0.28);
+        float l = clamp(dot(normalize(vN), normalize(uSun)) * 0.9 + 0.25, 0.08, 1.0);
+        float rim = pow(1.0 - abs(vN.z), 3.0);
+        gl_FragColor = vec4(base * l + uTint * rim * 0.55, 1.0); }`
+    });
+    const R = 1250, giant = new Mesh(new SphereGeometry(R, IS_MOBILE2 ? 48 : 72, IS_MOBILE2 ? 32 : 48), giantMat);
+    const giantG = new Group();
+    giantG.position.set(-1150, 420, -3300);
+    giantG.add(giant);
+    giantG.rotation.z = 0.32;
+    group.add(giantG);
+    const ringMat = new ShaderMaterial({
+      fog: false,
+      transparent: true,
+      depthWrite: false,
+      side: DoubleSide,
+      uniforms: { uTint: { value: new Color(BLUE.ring) } },
+      vertexShader: "varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+      fragmentShader: `uniform vec3 uTint; varying vec2 vP; float h(float x){ return fract(sin(x*12.9898)*43758.5453); }
+      void main(){ float r = length(vP) / 1250.0; if (r < 1.25 || r > 2.35) discard;
+        float k = floor(r * 90.0); float band = 0.35 + 0.65 * h(k); float gap = smoothstep(1.78, 1.8, r) * (1.0 - smoothstep(1.86, 1.88, r));
+        float a = band * (1.0 - gap * 0.9) * smoothstep(1.25, 1.32, r) * (1.0 - smoothstep(2.2, 2.35, r)) * 0.8;
+        gl_FragColor = vec4(mix(vec3(0.95,0.85,0.7), uTint, 0.45) * (0.6 + 0.6*band), a); }`
+    });
+    const ring = new Mesh(new RingGeometry(R * 1.2, R * 2.4, IS_MOBILE2 ? 96 : 160, 1), ringMat);
+    ring.rotation.x = -Math.PI / 2 + 0.18;
+    giantG.add(ring);
+    K.giantMat = giantMat;
+    K.ringMat = ringMat;
+    K.giantG = giantG;
+    const floorMat = new ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      fog: false,
+      uniforms: { uOffset: { value: 0 }, uTime: { value: 0 }, uIce: { value: new Color(BLUE.ice) }, uFog: { value: new Color(BLUE.fog) } },
+      vertexShader: "varying vec3 vW; void main(){ vec4 w = modelMatrix * vec4(position,1.0); vW = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; }",
+      fragmentShader: `uniform float uOffset; uniform float uTime; uniform vec3 uIce; uniform vec3 uFog; varying vec3 vW;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7))) * 43758.5453); }
+      void main(){ vec2 c = vec2(-1150.0, -3300.0); float r = length(vW.xz - c);
+        float k = floor(r / 7.0); float band = 0.25 + 0.75 * h(vec2(k, 3.0));
+        vec2 g = floor(vec2(vW.x, vW.z - uOffset) * 0.9); float sp = step(0.985, h(g)) * (0.5 + 0.5 * sin(uTime * 3.0 + h(g + 7.0) * 30.0));
+        float road = smoothstep(9.0, 13.0, abs(vW.x));          // darker clean strip right under the road
+        float dist = clamp(-vW.z / 2600.0, 0.0, 1.0);
+        float edgeLine = smoothstep(0.86, 0.9, fract(r / 7.0)) * 0.35;
+        vec3 col = uIce * (0.025 + 0.075 * band + edgeLine * 0.25) * (0.3 + 0.7 * road) + uIce * sp * 1.2 * road;
+        col = mix(col, uFog * 0.9, dist * 0.7);
+        gl_FragColor = vec4(col, 0.92 * (1.0 - dist * 0.2)); }`
+    });
+    const floor = new Mesh(new PlaneGeometry(1400, 3400), floorMat);
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.set(0, TRACK_Y2 - 1.4, -1500);
+    group.add(floor);
+    K.floorMat = floorMat;
+    const N = IS_MOBILE2 ? 110 : 260;
+    const iceGeo = new IcosahedronGeometry(1, 0);
+    const iceMat = new MeshStandardMaterial({ color: 4157327, emissive: new Color(BLUE.ice).multiplyScalar(0.12), metalness: 0.35, roughness: 0.3, flatShading: true });
+    const iceMesh = new InstancedMesh(iceGeo, iceMat, N);
+    iceMesh.frustumCulled = false;
+    group.add(iceMesh);
+    K.iceMesh = iceMesh;
+    K.iceMat = iceMat;
+    for (let i = 0; i < N; i++) {
+      const side = rnd() < 0.5 ? -1 : 1, x = side * (ICE_MIN_X + 3 + Math.pow(rnd(), 1.6) * 150), s = 0.6 + Math.pow(rnd(), 2.2) * (Math.abs(x) > 60 ? 9 : 3.5);
+      K.ice.push({
+        x: side * Math.max(ICE_MIN_X + s, Math.abs(x)),
+        y: TRACK_Y2 - 0.4 + rnd() * 5 + (Math.abs(x) > 60 ? rnd() * 18 : 0),
+        z: -rnd() * LOOP_LENGTH2 + RECYCLE_Z2,
+        s,
+        q: new Quaternion().setFromEuler(new Euler(rnd() * 6, rnd() * 6, rnd() * 6)),
+        axis: new Vector3(rnd() - 0.5, rnd() - 0.5, rnd() - 0.5).normalize(),
+        rate: (rnd() - 0.5) * 0.5,
+        drift: (rnd() - 0.5) * 0.6,
+        ph: rnd() * 6.28
+      });
+    }
+    const DN = IS_MOBILE2 ? 600 : 1600, dp = new Float32Array(DN * 3);
+    for (let i = 0; i < DN; i++) {
+      const side = rnd() < 0.5 ? -1 : 1;
+      dp[i * 3] = side * (ICE_MIN_X + rnd() * 220);
+      dp[i * 3 + 1] = TRACK_Y2 - 1 + rnd() * 14;
+      dp[i * 3 + 2] = -rnd() * LOOP_LENGTH2 + RECYCLE_Z2;
+    }
+    const dg = new BufferGeometry();
+    dg.setAttribute("position", new BufferAttribute(dp, 3));
+    const dustMat = new PointsMaterial({ size: 0.5, map: radialTexture2("rgba(255,255,255,1)", "rgba(160,220,255,0)", 64), color: BLUE.ice, transparent: true, depthWrite: false, blending: AdditiveBlending });
+    const dust = new Points(dg, dustMat);
+    dust.frustumCulled = false;
+    group.add(dust);
+    K.dust = dust;
+    K.dustMat = dustMat;
+    K.dustPos = dp;
+    group.visible = false;
+    return K;
+  }
+  function ringwayMood(p) {
+    const c = (k) => new Color(BLUE[k]).lerp(new Color(GOLD[k]), Math.max(0, Math.min(1, p)));
+    return { top: c("top"), mid: c("mid"), hor: c("hor"), bot: c("bot"), fog: c("fog"), ice: c("ice"), ring: c("ring") };
+  }
+  function updateRingway(K, env, dt, units, C) {
+    const { LOOP_LENGTH: LOOP_LENGTH2, RECYCLE_Z: RECYCLE_Z2 } = C, t = env.time;
+    const p = Math.max(0, Math.min(1, K.prog));
+    if (Math.abs(p - (K._p ?? -1)) > 2e-3) {
+      K._p = p;
+      const M = ringwayMood(p), u = env.skyMat.uniforms;
+      u.top.value.copy(M.top);
+      u.mid.value.copy(M.mid);
+      u.hor.value.copy(M.hor);
+      u.bot.value.copy(M.bot);
+      env.scene.fog.color.copy(M.fog);
+      K.floorMat.uniforms.uIce.value.copy(M.ice);
+      K.floorMat.uniforms.uFog.value.copy(M.fog);
+      K.iceMat.emissive.copy(M.ice).multiplyScalar(0.12);
+      K.dustMat.color.copy(M.ice);
+      K.giantMat.uniforms.uTint.value.copy(M.ring);
+      K.ringMat.uniforms.uTint.value.copy(M.ring);
+      env.trackMat.uniforms.uCol2.value.copy(M.ring);
+    }
+    K.giantMat.uniforms.uTime.value = t;
+    K.floorMat.uniforms.uTime.value = t;
+    K.floorMat.uniforms.uOffset.value = env.trackScroll;
+    K.giantG.position.z = -3300 + 500 * p;
+    const m = env._m, v = env._v, s = env._s, dq = env._dq;
+    for (let i = 0; i < K.ice.length; i++) {
+      const b = K.ice[i];
+      b.z += units;
+      if (b.z > RECYCLE_Z2 + b.s) b.z -= LOOP_LENGTH2;
+      b.x += b.drift * dt;
+      const lim = ICE_MIN_X + b.s;
+      if (Math.abs(b.x) < lim) {
+        b.x = Math.sign(b.x || 1) * lim;
+        b.drift = -b.drift;
+      }
+      dq.setFromAxisAngle(b.axis, b.rate * dt);
+      b.q.multiply(dq);
+      m.compose(v.set(b.x, b.y + Math.sin(t * 0.5 + b.ph) * 0.3, b.z), b.q, s.setScalar(b.s));
+      K.iceMesh.setMatrixAt(i, m);
+    }
+    K.iceMesh.instanceMatrix.needsUpdate = true;
+    const dp = K.dustPos;
+    for (let i = 2; i < dp.length; i += 3) {
+      dp[i] += units;
+      if (dp[i] > RECYCLE_Z2) dp[i] -= LOOP_LENGTH2;
+    }
+    K.dust.geometry.attributes.position.needsUpdate = true;
+  }
+
+  // captains.js
+  var LOG_STEP_M = 1e4;
+  var CAPTAINS = {
+    aurora: { captain: "Captain Elin Dal", chapters: [
+      ["Spark", 'Captain Elin Dal pulls an old rowing ship out of the scrapyard on Orbital Station 7. "She still glows," she says. Nobody believes her.'],
+      ["First Light", "Elin's first stroke lights up the whole hull, and the station crew watches a green streak cross the dark."],
+      ["The Rival", "A black ship with no name races up beside her, matches her pace, then vanishes. She can't stop thinking about it."],
+      ["Storm Row", "A solar storm shuts every road down except one. Elin rows it alone, and the Aurora shines brighter the harder she pulls."],
+      ["Northern Crown", "Elin crosses the finish beneath a sky of green fire. The Aurora's glow finally has a name: it's hers."]
+    ] },
+    raven: { captain: "Captain Sable Okoro", chapters: [
+      ["Night Shift", "Sable flies courier runs through the violet fog of the Shard Belt. Always alone, always early."],
+      ["Sharp Lines", "A rival crew laughs at her old Raven. She beats them to the beacon by half a hull, without a word."],
+      ["The Favour", "An old friend calls in a favour: one run, no lights, straight through the patrol lanes. Sable says yes."],
+      ["Blackout", "Every beacon on the lane goes dark. She rows by the glow of her own violet trim and doesn't miss a turn."],
+      ["First Feather", "The patrol finally catches her - at the finish line, to hand her the courier league crown."]
+    ] },
+    valkyrie: { captain: "Captain Runa Vik", chapters: [
+      ["Twin Wings", "Runa inherits the Valkyrie from her grandmother: wings folded, lights dead, dust on every panel."],
+      ["Wake Up", "She rebuilds the trim in magenta and cyan, one colour for each of them. On the first stroke, both light up."],
+      ["Formation", "The Wingriders invite her to fly third in their formation. She learns to hold a line a hand-width from the next ship."],
+      ["Crosswind", "A gravity storm scatters the formation. Runa turns back, flies wingtip to wingtip with the slowest ship and guides it home."],
+      ["Lead Wing", "The Wingriders give her the lead position. Her grandmother's name is painted under the canopy."]
+    ] },
+    nebula: { captain: "Captain Mira Solenne", chapters: [
+      ["Glass Sky", "Mira paints star charts. She buys the Nebula for its canopy, so she can row and watch the sky at the same time."],
+      ["Drift", "Inside the canopy the nebula starts to swirl whenever she rows well, as if it is listening."],
+      ["Lost Signal", "Her charts lead a lost freighter out of the Veil. The crew follow the purple mist from her engines."],
+      ["Inner Storm", "She rows through a dark cloud where no stars show. The canopy fills with its own light."],
+      ["The Map", "Her last chart is not of the sky but of every route she ever rowed. It glows on the station wall."]
+    ] },
+    titan: { captain: "Captain Bram Hollis", chapters: [
+      ["Iron Start", "Bram hauls ore with the Titan. Slow and steady, four engines and no hurry."],
+      ["Long Haul", "A hundred kilometres without a stop. The orange vents glow like a forge the whole way."],
+      ["Shelter", "A meteor shower catches a pack of young racers. Bram pulls the Titan alongside and takes the hits for them."],
+      ["Heavy Pull", "The docks need a cargo moved before the gate closes. Bram rows faster than anyone thought the Titan could go."],
+      ["The Anchor", "The racers name the station's new rest stop after him. He still rows there every morning."]
+    ] },
+    phoenix: { captain: "Captain Zara Embry", chapters: [
+      ["Ashes", "Zara finds the Phoenix burned out after a race crash. She keeps one ember of the old engine in a jar."],
+      ["Rekindle", "The rebuilt engine coughs, then roars. Fire-light runs along the wings for the first time."],
+      ["Too Hot", "She pushes too hard and the wings flare out mid-race. She learns to hold her pace and let the fire build."],
+      ["Comeback", "Same track as the crash, same rivals. This time she finishes first, wings blazing gold."],
+      ["Rising", "Children on the station draw the Phoenix on every wall. Zara signs every single drawing."]
+    ] },
+    starrider: { captain: "Nova Kestrel", chapters: [
+      ["Starfall", "A light falls through the station roof one night. In the crater lies a white-gold board, and no rider."],
+      ["Chosen", "The board waits for months, until a rookie called Nova steps on. It hums."],
+      ["Star Wake", "Nova learns the board leaves stars behind her, and that lost pilots follow them home."],
+      ["The Edge", "She rows past the last beacon into space no chart has ever shown. The stars in her wake light the way back."],
+      ["Legend", "Nobody knows where the board came from. Everybody knows who rides it."]
+    ] }
+  };
+  var chaptersFor = (m) => Math.max(0, Math.min(5, Math.floor((m || 0) / LOG_STEP_M)));
+  function shipMetresFromHistory(rows, ships) {
+    const byName = Object.fromEntries(ships.map((s) => [s.name, s.id])), out = {};
+    for (const r of rows || []) {
+      const id = byName[r.ship];
+      if (id) out[id] = (out[id] || 0) + (r.dist || 0);
+    }
+    return out;
+  }
+
+  // comet.js
+  var COMET_ROUND_S = 300;
+  var COMET_N = 4;
+  var COMET_BAND = 1;
+  var GROW = 2;
+  var SHRINK = 0.6;
+  var COMET_PRESETS = [140, 130, 120, 115, 110, 105];
+  var HS_KEY2 = "cosmicrow.comet.v1";
+  function loadCometScores() {
+    try {
+      return JSON.parse(localStorage.getItem(HS_KEY2) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+  function cometKey(target) {
+    return "comet:" + Math.round(target);
+  }
+  function addCometScore(key, e) {
+    const all = loadCometScores(), l = all[key] || [];
+    l.push(e);
+    l.sort((a, b) => b.tail - a.tail);
+    all[key] = l.slice(0, 10);
+    localStorage.setItem(HS_KEY2, JSON.stringify(all));
+    return all[key].indexOf(e) + 1;
+  }
+  var CometJudge = class {
+    constructor(target) {
+      this.target = target;
+      this.splits = [];
+      this.avg = NaN;
+      this.tail = 0;
+      this.best = 0;
+      this.inT = 0;
+      this.t = 0;
+      this.state = "wait";
+    }
+    stroke(split) {
+      if (!(split > 0 && isFinite(split))) return;
+      this.splits.push(split);
+      if (this.splits.length > COMET_N) this.splits.shift();
+      if (this.splits.length >= COMET_N) this.avg = this.splits.reduce((a, b) => a + b, 0) / COMET_N;
+    }
+    step(dt) {
+      this.t += dt;
+      if (!isFinite(this.avg)) {
+        this.state = "wait";
+        return;
+      }
+      const d = this.avg - this.target;
+      if (Math.abs(d) <= COMET_BAND) {
+        this.state = "in";
+        this.tail += GROW * dt;
+        this.inT += dt;
+      } else {
+        this.state = d > 0 ? "slow" : "fast";
+        this.tail = Math.max(0, this.tail - SHRINK * dt);
+      }
+      this.best = Math.max(this.best, this.tail);
+    }
+  };
+  var CometTail = class {
+    constructor(scene, ship, { target, color = 4191999, low = false }) {
+      this.judge = new CometJudge(target);
+      this.scene = scene;
+      this.ship = ship;
+      this.T = 0;
+      const n = this.n = low ? 160 : 360;
+      this.pos = new Float32Array(n * 3);
+      this.col = new Float32Array(n * 3);
+      this.seed = Array.from({ length: n }, () => Math.random());
+      const g = new BufferGeometry();
+      g.setAttribute("position", new BufferAttribute(this.pos, 3));
+      g.setAttribute("color", new BufferAttribute(this.col, 3));
+      const cv = document.createElement("canvas");
+      cv.width = cv.height = 64;
+      const c = cv.getContext("2d"), gr = c.createRadialGradient(32, 32, 0, 32, 32, 32);
+      gr.addColorStop(0, "rgba(255,255,255,1)");
+      gr.addColorStop(0.35, "rgba(255,255,255,0.5)");
+      gr.addColorStop(1, "rgba(255,255,255,0)");
+      c.fillStyle = gr;
+      c.fillRect(0, 0, 64, 64);
+      this.pts = new Points(g, new PointsMaterial({ size: 0.55, map: new CanvasTexture(cv), vertexColors: true, transparent: true, depthWrite: false, blending: AdditiveBlending }));
+      this.pts.frustumCulled = false;
+      scene.add(this.pts);
+      this.cA = new Color(color);
+      this.cIn = new Color(16773280);
+      this.cOut = new Color(16732043);
+      this.tmp = new Color();
+      this.vis = 0;
+    }
+    stroke(split) {
+      this.judge.stroke(split);
+    }
+    update(dt) {
+      const J = this.judge;
+      J.step(dt);
+      this.T += dt;
+      const target = Math.min(48, 2 + J.tail * 0.35);
+      this.vis += (target - this.vis) * Math.min(1, dt * 2);
+      const g = this.ship.group.position, L = this.vis, hot = J.state === "in" ? 1 : 0;
+      this.tmp.copy(this.cA).lerp(J.state === "in" ? this.cIn : J.state === "wait" ? this.cA : this.cOut, J.state === "in" ? Math.min(1, J.tail / 120) : 0.5);
+      for (let i = 0; i < this.n; i++) {
+        const u = (i / this.n + this.seed[i] * 0.02 + this.T * 0.25) % 1, z = g.z + 1 + u * L * 0.8, sp = 0.1 + u * (0.8 + L * 0.06);
+        const a = this.seed[i] * 6.283 + this.T * (1.5 + this.seed[i]);
+        this.pos[i * 3] = g.x + Math.cos(a) * sp * this.seed[i * 7 % this.n];
+        this.pos[i * 3 + 1] = g.y + 0.25 + u * L * 0.42 + u * u * L * 0.2 + Math.sin(a) * sp * 0.6;
+        this.pos[i * 3 + 2] = z;
+        const f = (1 - u) * Math.min(1, u * 6 + 0.15) * (0.75 + 0.6 * hot) * (0.6 + 0.4 * Math.sin(this.T * 6 + i));
+        this.col[i * 3] = this.tmp.r * f;
+        this.col[i * 3 + 1] = this.tmp.g * f;
+        this.col[i * 3 + 2] = this.tmp.b * f;
+      }
+      this.pts.geometry.attributes.position.needsUpdate = true;
+      this.pts.geometry.attributes.color.needsUpdate = true;
+      this.pts.material.size = 0.32 + Math.min(0.35, J.tail / 350);
+    }
+    stats() {
+      const J = this.judge;
+      return { tail: Math.round(J.best * 10) / 10, final: Math.round(J.tail * 10) / 10, inPct: J.t > 0 ? J.inT / J.t : 0, target: J.target };
+    }
+    dispose() {
+      this.scene.remove(this.pts);
+      this.pts.geometry.dispose();
+      this.pts.material.dispose();
+    }
+  };
+
   // main.js
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-v9c-pm5";
+  var BUILD_ID = "cosmicrow-v10";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
   var TRACK_Y = -2.1;
   var TRACK_HALF = 9;
   var STAGE_SKY = {
-    orbit: { top: 197647, mid: 2494543, hor: 3877519, bot: 262924, fog: 1444662, density: 26e-4 },
+    orbit: { top: 132111, mid: 661560, hor: 2390184, bot: 197902, fog: 529448, density: 26e-4 },
+    // mood: cyan / white
     city: { top: 328472, mid: 2755922, hor: 11545210, bot: 459791, fog: 2755646, density: 21e-4 },
-    sunset: { top: 655904, mid: 4000606, hor: 16732043, bot: 1180702, fog: 3803720, density: 16e-4 },
-    skalavik: { top: 262938, mid: 1969226, hor: 8006298, bot: 328468, fog: 1838136, density: 11e-4 }
+    sunset: { top: 655904, mid: 4853098, hor: 16742964, bot: 1180702, fog: 4066374, density: 16e-4 },
+    // mood: orange / purple
+    skalavik: { top: 133652, mid: 797232, hor: 3119722, bot: 198668, fog: 662558, density: 11e-4 },
+    // mood: green aurora over dark cliffs
+    ringway: { top: 132630, mid: 664400, hor: 6277375, bot: 198418, fog: 662586, density: 9e-4 }
+    // mood: ice blue -> gold (animated by progress)
   };
   var STAGES = [
     { id: "orbit", name: "Orbital Run", desc: "A neon track through the asteroid belt, high above the banded gas giant. Nebula light, silence, and the stars sliding by." },
     { id: "city", name: "Neon City", desc: "Down on the planet's surface: race between the glowing towers of the night city, with the ringed giant and its moon hanging in the sky." },
     { id: "skalavik", name: "Sk\xE1lav\xEDk 3026", desc: "Future Sk\xE1lav\xEDk. Row the neon coast beneath the great headland while the Seal People dance under the northern lights." },
+    { id: "ringway", name: "Ringway", desc: "A straight neon road across Saturn's ice rings. Ice drifts beside you, the giant fills half the sky, and the cold blue light turns to gold as you near the finish." },
     { id: "sunset", name: "Sunset Drive", desc: "Row straight at a giant striped sun on an endless neon grid, between chrome pillars, black palms and violet wireframe mountains at dusk." }
   ];
   var IS_MOBILE = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -30217,12 +31326,18 @@ ${pts}
       if (id === "city" && !this.city) this._buildCity();
       if (id === "sunset" && !this.sunset) this._buildSunset();
       if (id === "skalavik" && !this.skal) this.skal = buildSkalavik(this, SK_CONST);
+      if (id === "ringway" && !this.ring) this.ring = buildRingway(this, SK_CONST);
       this.stage = id;
       const city = id === "city", sun = id === "sunset", sk = id === "skalavik";
       this.orbitGroup.visible = id === "orbit";
       if (this.city) this.city.group.visible = city;
       if (this.sunset) this.sunset.group.visible = sun;
       if (this.skal) this.skal.group.visible = sk;
+      const rw = id === "ringway";
+      if (this.ring) {
+        this.ring.group.visible = rw;
+        this.ring._p = -1;
+      }
       this.stars.visible = id === "orbit";
       const u = this.skyMat.uniforms, P5 = STAGE_SKY[id] || STAGE_SKY.orbit;
       u.top.value.set(P5.top);
@@ -30231,21 +31346,37 @@ ${pts}
       u.bot.value.set(P5.bot);
       this.scene.fog.color.set(P5.fog);
       this.scene.fog.density = P5.density;
-      this.trackMat.uniforms.uCol2.value.set(id === "orbit" ? 10116095 : 16728024);
-      this.trackMat.uniforms.uGrid.value = sk ? 0 : 1;
-      this.farStars.material.opacity = city ? 0.45 : sun ? 0.55 : sk ? 0.9 : 0.8;
+      this.trackMat.uniforms.uCol2.value.set(id === "orbit" ? 12580607 : sk ? 5111708 : id === "sunset" ? 16747066 : 16728024);
+      this.trackMat.uniforms.uGrid.value = sk || rw ? 0 : 1;
+      if (this.rain) this.rain.visible = city;
+      this.farStars.material.opacity = city ? 0.45 : sun ? 0.55 : sk ? 0.9 : rw ? 0.85 : 0.8;
       if (sun) this._placeSun();
     }
     /** Sunset Drive: 0..1 race progress -> the sun grows a little and sinks slowly */
     setSunProgress(p) {
       if (this.sunset) this.sunset.prog = p;
       if (this.skal) this.skal.prog = p;
+      if (this.ring) this.ring.prog = p;
     }
     _buildCity() {
       const group = new Group();
       this.scene.add(group);
       const rnd = mulberry32(4242);
       const city = this.city = { group, towers: [], gates: [] };
+      {
+        const n = IS_MOBILE ? 500 : 1400, rp = new Float32Array(n * 6);
+        for (let i = 0; i < n; i++) {
+          const x = (Math.random() - 0.5) * 160, y = TRACK_Y + Math.random() * 38, z = RECYCLE_Z - Math.random() * LOOP_LENGTH * 0.5;
+          rp.set([x, y + 1.6, z, x, y, z + 0.3], i * 6);
+        }
+        const g = new BufferGeometry();
+        g.setAttribute("position", new BufferAttribute(rp, 3));
+        const rain = new LineSegments(g, new LineBasicMaterial({ color: new Color(16732120).multiplyScalar(1.4), transparent: true, opacity: 0.45, blending: AdditiveBlending, depthWrite: false }));
+        rain.frustumCulled = false;
+        group.add(rain);
+        city.rain = rain;
+        city.rainPos = rp;
+      }
       const giant = new Mesh(new SphereGeometry(520, 48, 24), this.planet.material);
       giant.position.set(-760, 820, -2500);
       giant.rotation.z = -0.4;
@@ -30396,6 +31527,24 @@ ${pts}
     }
     _updateCity(dt, units) {
       const c = this.city, m = this._m, v = this._v, s = this._s, q0 = this._q0 || (this._q0 = new Quaternion());
+      if (c.rain) {
+        const rp = c.rainPos, n = rp.length / 6;
+        for (let i = 0; i < n; i++) {
+          const o = i * 6, fall = dt * (38 + i % 7 * 4);
+          rp[o + 1] -= fall;
+          rp[o + 4] -= fall;
+          rp[o + 2] += units;
+          rp[o + 5] += units;
+          if (rp[o + 4] < TRACK_Y - 1 || rp[o + 5] > RECYCLE_Z) {
+            const x = rp[o], z = rp[o + 2] > RECYCLE_Z ? rp[o + 2] - LOOP_LENGTH * 0.5 : rp[o + 2], y = TRACK_Y + 8 + Math.random() * 30;
+            rp[o + 1] = y + 1.6;
+            rp[o + 4] = y;
+            rp[o + 2] = z;
+            rp[o + 5] = z + 0.3;
+          }
+        }
+        c.rain.geometry.attributes.position.needsUpdate = true;
+      }
       for (let i = 0; i < c.towers.length; i++) {
         const t = c.towers[i];
         t.z += units;
@@ -30597,6 +31746,7 @@ ${pts}
       if (this.stage === "city") this._updateCity(dt, unitsMoved);
       else if (this.stage === "sunset") this._updateSunset(dt, unitsMoved);
       else if (this.stage === "skalavik") updateSkalavik(this.skal, this, dt, unitsMoved, SK_CONST);
+      else if (this.stage === "ringway") updateRingway(this.ring, this, dt, unitsMoved, SK_CONST);
       else for (const r of this.rocks) {
         r.z += unitsMoved;
         if (r.z > RECYCLE_Z + r.s) r.z -= LOOP_LENGTH;
@@ -30717,7 +31867,7 @@ ${pts}
       });
     }
   };
-  var SynthAudio = class {
+  var SynthAudio = class _SynthAudio {
     /* Music: any id from music/tracks.js, 'shuffle' or 'off'. repeat 'loop' = keep playing the same track,
      * 'next' = move on when it ends (shuffle always moves on, never the same track twice in a row).
      * File tracks stream through one reused <audio> element -> MediaElementSource -> the same volume chain. */
@@ -30759,7 +31909,20 @@ ${pts}
       this.master.connect(ctx.destination);
       this.musicVol = ctx.createGain();
       this.musicVol.gain.value = this._volGain();
-      this.musicVol.connect(this.master);
+      this.effLP = ctx.createBiquadFilter();
+      this.effLP.type = "lowpass";
+      this.effLP.frequency.value = 2e4;
+      this.effLP.Q.value = 0.8;
+      this.effBass = ctx.createBiquadFilter();
+      this.effBass.type = "lowshelf";
+      this.effBass.frequency.value = 140;
+      this.effBass.gain.value = 0;
+      this.effGain = ctx.createGain();
+      this.effGain.gain.value = 1;
+      this.musicVol.connect(this.effLP);
+      this.effLP.connect(this.effBass);
+      this.effBass.connect(this.effGain);
+      this.effGain.connect(this.master);
       this.delay = ctx.createDelay(1);
       this.delay.delayTime.value = 0.375;
       const fb = ctx.createGain();
@@ -30855,6 +32018,21 @@ ${pts}
       localStorage.setItem("cosmicrow.muted", m ? "1" : "0");
       if (this.master) this.master.gain.setTargetAtTime(m ? 0 : 0.55, this.ctx.currentTime, 0.05);
       this._elVolume();
+    }
+    /** Music follows effort (any track, Johan's songs included - no stems needed): e 0..1 from stroke rate + watts,
+     *  or null = neutral (menus, effort-music off). Low effort = filtered + softer, high effort = open, louder, more bass. */
+    static effortParams(e) {
+      if (e == null) return { freq: 2e4, bass: 0, gain: 1 };
+      const x = Math.max(0, Math.min(1, e));
+      return { freq: Math.round(1200 * Math.pow(2e4 / 1200, Math.pow(x, 0.8))), bass: +(6 * x * x).toFixed(2), gain: +(0.78 + 0.27 * x).toFixed(3) };
+    }
+    setEffort(e) {
+      this.effort = e;
+      if (!this.effLP) return;
+      const p = _SynthAudio.effortParams(e), t = this.ctx.currentTime;
+      this.effLP.frequency.setTargetAtTime(p.freq, t, 0.9);
+      this.effBass.gain.setTargetAtTime(p.bass, t, 0.9);
+      this.effGain.gain.setTargetAtTime(p.gain, t, 0.9);
     }
     /** 0..1 from stroke rate; only Cosmic Drift reacts (gently). */
     setIntensity(x) {
@@ -31219,6 +32397,38 @@ ${pts}
     }
     return out;
   }
+  function buildPlatform() {
+    const g = new Group();
+    const disc = new Mesh(new CylinderGeometry(3.3, 3.6, 0.35, 64), new MeshStandardMaterial({ color: 725538, metalness: 0.8, roughness: 0.35, emissive: 330264 }));
+    const ring = new Mesh(new TorusGeometry(2.75, 0.06, 8, 96), new MeshBasicMaterial({ color: new Color(4191999).multiplyScalar(2.2), transparent: true, opacity: 0.9, blending: AdditiveBlending, depthWrite: false }));
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.y = 0.19;
+    const edge = new Mesh(new TorusGeometry(3.45, 0.03, 6, 96), new MeshBasicMaterial({ color: new Color(2074879).multiplyScalar(1.6), transparent: true, opacity: 0.8, blending: AdditiveBlending, depthWrite: false }));
+    edge.rotation.x = -Math.PI / 2;
+    edge.position.y = 0;
+    const cv = document.createElement("canvas");
+    cv.width = cv.height = 128;
+    const c = cv.getContext("2d"), gr = c.createRadialGradient(64, 64, 4, 64, 64, 64);
+    gr.addColorStop(0, "rgba(120,240,255,0.55)");
+    gr.addColorStop(0.55, "rgba(40,160,255,0.18)");
+    gr.addColorStop(1, "rgba(0,0,0,0)");
+    c.fillStyle = gr;
+    c.fillRect(0, 0, 128, 128);
+    const glow = new Mesh(new CircleGeometry(3, 48), new MeshBasicMaterial({ map: new CanvasTexture(cv), transparent: true, blending: AdditiveBlending, depthWrite: false }));
+    glow.rotation.x = -Math.PI / 2;
+    glow.position.y = 0.2;
+    for (let i = 0; i < 6; i++) {
+      const seg = new Mesh(new BoxGeometry(0.9, 0.06, 0.05), new MeshBasicMaterial({ color: new Color(4191999).multiplyScalar(1.8) }));
+      const a = i / 6 * Math.PI * 2;
+      seg.position.set(Math.cos(a) * 3.48, 0.05, Math.sin(a) * 3.48);
+      seg.rotation.y = -a + Math.PI / 2;
+      disc.add(seg);
+    }
+    g.add(disc, ring, edge, glow);
+    g.userData = { ring, disc };
+    g.visible = false;
+    return g;
+  }
   var Hud = class {
     constructor() {
       const $ = (id) => document.getElementById(id);
@@ -31452,6 +32662,56 @@ ${pts}
       e.cProgT.textContent = s.progress ? `${Math.round(Math.min(1, s.progress) * 100)}%` : "";
       e.cWbar.style.width = `${Math.min(100, (s.watts || 0) / 4)}%`;
       e.cBar.style.width = `${Math.round(s.thrust * 100)}%`;
+      if (this.clean) this._clean(s);
+    }
+    setClean(on) {
+      this.clean = on;
+      this.el.root.classList.toggle("clean", on);
+    }
+    /** clean chase HUD: split TL, distance TR, progress + markers top centre, rate/watts BL, HR pill BR */
+    _clean(s) {
+      const c = this._cl || (this._cl = Object.fromEntries(["clSplit", "clDist", "clDistU", "clDistK", "clTime", "clProg", "clMarks", "clMe", "clRep", "clSpm", "clW", "clHr", "clBand", "clBpm"].map((id) => [id, document.getElementById(id)])));
+      const set = (el, v) => {
+        if (el.textContent !== v) el.textContent = v;
+      };
+      set(c.clSplit, fmtSplit(s.splitSec));
+      set(c.clDist, Math.floor(s.distance).toLocaleString("en-US"));
+      set(c.clDistU, s.distUnit != null ? s.distUnit : " m");
+      set(c.clDistK, (s.distLabel || "Distance").toUpperCase());
+      set(c.clTime, (s.timeLabel && s.timeLabel !== "Time" ? s.timeLabel.toUpperCase() + " " : "") + (s.timeClock ? fmtClock(Math.ceil(s.time)) : fmtTime(s.time)));
+      const pr = Math.max(0, Math.min(1, s.progress || 0));
+      c.clProg.style.width = pr * 100 + "%";
+      c.clMe.style.left = pr * 100 + "%";
+      set(c.clRep, s.rep || "");
+      set(c.clSpm, s.spm > 0 ? String(s.spm) : "--");
+      set(c.clW, s.watts > 0 ? String(Math.round(s.watts)) : "--");
+      const marks = s.marks || [], key = marks.map((m) => m.c).join();
+      if (key !== this._mk) {
+        this._mk = key;
+        c.clMarks.querySelectorAll("b:not(.me)").forEach((x) => x.remove());
+        for (const m of marks) {
+          const b = document.createElement("b");
+          b.className = m.c;
+          b.textContent = m.c === "rival" ? "\u25B4" : "\u25B2";
+          c.clMarks.appendChild(b);
+        }
+      }
+      const bs = c.clMarks.querySelectorAll("b:not(.me)");
+      marks.forEach((m, i) => {
+        if (bs[i]) bs[i].style.left = Math.max(0, Math.min(1, m.f)) * 100 + "%";
+      });
+      const hz2 = s.hrBand;
+      c.clHr.classList.remove("hidden");
+      c.clHr.classList.toggle("nohr", !hz2);
+      if (hz2) {
+        set(c.clBand, hz2.label);
+        set(c.clBpm, String(hz2.bpm));
+        c.clHr.style.setProperty("--hz", hz2.color);
+      } else {
+        set(c.clBand, "HR");
+        set(c.clBpm, "--");
+        c.clHr.style.setProperty("--hz", "#6f7fa8");
+      }
     }
     flash(text) {
       const f = this.el.flash;
@@ -31516,6 +32776,11 @@ ${pts}
       this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun", olTabs: "race", pfTabs: "stats", pfChart: "split", lgAge: "", lgWc: "all" });
       this.stats = loadStats();
       if (migrateXP(this.stats)) saveStats(this.stats);
+      if (!this.stats.shipMV) {
+        this.stats.shipM = { ...shipMetresFromHistory(loadHistory(), SHIPS), ...this.stats.shipM || {} };
+        this.stats.shipMV = 1;
+        saveStats(this.stats);
+      }
       this.dev = localStorage.getItem("cosmicrow.dev") === "1" || /[?&]dev=1/.test(location.search);
       if (!this.dev && this.opts.unlockAll) {
         this.opts.unlockAll = false;
@@ -31538,6 +32803,8 @@ ${pts}
       this.trackNow = new Color();
       this.setShip(this.choice.ship, this.choice.color);
       this.burst = new NeonBurst(this.scene);
+      this.platform = buildPlatform();
+      this.scene.add(this.platform);
       this.audio = new SynthAudio();
       this.hud = new Hud();
       this.sim = new TapRowSimulator();
@@ -31606,7 +32873,7 @@ ${pts}
         }
       }).catch((e) => console.warn("Strava sign-in failed", e));
       window.CosmicRow = this;
-      window.CosmicRowLib = { parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, rowBand, bandThresholds, wattsFromPace, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady };
+      window.CosmicRowLib = { parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, rowBand, bandThresholds, wattsFromPace, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady, effortParams: SynthAudio.effortParams };
     }
     get target() {
       const w = this.workout;
@@ -31638,6 +32905,7 @@ ${pts}
       }
       this.ship = buildShip(id, colorKey);
       this.scene.add(this.ship.group);
+      this._posterShip = null;
       this.env.setAccent(this.ship.color.hex);
       this.trackBase.copy(this.env.trackMat.uniforms.uCol.value);
       this.trackNow.copy(this.trackBase);
@@ -31680,6 +32948,7 @@ ${pts}
       const c = this.pm5 && this.pm5.connected, name = c ? "PM5" : IS_MOBILE ? "Tap" : "Keyboard", $ = (id) => document.getElementById(id);
       $("inChipT").textContent = name;
       $("inChip").classList.toggle("on", !!c);
+      $("pmStateT").textContent = c ? "PM5 CONNECTED" : "PM5 NOT CONNECTED";
       $("setInS").textContent = "Now: " + name;
       $("inputInfo").innerHTML = c ? "Connected to a <b>Concept2 PM5</b> - just row. Pace, rate, watts, heart rate and drag come from the monitor." : `Now: <b>${IS_MOBILE ? "tap simulator" : "keyboard simulator"}</b> - ${IS_MOBILE ? "tap anywhere" : "press SPACE (or tap)"} for each stroke. Connect a PM5 below to row for real.`;
       $("lbChip").classList.toggle("on", !!(this.lb && this.lb.user));
@@ -31707,6 +32976,8 @@ ${pts}
           return this.wod && this.wod.workout ? { ...this.wod.workout, wod: this.wod.date } : null;
         case "daily":
           return dailyChallenge();
+        case "weekly":
+          return weeklySprint(isoWeek());
         case "calm":
           return wCalm();
         case "free":
@@ -31728,18 +32999,25 @@ ${pts}
         const r = ARCADE_ROUNDS.find((x) => x.id === w.arcade.round), l = ARCADE_LEVELS.find((x) => x.id === w.arcade.level);
         return `Laser Run \xB7 ${r ? r.label : ""} \xB7 ${l ? l.label : ""}`;
       }
-      const o = this.opts, parts = [(w.wod ? "WOD: " : w.daily ? "Daily: " : "") + w.name + (w.kind === "intervals" ? ` (${w.segs.length} reps)` : "")];
+      const o = this.opts, parts = [(w.wod ? "WOD: " : w.daily ? "Daily: " : w.weekly ? "Weekly: " : "") + w.name + (w.kind === "intervals" ? ` (${w.segs.length} reps)` : "")];
       if (w.targeted) parts.push(`target ${fmtSplit(w.segs[0].target).replace(/\.0$/, "")} (${(LEVELS.find((l) => l.id === w.targeted.level) || LEVELS[1]).label})${w.warmup ? " + warm-up/cool-down" : ""}`);
       if (w.kind !== "calm") {
         const n = this._fieldN(), sp = fmtSplit(o.rivalSplit).replace(/\.0$/, "");
         if (n) parts.push(o.field === "pace" ? `${n} pace boat${n > 1 ? "s" : ""} ~${sp}` : `vs ${n} rival${n > 1 ? "s" : ""} ~${sp}`);
-        if (o.pace) parts.push("pace " + fmtSplit(o.paceSplit).replace(/\.0$/, ""));
+        if (o.pace) {
+          const P5 = this._paceProfile(w);
+          parts.push(P5 ? `plan ${fmtTime(P5.T).replace(/\.0$/, "")} ${P5.short.toLowerCase()}` : "pace " + fmtSplit(o.paceSplit).replace(/\.0$/, ""));
+        }
         if (o.ghost && w.kind !== "free") parts.push("ghost");
         if (o.zone) parts.push(`zone ${o.zlo}-${o.zhi}`);
       }
       return parts.join(" \xB7 ");
     }
     _refreshMode() {
+      try {
+        this._paintPacePlan();
+      } catch (e) {
+      }
       const $ = (id) => document.getElementById(id), s = this.sel, o = this.opts;
       const other = ["wod", "daily", "calm", "plan", "calib"].includes(s.tab);
       document.querySelectorAll("#modeTabs button").forEach((b) => b.classList.toggle("sel", b.dataset.tab === s.tab));
@@ -31773,8 +33051,39 @@ ${pts}
       const d = dailyChallenge(), streak = currentStreak(this.stats), doneToday = this.stats.lastDaily === localDate();
       $("dailyBox").innerHTML = `<div class="wt">${esc(d.name)}</div>${esc(d.segs.length > 1 ? `${d.segs.length} \xD7 ${segLabel2(d.segs[0])}, ${fmtClock(d.segs[0].rest)} rest` : segLabel2(d.segs[0]))}<br>${doneToday ? '<span class="ok">Done today \u2713</span>' : "New challenge every day."} Streak: <b>${streak}</b> day${streak === 1 ? "" : "s"} (best ${this.stats.bestStreak})`;
       $("trDailyS").textContent = doneToday ? `Done \u2713 \xB7 streak ${streak}` : `Streak ${streak}`;
+      this._paintWeekly();
       this._paintCal();
       this._showPB();
+    }
+    /** weekly sprint box + board (local, or online through the Render server when one is set) */
+    _paintWeekly() {
+      const $ = (id) => document.getElementById(id), wk = isoWeek(), w = weeklySprint(wk), d = weeklyDistance(wk), mine = weeklyBoard(wk), ms = weeklyResetIn(), dd = Math.floor(ms / 864e5), hh = Math.floor(ms / 36e5) % 24;
+      $("weeklyBox").innerHTML = `<div class="wt">${esc(w.name)}</div>Week ${wk.slice(-2)}: the same <b>${d} m</b> sprint for everyone. Row it as often as you like - your best time counts.<br>${mine.length ? `Your best this week: <b>${fmtTime(mine[0].time)}</b>` : "No time yet this week."} \xB7 new distance in ${dd ? dd + " d " : ""}${hh} h`;
+      $("trWeekS").textContent = mine.length ? `${d} m \xB7 best ${fmtTime(mine[0].time)}` : `${d} m this week`;
+      const src = this.ui.wkSrc || "local";
+      document.querySelectorAll("#wkSrc button").forEach((b) => b.classList.toggle("sel", b.dataset.w === src));
+      const row = (r, i, me) => `<tr class="${me ? "me" : ""}"><td class="r">${i + 1}</td><td>${esc(r.name || "Rower")}</td><td class="s">${esc(r.ship ? (SHIPS.find((x) => x.id === r.ship) || { name: r.ship }).name : "")}</td><td class="t">${fmtTime(r.time)}</td></tr>`;
+      if (src === "local") {
+        $("wkTable").innerHTML = mine.map((r, i) => row(r, i, false)).join("") || '<tr><td class="s">Nobody has rowed it on this device yet.</td></tr>';
+        $("wkNote").textContent = "Top 10 attempts on this device.";
+        return;
+      }
+      const base = this._srvBase();
+      if (!base) {
+        $("wkTable").innerHTML = "";
+        $("wkNote").textContent = "Online board: set a server in Online \u203A Server (practice mode keeps this device only).";
+        return;
+      }
+      $("wkNote").textContent = "Loading the online board\u2026 (a sleeping free-tier server can take a minute to wake)";
+      const tok = this._wkTok = (this._wkTok || 0) + 1;
+      new SocialClient(base).weekly(wk).then((j) => {
+        if (tok !== this._wkTok) return;
+        const rows = j.rows || [];
+        $("wkTable").innerHTML = rows.slice(0, 20).map((r, i) => row(r, i, r.id === this.profile.id)).join("") || '<tr><td class="s">No online times yet this week - be the first.</td></tr>';
+        $("wkNote").textContent = `Online: best time per rower, ${rows.length} rower${rows.length === 1 ? "" : "s"}.`;
+      }).catch(() => {
+        if (tok === this._wkTok) $("wkNote").textContent = "Online board unavailable right now (offline or server asleep).";
+      });
     }
     /* ---------- menu panels ---------- */
     _showOnly(id) {
@@ -31821,9 +33130,23 @@ ${pts}
       const key = scoreKey(rd.id, lv.id), list = loadScores()[key] || [];
       $("arcHsKey").textContent = `\xB7 ${rd.label} \xB7 ${lv.label}`;
       $("arcHs").innerHTML = list.length ? "<tr><td>#</td><td>Score</td><td>Hits</td><td>Accuracy</td><td>Ship</td><td>Date</td></tr>" + list.slice(0, 10).map((e, i) => `<tr${e.date === this._lastHs ? ' class="me"' : ""}><td>${i + 1}</td><td><b>${e.score.toLocaleString("en-US")}</b></td><td>${e.hits}</td><td>${Math.round(e.acc * 100)}%</td><td>${esc(shipById(e.ship).name)}</td><td>${esc(String(e.date).slice(0, 10))}</td></tr>`).join("") : "<tr><td>No scores yet for this round - be the first.</td></tr>";
-      $("arcLine").innerHTML = `Selected: <b>Laser Run \xB7 ${rd.label} \xB7 ${lv.label}</b> \xB7 ${esc(this.stageDef().name)} \xB7 ${esc(shipById(this.choice.ship).name)}`;
+      $("arcLine").innerHTML = this.ui.arTabs === "comet" ? `Selected: <b>Comet Tail \xB7 5 min \xB7 target ${fmtSplit(this.opts.cometTarget || 120)}</b> \xB7 ${esc(this.stageDef().name)} \xB7 ${esc(shipById(this.choice.ship).name)}` : `Selected: <b>Laser Run \xB7 ${rd.label} \xB7 ${lv.label}</b> \xB7 ${esc(this.stageDef().name)} \xB7 ${esc(shipById(this.choice.ship).name)}`;
+      {
+        const T = this.opts.cometTarget || 120;
+        document.querySelectorAll("#cometP button").forEach((b) => b.classList.toggle("sel", +b.dataset.t === T));
+        if (document.activeElement !== $("cometTarget")) $("cometTarget").value = fmtSplit(T).replace(/\.0$/, "");
+        const list2 = loadCometScores()[cometKey(T)] || [];
+        $("cometHsKey").textContent = `\xB7 target ${fmtSplit(T).replace(/\.0$/, "")}`;
+        $("cometHs").innerHTML = list2.length ? "<tr><td>#</td><td>Longest tail</td><td>On pace</td><td>Ship</td><td>Date</td></tr>" + list2.map((e, i) => `<tr${e.date === this._lastCm ? ' class="me"' : ""}><td>${i + 1}</td><td><b>${e.tail.toFixed(1)} m</b></td><td>${Math.round(e.inPct * 100)}%</td><td>${esc(shipById(e.ship).name)}</td><td>${new Date(e.date).toLocaleDateString()}</td></tr>`).join("") : "<tr><td>No tails yet for this target - be the first.</td></tr>";
+      }
     }
     arcadeWorkout() {
+      if (this.ui.arTabs === "comet") {
+        const T = this.opts.cometTarget || 120, w2 = { ...wTime(COMET_ROUND_S) };
+        w2.name = `Comet Tail \xB7 ${fmtSplit(T).replace(/\.0$/, "")}`;
+        w2.comet = { target: T };
+        return w2;
+      }
       const a = this.sel.arc, rd = ARCADE_ROUNDS.find((x) => x.id === a.round) || ARCADE_ROUNDS[0], lv = ARCADE_LEVELS.find((x) => x.id === a.level) || ARCADE_LEVELS[1];
       const w = rd.s ? { ...wTime(rd.s) } : { ...wFree() };
       w.name = `Laser Run \xB7 ${rd.label}`;
@@ -31944,10 +33267,13 @@ ${pts}
       }
       tap($("settingsClose"), () => this.closeSettings());
       tap($("gBack"), () => this.closeGarage(false));
+      tap($("gLog"), () => this.openLog(SHIPS[this.g.idx].id));
+      tap($("cplClose"), () => this.closeLog());
       tap($("gSelect"), () => this.closeGarage(true));
       tap($("gPrev"), () => this._garageStep(-1));
       tap($("gNext"), () => this._garageStep(1));
       tap($("camBtn"), () => this.toggleCam());
+      document.querySelectorAll("#mainMenu button.mi").forEach((b) => b.addEventListener("mouseenter", () => document.querySelectorAll("#mainMenu button.mi").forEach((x) => x.classList.toggle("sel", x === b))));
       tap($("trainingBtn"), () => this.openTraining());
       tap($("arcadeBtn"), () => this.openArcade());
       tap($("onlineBtn"), () => this.openOnline());
@@ -31960,6 +33286,25 @@ ${pts}
       tap($("trStage"), () => this.openStages("training"));
       tap($("trGo"), () => this.startRace());
       tap($("arcPlay"), () => this.startRace(this.arcadeWorkout()));
+      for (const t of COMET_PRESETS) {
+        const b = document.createElement("button");
+        b.dataset.t = t;
+        b.textContent = fmtSplit(t).replace(/\.0$/, "");
+        $("cometP").appendChild(b);
+        tap(b, () => {
+          this.opts.cometTarget = t;
+          this._saveOpts();
+          this._paintArcade();
+        });
+      }
+      $("cometTarget").addEventListener("change", () => {
+        const v = parseSplit($("cometTarget").value);
+        if (isFinite(v) && v >= 80 && v <= 240) {
+          this.opts.cometTarget = v;
+          this._saveOpts();
+        }
+        this._paintArcade();
+      });
       tap($("inChip"), () => this.openSettings("input"));
       tap($("lbChip"), () => this.openSettings("logbook"));
       for (const nav of ["trTabs", "setTabs", "arTabs", "olTabs", "pfTabs"]) document.querySelectorAll(`#${nav} button`).forEach((b) => tap(b, () => this._tab(nav, b.dataset.sec)));
@@ -31967,6 +33312,10 @@ ${pts}
         this.sel.tab = b.dataset.pick;
         this._saveSel();
         this._refreshMode();
+      }));
+      document.querySelectorAll("#wkSrc button").forEach((b) => tap(b, () => {
+        this.ui.wkSrc = b.dataset.w;
+        this._paintWeekly();
       }));
       $("setAbout").innerHTML = $("aboutBody").innerHTML;
       if (IS_MOBILE) $("keyHint").textContent = "Tap anywhere to row \xB7 turn sideways for the best view";
@@ -32005,6 +33354,29 @@ ${pts}
         o2.paceSplit = +b.dataset.ps;
         o2.pace = true;
       })));
+      document.querySelectorAll("#hudStyleBtns button").forEach((b) => tap(b, () => {
+        this.opts.hudStyle = b.dataset.hs;
+        this._saveOpts();
+        this._applyCamMode();
+        document.querySelectorAll("#hudStyleBtns button").forEach((x) => x.classList.toggle("sel", x === b));
+      }));
+      document.querySelectorAll("#pacePlanBtns button").forEach((b) => tap(b, () => {
+        this.opts.pacePlan = b.dataset.pp;
+        if (b.dataset.pp !== "split") this.opts.pace = true;
+        this._saveOpts();
+        this._syncOptInputs && this._syncOptInputs();
+        this._paintPacePlan();
+        this._refreshMode();
+      }));
+      $("optPaceTarget").addEventListener("change", () => {
+        const w = this._selectedRaw(), D = w && w.kind === "distance" && w.segs && w.segs.length === 1 ? w.segs[0].value : 0, T = parseSplit($("optPaceTarget").value);
+        if (D && isFinite(T) && T > D / 500 * 60 && T < D / 500 * 300) {
+          this.opts.paceTargets = { ...this.opts.paceTargets || {}, [D]: T };
+          this._saveOpts();
+        }
+        this._paintPacePlan();
+        this._refreshMode();
+      });
       document.querySelectorAll("#rivalP button").forEach((b) => tap(b, () => setOpt((o2) => {
         o2.rivalSplit = +b.dataset.rs;
         if (o2.field === "off") o2.field = "rivals";
@@ -32274,6 +33646,10 @@ ${pts}
               $("about").classList.add("hidden");
               return;
             }
+            if (!$("capLog").classList.contains("hidden")) {
+              this.closeLog();
+              return;
+            }
             if (this.state === "race") this.finish(true);
             else if (this.state === "loading") this._ldSkip();
             else if (this.state === "garage") this.closeGarage(false);
@@ -32284,7 +33660,14 @@ ${pts}
             if (this.state === "garage") this.closeGarage(true);
             else if (this.state === "arcade") this.startRace(this.arcadeWorkout());
             else if (this.state === "summary") $("againBtn").click();
-            else if (["title", "training", "stages"].includes(this.state)) this.startRace();
+            else if (this.state === "title") {
+              const m = document.querySelector("#mainMenu button.mi.sel");
+              if (m && m.id !== "startBtn") m.click();
+              else this.startRace();
+            } else if (["training", "stages"].includes(this.state)) this.startRace();
+          } else if (this.state === "title" && (e.code === "ArrowUp" || e.code === "ArrowDown")) {
+            e.preventDefault();
+            this._menuStep(e.code === "ArrowUp" ? -1 : 1);
           } else if (this.state === "garage" && (e.code === "ArrowLeft" || e.code === "ArrowRight")) this._garageStep(e.code === "ArrowLeft" ? -1 : 1);
         }
       });
@@ -32312,12 +33695,18 @@ ${pts}
     stageDef() {
       return STAGES.find((x) => x.id === this.stageId) || STAGES[0];
     }
+    /** music theme by context: races play the stage theme (Calm mode: the calm track); menus play the stage theme, else the calm track in place of the default */
+    _applyTheme() {
+      if (!this.audio) return;
+      const race = this.state === "race", st = STAGE_THEMES[this.stageId] || null;
+      this.audio.setTheme(race ? this.workout && this.workout.kind === "calm" ? CALM_THEME : st : st || (this.audio.track === "cosmic" ? CALM_THEME : null));
+    }
     setStage(id) {
       this.stageId = id;
       localStorage.setItem(STAGE_KEY, id);
       this.env.setStage(id);
       if (this.audio) {
-        this.audio.setTheme(STAGE_THEMES[id] || null);
+        this._applyTheme();
         if (this._paintMusic) this._paintMusic();
       }
       document.querySelectorAll("#stageCards .stagecard").forEach((b) => b.classList.toggle("sel", b.dataset.stage === id));
@@ -32380,6 +33769,7 @@ ${pts}
       document.getElementById("optHrFlame").checked = this.opts.hrFlame !== false;
       document.getElementById("optHrFlameEst").checked = !!this.opts.hrFlameEst;
       document.getElementById("optLbPm5").checked = !!this.opts.lbPm5;
+      document.querySelectorAll("#hudStyleBtns button").forEach((x) => x.classList.toggle("sel", x.dataset.hs === (this.opts.hudStyle || "clean")));
       this._tab("setTabs", sec || this.ui.setTabs);
       this._paintStats();
       this._paintLogbook();
@@ -32403,6 +33793,7 @@ ${pts}
       const inRace = this.state === "race";
       const rider = !!this.ship.rider;
       this.hud.setCockpit(this.cockpit && inRace && !rider);
+      this.hud.setClean(this.opts.hudStyle !== "classic" && !(this.cockpit && inRace && !rider));
       this.ship.group.visible = rider || !(this.cockpit && inRace);
       if (rider) this.ship.rider.visible = !(this.cockpit && inRace);
       document.getElementById("camBtn").textContent = this.cockpit ? "\u25C9 Cockpit" : "\u25C9 Chase";
@@ -32461,6 +33852,10 @@ ${pts}
       $("gLock").classList.toggle("hidden", !lock);
       $("gLock").textContent = lock;
       $("gSelect").disabled = shipLocked || colLocked;
+      {
+        const m = (this.stats.shipM || {})[def.id] || 0, n = chaptersFor(m);
+        $("gLogN").textContent = ` ${CAPTAINS[def.id].captain} \xB7 ${n}/5 chapters \xB7 ${(m / 1e3).toFixed(1)} km`;
+      }
       $("gSelect").textContent = shipLocked || colLocked ? "Locked" : def.id === this.choice.ship && (this.g.color || def.color) === (this.choice.color || shipById(this.choice.ship).color) ? "Selected \u2713" : "Select";
     }
     closeGarage(select) {
@@ -32481,6 +33876,33 @@ ${pts}
     _paintShipLine() {
       const def = shipById(this.choice.ship), col = COLORS[this.choice.color || def.color];
       document.getElementById("shipLine").innerHTML = `Ship: <b style="color:${col.css}">${def.num} ${def.name}</b>${this.choice.color ? " \xB7 " + col.name : ""} &nbsp;\xB7&nbsp; <span class="xpchip">${esc(this._xpLine())}</span>`;
+      this._paintMenuXp();
+    }
+    /** main menu XP panel: selected ship + XP toward the next ship unlock (or the next level when every ship is unlocked) */
+    _paintMenuXp() {
+      const $ = (id) => document.getElementById(id);
+      if (!$("mXp")) return;
+      const def = shipById(this.choice.ship), xp = this.stats.xp || 0, nx = nextShip(this.stats), L = levelInfo(xp);
+      $("mXpShip").textContent = def.name.toUpperCase();
+      $("mXp").style.setProperty("--sc", COLORS[this.choice.color || def.color].css);
+      if (nx) {
+        const tgt = SHIP_XP[nx.id] || xp + nx.left;
+        $("mXpLine").textContent = `XP ${xp.toLocaleString("en-US")} / ${tgt.toLocaleString("en-US")}`;
+        $("mXpBar").style.width = Math.min(100, xp / Math.max(1, tgt) * 100) + "%";
+        $("mXpSub").textContent = `Lv ${L.level} ${L.title} \xB7 next ship: ${shipById(nx.id).name}`;
+      } else {
+        $("mXpLine").textContent = `XP ${xp.toLocaleString("en-US")} / ${L.hi.toLocaleString("en-US")}`;
+        $("mXpBar").style.width = L.frac * 100 + "%";
+        $("mXpSub").textContent = `Lv ${L.level} ${L.title} \xB7 every ship unlocked`;
+      }
+    }
+    /** ↑ / ↓ moves the magenta bar through the main menu, Enter opens the selected item */
+    _menuStep(d) {
+      const items = [...document.querySelectorAll("#mainMenu button.mi")];
+      let i = items.findIndex((b) => b.classList.contains("sel"));
+      i = (i + d + items.length) % items.length;
+      items.forEach((b, k) => b.classList.toggle("sel", k === i));
+      items[i].focus({ preventScroll: true });
     }
     /* ---------- personal bests (localStorage, per workout key) ---------- */
     _loadPB() {
@@ -32727,6 +34149,8 @@ ${pts}
       this.state = "race";
       this.hud.show(true);
       this._applyCamMode();
+      this._applyTheme();
+      if (this._paintMusic) this._paintMusic();
       const w = this.workout, calm = w.kind === "calm";
       this.hud.setCalm(calm);
       this.hud.setRest(false);
@@ -32741,6 +34165,7 @@ ${pts}
         this.scene.add(this.ghostShip.group);
       }
       this.paceOn = !calm && solo && this.opts.pace && isFinite(this.opts.paceSplit);
+      this._plan = this.paceOn ? this._paceProfile(w) : null;
       if (this.paceOn) {
         this.paceShip = buildProxyShip("raven", "red", { opacity: 1 });
         this.paceShip.group.visible = false;
@@ -32760,10 +34185,18 @@ ${pts}
       this.ramp = w.calib === "ramp" ? new RampTracker() : null;
       if (w.warmup) this.hud.flash("WARM-UP \xB7 EASY");
       if (w.arcade) this._startArcade(w);
+      if (w.comet) this._startComet(w);
       if (w.kind === "intervals") this.hud.flash(`REP 1 / ${w.segs.length}`);
       if (w.team) this.hud.flash(`ANCHOR LEG \xB7 ${w.team.fmtName}`);
     }
     toTitle() {
+      this.audio.setEffort(null);
+      this._eff = null;
+      this.state = "title";
+      this._applyTheme();
+      clearTimeout(this._logT);
+      this.closeLog();
+      document.querySelectorAll("#mainMenu button.mi").forEach((b) => b.classList.toggle("sel", b.id === "startBtn"));
       if (this._olHold) {
         this._olHold = false;
         document.getElementById("olCount").classList.add("hidden");
@@ -32868,7 +34301,92 @@ ${pts}
         d.style.opacity = (1 - r.dz / 160).toFixed(2);
       });
     }
+    /* ---------- Captain's Log ---------- */
+    openLog(shipId, ch = null, fresh2 = false) {
+      const $ = (id) => document.getElementById(id), C = CAPTAINS[shipId], def = shipById(shipId), m = (this.stats.shipM || {})[shipId] || 0, n = chaptersFor(m);
+      $("capLog").classList.remove("hidden");
+      $("cplShip").textContent = `${def.num} ${def.name.toUpperCase()}`;
+      $("cplCap").textContent = `${C.captain} \xB7 ${(m / 1e3).toFixed(1)} km rowed in the ${def.name}`;
+      $("cplList").innerHTML = C.chapters.map((c, i) => `<button data-i="${i}" class="${i < n ? "" : "lock"}">${i < n ? `${i + 1} \xB7 ${esc(c[0])}` : `\u{1F512} ${i + 1} \xB7 at ${(i + 1) * LOG_STEP_M / 1e3} km`}</button>`).join("");
+      $("cplList").querySelectorAll("button").forEach((b) => b.addEventListener("click", () => this._logShow(shipId, +b.dataset.i)));
+      this._logShow(shipId, ch != null ? ch : Math.max(0, n - 1), fresh2);
+    }
+    _logShow(shipId, i, fresh2) {
+      const $ = (id) => document.getElementById(id), C = CAPTAINS[shipId], m = (this.stats.shipM || {})[shipId] || 0, n = chaptersFor(m);
+      $("cplList").querySelectorAll("button").forEach((b) => b.classList.toggle("sel", +b.dataset.i === i));
+      clearInterval(this._logTy);
+      const el = $("cplTxt");
+      if (i >= n) {
+        $("cplT").textContent = `CHAPTER ${i + 1} \xB7 LOCKED`;
+        el.classList.remove("typing");
+        el.textContent = `Row ${(((i + 1) * LOG_STEP_M - m) / 1e3).toFixed(1)} km more in this ship to unlock this chapter.`;
+        $("cplNote").textContent = "One chapter per 10 km rowed in this ship.";
+        return;
+      }
+      const [title, txt] = C.chapters[i];
+      $("cplT").textContent = `${fresh2 ? "NEW \xB7 " : ""}CHAPTER ${i + 1} \xB7 ${title.toUpperCase()}`;
+      $("cplNote").textContent = i + 1 < 5 ? `Next chapter at ${(i + 2) * LOG_STEP_M / 1e3} km.` : "Log complete.";
+      el.classList.add("typing");
+      el.textContent = "";
+      let k = 0;
+      this._logTy = setInterval(() => {
+        k += 2;
+        el.textContent = txt.slice(0, k);
+        if (k >= txt.length) {
+          clearInterval(this._logTy);
+          el.classList.remove("typing");
+        }
+      }, 28);
+      if (fresh2) this.audio.milestone && this.audio.milestone();
+    }
+    closeLog() {
+      clearInterval(this._logTy);
+      document.getElementById("capLog").classList.add("hidden");
+    }
+    /* ---------- Comet Tail ---------- */
+    _startComet(w) {
+      this._endComet();
+      this.comet = new CometTail(this.scene, this.ship, { target: w.comet.target, color: this.ship.color.hex, low: IS_MOBILE });
+      this._cmStrokes = this.source.strokeCount;
+      this._cmShown = {};
+      document.getElementById("cometHud").classList.remove("hidden");
+      this.hud.flash("COMET TAIL");
+    }
+    _cometTick(dt, src, pace) {
+      const C = this.comet, J = C.judge, $ = (id) => document.getElementById(id), sh = this._cmShown;
+      if (src.strokeCount !== this._cmStrokes) {
+        if (src.strokeCount > this._cmStrokes && this.runner.phase === "work") C.stroke(pace);
+        this._cmStrokes = src.strokeCount;
+      }
+      if (this.runner.phase === "work") C.update(dt);
+      const tl = J.tail.toFixed(1);
+      if (sh.t !== tl) {
+        sh.t = tl;
+        $("cmTail").textContent = tl;
+        $("cmBest").textContent = J.best.toFixed(1);
+      }
+      if (sh.st !== J.state) {
+        sh.st = J.state;
+        const el = $("cometHud");
+        el.classList.remove("in", "slow", "fast", "wait");
+        el.classList.add(J.state);
+      }
+      const d = isFinite(J.avg) ? J.avg - J.target : 0;
+      $("cmMark").style.left = 50 + Math.max(-50, Math.min(50, -d / 3 * 50)) + "%";
+      const txt = `4-STROKE AVG ${isFinite(J.avg) ? fmtSplit(J.avg) : "--"} \xB7 TARGET ${fmtSplit(J.target)} \xB7 ${J.state === "in" ? "ON PACE - GROWING" : J.state === "slow" ? "TOO SLOW" : J.state === "fast" ? "TOO FAST" : "ROW " + Math.max(0, 4 - J.splits.length) + " MORE STROKES"}`;
+      if (sh.txt !== txt) {
+        sh.txt = txt;
+        $("cmTxt").textContent = txt;
+      }
+    }
+    _endComet() {
+      if (!this.comet) return;
+      this.comet.dispose();
+      this.comet = null;
+      document.getElementById("cometHud").classList.add("hidden");
+    }
     _endArcade() {
+      this._endComet();
       if (!this.arcade) return;
       this.arcade.dispose();
       this.arcade = null;
@@ -32898,6 +34416,8 @@ ${pts}
       if (this.state !== "race") return;
       const s = this.session, r = this.runner, w = this.workout;
       this.state = "summary";
+      this.audio.setEffort(null);
+      this._eff = null;
       this.hud.show(false);
       this.hud.setRest(false);
       this._applyCamMode();
@@ -32917,8 +34437,8 @@ ${pts}
       const complete = r.finishedMain && (!early || r.mainDone), dist = r.workD, time = r.workT;
       const avgSplit = dist > 1 ? time / dist * 500 : NaN;
       const avgSpm = s.spmSamples ? s.spmSum / s.spmSamples : time > 0 ? s.strokes / time * 60 : 0;
-      const arcStats = this.arcade ? this.arcade.stats() : null;
-      const key = w.arcade ? null : workoutKey(w), all = this._loadPB(), prev = key ? all[key] : null;
+      const arcStats = this.arcade ? this.arcade.stats() : null, cmStats = this.comet ? this.comet.stats() : null;
+      const key = w.arcade || w.comet ? null : workoutKey(w), all = this._loadPB(), prev = key ? all[key] : null;
       let isPB = false;
       const valid = w.kind === "free" ? dist >= 100 && isFinite(avgSplit) : w.kind !== "calm" && complete && time > 0 && dist > 0;
       if (valid && key) {
@@ -32934,6 +34454,11 @@ ${pts}
         }
       }
       const before = unlockedSet(this.stats);
+      {
+        const sid = this.ship.def.id, m0 = (this.stats.shipM || {})[sid] || 0, m1 = m0 + dist + r.restD + r.warmD + r.coolD;
+        this.stats.shipM = { ...this.stats.shipM || {}, [sid]: m1 };
+        this._newChapter = chaptersFor(m1) > chaptersFor(m0) ? { ship: sid, ch: chaptersFor(m1) - 1 } : null;
+      }
       this.stats.lifetimeM += dist + r.restD + r.warmD + r.coolD;
       if (dist > 0) this.stats.sessions++;
       if (isPB) this.stats.pbCount++;
@@ -32944,6 +34469,16 @@ ${pts}
         const st = completeDaily(this.stats, w.daily);
         streakMsg = `Daily challenge complete \u2713 Streak: ${st} day${st === 1 ? "" : "s"}`;
       }
+      if (w.weekly && complete && time > 0) {
+        const wr = addWeeklyScore(w.weekly, { name: this.profile.name || "Rower", ship: this.ship.def.id, time: +time.toFixed(1), date: localDate() });
+        this._weeklyMsg = `Weekly sprint ${fmtTime(time)} \xB7 #${wr} on this device this week`;
+        if (this._srvBase()) new SocialClient(this._srvBase()).submitWeekly(this.profile, w.weekly, weeklyDistance(w.weekly), +time.toFixed(1), this.ship.def.id).then((j) => {
+          this._weeklyMsg += ` \xB7 #${j.rank} online`;
+          const n = document.getElementById("wkSumNote");
+          if (n) n.textContent = this._weeklyMsg;
+        }).catch(() => {
+        });
+      } else this._weeklyMsg = null;
       const xpBefore = this.stats.xp || 0, place = teamRes ? teamRes.win ? 1 : 2 : raceRes && complete ? raceRes.pos : 0, of = teamRes ? 2 : raceRes ? raceRes.of : 0;
       const xpRes = w.kind === "calm" && dist < 100 ? { total: 0, items: [] } : xpForRow(this.stats, { metres: dist + r.restD + r.warmD + r.coolD, daily: dailyFirst, pb: isPB, wod: !!(w.wod && complete), plan: !!(w.plan && complete), place, of, week: isoWeek(), day: localDate() });
       saveStats(this.stats);
@@ -32953,7 +34488,7 @@ ${pts}
       });
       const best = key ? all[key] : null;
       const $ = (id) => document.getElementById(id);
-      $("sumTitle").textContent = (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : "") + w.name + (early && !r.mainDone && w.kind !== "free" && w.kind !== "calm" ? " (stopped)" : "");
+      $("sumTitle").textContent = (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name + (early && !r.mainDone && w.kind !== "free" && w.kind !== "calm" ? " (stopped)" : "");
       $("sTime").textContent = fmtTime(time) + (r.restT > 0.5 ? ` + ${fmtClock(r.restT)} rest` : "") + (raceRes && raceRes.pen ? ` +${raceRes.pen} s jump start` : "") + (r.warmT + r.coolT > 5 ? ` \xB7 +${fmtClock(r.warmT + r.coolT)} warm-up/cool-down` : "");
       $("sDist").textContent = `${Math.floor(dist)} m`;
       $("sSplit").textContent = fmtSplit(avgSplit) + " /500m";
@@ -32964,6 +34499,8 @@ ${pts}
       $("sStage").textContent = this.stageDef().name;
       $("sBest").textContent = best ? this._fmtPB(w, best) : "--";
       let arcHtml = "";
+      this._posterScore = null;
+      this._posterSub = null;
       if (arcStats) {
         const lvl = ARCADE_LEVELS.find((x) => x.id === w.arcade.level), hk = scoreKey(w.arcade.round, w.arcade.level), date = (/* @__PURE__ */ new Date()).toISOString();
         const rank = arcStats.score > 0 ? addScore(hk, { score: arcStats.score, hits: arcStats.hits, acc: arcStats.acc, dist: Math.round(dist), ship: this.ship.def.id, date }) : 0;
@@ -32973,6 +34510,19 @@ ${pts}
         $("sumPB").textContent = rank === 1 ? "\u2605 NEW HIGH SCORE \u2605" : "\u2605 NEW PERSONAL BEST \u2605";
         isPB = rank === 1;
         arcHtml = `<div class="arcsum"><div class="big">${arcStats.score.toLocaleString("en-US")} <small>points</small></div><div>Hits <b>${arcStats.hits}</b> / ${arcStats.shots} shots \xB7 accuracy <b>${Math.round(arcStats.acc * 100)}%</b> \xB7 best streak <b>${arcStats.maxCombo}</b></div><div>Asteroids ${arcStats.counts.asteroid} \xB7 drones ${arcStats.counts.drone} \xB7 crystals ${arcStats.counts.crystal} \xB7 hazards hit ${arcStats.hazardHits}</div><div>${rank ? `High-score table: <b>#${rank}</b> (${esc(w.name)}, ${lvl.label})` : "Not in the top 10 this time."}</div></div>`;
+        this._posterScore = `${arcStats.score.toLocaleString("en-US")} pts`;
+        this._posterSub = `${w.name} \xB7 ${Math.round(arcStats.acc * 100)}% accuracy`;
+      } else if (cmStats) {
+        const hk = cometKey(cmStats.target), date = (/* @__PURE__ */ new Date()).toISOString();
+        const rank = cmStats.tail > 0 ? addCometScore(hk, { tail: cmStats.tail, inPct: cmStats.inPct, ship: this.ship.def.id, date }) : 0;
+        this._lastCm = date;
+        const top = (loadCometScores()[hk] || [])[0];
+        $("sBest").textContent = top ? `${top.tail.toFixed(1)} m (longest tail at ${fmtSplit(cmStats.target)})` : "--";
+        $("sumPB").textContent = "\u2605 NEW LONGEST TAIL \u2605";
+        isPB = rank === 1;
+        arcHtml = `<div class="arcsum"><div class="big">${cmStats.tail.toFixed(1)} <small>m longest tail</small></div><div>Target ${fmtSplit(cmStats.target)} \xB1${COMET_BAND} s (4-stroke average) \xB7 on pace <b>${Math.round(cmStats.inPct * 100)}%</b> of the round \xB7 tail at the end ${cmStats.final.toFixed(1)} m</div><div>${rank ? `Longest-tail table: <b>#${rank}</b>` : "Not in the top 10 this time."}</div></div>`;
+        this._posterScore = `${cmStats.tail.toFixed(1)} m`;
+        this._posterSub = `Comet Tail \xB7 longest tail at ${fmtSplit(cmStats.target)}`;
       } else $("sumPB").textContent = "\u2605 NEW PERSONAL BEST \u2605";
       $("sumPB").classList.toggle("hidden", !isPB);
       let extra = arcHtml;
@@ -32983,7 +34533,10 @@ ${pts}
         const gT = this.ghost.workT || this.ghost.t[this.ghost.t.length - 1], gD = this.ghost.d[this.ghost.d.length - 1];
         if (complete) extra += `<div class="sumnote">vs ghost: <b>${scoredOnTime(w) ? time <= gT ? `${(gT - time).toFixed(1)} s faster` : `${(time - gT).toFixed(1)} s slower` : dist >= gD ? `${Math.round(dist - gD)} m further` : `${Math.round(gD - dist)} m short`}</b></div>`;
       }
-      if (this.paceOn && w.kind !== "free") {
+      if (this.paceOn && w.kind !== "free" && this._plan) {
+        const P5 = this._plan, d = P5.T - time;
+        extra += `<div class="sumnote">vs race plan ${fmtTime(P5.T)} (${esc(RACE_PLANS.find((x) => x.id === P5.plan).name)}): <b>${d >= 0 ? d.toFixed(1) + " s ahead" : (-d).toFixed(1) + " s behind"}</b></div>`;
+      } else if (this.paceOn && w.kind !== "free") {
         const pd = 500 / this.opts.paceSplit * time;
         extra += `<div class="sumnote">vs pace boat ${fmtSplit(this.opts.paceSplit)}: <b>${dist >= pd ? Math.round(dist - pd) + " m ahead" : Math.round(pd - dist) + " m behind"}</b></div>`;
       }
@@ -32995,6 +34548,7 @@ ${pts}
       if (raceRes && raceRes.ghosts) extra += `<div class="sumnote">\u{1F47B} ${raceRes.ghosts.map((x) => `${esc(x.name.replace(/ 👻$/, ""))}: ${x.beat ? "<b>beaten</b>" : "ahead of you"}`).join(" \xB7 ")}</div>`;
       extra += this._calibSummary(w, r, complete, avgSplit);
       if (streakMsg) extra += `<div class="sumnote"><b>${streakMsg}</b></div>`;
+      if (this._weeklyMsg) extra += `<div class="sumnote" id="wkSumNote" style="color:#ff9fe8">\u26A1 ${this._weeklyMsg}</div>`;
       extra += this._afterRow({ w, s, r, complete, dist, time, avgSplit, avgSpm, raceRes, teamRes });
       if (fresh2.length) extra += `<div class="sumnote" style="color:#ffd59a">\u{1F513} Unlocked: <b>${fresh2.join(", ")}</b> - find it in the Garage</div>`;
       {
@@ -33008,6 +34562,12 @@ ${pts}
       const newShip = unlockedSet(this.stats).filter((x) => !before.includes(x) && x.startsWith("ship:")).map((x) => x.split(":")[1])[0];
       clearTimeout(this._revealT);
       if (newShip && !this.opts.unlockAll) this._revealT = setTimeout(() => this.state === "summary" && this.openReveal(newShip), 1400);
+      if (this._newChapter) {
+        const nc = this._newChapter, C = CAPTAINS[nc.ship];
+        $("sumExtra").insertAdjacentHTML("beforeend", `<div class="sumnote" style="color:#4dff9c">\u{1F4DC} New Captain's Log chapter: <b>${esc(shipById(nc.ship).name)} \xB7 ${nc.ch + 1} ${esc(C.chapters[nc.ch][0])}</b> <button class="small" id="sumLog">Read</button></div>`);
+        $("sumLog").addEventListener("click", () => this.openLog(nc.ship, nc.ch, true));
+        if (!newShip) this._logT = setTimeout(() => this.state === "summary" && this.openLog(nc.ship, nc.ch, true), 1600);
+      }
       this.lastResult = { workout: w, runner: r, strokes: s.strokeLog, endDate: /* @__PURE__ */ new Date(), avgSpm, strokeCount: s.strokes, hrAvg: s.hrN ? s.hrSum / s.hrN : 0, hrMax: s.hrMax, dragFactor: this.source.dragFactor, source: s.source, clientVersion: BUILD_ID };
       this._lbConfirm = false;
       const lbPm5Off = s.source === "pm5" && !this.opts.lbPm5;
@@ -33016,12 +34576,14 @@ ${pts}
       $("lbSave").textContent = `Save to Logbook${this.lb.host === "live" ? "" : " (dev)"}`;
       $("lbStatus").textContent = this.lb.token && dist >= 100 && w.kind !== "calm" && s.source === "pm5" ? lbPm5Off ? "Logbook: your PM5 already logged this piece - the game upload is off to avoid a duplicate (Settings \u203A Logbook to change)." : "\u26A0 Your PM5 may already log this piece - saving here too can create a duplicate Logbook entry." : "";
       this._posterData = {
-        title: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : "") + w.name,
+        title: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name,
         time: fmtTime(time + (raceRes && raceRes.pen || 0)),
         split: fmtSplit(avgSplit),
         spm: avgSpm > 0 ? avgSpm.toFixed(0) : "",
         place: raceRes && !w.team ? `${ordinal(raceRes.pos)} of ${raceRes.of}` : "",
-        badge: isPB ? "\u2605 NEW PERSONAL BEST \u2605" : "",
+        score: this._posterScore || "",
+        scoreSub: this._posterSub || "",
+        badge: isPB ? cmStats ? "\u2605 NEW LONGEST TAIL \u2605" : "\u2605 NEW PERSONAL BEST \u2605" : "",
         name: this.profile.name || "Rower",
         ship: this.ship.def.name,
         stage: this.stageDef().name,
@@ -33055,9 +34617,9 @@ ${pts}
       if (dist > 0) samples.push([+time.toFixed(1), +dist.toFixed(1), isFinite(avgSplit) ? +avgSplit.toFixed(1) : 0, Math.round(avgSpm), samples.length ? samples[samples.length - 1][4] : 0, 0]);
       const wsum = s.hist.reduce((a, x) => a + x[4], 0);
       const row = addRow({
-        name: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : "") + w.name,
+        name: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name,
         kind: w.kind,
-        key: w.arcade ? null : workoutKey(w),
+        key: w.arcade || w.comet ? null : workoutKey(w),
         dist,
         time,
         split: avgSplit,
@@ -33070,7 +34632,7 @@ ${pts}
         ship: this.ship.def.name,
         source: s.source,
         complete,
-        arcade: !!w.arcade,
+        arcade: !!(w.arcade || w.comet),
         plan: w.plan ? `${(planById(this.plans, w.plan.id) || {}).name || ""} W${w.plan.w + 1}.${w.plan.d + 1}` : "",
         online: w.online ? w.online.code : "",
         team: w.team ? w.team.fmtName : "",
@@ -33300,6 +34862,37 @@ ${pts}
       if (p && p.connected && p.heartRate && performance.now() - p.hrAt < 5e3) return { bpm: p.heartRate, src: "pm5" };
       return null;
     }
+    _engZoneHr() {
+      const h = this._hrNow();
+      if (!h) return null;
+      const z = rowBand(h.bpm, this._bands());
+      return z ? { label: z.i < 0 ? "WU" : z.id, color: z.color, bpm: h.bpm } : null;
+    }
+    /** race-plan pace boat for the current distance piece (null = steady split boat) */
+    _paceProfile(w) {
+      const o = this.opts, plan = o.pacePlan || "split";
+      if (plan === "split" || !w || w.kind !== "distance" || !w.segs || w.segs.length !== 1) return null;
+      const D = w.segs[0].value, T = o.paceTargets && o.paceTargets[D] || defaultTarget(D), segs = racePlan(D, T, plan);
+      return { D, T, plan, segs, short: { even: "EVEN", fast: "FAST", neg: "NEG" }[plan] };
+    }
+    _paintPacePlan() {
+      const $ = (id) => document.getElementById(id), o = this.opts, w = this._selectedRaw(), plan = o.pacePlan || "split";
+      document.querySelectorAll("#pacePlanBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.pp === plan));
+      const D = w && w.kind === "distance" && w.segs && w.segs.length === 1 ? w.segs[0].value : 0;
+      $("pacePlanD").textContent = D ? `for ${D.toLocaleString("en-US")} m` : "(pick a distance workout)";
+      if (!D) {
+        $("pacePlanNote").textContent = "Race plans work on single distance pieces; other workouts use the steady split.";
+        return;
+      }
+      const T = o.paceTargets && o.paceTargets[D] || defaultTarget(D);
+      if (document.activeElement !== $("optPaceTarget")) $("optPaceTarget").value = fmtTime(T).replace(/\.0$/, "");
+      if (plan === "split") {
+        $("pacePlanNote").textContent = `Steady boat at ${fmtSplit(o.paceSplit)}. Pick a plan to race a target time instead.`;
+        return;
+      }
+      const segs = racePlan(D, T, plan);
+      $("pacePlanNote").textContent = segs.map((g) => `${Math.round(g.to - g.from)} m @ ${fmtSplit(g.split)}`).join(" \xB7 ") + ` = ${fmtTime(planTime(segs))}`;
+    }
     _hrChip(src) {
       const el = this._chipHr || (this._chipHr = document.getElementById("chipHr")), h = this._hrNow();
       if (!h) {
@@ -33440,10 +35033,10 @@ ${pts}
       L.on("countdown", ({ startAt }) => this._olCountdown(startAt));
       L.on("emote", (m) => this._showEmote(m));
       L.on("sample", (m) => {
-        const rr = this.racers.find((x) => x.id === m.id);
-        if (rr && rr.push) {
-          rr.push({ t: m.t, d: m.d, split: m.split, finished: m.finished });
-          if (m.finished && m.ft != null) rr.finishT = m.ft;
+        const rr2 = this.racers.find((x) => x.id === m.id);
+        if (rr2 && rr2.push) {
+          rr2.push({ t: m.t, d: m.d, split: m.split, finished: m.finished });
+          if (m.finished && m.ft != null) rr2.finishT = m.ft;
         }
       });
     }
@@ -33471,9 +35064,9 @@ ${pts}
       const okShip = (id) => SHIPS.some((x) => x.id === id && x.id !== "starrider") ? id : "aurora", okCol = (c) => COLORS[c] ? c : null;
       const others = (this.olRoom ? this.olRoom.players : []).filter((p) => p.id !== "me").slice(0, 11);
       const list = others.map((p) => {
-        const rr = new RemoteRacer({ id: p.id, name: String(p.name || "Rower").slice(0, 12).toUpperCase(), ship: okShip(p.ship), color: okCol(p.color) });
-        rr.wall = true;
-        return rr;
+        const rr2 = new RemoteRacer({ id: p.id, name: String(p.name || "Rower").slice(0, 12).toUpperCase(), ship: okShip(p.ship), color: okCol(p.color) });
+        rr2.wall = true;
+        return rr2;
       });
       if (this.opts.olGhosts !== false && list.length) {
         const D = w.segs[0].value, pb = personalBests().find((x) => x.key === "d" + D), mine = this._loadPB()[String(D)], ghost = loadGhosts()[String(D)] || null;
@@ -33961,6 +35554,12 @@ ${pts}
         this.opts.lbPm5 = $("optLbPm5").checked;
         this._saveOpts();
       });
+      $("optMusicFx").checked = this.opts.musicFx !== false;
+      $("optMusicFx").addEventListener("change", () => {
+        this.opts.musicFx = $("optMusicFx").checked;
+        this._saveOpts();
+        if (!this.opts.musicFx) this.audio.setEffort(null);
+      });
       $("optHrFlameEst").checked = !!this.opts.hrFlameEst;
       $("optHrFlameEst").addEventListener("change", () => {
         this.opts.hrFlameEst = $("optHrFlameEst").checked;
@@ -34169,11 +35768,61 @@ ${pts}
       const $ = (id) => document.getElementById(id);
       if (!this._posterData) return;
       const cv = $("posterCv");
-      drawPoster(cv, this._posterData);
+      if (!this._posterShip) this._posterShip = this._shipSnapshot();
+      drawPoster(cv, { ...this._posterData, shipImg: this._posterShip });
       $("posterBox").classList.remove("hidden");
+      $("posterSave").textContent = IS_MOBILE ? "Share" : "Download PNG";
       if (share) {
-        const r = await sharePoster(cv, `cosmicrow-${localDate()}.png`);
+        const d = this._posterData, r = await sharePoster(cv, `cosmicrow-${localDate()}.png`, { mobile: IS_MOBILE, text: `${d.score || d.time} \xB7 ${d.stage}` });
         $("posterNote").textContent = r === "shared" ? "Shared \u2713" : r === "downloaded" ? "Saved as a PNG \u2713" : "";
+      }
+    }
+    /** 3/4 hero render of your current ship (with its glow tier) into a 2D canvas with a transparent background */
+    _shipSnapshot(w = 900, h = 520) {
+      try {
+        const sc = new Scene(), grp = this.ship.group.clone(true);
+        grp.position.set(0, 0, 0);
+        grp.rotation.set(0, 0, 0);
+        grp.scale.set(1, 1, 1);
+        grp.visible = true;
+        sc.add(grp);
+        sc.add(new AmbientLight(16777215, 0.7));
+        const dl = new DirectionalLight(16777215, 1.6);
+        dl.position.set(4, 6, 5);
+        sc.add(dl);
+        const rim = new DirectionalLight(10479871, 1.2);
+        rim.position.set(-5, 2, -6);
+        sc.add(rim);
+        const box = new Box3().setFromObject(grp), c = box.getCenter(new Vector3()), sz = box.getSize(new Vector3()), r = Math.max(sz.x, sz.z, 1);
+        const cam = new PerspectiveCamera(30, w / h, 0.1, 500);
+        cam.position.set(c.x + r * 1.05, c.y + r * 0.5, c.z - r * 1.45);
+        cam.lookAt(c.x, c.y, c.z);
+        const rt = new WebGLRenderTarget(w, h, { samples: this.renderer.capabilities.isWebGL2 ? 4 : 0 });
+        rt.texture.colorSpace = SRGBColorSpace;
+        const prevT = this.renderer.getRenderTarget(), prevC = this.renderer.getClearColor(new Color()), prevA = this.renderer.getClearAlpha();
+        this.renderer.setRenderTarget(rt);
+        this.renderer.setClearColor(0, 0);
+        this.renderer.clear();
+        this.renderer.render(sc, cam);
+        const px2 = new Uint8Array(w * h * 4);
+        this.renderer.readRenderTargetPixels(rt, 0, 0, w, h, px2);
+        this.renderer.setRenderTarget(prevT);
+        this.renderer.setClearColor(prevC, prevA);
+        rt.dispose();
+        const cv = document.createElement("canvas");
+        cv.width = w;
+        cv.height = h;
+        const g = cv.getContext("2d"), id = g.createImageData(w, h);
+        for (let y = 0; y < h; y++) id.data.set(px2.subarray((h - 1 - y) * w * 4, (h - y) * w * 4), y * w * 4);
+        const D = id.data;
+        for (let i = 0; i < D.length; i += 4) {
+          const m = Math.max(D[i], D[i + 1], D[i + 2]);
+          if (m > D[i + 3]) D[i + 3] = Math.min(255, m * 1.4);
+        }
+        g.putImageData(id, 0, 0);
+        return cv;
+      } catch (e) {
+        return null;
       }
     }
     /* ---------- afterburner colour = heart-rate zone (player ship only; rivals keep their colours) ---------- */
@@ -34328,6 +35977,7 @@ ${pts}
       }
       const pace = src === this.pm5 && isFinite(src.paceSec) ? src.paceSec : splitFromSpeed(s.smooth);
       const pmPace = src === this.pm5 && isFinite(src.paceSec) && src.paceSec > 0, watts2 = pmPace ? wattsFromPace(src.paceSec) : wattsFromSpeed(s.smooth);
+      this._effW = watts2;
       const sdt = s.time - s.lastTime;
       s.lastTime = s.time;
       const dd = Math.max(0, src.distanceM - s.lastDist);
@@ -34426,6 +36076,12 @@ ${pts}
         hud.progress = r.phaseT / lim;
         if (r.phase === "warm") hud.distance = r.warmD;
       }
+      if (this.comet) this._cometTick(dt, src, pmPace ? pace : splitFromSpeed(s.smooth));
+      hud.marks = this._marks;
+      {
+        const ez = this._engZoneHr();
+        hud.hrBand = ez;
+      }
       this.hud.update(hud);
       this.hud.pushForce(dt, Math.min(1, src.power || 0));
       if (src === this.pm5 && src.forceCurve && src.curveAt !== s.fcAt) {
@@ -34446,6 +36102,7 @@ ${pts}
       }
       this._extrasTick(dt, src, r, w, s, sdt);
       let gapL = null, gapM = null;
+      const marks = [], goalD = w.kind === "distance" && w.segs && w.segs.length === 1 ? w.segs[0].value : 0;
       if (this.ghostShip) {
         const mt = s.time - r.warmT, gd = ghostDistanceAt(this.ghost, mt), z = -(gd - r.workD) * WORLD_UNITS_PER_M, gs = this.ghostShip.group;
         gs.visible = s.started && z > -900 && z < 1.5;
@@ -34454,11 +36111,13 @@ ${pts}
           const ahead = scoredOnTime(w) ? ghostTimeAt(this.ghost, r.workD) - mt : r.workD - gd;
           gapL = "GHOST";
           gapM = r.workD - gd;
+          if (goalD) marks.push({ f: gd / goalD, c: "ghost" });
           this.hud.chip(this.hud.el.chipGhost, `\u{1F47B} GHOST ${scoredOnTime(w) ? (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(1) + " s" : (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(0) + " m"}`, "ghost");
         }
       }
       if (this.paceShip) {
-        const pd = 500 / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
+        const P5 = this._plan, pd = P5 ? planDistanceAt(P5.segs, r.workT) : 500 / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
+        if (P5) marks.push({ f: pd / P5.D, c: "pace" });
         ps.visible = s.started && z > -900 && z < 1.5;
         ps.position.set(5.5, 0.1 + Math.sin(this.timer.getElapsed() * 1.1 + 1) * 0.08, z);
         if (s.started) {
@@ -34467,10 +36126,14 @@ ${pts}
             gapL = "PACE";
             gapM = d;
           }
-          this.hud.chip(this.hud.el.chipPace, `PACE ${fmtSplit(this.opts.paceSplit).replace(/\.0$/, "")} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m`, "pace");
+          this.hud.chip(this.hud.el.chipPace, P5 ? `PLAN ${fmtTime(P5.T).replace(/\.0$/, "")} ${P5.short} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m` : `PACE ${fmtSplit(this.opts.paceSplit).replace(/\.0$/, "")} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m`, "pace");
         }
       }
       this.hud.setGap(gapL, gapM);
+      if (goalD) {
+        for (const x of this.racers) if (!x.isGhost || !this.ghostShip) marks.push({ f: x.d / goalD, c: x.isGhost ? "ghost" : "rival" });
+      }
+      this._marks = marks;
       this._updateRacers(dt, r, w);
       this._hrChip(src);
       let zone = "";
@@ -34489,6 +36152,18 @@ ${pts}
         this._musicT = 0;
         this.audio.setIntensity(calm ? 0.1 : src.spm > 0 ? Math.min(1, Math.max(0, (src.spm - 18) / 14)) : 0.2);
       }
+      this._effT = (this._effT || 0) + dt;
+      if (this._effT > 0.5) {
+        this._effT = 0;
+        this.audio.setEffort(this.opts.musicFx === false || calm ? null : this._effortNow(src));
+      }
+    }
+    /** music effort 0..1: half stroke rate (18 -> 34 spm), half watts (60 -> 320 W), both eased so a single stroke doesn't pump */
+    _effortNow(src) {
+      const spm = src.spm > 0 ? src.spm : 0, w = isFinite(this._effW) ? this._effW : 0;
+      const raw = 0.5 * Math.max(0, Math.min(1, (spm - 18) / 16)) + 0.5 * Math.max(0, Math.min(1, (w - 60) / 260));
+      this._eff = this._eff == null ? raw : this._eff + (raw - this._eff) * 0.35;
+      return this._eff;
     }
     /* ---------- main loop ---------- */
     _frame() {
@@ -34581,6 +36256,15 @@ ${pts}
           this.audio.milestone();
         }
         this._revealBloom = 0.5 + (p < 1 ? 0.4 * e : 0.25 + 0.35 * Math.max(0, 1 - (t - this._revealT0 - 2.4)));
+      } else if (this.state === "title") {
+        this.garageSpin += dt * 0.4;
+        const narrow = this.camera.aspect < 1.2, px2 = narrow ? 0 : 4.6;
+        g.position.set(px2, 0.55 + Math.sin(t * 1.2) * 0.08, 0);
+        g.rotation.set(0.06, this.garageSpin + Math.PI * 0.72, 0);
+        this.camera.position.set(0.4, narrow ? 3.6 : 3.1, narrow ? 15 : 11);
+        this.camera.lookAt(narrow ? 0 : 1.4, narrow ? -2.6 : -0.2, 0);
+        fovTarget = this.baseFov;
+        this.platform.position.set(px2, -0.55, 0);
       } else if (this.state === "garage") {
         this.garageSpin += dt * 0.55;
         g.position.set(0, 0.2 + Math.sin(t * 1.2) * 0.08, 0);
@@ -34619,6 +36303,15 @@ ${pts}
         la.y += ay * 0.85;
         la.x += ax * 0.5;
         this.camera.lookAt(la);
+      }
+      {
+        const on = this.state === "title" || this.state === "garage";
+        this.platform.visible = on;
+        if (on) {
+          if (this.state === "garage") this.platform.position.set(0, -0.75, 0);
+          this.platform.userData.ring.material.opacity = 0.75 + 0.2 * Math.sin(t * 2.2);
+          this.platform.userData.disc.rotation.y = t * 0.2;
+        }
       }
       if (Math.abs(this.camera.fov - fovTarget) > 0.01) {
         this.camera.fov += (fovTarget - this.camera.fov) * Math.min(1, dt * 3);

@@ -1,0 +1,17 @@
+{
+  "name": "CosmicRow – neon space rowing for your Concept2",
+  "short_name": "CosmicRow",
+  "description": "Free 3D arcade game in your browser. Connect your PM5 and race through neon space.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "landscape",
+  "background_color": "#05030f",
+  "theme_color": "#0a0420",
+  "icons": [
+    { "src": "favicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "favicon-32.png", "sizes": "32x32", "type": "image/png" },
+    { "src": "favicon-16.png", "sizes": "16x16", "type": "image/png" }
+  ]
+}

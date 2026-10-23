@@ -100,6 +100,7 @@
   #flash { position:absolute; left:50%; top:30%; transform:translate(-50%,-50%) scale(1); font-size:clamp(40px,8vw,90px); font-weight:800; font-style:italic;
     color:#fff; text-shadow:0 0 18px var(--mag), 0 0 40px var(--cyan); opacity:0; }
   #flash.go { animation:burst 1.4s ease-out forwards; }
+  #flash.big { color:#ffe46b; text-shadow:0 0 18px #ffb03f, 0 0 46px #ff3fd8; letter-spacing:0.06em; } #flash.big.go { animation:burst 2.6s ease-out forwards; }
   #topBtns { position:fixed; right:14px; bottom:14px; z-index:30; display:flex; gap:8px; }
   @media (max-height: 520px) { #topBtns { right:8px; bottom:8px; } }
   @keyframes flicker { 0%,100%{opacity:1} 47%{opacity:1} 48%{opacity:0.82} 49%{opacity:1} 80%{opacity:0.95} }
@@ -279,6 +280,10 @@
   }
   @media (max-width: 700px) and (max-height: 520px) { #cockpit .pod { display:none; } }
 
+  .stlong { margin-top:8px; gap:6px; flex-wrap:wrap; justify-content:center; } .stlong button { font-size:11px; padding:5px 10px; } .stlong button.sel { border-color:#ffc94d; color:#ffe46b; box-shadow:0 0 10px rgba(255,201,77,0.5); }
+  /* colour themes: HUD accent per stage / game (hue shift from the cyan look); HR colours keep their zone meaning */
+  body:not([data-ctheme="classic"]) #hud .holo, body:not([data-ctheme="classic"]) #cleanHud > :not(#clHr), body:not([data-ctheme="classic"]) #raceBar, body:not([data-ctheme="classic"]) #leader { filter:hue-rotate(var(--hudHue, 0deg)); }
+  #toast { position:fixed; left:50%; top:12%; transform:translateX(-50%); z-index:60; max-width:min(560px,90vw); padding:10px 18px; border:1px solid #3ff6ff; border-radius:10px; background:rgba(4,8,24,0.92); color:#e8fbff; font-size:13px; letter-spacing:0.04em; box-shadow:0 0 18px rgba(63,246,255,0.45); text-align:center; }
   #nowPlaying { position:fixed; left:50%; top:22%; transform:translate(-50%, -10px); z-index:45; pointer-events:none; opacity:0; transition:opacity .5s, transform .5s;
     padding:7px 18px; font-size:12px; letter-spacing:0.12em; color:#dff6ff; text-align:center; background:linear-gradient(90deg, rgba(4,10,24,0.2), rgba(4,10,24,0.85), rgba(4,10,24,0.2));
     border-top:1px solid rgba(63,246,255,0.6); border-bottom:1px solid rgba(255,63,216,0.5); text-shadow:0 0 8px #3fd0ff; }
@@ -665,7 +670,7 @@
   @media (max-width: 640px) { #capLog .clBody { grid-template-columns:1fr; } #capLog .lgList { display:flex; flex-wrap:wrap; gap:4px; } #capLog .lgList button { width:auto; margin:0; font-size:10.5px; } }
 </style>
 </head>
-<body data-build="cosmicrow-v10">
+<body data-build="cosmicrow-v11a">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -756,6 +761,7 @@
 </div>
 
 <div id="nowPlaying" class="hidden"></div>
+<div id="toast" class="hidden"></div>
 <div id="rotateHint">↻ Turn your phone sideways for the best view</div>
 
 <!-- Main screen: just the big choices -->
@@ -803,6 +809,7 @@
           <div class="seg" id="modeTabs"><button data-tab="distance">Distance</button><button data-tab="time">Time</button><button data-tab="intervals">Intervals</button><button data-tab="free">Free row</button></div>
           <div id="modeOpts">
             <div class="row opt" data-for="distance" id="distBtns"><button data-d="500">500 m</button><button data-d="1000">1000 m</button><button data-d="2000">2000 m</button><button data-d="5000">5000 m</button><button data-d="6000">6000 m</button></div>
+            <div class="row opt" data-for="distance" id="longBtns"><span class="note" style="margin-right:6px">Long haul (best on Ringway):</span><button data-d="10000">10 km</button><button data-d="21097">Half marathon</button><button data-d="42195">Marathon</button><button data-d="50000">50 km</button><button data-d="100000">100 km</button></div>
             <div class="row opt" data-for="time" id="timeBtns"><button data-s="60">1 min</button><button data-s="240">4 min</button><button data-s="1800">30 min</button></div>
             <div class="opt" data-for="intervals">
               <div class="row" id="intBtns"></div>
@@ -914,6 +921,7 @@
   <div class="panel stagepanel">
     <div class="tag" style="margin:0 0 8px">Choose your stage</div>
     <div class="stagecards" id="stageCards"></div>
+    <div class="row stlong" id="stLong"><span class="note">🪐 Ringway long haul:</span></div>
     <div class="row" style="margin-top:10px"><button id="stBack">◀ Back</button><button class="big" id="stStart">Start race</button></div>
   </div>
 </div>
@@ -1037,7 +1045,7 @@
         <button data-sec="graphics"><b>Graphics</b><small>Quality</small></button>
         <button data-sec="logbook"><b>Logbook</b><small>Concept2</small></button>
         <button data-sec="strava"><b>Strava</b><small>Export · sync</small></button>
-        <button data-sec="unlocks"><b>Progress</b><small>Unlocks · XP</small></button>
+        <button data-sec="unlocks"><b>Progress</b><small>Unlocks · XP · test</small></button>
         <button data-sec="about"><b>About</b><small>Credits</small></button>
       </nav>
       <div class="mbody">
@@ -1050,6 +1058,7 @@
           <div class="card"><div class="ct">Sound</div><label class="chk"><input type="checkbox" id="optMute"> Mute everything (M)</label></div>
         </section>
         <section class="msec" data-sec="view">
+          <div class="card"><div class="ct">🎨 Colour theme</div><div class="seg" id="cthemeBtns"></div><div class="note" id="cthemeNote"></div><div class="note">Saved with your profile. Classic Cyan is the original look.</div></div>
           <div class="card"><div class="ct">Camera</div><div class="seg" id="viewBtns"><button data-v="chase">Chase</button><button data-v="cockpit">Cockpit</button></div><div class="note">Also C or the ◉ button during a race.</div></div>
           <div class="card"><div class="ct">HUD screens</div><div class="row" id="hudChecks">
             <label class="chk"><input type="checkbox" data-t="hr" checked> Heart rate</label><label class="chk"><input type="checkbox" data-t="drag" checked> Drag</label>
@@ -1094,7 +1103,9 @@
         </section>
         <section class="msec" data-sec="unlocks">
           <div class="card"><div class="ct">Progress</div><div class="infobox">Ships unlock with pilot XP (Profile › Stats): Raven 100 · Valkyrie 300 · Nebula 600 · Titan 1,000 · Phoenix 1,500 · Star Rider 2,500 + a secret challenge. Colours unlock by metres and streaks.</div>
-            <label class="chk hidden" id="devUnlock"><input type="checkbox" id="optUnlockAll"> DEV: unlock all ships &amp; colours (testing only)</label><div class="pbline" id="statsLine"></div></div>
+            <div class="pbline" id="statsLine"></div></div>
+          <div class="card testcard"><div class="ct">🧪 Test</div><label class="chk" id="devUnlock"><input type="checkbox" id="optUnlockAll"> Unlock all ships (incl. Star Rider) &amp; colours</label>
+            <div class="note">For trying every ship. Your XP and real progress are kept: turn it off and ships go back to what your XP has unlocked.</div></div>
         </section>
         <section class="msec" data-sec="about"><div class="card" id="setAbout"></div></section>
       </div>
@@ -1120,7 +1131,7 @@
     <h1 class="logo" style="font-size:52px">CosmicRow</h1>
     <div id="aboutBody">
     <p style="font-size:18px;color:#fff;letter-spacing:0.1em">Developed by Johan K. Jacobsen</p>
-    <p style="font-size:12px;opacity:0.8;line-height:1.6">A Tron / Blade Runner space-rowing experience.<br>Music: <b>Sorina</b> and <b>Neon Horizon</b> by Johan K. Jacobsen · Cosmic Drift &amp; Neon Drive: procedural CosmicRow originals.<br>Today's WOD: Workout of the Day by <a href="https://www.concept2.com/training/wod" target="_blank" rel="noopener" style="color:#3ff6ff">Concept2</a> (personal use).<br>
+    <p style="font-size:12px;opacity:0.8;line-height:1.6">A neon synthwave space-rowing experience.<br>Music: <b>Sorina</b>, <b>Neon Horizon</b> and <b>Skálhøvdi Calling</b> (v1 &amp; v2), all by Johan K. Jacobsen.<br>Today's WOD: Workout of the Day by <a href="https://www.concept2.com/training/wod" target="_blank" rel="noopener" style="color:#3ff6ff">Concept2</a> (personal use).<br>
       Seven ships (one secret), two stages, the Laser Run arcade game, chase &amp; cockpit views.<br>Browser prototype built with Three.js &amp; WebAudio. Concept2 PM5 via Web Bluetooth (Chrome).</p>
     </div>
     <button id="aboutClose">Back</button>
@@ -26657,14 +26668,14 @@ void main() {
   var LADDER_TRAIL = [5, 8, 12, 13, 14, 16, 20];
   var SIG_COL = { aurora: 4191999, raven: 10505215, valkyrie: 16728024, nebula: 13073919, titan: 16747034, phoenix: 16762170, starrider: 16769696 };
   function ladderFill(k, group, out, id, tier, ticks, geo) {
-    const { cy, H, zf, zb, L, W } = geo, col = SIG_COL[id] || 4191999, m = glowMat(col, 2.2), P5 = LOW_FX ? 0.45 : 1;
+    const { cy, H, zf, zb, L, W } = geo, col = SIG_COL[id] || 4191999, m = glowMat(col, 2.2), P2 = LOW_FX ? 0.45 : 1;
     for (let j = 0; out.fx.emissive < LADDER_EMISSIVE[tier] && j < 12; j++) for (const sd of [-1, 1]) {
       out.fx.emissive++;
       k.strip(group, [sd * W * (0.18 + 0.07 * (j % 4)), cy + H * (0.32 - 0.11 * (j % 5)), zf + L * (0.18 + 0.04 * j)], [sd * W * (0.55 + 0.06 * (j % 4)), cy + H * (0.32 - 0.11 * (j % 5)), zb - L * (0.12 + 0.03 * j)], 0.018, m);
     }
     if (out.fx.trailLen < LADDER_TRAIL[tier]) {
       const xs = id === "aurora" ? [-0.56, 0.56] : [0], len = LADDER_TRAIL[tier];
-      for (const x of xs) ticks.push(trail(group, out, zb + 0.1, x, Math.round((22 + tier * 10) * P5), [col, 1718922], 0.22, len, cy - H * 0.05, 0.35));
+      for (const x of xs) ticks.push(trail(group, out, zb + 0.1, x, Math.round((22 + tier * 10) * P2), [col, 1718922], 0.22, len, cy - H * 0.05, 0.35));
       out.fx.trailLen = len;
     }
   }
@@ -26674,7 +26685,7 @@ void main() {
     const bb = new Box3().setFromObject(group), W = Math.max(0.8, bb.max.x), zb = bb.max.z, zf = bb.min.z, H = bb.max.y - bb.min.y, cy = (bb.max.y + bb.min.y) / 2, L = zb - zf;
     const ticks = [];
     let T = 0;
-    const P5 = LOW_FX ? 0.45 : 1;
+    const P2 = LOW_FX ? 0.45 : 1;
     out.fx = { tier, trailLen: 0, emissive: 0, engineGlow: 1 + tier * 0.1, sig: SHIP_SIG[id] || "" };
     for (const f of k.flames) f.halo.scale.multiplyScalar(1 + tier * 0.1);
     const em = (o) => {
@@ -26730,7 +26741,7 @@ void main() {
       for (const sd of [-1, 1]) {
         lineAt(sd, cy + H * 0.25, zf + L * 0.15, zb - L * 0.2, W * 0.15, W * 0.9, 0.035, mm);
         lineAt(sd, cy + H * 0.25 - 0.09, zf + L * 0.18, zb - L * 0.18, W * 0.15, W * 0.9, 0.025, mc);
-        ticks.push(trail(group, out, zb - L * 0.35, sd * (W + 0.1), Math.round(40 * P5), [16728024, 4191999], 0.16, 12, cy + H * 0.3, 0.08));
+        ticks.push(trail(group, out, zb - L * 0.35, sd * (W + 0.1), Math.round(40 * P2), [16728024, 4191999], 0.16, 12, cy + H * 0.3, 0.08));
       }
       out.fx.trailLen = 12;
     }
@@ -26758,7 +26769,7 @@ void main() {
         sh.material.uniforms.uT.value = T;
         sh.material.uniforms.uI.value = 0.15 + 0.15 * th;
       });
-      for (const x of [-W * 0.35, W * 0.35]) ticks.push(trail(group, out, zb, x, Math.round(50 * P5), [13073919, 5905050], 0.55, 13, cy - H * 0.1, 0.9));
+      for (const x of [-W * 0.35, W * 0.35]) ticks.push(trail(group, out, zb, x, Math.round(50 * P2), [13073919, 5905050], 0.55, 13, cy - H * 0.1, 0.9));
       out.fx.trailLen = 13;
     }
     if (tier >= 4) {
@@ -26800,7 +26811,7 @@ void main() {
       ticks.push(() => {
         vm.color.setRGB(1, 0.54, 0.1).multiplyScalar(2 + 0.8 * Math.sin(T * 2.2));
       });
-      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(50 * P5), [16756816, 16730640], 0.3, 14, cy, 1.4));
+      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(50 * P2), [16756816, 16730640], 0.3, 14, cy, 1.4));
       out.fx.trailLen = 14;
     }
     if (id === "phoenix") {
@@ -26819,7 +26830,7 @@ void main() {
         wg.material.opacity = 0.45 + 0.25 * th + 0.12 * Math.sin(T * 11 + i * 2);
         wg.scale.set(1 + 0.08 * Math.sin(T * 7 + i), 1 + 0.12 * Math.sin(T * 9 + i), 1);
       }));
-      for (const x of [-0.35, 0.35]) ticks.push(trail(group, out, zb - 0.2, x, Math.round(90 * P5), [16770155, 16722490], 0.34, 16));
+      for (const x of [-0.35, 0.35]) ticks.push(trail(group, out, zb - 0.2, x, Math.round(90 * P2), [16770155, 16722490], 0.34, 16));
       out.fx.trailLen = 16;
     }
     if (id === "starrider") {
@@ -26849,8 +26860,8 @@ void main() {
           r.material.opacity = 0.5 + 0.4 * th;
         });
       });
-      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(110 * P5), [16777215, 16762170], 0.28, 20, cy - H * 0.3, 1.2));
-      const tw = trail(group, out, zb + 0.4, 0, Math.round(40 * P5), [16773824, 10479871], 0.6, 20, cy - H * 0.2, 2.6);
+      ticks.push(trail(group, out, zb + 0.2, 0, Math.round(110 * P2), [16777215, 16762170], 0.28, 20, cy - H * 0.3, 1.2));
+      const tw = trail(group, out, zb + 0.4, 0, Math.round(40 * P2), [16773824, 10479871], 0.6, 20, cy - H * 0.2, 2.6);
       tw.points.material.map = starTex();
       ticks.push(tw);
       out.fx.trailLen = 20;
@@ -26897,428 +26908,12 @@ void main() {
     });
   }
 
-  // music/cosmicDrift.js
-  var BPM = 84;
-  var STEP = 60 / BPM / 4;
-  var BAR = STEP * 16;
-  var LOOP_BARS = 72;
-  var COSMIC_DRIFT = { BPM, STEP, BAR, LOOP_BARS, LOOP_SECONDS: BAR * LOOP_BARS };
-  var P1 = [[38, 50, 57, 60, 64, 65], [34, 53, 57, 62, 64], [41, 53, 57, 60, 64], [36, 55, 57, 62, 64]];
-  var P2 = [[43, 55, 58, 62, 65, 69], [39, 51, 55, 58, 62], [34, 53, 57, 58, 62], [33, 52, 55, 57, 62]];
-  var P3 = [[38, 50, 57, 62, 64], [36, 55, 60, 65, 67]];
-  var P4 = [[34, 53, 57, 62, 65], [33, 53, 57, 60, 64], [38, 50, 57, 60, 65, 69], [36, 55, 60, 62, 64]];
-  var SCALE = [2, 4, 5, 7, 9, 10, 12];
-  var SECTIONS = [
-    [0, 8, P1, 2, { pad: 1, sub: "long", bells: 0.1 }],
-    [8, 16, P1, 2, { pad: 1, sub: "pulse", arp: "A", bells: 0.08 }],
-    [24, 16, P2, 2, { pad: 1, sub: "pulse", arp: "B", lead: 1, tick: 1, bells: 0.05 }],
-    [40, 8, P3, 4, { pad: 1, sub: "long", lead: 0.6, bells: 0.16 }],
-    [48, 16, P4, 2, { pad: 1, sub: "pulse", arp: "C", lead: 1, tick: 1, thump: 1, bells: 0.06 }],
-    [64, 8, P1, 2, { pad: 1, sub: "long", arp: "A", arpFade: 1, bells: 0.1 }]
-  ];
-  var ARP = { A: { div: 2, pat: [0, 2, 1, 3, 2, 4, 3, 1] }, B: { div: 1, pat: [0, 1, 2, 3, 4, 3, 2, 1, 0, 2, 1, 3, 2, 4, 3, 2] }, C: { div: 1, pat: [0, 2, 4, 2, 1, 3, 5, 3, 0, 2, 4, 6, 4, 3, 2, 1] } };
-  function rng(seed) {
-    let a = seed >>> 0;
-    return () => {
-      a = a + 1831565813 | 0;
-      let t = Math.imul(a ^ a >>> 15, 1 | a);
-      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
-      return ((t ^ t >>> 14) >>> 0) / 4294967296;
-    };
-  }
-  var hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
-  var CosmicDrift = class {
-    /** ctx: (Offline)AudioContext; out: destination node; opts.light = fewer voices (phones); opts.seed */
-    constructor(ctx, out, opts = {}) {
-      this.ctx = ctx;
-      this.light = !!opts.light;
-      this.seed = opts.seed || 2026;
-      this.intensity = 0.25;
-      this.step = 0;
-      this.nextTime = 0;
-      this.running = false;
-      this._buildBus(out);
-    }
-    _buildBus(out) {
-      const c = this.ctx;
-      this.out = c.createGain();
-      this.out.gain.value = 1;
-      const comp = c.createDynamicsCompressor();
-      comp.threshold.value = -14;
-      comp.knee.value = 12;
-      comp.ratio.value = 2.5;
-      comp.attack.value = 0.02;
-      comp.release.value = 0.4;
-      this.mix = c.createGain();
-      this.mix.gain.value = 0.88;
-      this.mix.connect(comp);
-      comp.connect(this.out);
-      this.out.connect(out);
-      this.verb = c.createConvolver();
-      this.verb.buffer = this._impulse(5);
-      this.verbIn = c.createGain();
-      this.verbIn.gain.value = 1;
-      const verbOut = c.createGain();
-      verbOut.gain.value = 0.55;
-      this.verbIn.connect(this.verb);
-      this.verb.connect(verbOut);
-      verbOut.connect(this.mix);
-      const dl = c.createDelay(2), dr = c.createDelay(2), fb = c.createGain(), lp = c.createBiquadFilter();
-      dl.delayTime.value = STEP * 3;
-      dr.delayTime.value = STEP * 4;
-      fb.gain.value = 0.42;
-      lp.type = "lowpass";
-      lp.frequency.value = 2400;
-      this.delayIn = c.createGain();
-      this.delayIn.gain.value = 1;
-      const pl = this._pan(-0.6), pr = this._pan(0.6), dOut = c.createGain();
-      dOut.gain.value = 0.38;
-      this.delayIn.connect(dl);
-      dl.connect(pl);
-      dl.connect(dr);
-      dr.connect(pr);
-      dr.connect(lp);
-      lp.connect(fb);
-      fb.connect(dl);
-      pl.connect(dOut);
-      pr.connect(dOut);
-      dOut.connect(this.mix);
-      dOut.connect(this.verbIn);
-      const bus = (g, verb, delay) => {
-        const n = c.createGain();
-        n.gain.value = g;
-        n.connect(this.mix);
-        if (verb) {
-          const s = c.createGain();
-          s.gain.value = verb;
-          n.connect(s);
-          s.connect(this.verbIn);
-        }
-        if (delay) {
-          const s = c.createGain();
-          s.gain.value = delay;
-          n.connect(s);
-          s.connect(this.delayIn);
-        }
-        return n;
-      };
-      this.padBus = bus(0.5, 0.9, 0.15);
-      this.subBus = bus(0.32, 0.05, 0);
-      this.pulseBus = bus(0.45, 0.15, 0.1);
-      this.arpFilter = c.createBiquadFilter();
-      this.arpFilter.type = "lowpass";
-      this.arpFilter.frequency.value = 2e3;
-      this.arpFilter.Q.value = 0.7;
-      this.arpBus = bus(0.32, 0.6, 0.7);
-      this.arpFilter.connect(this.arpBus);
-      this.leadBus = bus(0.36, 0.9, 0.55);
-      this.bellBus = bus(0.26, 1.2, 0.6);
-      this.tickBus = bus(0.08, 0.4, 0.2);
-      this.thumpBus = bus(0.45, 0.1, 0);
-      this.noise = c.createBuffer(1, c.sampleRate, c.sampleRate);
-      const d = this.noise.getChannelData(0);
-      const r = rng(7);
-      for (let i = 0; i < d.length; i++) d[i] = r() * 2 - 1;
-      this.setIntensity(this.intensity, true);
-    }
-    _pan(p) {
-      const c = this.ctx;
-      if (c.createStereoPanner) {
-        const n = c.createStereoPanner();
-        n.pan.value = p;
-        return n;
-      }
-      return c.createGain();
-    }
-    _impulse(sec) {
-      const c = this.ctx, len = Math.floor(c.sampleRate * sec), buf = c.createBuffer(2, len, c.sampleRate), r = rng(99);
-      for (let ch = 0; ch < 2; ch++) {
-        const d = buf.getChannelData(ch);
-        let lp = 0;
-        for (let i = 0; i < len; i++) {
-          const t = i / len, k = 0.75 - 0.55 * t;
-          lp += k * (r() * 2 - 1 - lp);
-          const pre = Math.min(1, i / (c.sampleRate * 0.02));
-          d[i] = lp * Math.pow(1 - t, 2.2) * pre * 0.9;
-        }
-      }
-      return buf;
-    }
-    /** 0..1 - rises a little with stroke rate; stays calm. */
-    setIntensity(x, now3) {
-      this.intensity = Math.max(0, Math.min(1, x));
-      const t = this.ctx.currentTime, k = now3 ? 0.01 : 2.5, i = this.intensity;
-      this.arpFilter.frequency.setTargetAtTime(1500 + 2300 * i, t, k);
-      this.arpBus.gain.setTargetAtTime(0.27 + 0.13 * i, t, k);
-      this.pulseBus.gain.setTargetAtTime(0.42 + 0.22 * i, t, k);
-      this.tickBus.gain.setTargetAtTime(0.04 + 0.05 * i, t, k);
-    }
-    /* ---------- transport ---------- */
-    start(when) {
-      this.running = true;
-      this.step = 0;
-      this.nextTime = when;
-    }
-    stop(fade = 1.5) {
-      this.running = false;
-      const t = this.ctx.currentTime;
-      this.out.gain.cancelScheduledValues(t);
-      this.out.gain.setValueAtTime(this.out.gain.value, t);
-      this.out.gain.linearRampToValueAtTime(0, t + fade);
-      setTimeout(() => {
-        try {
-          this.out.disconnect();
-        } catch (e) {
-        }
-      }, (fade + 6) * 1e3);
-    }
-    /** Schedule every 16th step that starts before tEnd (call often for live play, once for offline). */
-    scheduleUntil(tEnd) {
-      if (!this.running) return;
-      if (this.nextTime < this.ctx.currentTime - 0.2) {
-        const skip = Math.ceil((this.ctx.currentTime - this.nextTime) / STEP);
-        this.step += skip;
-        this.nextTime += skip * STEP;
-      }
-      while (this.nextTime < tEnd) {
-        this._step(this.step, this.nextTime);
-        this.step++;
-        this.nextTime += STEP;
-      }
-    }
-    _section(bar) {
-      for (let i = SECTIONS.length - 1; i >= 0; i--) if (bar >= SECTIONS[i][0]) return SECTIONS[i];
-      return SECTIONS[0];
-    }
-    _step(step, t) {
-      const loop = Math.floor(step / (16 * LOOP_BARS)), inLoop = step % (16 * LOOP_BARS), bar = Math.floor(inLoop / 16), s = inLoop % 16;
-      const [start, len, prog, bpc, f] = this._section(bar);
-      const rel = bar - start, ci = Math.floor(rel / bpc) % prog.length, chord = prog[ci];
-      const r = rng(this.seed + loop * 7919 + inLoop * 31);
-      const chordStart = rel % bpc === 0 && s === 0, chordDur = bpc * BAR;
-      if (f.pad && chordStart) this._pad(t, chord.slice(1), chordDur, rel === 0 && start === 0);
-      if (f.sub === "long" && chordStart) this._sub(t, chord[0], chordDur);
-      if (f.sub === "pulse") {
-        if (s % 2 === 0) this._pulse(t, chord[0], s % 8 === 0 ? 1 : s % 4 === 0 ? 0.75 : 0.55);
-        if (chordStart) this._sub(t, chord[0], chordDur, 0.55);
-      }
-      if (f.arp) {
-        const a = ARP[f.arp];
-        if (s % a.div === 0) {
-          const idx = a.pat[s / a.div % a.pat.length], tones = chord.slice(1).map((m) => m + 12);
-          let note = tones[idx % tones.length] + (idx >= tones.length ? 12 : 0);
-          if (r() < 0.12) note += 12;
-          const restP = a.div === 1 ? s % 2 ? 0.35 : 0.1 : 0.08;
-          let vel = (s % 4 === 0 ? 1 : 0.7) * (f.arpFade ? 1 - rel / len * 0.85 : 1) * (rel < 2 && start !== 64 ? 0.5 + rel * 0.25 : 1);
-          if (r() > restP) this._arp(t, note, STEP * a.div * 0.9, vel);
-        }
-      }
-      if (f.lead && (s === 0 || s === 8)) this._leadPhrase(t, s, rel, chord, f.lead, r, loop);
-      if (f.bells && s % 4 === 2 && r() < f.bells) {
-        const tones = chord.slice(1);
-        this._bell(t, tones[Math.floor(r() * tones.length)] + 24 + (r() < 0.3 ? 12 : 0), 0.5 + r() * 0.5);
-      }
-      if (f.tick && s % 4 === 2) this._tick(t, 0.6 + r() * 0.4);
-      if (f.tick && s % 2 === 1 && r() < 0.25) this._tick(t, 0.3);
-      if (f.thump && (s === 0 || s === 8)) this._thump(t, s === 0 ? 1 : 0.7);
-    }
-    /* ---------- instruments ---------- */
-    _env(g, t, a, peak, hold, rel) {
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(peak, t + a);
-      g.gain.setValueAtTime(peak, t + a + hold);
-      g.gain.linearRampToValueAtTime(0, t + a + hold + rel);
-      return t + a + hold + rel;
-    }
-    _pad(t, notes, dur, first) {
-      const c = this.ctx, att = first ? 3.5 : 1.6, rel = 2.6, hold = Math.max(0.1, dur - att * 0.5), end = t + att + hold + rel;
-      const filt = c.createBiquadFilter();
-      filt.type = "lowpass";
-      filt.Q.value = 0.8;
-      filt.frequency.setValueAtTime(800, t);
-      filt.frequency.linearRampToValueAtTime(2600 + 700 * this.intensity, t + dur * 0.55);
-      filt.frequency.linearRampToValueAtTime(1100, end);
-      const g = c.createGain();
-      this._env(g, t, att, 0.11, hold, rel);
-      filt.connect(g);
-      g.connect(this.padBus);
-      const dets = this.light ? [-7, 7] : [-9, 0, 9];
-      notes.forEach((m, ni) => dets.forEach((det, di) => {
-        const o = c.createOscillator();
-        o.type = di === 1 ? "triangle" : "sawtooth";
-        o.frequency.value = hz(m);
-        o.detune.value = det + (ni % 2 ? 2 : -2);
-        const p = this._pan((di - (dets.length - 1) / 2) * 0.55);
-        const vg = c.createGain();
-        vg.gain.value = m < 52 ? 0.45 : 1;
-        o.connect(vg);
-        vg.connect(p);
-        p.connect(filt);
-        o.start(t);
-        o.stop(end + 0.05);
-      }));
-    }
-    _sub(t, m, dur, level = 1) {
-      const c = this.ctx, o = c.createOscillator(), g = c.createGain();
-      o.type = "sine";
-      o.frequency.value = hz(m >= 40 ? m - 12 : m);
-      const end = this._env(g, t, 0.5, 0.42 * level, Math.max(0.1, dur - 0.6), 0.9);
-      o.connect(g);
-      g.connect(this.subBus);
-      o.start(t);
-      o.stop(end + 0.05);
-    }
-    _pulse(t, m, vel) {
-      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
-      o.type = "sawtooth";
-      o2.type = "sine";
-      o.frequency.value = hz(m);
-      o2.frequency.value = hz(m);
-      f.type = "lowpass";
-      f.Q.value = 2;
-      f.frequency.setValueAtTime(260 + 380 * vel * (0.6 + this.intensity * 0.6), t);
-      f.frequency.exponentialRampToValueAtTime(110, t + 0.3);
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.2 * vel, t + 0.012);
-      g.gain.exponentialRampToValueAtTime(8e-4, t + 0.42);
-      g.gain.linearRampToValueAtTime(0, t + 0.45);
-      o.connect(f);
-      o2.connect(f);
-      f.connect(g);
-      g.connect(this.pulseBus);
-      o.start(t);
-      o2.start(t);
-      o.stop(t + 0.47);
-      o2.stop(t + 0.47);
-    }
-    _arp(t, m, dur, vel) {
-      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain();
-      o.type = "square";
-      o2.type = "triangle";
-      o.frequency.value = hz(m);
-      o2.frequency.value = hz(m);
-      o2.detune.value = 6;
-      const sq = c.createGain();
-      sq.gain.value = 0.35;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.16 * vel, t + 8e-3);
-      g.gain.exponentialRampToValueAtTime(1e-3, t + dur + 0.25);
-      g.gain.linearRampToValueAtTime(0, t + dur + 0.28);
-      o.connect(sq);
-      sq.connect(g);
-      o2.connect(g);
-      g.connect(this.arpFilter);
-      o.start(t);
-      o2.start(t);
-      o.stop(t + dur + 0.3);
-      o2.stop(t + dur + 0.3);
-    }
-    _leadPhrase(t, s, rel, chord, amount, r, loop) {
-      if (r() > 0.62 * amount + 0.1) return;
-      const tones = chord.slice(1).map((m2) => m2 + 12).filter((m2) => m2 >= 64 && m2 <= 81);
-      const pool = [];
-      for (let o = 60; o <= 84; o += 12) for (const d of SCALE) {
-        const m2 = o + d;
-        if (m2 >= 64 && m2 <= 81) pool.push(m2);
-      }
-      this._lastLead = this._lastLead || 69;
-      let m = r() < 0.6 && tones.length ? tones.reduce((a, b) => Math.abs(b - this._lastLead) < Math.abs(a - this._lastLead) ? b : a) : pool[Math.max(0, Math.min(pool.length - 1, pool.indexOf(this._nearest(pool, this._lastLead)) + Math.floor(r() * 5) - 2))];
-      this._lastLead = m;
-      const dur = STEP * (r() < 0.5 ? 8 : r() < 0.6 ? 12 : 6);
-      this._lead(t, m, dur, 0.8 + r() * 0.2);
-    }
-    _nearest(pool, m) {
-      return pool.reduce((a, b) => Math.abs(b - m) < Math.abs(a - m) ? b : a);
-    }
-    _lead(t, m, dur, vel) {
-      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), lfo = c.createOscillator(), lg = c.createGain(), g = c.createGain(), f = c.createBiquadFilter();
-      o.type = "triangle";
-      o2.type = "sine";
-      o.frequency.value = hz(m);
-      o2.frequency.value = hz(m + 12);
-      lfo.frequency.value = 4.6;
-      lg.gain.value = 0;
-      lg.gain.setValueAtTime(0, t);
-      lg.gain.linearRampToValueAtTime(9, t + dur * 0.6);
-      lfo.connect(lg);
-      lg.connect(o.detune);
-      lg.connect(o2.detune);
-      f.type = "lowpass";
-      f.frequency.value = 2600;
-      const o2g = c.createGain();
-      o2g.gain.value = 0.18;
-      const end = this._env(g, t, 0.18, 0.13 * vel, Math.max(0.05, dur - 0.2), 1.4);
-      o.connect(f);
-      o2.connect(o2g);
-      o2g.connect(f);
-      f.connect(g);
-      g.connect(this.leadBus);
-      [o, o2, lfo].forEach((n) => {
-        n.start(t);
-        n.stop(end + 0.05);
-      });
-    }
-    _bell(t, m, vel) {
-      const c = this.ctx, g = c.createGain(), o = c.createOscillator(), o2 = c.createOscillator(), g2 = c.createGain(), p = this._pan(m % 5 / 5 - 0.4);
-      o.type = "sine";
-      o2.type = "sine";
-      o.frequency.value = hz(m);
-      o2.frequency.value = hz(m) * 2.76;
-      g2.gain.value = 0.12;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.09 * vel, t + 6e-3);
-      g.gain.exponentialRampToValueAtTime(5e-4, t + 3.2);
-      g.gain.linearRampToValueAtTime(0, t + 3.25);
-      o.connect(g);
-      o2.connect(g2);
-      g2.connect(g);
-      g.connect(p);
-      p.connect(this.bellBus);
-      o.start(t);
-      o2.start(t);
-      o.stop(t + 3.3);
-      o2.stop(t + 3.3);
-    }
-    _tick(t, vel) {
-      const c = this.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
-      s.buffer = this.noise;
-      f.type = "bandpass";
-      f.frequency.value = 7500;
-      f.Q.value = 0.8;
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.5 * vel, t + 3e-3);
-      g.gain.exponentialRampToValueAtTime(1e-3, t + 0.07);
-      g.gain.linearRampToValueAtTime(0, t + 0.075);
-      s.connect(f);
-      f.connect(g);
-      g.connect(this.tickBus);
-      s.start(t, t * 7.31 % 0.5);
-      s.stop(t + 0.08);
-    }
-    _thump(t, vel) {
-      const c = this.ctx, o = c.createOscillator(), g = c.createGain();
-      o.type = "sine";
-      o.frequency.setValueAtTime(78, t);
-      o.frequency.exponentialRampToValueAtTime(42, t + 0.22);
-      g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.5 * vel, t + 5e-3);
-      g.gain.exponentialRampToValueAtTime(1e-3, t + 0.45);
-      g.gain.linearRampToValueAtTime(0, t + 0.46);
-      o.connect(g);
-      g.connect(this.thumpBus);
-      o.start(t);
-      o.stop(t + 0.48);
-    }
-  };
-
   // music/tracks.js
   var TRACKS = [
-    { id: "cosmic", name: "Cosmic Drift", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 205.7 },
     { id: "sorina", name: "Sorina", artist: "Johan K. Jacobsen", kind: "file", src: "music/Sorina.mp3", gainDb: -0.7 },
-    // measured -15.3 LUFS -> matched to Cosmic Drift (-16)
+    // measured -15.3 LUFS -> matched to -16 LUFS
     { id: "neonhorizon", name: "Neon Horizon", artist: "Johan K. Jacobsen", kind: "file", src: "music/NeonHorizon.mp3", gainDb: -0.9 },
     // measured -15.1 LUFS; theme of the Sunset Drive stage
-    { id: "drive", name: "Neon Drive", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 180 },
     { id: "skalhovdi", name: "Sk\xE1lh\xF8vdi Calling", artist: "Johan K. Jacobsen", kind: "file", src: "music/skalhovdi_3026.mp3", gainDb: -0.1 },
     // Suno, 3:30, 128 bpm; measured -15.9 LUFS; theme of the Skálavík 3026 stage
     { id: "skalhovdi2", name: "Sk\xE1lh\xF8vdi Calling (v2)", artist: "Johan K. Jacobsen", kind: "file", src: "music/skalhovdi_3026_v2.mp3", gainDb: 0.2 }
@@ -27326,6 +26921,7 @@ void main() {
   ];
   var STAGE_THEMES = { sunset: "neonhorizon", skalavik: "skalhovdi" };
   var CALM_THEME = "skalhovdi2";
+  var DEFAULT_TRACK = "skalhovdi2";
   var trackById = (id) => TRACKS.find((t) => t.id === id) || null;
 
   // workouts.js
@@ -27336,8 +26932,10 @@ void main() {
   };
   var fmtDist = (m) => m >= 1e3 && m % 1e3 === 0 ? `${m / 1e3}k` : `${m}m`;
   var segLabel = (g) => g.type === "distance" ? fmtDist(g.value) : fmtClock(g.value);
+  var LONG_DIST = [1e4, 21097, 42195, 5e4, 1e5];
+  var distName = (m) => m === 21097 ? "Half marathon" : m === 42195 ? "Marathon" : m >= 1e3 ? m / 1e3 + " km" : m + " m";
   function wDistance(m) {
-    return { kind: "distance", name: `${m >= 1e3 ? m / 1e3 + " km" : m + " m"}`, segs: [{ type: "distance", value: m, rest: 0 }] };
+    return { kind: "distance", name: distName(m), segs: [{ type: "distance", value: m, rest: 0 }] };
   }
   function wTime(s) {
     return { kind: "time", name: `${fmtClock(s)} min`, segs: [{ type: "time", value: s, rest: 0 }] };
@@ -27758,16 +27356,25 @@ void main() {
   // ghost.js
   var KEY2 = "cosmicrow.ghost.v1";
   var GhostRecorder = class {
-    constructor() {
+    constructor(max = 8e3) {
       this.t = [0];
       this.d = [0];
       this._last = 0;
+      this.iv = 1;
+      this.max = max;
     }
+    /** long rows (marathon, 100 km over hours): past `max` points, keep every other point and double the interval -> memory stays bounded */
     sample(t, d, force) {
-      if (force || t - this._last >= 1) {
+      if (force && this.iv === 1 || t - this._last >= this.iv) {
         this.t.push(+t.toFixed(2));
         this.d.push(+d.toFixed(2));
         this._last = t;
+      }
+      if (this.t.length > this.max) {
+        const keep = (a) => a.filter((_, i) => i % 2 === 0 || i === a.length - 1);
+        this.t = keep(this.t);
+        this.d = keep(this.d);
+        this.iv *= 2;
       }
     }
     data(extra) {
@@ -27982,7 +27589,7 @@ void main() {
     { id: "phoenix", name: "PHOENIX", ship: "phoenix", color: "gold", offset: 0 }
   ];
   var RIVAL_LANES = [-4.5, 4.5, -7.4, 7.4, -2.2];
-  function rng2(seed) {
+  function rng(seed) {
     let a = seed | 0;
     return () => {
       a = a + 1831565813 | 0;
@@ -27995,7 +27602,7 @@ void main() {
     /** targetSplit in s/500m. Personality: start burst, slow drift (fatigue/surges), small stroke-to-stroke noise, sprint finish. */
     constructor({ id, name, ship, color, targetSplit, seed = 1, finishM = 0 }) {
       Object.assign(this, { id, name, ship, color, targetSplit, finishM });
-      const r = this.r = rng2(seed * 7919 + 13);
+      const r = this.r = rng(seed * 7919 + 13);
       this.d = 0;
       this.split = NaN;
       this.finished = false;
@@ -28245,7 +27852,7 @@ void main() {
     const rank = list.indexOf(entry);
     return rank >= 0 ? rank + 1 : 0;
   }
-  function rng3(seed) {
+  function rng2(seed) {
     let a = seed | 0;
     return () => {
       a = a + 1831565813 | 0;
@@ -28258,7 +27865,7 @@ void main() {
     constructor(scene, { color = 4191999, cruiseSplit = 135, seed = Date.now() & 65535 } = {}) {
       this.scene = scene;
       this.cruise = cruiseSplit;
-      this.rnd = rng3(seed);
+      this.rnd = rng2(seed);
       this.group = new Group();
       scene.add(this.group);
       this._mkAssets(color);
@@ -28806,7 +28413,7 @@ void main() {
   var KEY4 = "cosmicrow.history.v1";
   var MAX_ROWS = 150;
   var MAX_SAMPLES2 = 240;
-  var PB_DIST = [100, 500, 1e3, 2e3, 5e3, 6e3, 1e4];
+  var PB_DIST = [100, 500, 1e3, 2e3, 5e3, 6e3, 1e4, 21097, 42195, 5e4, 1e5];
   var PB_TIME = [60, 240, 1800, 3600];
   var watts = (pace) => pace > 0 ? 2.8 / Math.pow(pace / 500, 3) : 0;
   var pad2 = (n) => String(n).padStart(2, "0");
@@ -28816,7 +28423,7 @@ void main() {
     const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, x = s % 60;
     return (h ? h + ":" + pad2(m) : m) + ":" + (x < 10 ? "0" : "") + x.toFixed(1);
   };
-  var distLabel = (m) => m >= 1e3 ? m / 1e3 + " km" : m + " m";
+  var distLabel = (m) => m === 21097 ? "Half marathon" : m === 42195 ? "Marathon" : m >= 1e3 ? m / 1e3 + " km" : m + " m";
   var timeLabel = (s) => s >= 3600 ? s / 3600 + " h" : s / 60 + " min";
   function downsample(samples, max = MAX_SAMPLES2) {
     if (samples.length <= max) return samples.slice();
@@ -29554,7 +29161,7 @@ ${pts}
       p = JSON.parse(localStorage.getItem(PKEY) || "{}");
     } catch (e) {
     }
-    return Object.assign({ id: rid(), name: "", flag: "fo", birthYear: 0, sex: "", weightKg: 0, hrMax: 0, share: false }, p);
+    return Object.assign({ id: rid(), name: "", flag: "fo", colourTheme: "classic", birthYear: 0, sex: "", weightKg: 0, hrMax: 0, share: false }, p);
   }
   function saveProfile(p) {
     localStorage.setItem(PKEY, JSON.stringify(p));
@@ -29590,7 +29197,7 @@ ${pts}
     const i = RANKS.indexOf(r), nx = RANKS[i + 1];
     return { ...r, next: nx || null, toNext: nx ? nx.min - m : 0, pct: nx ? (m - r.min) / (nx.min - r.min) : 1 };
   }
-  function rng4(seed) {
+  function rng3(seed) {
     let s = seed >>> 0 || 1;
     return () => ((s = Math.imul(s ^ s >>> 15, 2246822507) ^ Math.imul(s ^ s >>> 13, 3266489909)) >>> 0) / 4294967296;
   }
@@ -29602,7 +29209,7 @@ ${pts}
   var FIRST = ["Ane", "Bo", "Cecilie", "Dmitri", "Elif", "Frode", "Gry", "Hamid", "Ida", "Jonas", "Kirsi", "Lars", "Maja", "Nils", "Oda", "Pia", "Rasmus", "Sara", "Tobias", "Ulla", "Viggo", "Yasmin", "Aksel", "Freja", "Emil", "Sofie", "Kasper", "Nora"];
   var LAST = "ABDEFHJKLMNPRSTV";
   function exampleLeague(week, n = 60) {
-    const r = rng4(hash(week)), out = [];
+    const r = rng3(hash(week)), out = [];
     for (let i = 0; i < n; i++) out.push({ id: "ex" + i, name: `${FIRST[r() * FIRST.length | 0]} ${LAST[r() * LAST.length | 0]}.`, age: AGE_GROUPS[r() * 5 | 0], wc: r() < 0.3 ? "LW" : "HW", m: Math.round((4e3 + Math.pow(r(), 1.6) * 8e4) / 10) * 10, example: true });
     return out;
   }
@@ -29626,7 +29233,7 @@ ${pts}
   var CODE_CH2 = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   var clubCode = (rnd = Math.random) => Array.from({ length: 5 }, () => CODE_CH2[rnd() * CODE_CH2.length | 0]).join("");
   function exampleMembers(code, n = 5) {
-    const r = rng4(hash(code + "m")), out = [];
+    const r = rng3(hash(code + "m")), out = [];
     for (let i = 0; i < n; i++) out.push({ id: "em" + i, name: `${FIRST[r() * FIRST.length | 0]} ${LAST[r() * LAST.length | 0]}.`, split: 112 + r() * 26, m: Math.round(5e3 + r() * 4e4), example: true });
     return out;
   }
@@ -29642,7 +29249,7 @@ ${pts}
     if (!/^[A-HJ-NP-Z2-9]{5}$/.test(code)) throw new Error("Club codes are 5 letters/digits.");
     let c = st.list.find((x) => x.code === code);
     if (!c) {
-      const r = rng4(hash(code));
+      const r = rng3(hash(code));
       c = { code, name: ["Harbour", "Northside", "Fjord", "Lakeside", "Old Town", "Neon"][r() * 6 | 0] + " " + ["Rowing Club", "Erg Crew", "Oarsmen", "Indoor RC"][r() * 4 | 0], created: Date.now(), mode: "local", members: exampleMembers(code, 6), example: true };
       st.list.push(c);
     }
@@ -29665,7 +29272,7 @@ ${pts}
     { id: "agg2k", name: "Aggregate 2k", legs: 3, leg: 2e3, desc: "Three rowers each row 2000 m. The lowest combined time wins." }
   ];
   function rivalClub(club) {
-    const r = rng4(hash(club.code + "rival"));
+    const r = rng3(hash(club.code + "rival"));
     return { name: ["Steelwater", "Ice Harbour", "Bluefin", "Kestrel", "Polar Night"][r() * 5 | 0] + " RC", members: exampleMembers(club.code + "rv", 4), example: true };
   }
   function teamLegs(members, fmt, rnd = Math.random) {
@@ -30355,18 +29962,18 @@ ${pts}
     ground.position.set(-1500, TRACK_Y2 - 0.35, -1400);
     ground.renderOrder = -5;
     group.add(ground);
-    const P5 = SK_PHOTO, PX_C = P5.W / 2 - SK_XOFF / SK_S, S = SK_S, ZC = SK_ZC;
+    const P2 = SK_PHOTO, PX_C = P2.W / 2 - SK_XOFF / SK_S, S = SK_S, ZC = SK_ZC;
     const hAt = (px2) => {
-      const f = (px2 - P5.X0) / P5.STEP;
+      const f = (px2 - P2.X0) / P2.STEP;
       if (f <= 0) return 0;
       const n = SK_PROFILE.length - 1;
-      if (f >= n) return SK_PROFILE[n] + (f - n) * P5.STEP * 0.04;
+      if (f >= n) return SK_PROFILE[n] + (f - n) * P2.STEP * 0.04;
       const i = Math.floor(f), t = f - i;
       return SK_PROFILE[i] * (1 - t) + SK_PROFILE[i + 1] * t;
     };
     K.hAt = hAt;
     K.S = S;
-    const U0 = P5.X0 - 6, U1 = P5.W + 260, NU = LOW ? 150 : 290, NV = LOW ? 26 : 44;
+    const U0 = P2.X0 - 6, U1 = P2.W + 260, NU = LOW ? 150 : 290, NV = LOW ? 26 : 44;
     const pos = [], uvp = [], vv = [], idx = [];
     for (let j = 0; j <= NV; j++) {
       const t = j / NV, v = t * t;
@@ -30376,7 +29983,7 @@ ${pts}
         pos.push(x, y, z);
         vv.push(v);
         const dv = -ZC / Math.max(1, -ZC - v * depth);
-        uvp.push((PX_C + (u - PX_C) * dv) / P5.W, (P5.HOR - y / S * dv) / P5.H);
+        uvp.push((PX_C + (u - PX_C) * dv) / P2.W, (P2.HOR - y / S * dv) / P2.H);
       }
     }
     for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) {
@@ -30442,14 +30049,14 @@ ${pts}
     {
       const rg = new DodecahedronGeometry(1, 0), rm = new MeshBasicMaterial({ color: 329485, fog: false }), rr2 = mulberry322(88);
       for (let i = 0; i < 26; i++) {
-        const u = P5.X0 - 150 + rr2() * 175, r = (6 + rr2() * 14) * S * 0.25, o = new Mesh(rg, rm);
+        const u = P2.X0 - 150 + rr2() * 175, r = (6 + rr2() * 14) * S * 0.25, o = new Mesh(rg, rm);
         o.scale.set(r * 2.2, r * (0.5 + rr2() * 0.5), r * 1.4);
         o.position.set((u - PX_C) * S, TRACK_Y2 - r * 0.2, ZC + 160 + rr2() * 260);
         K.mtnGroup.add(o);
       }
       const wl = new Mesh(new PlaneGeometry(175 * S, 6), new MeshBasicMaterial({ color: 4191999, transparent: true, opacity: 0.55, blending: AdditiveBlending, depthWrite: false, fog: false }));
       wl.rotation.x = -Math.PI / 2;
-      wl.position.set((P5.X0 - 62 - PX_C) * S, TRACK_Y2 - 0.2, ZC + 300);
+      wl.position.set((P2.X0 - 62 - PX_C) * S, TRACK_Y2 - 0.2, ZC + 300);
       K.mtnGroup.add(wl);
     }
     const BU = 642, bx = (BU - PX_C) * S, by = TRACK_Y2 + hAt(BU) * S, bz = ZC + 4;
@@ -30679,7 +30286,7 @@ ${pts}
     const group = new Group();
     env.scene.add(group);
     const rnd = mulberry322(6116);
-    const K = { group, prog: 0, ice: [], cA: new Color(), cB: new Color() };
+    const K = { group, prog: 0, flare: 0, ice: [], arches: [], cA: new Color(), cB: new Color() };
     const giantMat = new ShaderMaterial({
       fog: false,
       uniforms: { uTime: { value: 0 }, uTint: { value: new Color(BLUE.ring) }, uSun: { value: new Vector3(0.6, 0.35, 0.7).normalize() } },
@@ -30708,17 +30315,65 @@ ${pts}
       uniforms: { uTint: { value: new Color(BLUE.ring) } },
       vertexShader: "varying vec2 vP; void main(){ vP = position.xy; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
       fragmentShader: `uniform vec3 uTint; varying vec2 vP; float h(float x){ return fract(sin(x*12.9898)*43758.5453); }
-      void main(){ float r = length(vP) / 1250.0; if (r < 1.25 || r > 2.35) discard;
+      void main(){ float r = length(vP) / 1250.0; if (r < 1.25 || r > 2.9) discard;
         float k = floor(r * 90.0); float band = 0.35 + 0.65 * h(k); float gap = smoothstep(1.78, 1.8, r) * (1.0 - smoothstep(1.86, 1.88, r));
-        float a = band * (1.0 - gap * 0.9) * smoothstep(1.25, 1.32, r) * (1.0 - smoothstep(2.2, 2.35, r)) * 0.8;
+        float gap2 = smoothstep(2.32, 2.34, r) * (1.0 - smoothstep(2.4, 2.42, r));
+        float a = band * (1.0 - gap * 0.9) * (1.0 - gap2 * 0.85) * smoothstep(1.25, 1.32, r) * (1.0 - smoothstep(2.7, 2.9, r)) * 0.8;
         gl_FragColor = vec4(mix(vec3(0.95,0.85,0.7), uTint, 0.45) * (0.6 + 0.6*band), a); }`
     });
-    const ring = new Mesh(new RingGeometry(R * 1.2, R * 2.4, IS_MOBILE2 ? 96 : 160, 1), ringMat);
+    const ring = new Mesh(new RingGeometry(R * 1.2, R * 2.95, IS_MOBILE2 ? 96 : 160, 1), ringMat);
     ring.rotation.x = -Math.PI / 2 + 0.18;
     giantG.add(ring);
     K.giantMat = giantMat;
     K.ringMat = ringMat;
     K.giantG = giantG;
+    const megaMat = new ShaderMaterial({
+      fog: false,
+      transparent: true,
+      depthWrite: false,
+      uniforms: { uTint: { value: new Color(BLUE.ring) }, uTime: { value: 0 }, uFlare: { value: 0 } },
+      vertexShader: "varying vec2 vU; void main(){ vU = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }",
+      fragmentShader: `uniform vec3 uTint; uniform float uTime; uniform float uFlare; varying vec2 vU;
+      float h(float x){ return fract(sin(x*78.233)*43758.5453); }
+      void main(){ float u = vU.x * 900.0, v = vU.y;
+        float seg = fract(u); float k = floor(u); float panel = smoothstep(0.02, 0.06, seg) * (1.0 - smoothstep(0.94, 0.98, seg));
+        float face = smoothstep(0.08, 0.12, v) * (1.0 - smoothstep(0.42, 0.46, v));                 // the lit face of the band
+        float edge = exp(-pow((v - 0.07) * 50.0, 2.0)) + exp(-pow((v - 0.47) * 50.0, 2.0)) + 0.5 * exp(-pow((v - 0.27) * 80.0, 2.0));          // neon edge lines
+        float win = step(0.55, h(k)) * (0.6 + 0.4 * sin(uTime * 0.7 + k));
+        float run = smoothstep(0.985, 1.0, fract(vU.x * 6.0 - uTime * 0.02));                      // light pulse running round the ring
+        vec3 c = uTint * (face * panel * (0.12 + 0.5 * win) + edge * 1.4 + run * face * 2.0) * (1.0 + uFlare * 2.0) + vec3(1.0, 0.85, 0.5) * uFlare * edge;
+        float a = clamp(face * 0.85 + edge, 0.0, 1.0);
+        gl_FragColor = vec4(c, a); }`
+    });
+    const megaG = new Group();
+    megaG.position.set(250, -380, -2900);
+    megaG.rotation.set(-0.22, 0.42, 0.08);
+    group.add(megaG);
+    K.megaG = megaG;
+    const megaGeo = new TorusGeometry(1700, 60, 8, IS_MOBILE2 ? 220 : 360);
+    for (const [sc, z] of [[1, 0], [0.82, -60]]) {
+      const m = new Mesh(megaGeo, megaMat);
+      m.scale.setScalar(sc);
+      m.position.z = z;
+      megaG.add(m);
+    }
+    K.megaMat = megaMat;
+    const ARCH_R = 64, AN = 6, ASP = 320;
+    K.ARCH_SP = ASP;
+    K.archLoop = AN * ASP;
+    const archMat = new MeshBasicMaterial({ color: BLUE.ring, toneMapped: false });
+    const haloMat = new MeshBasicMaterial({ color: BLUE.ring, transparent: true, opacity: 0.16, blending: AdditiveBlending, depthWrite: false, toneMapped: false });
+    const archGeo = new TorusGeometry(ARCH_R, 1.1, 8, 120, Math.PI), haloGeo = new TorusGeometry(ARCH_R, 4.5, 8, 120, Math.PI), innerGeo = new TorusGeometry(ARCH_R - 5, 0.4, 6, 120, Math.PI);
+    for (let i = 0; i < AN; i++) {
+      const g = new Group();
+      g.add(new Mesh(archGeo, archMat), new Mesh(haloGeo, haloMat), new Mesh(innerGeo, archMat));
+      g.position.set(0, TRACK_Y2 - 1.4, -120 - i * ASP);
+      group.add(g);
+      K.arches.push(g);
+    }
+    K.archMat = archMat;
+    K.haloMat = haloMat;
+    K.ARCH_R = ARCH_R;
     const floorMat = new ShaderMaterial({
       transparent: true,
       depthWrite: false,
@@ -30783,8 +30438,9 @@ ${pts}
     group.visible = false;
     return K;
   }
-  function ringwayMood(p) {
-    const c = (k) => new Color(BLUE[k]).lerp(new Color(GOLD[k]), Math.max(0, Math.min(1, p)));
+  function ringwayMood(p, pal = null) {
+    const A = pal && pal.BLUE || BLUE, B = pal && pal.GOLD || GOLD;
+    const c = (k) => new Color(A[k]).lerp(new Color(B[k]), Math.max(0, Math.min(1, p)));
     return { top: c("top"), mid: c("mid"), hor: c("hor"), bot: c("bot"), fog: c("fog"), ice: c("ice"), ring: c("ring") };
   }
   function updateRingway(K, env, dt, units, C) {
@@ -30792,7 +30448,7 @@ ${pts}
     const p = Math.max(0, Math.min(1, K.prog));
     if (Math.abs(p - (K._p ?? -1)) > 2e-3) {
       K._p = p;
-      const M = ringwayMood(p), u = env.skyMat.uniforms;
+      const M = ringwayMood(p, K.pal), u = env.skyMat.uniforms;
       u.top.value.copy(M.top);
       u.mid.value.copy(M.mid);
       u.hor.value.copy(M.hor);
@@ -30805,11 +30461,27 @@ ${pts}
       K.giantMat.uniforms.uTint.value.copy(M.ring);
       K.ringMat.uniforms.uTint.value.copy(M.ring);
       env.trackMat.uniforms.uCol2.value.copy(M.ring);
+      K.megaMat.uniforms.uTint.value.copy(M.ring);
+      K._ring = M.ring.clone();
+    }
+    K.flare = Math.max(0, K.flare - dt / 3);
+    const f = K.flare;
+    K.megaMat.uniforms.uTime.value = t;
+    K.megaMat.uniforms.uFlare.value = f;
+    if (K._ring) {
+      K.archMat.color.copy(K._ring).lerp(K.cA.set(16770155), f).multiplyScalar(1 + f * 1.5);
+      K.haloMat.color.copy(K.archMat.color);
+      K.haloMat.opacity = 0.16 + 0.4 * f;
+    }
+    for (const g of K.arches) {
+      g.position.z += units;
+      if (g.position.z > RECYCLE_Z2 + 10) g.position.z -= K.archLoop;
     }
     K.giantMat.uniforms.uTime.value = t;
     K.floorMat.uniforms.uTime.value = t;
     K.floorMat.uniforms.uOffset.value = env.trackScroll;
     K.giantG.position.z = -3300 + 500 * p;
+    K.megaG.position.z = -2900 + 700 * p;
     const m = env._m, v = env._v, s = env._s, dq = env._dq;
     for (let i = 0; i < K.ice.length; i++) {
       const b = K.ice[i];
@@ -30834,6 +30506,74 @@ ${pts}
     }
     K.dust.geometry.attributes.position.needsUpdate = true;
   }
+
+  // colourthemes.js
+  var COLOUR_THEMES = {
+    classic: { name: "Classic Cyan", desc: "The original cyan neon look." },
+    vivid: {
+      name: "Vivid",
+      desc: "Every stage its own palette; ships, rivals and scenery in clearly different colours.",
+      sky: {
+        orbit: { top: 197146, mid: 1837906, hor: 5916415, bot: 262927, fog: 1182260 },
+        // deep blue + violet, white stars
+        city: { top: 524828, mid: 3803742, hor: 16723880, bot: 525071, fog: 3409982 },
+        // magenta + cyan
+        sunset: { top: 1311518, mid: 6951010, hor: 16747050, bot: 1442842, fog: 4852794 },
+        // orange, pink, purple
+        skalavik: { top: 68626, mid: 406062, hor: 3137696, bot: 133642, fog: 533022 },
+        // aurora greens + teals
+        ringway: { top: 918536, mid: 3806216, hor: 16756800, bot: 787716, fog: 2757128 }
+        // gold + amber, a hint of red
+      },
+      track2: { orbit: 13220095, city: 4191999, sunset: 16740276, skalavik: 5111744, ringway: 16742970 },
+      pylons: { orbit: [10124287, 16777215], city: [4191999, 16728024], sunset: [16751162, 16727976], skalavik: [4063152, 16758874], ringway: [16760906, 16730682] },
+      rocks: [0.72, 0.16, 0.45, 0.42],
+      // asteroid HSL: hue start, hue spread, saturation, lightness (violet / blue / magenta rocks)
+      ringway: {
+        BLUE: { top: 1180682, mid: 4855308, hor: 16742970, bot: 787716, fog: 2756104, ice: 16757370, ring: 16738874 },
+        GOLD: { top: 1313284, mid: 4860426, hor: 16765002, bot: 788484, fog: 3809288, ice: 16770720, ring: 16764746 }
+      },
+      ships: { aurora: "blue", raven: "red", valkyrie: "magenta", nebula: "purple", titan: "orange", phoenix: "green", starrider: "gold" },
+      rivals: { raven: "red", valkyrie: "magenta", nebula: "purple", titan: "green", phoenix: "orange" },
+      stageShip: { orbit: "purple", city: "magenta", sunset: "orange", skalavik: "green", ringway: "gold" },
+      // your ship + trail + track edges per stage (unless you picked a colour)
+      accentMix: 0.2,
+      hud: { orbit: 70, city: 120, sunset: -150, skalavik: -30, ringway: -140, laserrun: 150, comet: 95 }
+      // hue-rotate from cyan (deg)
+    },
+    sunset: {
+      name: "Sunset",
+      desc: "Warm orange, pink and purple on every stage.",
+      skyAll: { top: 1311518, mid: 5902174, hor: 16742964, bot: 1442842, fog: 4066362 },
+      track2All: 16743092,
+      pylonsAll: [16751162, 16727976],
+      rocks: [0.88, 0.12, 0.4, 0.42],
+      ships: { aurora: "orange", raven: "magenta", valkyrie: "red", nebula: "purple", titan: "gold", phoenix: "orange", starrider: "gold" },
+      rivals: { raven: "magenta", valkyrie: "red", nebula: "purple", titan: "gold", phoenix: "orange" },
+      stageShip: { orbit: "orange", city: "magenta", sunset: "orange", skalavik: "magenta", ringway: "gold" },
+      accentMix: 0.25,
+      hudAll: -150
+    },
+    aurora: {
+      name: "Aurora",
+      desc: "Northern-lights greens and teals everywhere.",
+      skyAll: { top: 68626, mid: 406062, hor: 3137696, bot: 133642, fog: 533022 },
+      track2All: 5111744,
+      pylonsAll: [4063152, 10124287],
+      rocks: [0.42, 0.14, 0.35, 0.38],
+      ships: { aurora: "green", raven: "blue", valkyrie: "purple", nebula: "green", titan: "blue", phoenix: "gold", starrider: "gold" },
+      rivals: { raven: "blue", valkyrie: "purple", nebula: "green", titan: "gold", phoenix: "magenta" },
+      stageShip: { orbit: "green", city: "green", sunset: "green", skalavik: "green", ringway: "green" },
+      accentMix: 0.25,
+      hudAll: -40
+    }
+  };
+  var COLOUR_THEME_IDS = Object.keys(COLOUR_THEMES);
+  var themeById = (id) => COLOUR_THEMES[id] || COLOUR_THEMES.classic;
+  var themeSky = (T, stage) => T.sky && T.sky[stage] || T.skyAll || null;
+  var themeTrack2 = (T, stage) => (T.track2 && T.track2[stage]) ?? T.track2All ?? null;
+  var themePylons = (T, stage) => T.pylons && T.pylons[stage] || T.pylonsAll || null;
+  var themeHud = (T, key) => T.hud && T.hud[key] != null ? T.hud[key] : T.hudAll ?? 0;
 
   // captains.js
   var LOG_STEP_M = 1e4;
@@ -31027,8 +30767,11 @@ ${pts}
   };
 
   // main.js
+  var RESUME_KEY = "cosmicrow.resume.v1";
+  var fmtKm = (m) => (Math.round(m / 100) / 10).toLocaleString("en-US") + " KM";
+  var downsampleHist = (h, n) => h.length <= n ? h.slice() : Array.from({ length: n }, (_, i) => h[Math.round(i * (h.length - 1) / (n - 1))]);
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-v10";
+  var BUILD_ID = "cosmicrow-v11a";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -31049,7 +30792,7 @@ ${pts}
     { id: "orbit", name: "Orbital Run", desc: "A neon track through the asteroid belt, high above the banded gas giant. Nebula light, silence, and the stars sliding by." },
     { id: "city", name: "Neon City", desc: "Down on the planet's surface: race between the glowing towers of the night city, with the ringed giant and its moon hanging in the sky." },
     { id: "skalavik", name: "Sk\xE1lav\xEDk 3026", desc: "Future Sk\xE1lav\xEDk. Row the neon coast beneath the great headland while the Seal People dance under the northern lights." },
-    { id: "ringway", name: "Ringway", desc: "A straight neon road across Saturn's ice rings. Ice drifts beside you, the giant fills half the sky, and the cold blue light turns to gold as you near the finish." },
+    { id: "ringway", name: "Ringway", desc: "A straight neon road across a ringed giant's ice rings, under colossal neon arches and an orbital ring that spans the sky. Cold blue light turns to gold as you near the finish. Home of the long haul: 10 km to 100 km." },
     { id: "sunset", name: "Sunset Drive", desc: "Row straight at a giant striped sun on an endless neon grid, between chrome pillars, black palms and violet wireframe mountains at dusk." }
   ];
   var IS_MOBILE = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -31335,6 +31078,7 @@ ${pts}
           });
           tint.setHSL(0.68 + this.rand() * 0.12, 0.15 + this.rand() * 0.2, 0.25 + this.rand() * 0.25);
           mesh.setColorAt(i, tint);
+          (mesh.userData.tint0 = mesh.userData.tint0 || []).push(tint.getHex());
         }
         this.orbitGroup.add(mesh);
         this.rockMeshes.push(mesh);
@@ -31357,6 +31101,7 @@ ${pts}
         this.pylons.setColorAt(i, Math.floor(i / 2) % 5 === 0 ? cB : cA);
       }
       this.scene.add(this.pylons);
+      this._pylCol0 = [cA.clone(), cB.clone()];
     }
     _buildStreaks() {
       const N = Q.streaks;
@@ -31393,18 +31138,41 @@ ${pts}
         this.ring._p = -1;
       }
       this.stars.visible = id === "orbit";
-      const u = this.skyMat.uniforms, P5 = STAGE_SKY[id] || STAGE_SKY.orbit;
-      u.top.value.set(P5.top);
-      u.mid.value.set(P5.mid);
-      u.hor.value.set(P5.hor);
-      u.bot.value.set(P5.bot);
-      this.scene.fog.color.set(P5.fog);
-      this.scene.fog.density = P5.density;
-      this.trackMat.uniforms.uCol2.value.set(id === "orbit" ? 12580607 : sk ? 5111708 : id === "sunset" ? 16747066 : 16728024);
+      const T = this.ctheme || COLOUR_THEMES.classic, P2 = { ...STAGE_SKY[id] || STAGE_SKY.orbit, ...themeSky(T, id) || {} }, u = this.skyMat.uniforms;
+      u.top.value.set(P2.top);
+      u.mid.value.set(P2.mid);
+      u.hor.value.set(P2.hor);
+      u.bot.value.set(P2.bot);
+      this.scene.fog.color.set(P2.fog);
+      this.scene.fog.density = P2.density;
+      this.trackMat.uniforms.uCol2.value.set(themeTrack2(T, id) ?? (id === "orbit" ? 12580607 : sk ? 5111708 : id === "sunset" ? 16747066 : 16728024));
+      if (this._pylCol0) {
+        const pc = themePylons(T, id), [a0, b0] = this._pylCol0, cA = pc ? new Color(pc[0]).multiplyScalar(1.5) : a0, cB = pc ? new Color(pc[1]).multiplyScalar(1.8) : b0;
+        for (let i = 0; i < this.pyl.length; i++) this.pylons.setColorAt(i, Math.floor(i / 2) % 5 === 0 ? cB : cA);
+        this.pylons.instanceColor.needsUpdate = true;
+      }
+      if (this.ring) this.ring.pal = T.ringway || null;
       this.trackMat.uniforms.uGrid.value = sk || rw ? 0 : 1;
       if (this.rain) this.rain.visible = city;
       this.farStars.material.opacity = city ? 0.45 : sun ? 0.55 : sk ? 0.9 : rw ? 0.85 : 0.8;
       if (sun) this._placeSun();
+    }
+    /** colour theme (classic = untouched original): re-tints sky/track/posts for the current stage, asteroids, Ringway light */
+    applyColourTheme(T) {
+      this.ctheme = T;
+      const tint = new Color();
+      for (const mesh of this.rockMeshes || []) {
+        const t0 = mesh.userData.tint0 || [];
+        for (let i = 0; i < t0.length; i++) {
+          if (T.rocks) {
+            const h = Math.abs(Math.sin(i * 12.9898 + mesh.id) * 43758.5453) % 1, [h0, hs, sa, li] = T.rocks;
+            tint.setHSL((h0 + h * hs) % 1, sa * (0.7 + 0.6 * (h * 7 % 1)), li * (0.7 + 0.5 * (h * 13 % 1)));
+          } else tint.setHex(t0[i]);
+          mesh.setColorAt(i, tint);
+        }
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+      }
+      if (this.stage) this.setStage(this.stage);
     }
     /** Sunset Drive: 0..1 race progress -> the sun grows a little and sinks slowly */
     setSunProgress(p) {
@@ -31789,7 +31557,7 @@ ${pts}
       }
     }
     setAccent(hex) {
-      this.trackMat.uniforms.uCol.value.set(hex).lerp(new Color(4182271), 0.55);
+      this.trackMat.uniforms.uCol.value.set(hex).lerp(new Color(4182271), this.ctheme && this.ctheme.accentMix != null ? this.ctheme.accentMix : 0.55);
     }
     /** Scroll everything by `units` (proportional to metres rowed this frame). */
     update(dt, unitsMoved, speedMps) {
@@ -31934,7 +31702,7 @@ ${pts}
         m = JSON.parse(localStorage.getItem("cosmicrow.music.v1") || "null");
       } catch (e) {
       }
-      this.track = m && (trackById(m.track) || m.track === "shuffle" || m.track === "off") ? m.track : "cosmic";
+      this.track = m && (trackById(m.track) || m.track === "shuffle" || m.track === "off") ? m.track : DEFAULT_TRACK;
       this.repeat = m && m.repeat === "next" ? "next" : "loop";
       this.volume = m && typeof m.vol === "number" ? Math.max(0, Math.min(1, m.vol)) : 0.7;
       this.themes = !(m && m.themes === false);
@@ -32088,7 +31856,7 @@ ${pts}
       this.effBass.gain.setTargetAtTime(p.bass, t, 0.9);
       this.effGain.gain.setTargetAtTime(p.gain, t, 0.9);
     }
-    /** 0..1 from stroke rate; only Cosmic Drift reacts (gently). */
+    /** 0..1 from stroke rate (kept for future procedural layers; file tracks ignore it) */
     setIntensity(x) {
       if (this.current && this.current.setIntensity) this.current.setIntensity(x);
     }
@@ -32151,7 +31919,7 @@ ${pts}
         const i = ok.findIndex((t) => t.id === after);
         return ok[(i + 1) % ok.length];
       }
-      return trackById(this.track) && !this.failed.has(this.track) ? trackById(this.track) : trackById("cosmic");
+      return trackById(this.track) && !this.failed.has(this.track) ? trackById(this.track) : ok[0] || null;
     }
     next() {
       if (!this.ctx || this.track === "off") return;
@@ -32176,21 +31944,7 @@ ${pts}
       this.playing = true;
       this.nowId = t.id;
       this.nowKind = t.kind;
-      if (t.kind === "file") {
-        this._playFile(t, note);
-        return;
-      }
-      this.endAt = this.ctx.currentTime + (t.seconds || 180);
-      this._announce(t, note);
-      if (t.id === "cosmic") {
-        const m = this.current = new CosmicDrift(this.ctx, this.musicVol, { light: IS_MOBILE, seed: Date.now() / 864e5 | 0 });
-        m.start(this.ctx.currentTime + 0.1);
-        const tick = () => m.scheduleUntil(this.ctx.currentTime + 0.6);
-        this.timer = setInterval(tick, 100);
-        tick();
-        return;
-      }
-      this._startDrive();
+      this._playFile(t, note);
     }
     _playFile(t, note) {
       if (!this.el) {
@@ -32210,7 +31964,10 @@ ${pts}
         el2.addEventListener("ended", () => {
           if (this.nowKind === "file") this.next();
         });
-        el2.addEventListener("error", () => this._fileFailed());
+        el2.addEventListener("error", () => {
+          const t2 = this._fileT;
+          if (t2 && el2.src === new URL(t2.src, location.href).href) this._fileFailed();
+        });
       }
       const el = this.el;
       this._elTok = (this._elTok || 0) + 1;
@@ -32228,43 +31985,22 @@ ${pts}
       this._fileT = t;
       const p = el.play();
       if (p && p.catch) p.catch((e) => {
-        if (e && e.name === "NotAllowedError") return;
-        this._fileFailed();
+        if (e && (e.name === "NotAllowedError" || e.name === "AbortError")) return;
+        if (this._fileT === t) this._fileFailed();
       });
       el.addEventListener("playing", () => {
         if (this._fileT === t && this.nowId === t.id) this._announce(t, note);
       }, { once: true });
     }
-    /** File missing / offline: fall back to Cosmic Drift (the choice itself is kept for next time). */
+    /** File missing / offline: try the next song that hasn't failed (the choice itself is kept for next time); none left = quiet + a note. */
     _fileFailed() {
       const t = this._fileT;
       if (!t || this.nowId !== t.id) return;
       this.failed.add(t.id);
       this._stopMusic();
-      this._play(trackById("cosmic"), `${t.name} isn't available offline`);
-    }
-    /** Original "Neon Drive" step sequencer. 96 BPM, 16th notes, A-minor progression. */
-    _startDrive() {
-      const bpm = 96, step = 60 / bpm / 4;
-      let next = this.ctx.currentTime + 0.1, n = 0;
-      const roots = [45, 41, 48, 43];
-      const arp = [0, 7, 12, 15, 12, 7, 3, 7];
-      const tick = () => {
-        if (next < this.ctx.currentTime - 0.1) next = this.ctx.currentTime + 0.05;
-        while (next < this.ctx.currentTime + 0.2) {
-          const bar = Math.floor(n / 16) % 4, s = n % 16, root = roots[bar];
-          if (s % 4 === 0) this._kick(next);
-          if (s % 4 === 2) this._hat(next, 0.05);
-          if (s === 4 || s === 12) this._snare(next);
-          if (s % 2 === 0) this._bass(next, root - 12 + (s % 8 === 6 ? 12 : 0), step * 1.8);
-          this._lead(next, root + 12 + arp[s % 8], step * 0.9, 0.035);
-          if (s === 0) this._pad(next, [root, root + 3, root + 7, root + 10], step * 16);
-          next += step;
-          n++;
-        }
-      };
-      this.timer = setInterval(tick, 50);
-      tick();
+      const nx = TRACKS.find((x) => !this.failed.has(x.id));
+      if (nx) this._play(nx, `${t.name} isn't available offline`);
+      else this._announce({ name: "Music", artist: "" }, "Music isn't available offline");
     }
     _f(m) {
       return 440 * Math.pow(2, (m - 69) / 12);
@@ -32754,25 +32490,26 @@ ${pts}
       marks.forEach((m, i) => {
         if (bs[i]) bs[i].style.left = Math.max(0, Math.min(1, m.f)) * 100 + "%";
       });
-      const hz2 = s.hrBand;
+      const hz = s.hrBand;
       c.clHr.classList.remove("hidden");
-      c.clHr.classList.toggle("nohr", !hz2);
-      if (hz2) {
-        set(c.clBand, hz2.label);
-        set(c.clBpm, String(hz2.bpm));
-        c.clHr.style.setProperty("--hz", hz2.color);
+      c.clHr.classList.toggle("nohr", !hz);
+      if (hz) {
+        set(c.clBand, hz.label);
+        set(c.clBpm, String(hz.bpm));
+        c.clHr.style.setProperty("--hz", hz.color);
       } else {
         set(c.clBand, "HR");
         set(c.clBpm, "--");
         c.clHr.style.setProperty("--hz", "#6f7fa8");
       }
     }
-    flash(text) {
+    flash(text, cls = "") {
       const f = this.el.flash;
       f.textContent = text;
-      f.classList.remove("go");
+      f.classList.remove("go", "big");
       void f.offsetWidth;
       f.classList.add("go");
+      if (cls) f.classList.add(cls);
     }
   };
   var STAGE_KEY = "cosmicrow.stage.v1";
@@ -32836,10 +32573,6 @@ ${pts}
         saveStats(this.stats);
       }
       this.dev = localStorage.getItem("cosmicrow.dev") === "1" || /[?&]dev=1/.test(location.search);
-      if (!this.dev && this.opts.unlockAll) {
-        this.opts.unlockAll = false;
-        localStorage.setItem(OPTS_KEY, JSON.stringify(this.opts));
-      }
       this.sel = readJSON(MODE_KEY, { tab: "distance", d: 2e3, s: 240, preset: "8x500", custom: { reps: 6, value: 500, unit: "distance", rest: 60 }, arc: { round: "r3", level: "normal" } });
       const saved = (() => {
         try {
@@ -32855,7 +32588,7 @@ ${pts}
       this.env.setStage(this.stageId);
       this.trackBase = new Color();
       this.trackNow = new Color();
-      this.setShip(this.choice.ship, this.choice.color);
+      this.setShip(this.choice.ship, this._themeColor());
       this.burst = new NeonBurst(this.scene);
       this.platform = buildPlatform();
       this.scene.add(this.platform);
@@ -32927,6 +32660,19 @@ ${pts}
         }
       }).catch((e) => console.warn("Strava sign-in failed", e));
       window.CosmicRow = this;
+      if (this.profile.colourTheme && this.profile.colourTheme !== "classic") this.setColourTheme(this.profile.colourTheme);
+      else document.body.dataset.ctheme = "classic";
+      const ck = () => {
+        if (this.state === "race") this._checkpoint();
+      };
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) ck();
+      });
+      window.addEventListener("pagehide", ck);
+      {
+        const c = this._recoverCheckpoint();
+        if (c) setTimeout(() => this.toast(`Saved your unfinished ${c.name}: ${(c.dist / 1e3).toFixed(2)} km in ${fmtTime(c.time)} (Profile \u203A History)`, 7e3), 1200);
+      }
       window.CosmicRowLib = { parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, rowBand, bandThresholds, wattsFromPace, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady, effortParams: SynthAudio.effortParams };
     }
     get target() {
@@ -32958,6 +32704,7 @@ ${pts}
         disposeShip(this.ship);
       }
       this.ship = buildShip(id, colorKey);
+      this.ship.colorKey = colorKey || null;
       this.scene.add(this.ship.group);
       this._posterShip = null;
       this.env.setAccent(this.ship.color.hex);
@@ -33059,8 +32806,8 @@ ${pts}
         const n = this._fieldN(), sp = fmtSplit(o.rivalSplit).replace(/\.0$/, "");
         if (n) parts.push(o.field === "pace" ? `${n} pace boat${n > 1 ? "s" : ""} ~${sp}` : `vs ${n} rival${n > 1 ? "s" : ""} ~${sp}`);
         if (o.pace) {
-          const P5 = this._paceProfile(w);
-          parts.push(P5 ? `plan ${fmtTime(P5.T).replace(/\.0$/, "")} ${P5.short.toLowerCase()}` : "pace " + fmtSplit(o.paceSplit).replace(/\.0$/, ""));
+          const P2 = this._paceProfile(w);
+          parts.push(P2 ? `plan ${fmtTime(P2.T).replace(/\.0$/, "")} ${P2.short.toLowerCase()}` : "pace " + fmtSplit(o.paceSplit).replace(/\.0$/, ""));
         }
         if (o.ghost && w.kind !== "free") parts.push("ghost");
         if (o.zone) parts.push(`zone ${o.zlo}-${o.zhi}`);
@@ -33076,7 +32823,7 @@ ${pts}
       const other = ["wod", "daily", "calm", "plan", "calib"].includes(s.tab);
       document.querySelectorAll("#modeTabs button").forEach((b) => b.classList.toggle("sel", b.dataset.tab === s.tab));
       document.querySelectorAll("#modeOpts .opt").forEach((x) => x.classList.toggle("show", x.dataset.for === s.tab || x.dataset.for === "other" && other));
-      document.querySelectorAll("#distBtns button").forEach((b) => b.classList.toggle("sel", +b.dataset.d === s.d));
+      document.querySelectorAll("#distBtns button, #longBtns button, #stLong button").forEach((b) => b.classList.toggle("sel", s.tab === "distance" && +b.dataset.d === s.d));
       document.querySelectorAll("#timeBtns button").forEach((b) => b.classList.toggle("sel", +b.dataset.s === s.s));
       document.querySelectorAll("#intBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.p === s.preset));
       document.querySelectorAll(".pick").forEach((b) => {
@@ -33258,7 +33005,7 @@ ${pts}
         this._saveSel();
         this._refreshMode();
       }));
-      document.querySelectorAll("#distBtns button").forEach((b) => tap(b, () => {
+      document.querySelectorAll("#distBtns button, #longBtns button").forEach((b) => tap(b, () => {
         this.sel.tab = "distance";
         this.sel.d = +b.dataset.d;
         this._saveSel();
@@ -33319,6 +33066,28 @@ ${pts}
         tap(b, () => this.setStage(st.id));
         cards.appendChild(b);
       }
+      for (const d of LONG_DIST) {
+        const b = document.createElement("button");
+        b.dataset.d = d;
+        b.textContent = distName(d);
+        $("stLong").appendChild(b);
+        tap(b, () => {
+          this.sel.tab = "distance";
+          this.sel.d = d;
+          this._saveSel();
+          this.setStage("ringway");
+          this._refreshMode();
+        });
+      }
+      for (const [id, T] of Object.entries(COLOUR_THEMES)) {
+        const b = document.createElement("button");
+        b.dataset.ct = id;
+        b.textContent = T.name;
+        $("cthemeBtns").appendChild(b);
+        tap(b, () => this.setColourTheme(id));
+      }
+      document.querySelectorAll("#cthemeBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.ct === (this.profile.colourTheme || "classic")));
+      $("cthemeNote").textContent = themeById(this.profile.colourTheme).desc;
       tap($("settingsClose"), () => this.closeSettings());
       tap($("gBack"), () => this.closeGarage(false));
       tap($("gLog"), () => this.openLog(SHIPS[this.g.idx].id));
@@ -33625,8 +33394,10 @@ ${pts}
         const rs = parseSplit($("optRivalSplit").value);
         if (isFinite(rs)) o.rivalSplit = rs;
         this._saveOpts();
+        this._enforceUnlocks();
         this._paintStats();
         this._refreshMode();
+        if (this._paintXp) this._paintXp();
       };
       this._syncOptInputs = () => {
         const o2 = this.opts;
@@ -33753,12 +33524,16 @@ ${pts}
     _applyTheme() {
       if (!this.audio) return;
       const race = this.state === "race", st = STAGE_THEMES[this.stageId] || null;
-      this.audio.setTheme(race ? this.workout && this.workout.kind === "calm" ? CALM_THEME : st : st || (this.audio.track === "cosmic" ? CALM_THEME : null));
+      this.audio.setTheme(race ? this.workout && this.workout.kind === "calm" ? CALM_THEME : st : st);
     }
     setStage(id) {
       this.stageId = id;
       localStorage.setItem(STAGE_KEY, id);
       this.env.setStage(id);
+      if (this.profile) {
+        this._hudHue();
+        this._themeShip();
+      }
       if (this.audio) {
         this._applyTheme();
         if (this._paintMusic) this._paintMusic();
@@ -33833,7 +33608,7 @@ ${pts}
     }
     closeSettings() {
       this._enforceUnlocks();
-      this.setShip(this.choice.ship, this.choice.color);
+      this.setShip(this.choice.ship, this._themeColor());
       this.toTitle();
     }
     /* ---------- camera modes ---------- */
@@ -33923,7 +33698,7 @@ ${pts}
           return;
         }
       }
-      this.setShip(this.choice.ship, this.choice.color);
+      this.setShip(this.choice.ship, this._themeColor());
       this.ship.group.rotation.set(0, 0, 0);
       this.toTitle();
     }
@@ -34033,6 +33808,11 @@ ${pts}
       this.rivalViews = [];
       const tags = document.getElementById("rivalTags"), bar = document.getElementById("raceBar");
       list.forEach((r, i) => {
+        const T = themeById(this.profile.colourTheme);
+        if (!r.isGhost && !r.wall && T.rivals && T.rivals[r.id] && !r._c0) {
+          r._c0 = true;
+          r.color = T.rivals[r.id];
+        }
         const ship = buildProxyShip(r.ship, r.color, r.isGhost ? { opacity: 0.3, tint: 10474495 } : { opacity: 1 });
         ship.group.visible = false;
         this.scene.add(ship.group);
@@ -34210,6 +33990,7 @@ ${pts}
       this.hud.show(true);
       this._applyCamMode();
       this._applyTheme();
+      this._hudHue();
       if (this._paintMusic) this._paintMusic();
       const w = this.workout, calm = w.kind === "calm";
       this.hud.setCalm(calm);
@@ -34252,8 +34033,10 @@ ${pts}
     toTitle() {
       this.audio.setEffort(null);
       this._eff = null;
+      if (this.state === "race") localStorage.removeItem(RESUME_KEY);
       this.state = "title";
       this._applyTheme();
+      this._hudHue();
       clearTimeout(this._logT);
       this.closeLog();
       document.querySelectorAll("#mainMenu button.mi").forEach((b) => b.classList.toggle("sel", b.id === "startBtn"));
@@ -34472,7 +34255,95 @@ ${pts}
         this.session.started = true;
       }
     }
+    /** colour theme (Settings › View): saved in the player profile; 'classic' = the original look, untouched */
+    setColourTheme(id) {
+      const T = themeById(id);
+      this.profile.colourTheme = COLOUR_THEMES[id] ? id : "classic";
+      saveProfile(this.profile);
+      for (const def of SHIPS) {
+        if (def.color0 == null) def.color0 = def.color;
+        def.color = T.ships && T.ships[def.id] || def.color0;
+      }
+      this.env.applyColourTheme(T);
+      this.setShip(this.choice.ship, this._themeColor());
+      document.body.dataset.ctheme = this.profile.colourTheme;
+      this._hudHue();
+      document.querySelectorAll("#cthemeBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.ct === this.profile.colourTheme));
+      const n = document.getElementById("cthemeNote");
+      if (n) n.textContent = T.desc || "";
+    }
+    /** ship colour key with the colour theme: your own pick wins, else the theme's per-stage colour (Vivid), else the ship's default */
+    _themeColor() {
+      const T = themeById(this.profile && this.profile.colourTheme);
+      return this.choice.color || T.stageShip && T.stageShip[this.stageId] || null;
+    }
+    _themeShip() {
+      const k = this._themeColor();
+      if (this.ship && this.state !== "garage" && this.ship.colorKey !== k) this.setShip(this.choice.ship, k);
+    }
+    _hudHue() {
+      const T = themeById(this.profile.colourTheme), w = this.state === "race" ? this.workout : null, key = w && w.comet ? "comet" : w && w.arcade ? "laserrun" : this.stageId;
+      document.documentElement.style.setProperty("--hudHue", themeHud(T, key) + "deg");
+    }
+    /** big milestone (5 km marks, halfway): triple burst, double chime, big flash; Ringway's rings flare */
+    toast(msg, ms = 4e3) {
+      const t = document.getElementById("toast");
+      if (!t) return;
+      t.textContent = msg;
+      t.classList.remove("hidden");
+      clearTimeout(this._toastT);
+      this._toastT = setTimeout(() => t.classList.add("hidden"), ms);
+    }
+    _bigMilestone(txt) {
+      const z = this.cockpit ? -10 : -6;
+      this.burst.fire(new Vector3(0, 0.5, z));
+      setTimeout(() => this.state === "race" && this.burst.fire(new Vector3(-3, 1.2, z - 4)), 180);
+      setTimeout(() => this.state === "race" && this.burst.fire(new Vector3(3, 1.2, z - 4)), 360);
+      this.audio.milestone();
+      setTimeout(() => this.audio.milestone(), 420);
+      this.hud.flash(txt, "big");
+      if (this.env.ring) this.env.ring.flare = 1;
+      (this._bigLog = this._bigLog || []).push(txt);
+      if (this._bigLog.length > 30) this._bigLog.shift();
+    }
+    /** resumable checkpoint of a long row (saved every 30 s and when the tab hides); turned into a history row on the next start if the tab died */
+    _checkpoint() {
+      const s = this.session, r = this.runner, w = this.workout;
+      if (!s || !r || !w || this.state !== "race" || r.workD < 50 || w.online) return;
+      if (!(w.kind === "distance" && w.segs[0].value >= 1e4 || r.workT >= 600)) return;
+      try {
+        localStorage.setItem(RESUME_KEY, JSON.stringify({
+          at: Date.now(),
+          name: w.name,
+          kind: w.kind,
+          key: workoutKey(w),
+          goal: w.kind === "distance" ? w.segs[0].value : 0,
+          dist: +r.workD.toFixed(1),
+          time: +r.workT.toFixed(1),
+          strokes: s.strokes,
+          stage: this.stageDef().name,
+          ship: this.ship.def.name,
+          source: s.source,
+          samples: downsampleHist(s.hist, 240)
+        }));
+      } catch (e) {
+      }
+    }
+    _recoverCheckpoint() {
+      let c = null;
+      try {
+        c = JSON.parse(localStorage.getItem(RESUME_KEY) || "null");
+      } catch (e) {
+      }
+      localStorage.removeItem(RESUME_KEY);
+      if (!c || !(c.dist >= 50) || Date.now() - c.at > 3 * 864e5) return null;
+      addRow({ name: c.name + " (saved, unfinished)", kind: c.kind, key: null, dist: c.dist, time: c.time, split: c.time / c.dist * 500, strokes: c.strokes, stage: c.stage, ship: c.ship, source: c.source, complete: false, samples: c.samples || [], date: new Date(c.at).toISOString() });
+      this.stats.lifetimeM = (this.stats.lifetimeM || 0) + c.dist;
+      saveStats(this.stats);
+      return c;
+    }
     finish(early = false) {
+      localStorage.removeItem(RESUME_KEY);
       if (this.state !== "race") return;
       const s = this.session, r = this.runner, w = this.workout;
       this.state = "summary";
@@ -34594,8 +34465,8 @@ ${pts}
         if (complete) extra += `<div class="sumnote">vs ghost: <b>${scoredOnTime(w) ? time <= gT ? `${(gT - time).toFixed(1)} s faster` : `${(time - gT).toFixed(1)} s slower` : dist >= gD ? `${Math.round(dist - gD)} m further` : `${Math.round(gD - dist)} m short`}</b></div>`;
       }
       if (this.paceOn && w.kind !== "free" && this._plan) {
-        const P5 = this._plan, d = P5.T - time;
-        extra += `<div class="sumnote">vs race plan ${fmtTime(P5.T)} (${esc(RACE_PLANS.find((x) => x.id === P5.plan).name)}): <b>${d >= 0 ? d.toFixed(1) + " s ahead" : (-d).toFixed(1) + " s behind"}</b></div>`;
+        const P2 = this._plan, d = P2.T - time;
+        extra += `<div class="sumnote">vs race plan ${fmtTime(P2.T)} (${esc(RACE_PLANS.find((x) => x.id === P2.plan).name)}): <b>${d >= 0 ? d.toFixed(1) + " s ahead" : (-d).toFixed(1) + " s behind"}</b></div>`;
       } else if (this.paceOn && w.kind !== "free") {
         const pd = 500 / this.opts.paceSplit * time;
         extra += `<div class="sumnote">vs pace boat ${fmtSplit(this.opts.paceSplit)}: <b>${dist >= pd ? Math.round(dist - pd) + " m ahead" : Math.round(pd - dist) + " m behind"}</b></div>`;
@@ -35644,7 +35515,6 @@ ${pts}
       });
       tap($("rvFly"), () => this.closeReveal(true));
       tap($("rvLater"), () => this.closeReveal(false));
-      $("devUnlock").classList.toggle("hidden", !this.dev);
       tap($("sumStats"), () => {
         $("summary").classList.add("hidden");
         if (this._lastRow) this._histSel = this._lastRow.id;
@@ -36090,7 +35960,7 @@ ${pts}
       if (r.phase === "work" && s.started && r.workT - s.histLast >= 1) {
         s.histLast = r.workT;
         s.hist.push([+r.workT.toFixed(1), +r.workD.toFixed(1), pmPace ? +pace.toFixed(1) : s.smooth > 0.4 ? +(500 / s.smooth).toFixed(1) : 0, src.spm | 0, Math.round(watts2), src.heartRate | 0]);
-        if (s.hist.length > 2e4) s.hist.splice(0, 2);
+        if (s.hist.length > 14400) s.hist = s.hist.filter((_, i) => i % 2 === 0);
       }
       if (w.online) {
         s.olSend += dt;
@@ -36099,11 +35969,26 @@ ${pts}
           this.lobby && this.lobby.send({ t: this._olClock(), d: r.workD, split: s.smooth > 0.4 ? 500 / s.smooth : NaN, finished: false, pen: this._olPen() });
         }
       }
-      if (!calm) while (r.workD >= s.nextMilestone && (w.kind !== "distance" || s.nextMilestone < w.segs[0].value)) {
-        this.burst.fire(new Vector3(0, 0.5, this.cockpit ? -10 : -6));
-        this.audio.milestone();
-        this.hud.flash(`${s.nextMilestone} M`);
-        s.nextMilestone += 500;
+      if (!calm) {
+        const goal = w.kind === "distance" ? w.segs[0].value : 0, long = goal >= 1e4, stepM = long ? 1e3 : 500;
+        if (long && !s.halfDone && r.workD >= goal / 2) {
+          s.halfDone = true;
+          this._bigMilestone(`HALFWAY \xB7 ${fmtKm(goal / 2)}`);
+        }
+        while (r.workD >= s.nextMilestone && (w.kind !== "distance" || s.nextMilestone < goal)) {
+          const m = s.nextMilestone;
+          if (long && m % 5e3 === 0 && Math.abs(m - goal / 2) > 400) this._bigMilestone(`${m / 1e3} KM`);
+          else if (!long || Math.abs(m - goal / 2) > 400) {
+            this.burst.fire(new Vector3(0, 0.5, this.cockpit ? -10 : -6));
+            this.audio.milestone();
+            this.hud.flash(m >= 1e3 && long ? `${m / 1e3} KM` : `${m} M`);
+          }
+          s.nextMilestone = Math.ceil((m + 1) / stepM) * stepM;
+        }
+        if (long && r.workT - (s.ckT || 0) >= 30) {
+          s.ckT = r.workT;
+          this._checkpoint();
+        }
       }
       const g = r.seg, rem = r.remaining(), hud = {
         splitSec: pmPace || s.smooth > 0.4 ? pace : NaN,
@@ -36193,8 +36078,8 @@ ${pts}
         }
       }
       if (this.paceShip) {
-        const P5 = this._plan, pd = P5 ? planDistanceAt(P5.segs, r.workT) : 500 / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
-        if (P5) marks.push({ f: pd / P5.D, c: "pace" });
+        const P2 = this._plan, pd = P2 ? planDistanceAt(P2.segs, r.workT) : 500 / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
+        if (P2) marks.push({ f: pd / P2.D, c: "pace" });
         ps.visible = s.started && z > -900 && z < 1.5;
         ps.position.set(5.5, 0.1 + Math.sin(this.timer.getElapsed() * 1.1 + 1) * 0.08, z);
         if (s.started) {
@@ -36203,7 +36088,7 @@ ${pts}
             gapL = "PACE";
             gapM = d;
           }
-          this.hud.chip(this.hud.el.chipPace, P5 ? `PLAN ${fmtTime(P5.T).replace(/\.0$/, "")} ${P5.short} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m` : `PACE ${fmtSplit(this.opts.paceSplit).replace(/\.0$/, "")} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m`, "pace");
+          this.hud.chip(this.hud.el.chipPace, P2 ? `PLAN ${fmtTime(P2.T).replace(/\.0$/, "")} ${P2.short} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m` : `PACE ${fmtSplit(this.opts.paceSplit).replace(/\.0$/, "")} ${d >= 0 ? "+" : "\u2212"}${Math.abs(d).toFixed(0)} m`, "pace");
         }
       }
       this.hud.setGap(gapL, gapM);
@@ -36248,19 +36133,19 @@ ${pts}
       const dt = Math.min(0.25, this.timer.getDelta());
       const src = this.source;
       this.acc += dt;
-      const STEP2 = 1 / 120;
+      const STEP = 1 / 120;
       let steps = 0;
       const pmLive = src === this.pm5;
       const d0 = pmLive ? src.visualM : src.distanceM;
-      while (this.acc >= STEP2 && steps < 40) {
+      while (this.acc >= STEP && steps < 40) {
         if (this.state === "race" && !this._olHold) {
-          src.update(STEP2);
+          src.update(STEP);
           if (!pmLive && (this.session.started || src.distanceM > 0 || src.speedMps > 0)) {
             this.session.started = true;
-            this.session.time += STEP2;
+            this.session.time += STEP;
           }
         }
-        this.acc -= STEP2;
+        this.acc -= STEP;
         steps++;
       }
       if (steps >= 40) this.acc = 0;

@@ -670,7 +670,7 @@
   @media (max-width: 640px) { #capLog .clBody { grid-template-columns:1fr; } #capLog .lgList { display:flex; flex-wrap:wrap; gap:4px; } #capLog .lgList button { width:auto; margin:0; font-size:10.5px; } }
 </style>
 </head>
-<body data-build="cosmicrow-v11a">
+<body data-build="cosmicrow-v11a1">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -1178,7 +1178,7 @@
 
 <script>
 (() => {
-  // node_modules/three/build/three.module.js
+  // ../../workspace/cosmicrow/src/node_modules/three/build/three.module.js
   /**
    * @license
    * Copyright 2010-2023 Three.js Authors
@@ -24746,7 +24746,7 @@ void main() {
     }
   }
 
-  // node_modules/three/examples/jsm/shaders/CopyShader.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/CopyShader.js
   var CopyShader = {
     name: "CopyShader",
     uniforms: {
@@ -24786,7 +24786,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/Pass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/Pass.js
   var Pass = class {
     constructor() {
       this.isPass = true;
@@ -24830,7 +24830,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/ShaderPass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/ShaderPass.js
   var ShaderPass = class extends Pass {
     constructor(shader, textureID) {
       super();
@@ -24870,7 +24870,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/MaskPass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/MaskPass.js
   var MaskPass = class extends Pass {
     constructor(scene, camera) {
       super();
@@ -24927,7 +24927,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/EffectComposer.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/EffectComposer.js
   var EffectComposer = class {
     constructor(renderer, renderTarget) {
       this.renderer = renderer;
@@ -25049,7 +25049,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/postprocessing/RenderPass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/RenderPass.js
   var RenderPass = class extends Pass {
     constructor(scene, camera, overrideMaterial = null, clearColor = null, clearAlpha = null) {
       super();
@@ -25100,7 +25100,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
   var LuminosityHighPassShader = {
     name: "LuminosityHighPassShader",
     shaderID: "luminosityHighPass",
@@ -25155,7 +25155,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
   var UnrealBloomPass = class _UnrealBloomPass extends Pass {
     constructor(resolution, strength, radius, threshold) {
       super();
@@ -25411,7 +25411,7 @@ void main() {
   UnrealBloomPass.BlurDirectionX = new Vector2(1, 0);
   UnrealBloomPass.BlurDirectionY = new Vector2(0, 1);
 
-  // node_modules/three/examples/jsm/shaders/OutputShader.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/OutputShader.js
   var OutputShader = {
     name: "OutputShader",
     uniforms: {
@@ -25495,7 +25495,7 @@ void main() {
     )
   };
 
-  // node_modules/three/examples/jsm/postprocessing/OutputPass.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/OutputPass.js
   var OutputPass = class extends Pass {
     constructor() {
       super();
@@ -25542,7 +25542,7 @@ void main() {
     }
   };
 
-  // node_modules/three/examples/jsm/misc/Timer.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/misc/Timer.js
   var Timer = class {
     constructor() {
       this._previousTime = 0;
@@ -25599,7 +25599,7 @@ void main() {
     if (document.hidden === false) this.reset();
   }
 
-  // node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
+  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
   function mergeGeometries(geometries, useGroups = false) {
     const isIndexed = geometries[0].index !== null;
     const attributesUsed = new Set(Object.keys(geometries[0].attributes));
@@ -27496,21 +27496,33 @@ void main() {
   function forgetLogbook() {
     localStorage.removeItem(STORE);
   }
+  function cleanToken(t) {
+    return String(t || "").replace(/^\s*bearer\s+/i, "").replace(/[^\x21-\x7e]/g, "");
+  }
   var LogbookClient = class {
     constructor({ token, host = "dev", fetchImpl } = {}) {
-      this.token = token;
+      this.token = cleanToken(token);
       this.base = LOGBOOK_HOSTS[host] || LOGBOOK_HOSTS.dev;
       this.fetch = fetchImpl || ((...a) => fetch(...a));
     }
     async _req(path, { method = "GET", body } = {}) {
       if (!this.token) throw new Error("No Logbook token set");
-      const res = await this.fetch(this.base + path, {
-        method,
-        mode: "cors",
-        credentials: "omit",
-        headers: { Authorization: "Bearer " + this.token, Accept: "application/vnd.c2logbook.v1+json", ...body ? { "Content-Type": "application/json" } : {} },
-        body: body ? JSON.stringify(body) : void 0
-      });
+      let res;
+      try {
+        res = await this.fetch(this.base + path, {
+          method,
+          mode: "cors",
+          credentials: "omit",
+          cache: "no-store",
+          headers: { Authorization: "Bearer " + this.token, ...body ? { "Content-Type": "application/json" } : {} },
+          body: body ? JSON.stringify(body) : void 0
+        });
+      } catch (e) {
+        const err = new Error("Could not reach Concept2 (browser blocked the request). Check your connection and try again.");
+        err.network = true;
+        err.cause = e;
+        throw err;
+      }
       let data = null;
       try {
         data = await res.json();
@@ -30771,7 +30783,7 @@ ${pts}
   var fmtKm = (m) => (Math.round(m / 100) / 10).toLocaleString("en-US") + " KM";
   var downsampleHist = (h, n) => h.length <= n ? h.slice() : Array.from({ length: n }, (_, i) => h[Math.round(i * (h.length - 1) / (n - 1))]);
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-v11a";
+  var BUILD_ID = "cosmicrow-v11a1";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -33420,7 +33432,8 @@ ${pts}
         this._paintLogbook();
       });
       tap($("lbConnect"), async () => {
-        this.lb.token = $("lbToken").value.trim();
+        this.lb.token = cleanToken($("lbToken").value);
+        $("lbToken").value = this.lb.token;
         this.lb.host = $("lbHost").value;
         saveLogbookSettings(this.lb);
         if (!this.lb.token) {

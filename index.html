@@ -335,6 +335,7 @@
   .olplayers { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; } .olplayers span { font-size:11px; padding:5px 9px; border:1px solid rgba(63,246,255,0.35); text-transform:none; letter-spacing:0.04em; }
   .olplayers span.rdy { border-color:#22ff8a; color:#b9ffd8; } .olplayers span.me { border-color:var(--mag); }
   .schedrow { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid rgba(63,246,255,0.12); font-size:12px; } .schedrow b { color:#fff; } .schedrow button { font-size:11px; padding:5px 10px; }
+  .spin { display:inline-block; width:12px; height:12px; margin-right:6px; vertical-align:-1px; border:2px solid rgba(63,246,255,0.3); border-top-color:var(--cyan); border-radius:50%; animation:spin 0.9s linear infinite; } @keyframes spin { to { transform:rotate(360deg); } }
   #olCount { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:40; pointer-events:none; text-align:center; }
   #olCount .ot { font-size:14px; letter-spacing:0.4em; color:#9feaff; text-transform:uppercase; } #olCount .on { font-size:120px; font-weight:800; color:#fff; text-shadow:0 0 30px var(--cyan), 0 0 60px var(--mag); line-height:1.05; }
   #olCount .os { font-size:12px; letter-spacing:0.12em; color:#ffd9f6; } #olCount.go .on { color:#b9ffd8; text-shadow:0 0 30px #22ff8a; }
@@ -451,7 +452,7 @@
   @media (orientation: portrait) and (max-width: 600px) { body.arcade .holo.top { top:96px; } }
 </style>
 </head>
-<body data-build="cosmicrow-social-v7">
+<body data-build="cosmicrow-online-v8">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -668,10 +669,13 @@
       <nav class="mtabs" id="olTabs">
         <button data-sec="race"><b>Race now</b><small>Create · join by code</small></button>
         <button data-sec="sched"><b>Scheduled</b><small>A race every 15 min</small></button>
-        <button data-sec="server"><b>Server</b><small id="olSrvS">Simulated lobby</small></button>
+        <button data-sec="server"><b>Server</b><small id="olSrvS">Race server</small></button>
       </nav>
       <div class="mbody">
         <section class="msec" data-sec="race">
+          <div class="card hidden" id="olWake"><div class="ct">Race server</div><div class="infobox" id="olWakeT"></div>
+            <div class="row"><button id="olRetry">Retry now</button><button id="olPractice">Practice offline instead</button></div></div>
+          <div class="card hidden" id="olStale"><div class="infobox">Lost the connection to the race server.</div><div class="row"><button id="olReconnect">Reconnect</button></div></div>
           <div class="card" id="olLobby"><div class="ct">Name shown to others</div><div class="row"><input type="text" id="olName" maxlength="20" placeholder="Your race name" size="18"></div>
             <div class="ct" style="margin-top:12px">Create a race</div><div class="seg" id="olDist"></div><div class="row"><button id="olCreate">Create race ▸</button></div>
             <div class="ct" style="margin-top:12px">Join with a code</div><div class="row"><input type="text" id="olCode" maxlength="5" placeholder="K7QXM" size="7" autocapitalize="characters" autocomplete="off"><button id="olJoin">Join</button></div>
@@ -684,10 +688,10 @@
         </section>
         <section class="msec" data-sec="sched"><div class="card"><div class="ct">Public races</div><div id="olSched"></div><div class="note">Join, then wait: the 10-second countdown starts by itself before the start time.</div></div></section>
         <section class="msec" data-sec="server">
-          <div class="card"><div class="ct">Server</div><div class="seg" id="olMode"><button data-m="local">Local / simulated</button><button data-m="server">Online server</button></div>
+          <div class="card"><div class="ct">Server</div><div class="seg" id="olMode"><button data-m="server">Race server</button><button data-m="local">Practice (offline)</button></div>
             <div class="row" id="olUrlRow"><input type="text" id="olUrl" placeholder="wss://your-server.example" size="30" autocomplete="off"><button id="olConnect">Connect</button></div>
             <div class="status" id="olConnNote"></div>
-            <div class="note">Simulated mode runs on this device with computer-controlled online rowers (5 updates a second, with network delay), so lobbies, codes and countdowns work without a server. Real races need the small server in /server/online (free hosting options in its README).</div></div>
+            <div class="note">Race server = real people (CosmicRow's free server - it may need up to a minute to wake up). Practice = everything on this device with simulated online rowers (5 updates a second, with network delay), no internet needed. You can also enter another server address.</div></div>
         </section>
       </div>
     </div>
@@ -27783,7 +27787,7 @@ ${pts}
   };
 
   // online/config.js
-  var DEFAULT_SERVER = "";
+  var DEFAULT_SERVER = "wss://cosmicrow-online.onrender.com";
 
   // input/heartRate.js
   function parseHeartRate(dv) {
@@ -28118,7 +28122,7 @@ ${pts}
 
   // main.js
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-social-v7";
+  var BUILD_ID = "cosmicrow-online-v8";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -29750,7 +29754,22 @@ ${pts}
       this.clubs = loadClubs();
       this.hr = new HeartRateStrap();
       this.hr.onChange = () => this._paintHr();
-      this.online = readJSON("cosmicrow.online.v1", { mode: DEFAULT_SERVER ? "server" : "local", url: DEFAULT_SERVER, dist: 2e3 });
+      this.online = readJSON("cosmicrow.online.v1", { mode: DEFAULT_SERVER ? "server" : "local", url: DEFAULT_SERVER, dist: 2e3, v: 2 });
+      let rawOl = null;
+      try {
+        rawOl = JSON.parse(localStorage.getItem("cosmicrow.online.v1") || "null");
+      } catch (e) {
+      }
+      if (rawOl && !(rawOl.v >= 2)) {
+        if (DEFAULT_SERVER) {
+          this.online.mode = "server";
+          if (!this.online.url) this.online.url = DEFAULT_SERVER;
+        }
+        this.online.v = 2;
+        localStorage.setItem("cosmicrow.online.v1", JSON.stringify(this.online));
+      }
+      this._olTok = 0;
+      this._olWakeLimit = 75e3;
       this.lobby = null;
       this.olRoom = null;
       this._olHold = false;
@@ -31200,8 +31219,8 @@ ${pts}
         if (fresh2.length) html += `<div class="sumnote" style="color:#ffd59a">\u{1F3C5} New record${fresh2.length > 1 ? "s" : ""}: <b>${fresh2.slice(0, 4).map((x) => `${x.label} ${x.text}`).join(" \xB7 ")}</b></div>`;
       }
       if (s.hrN) html += `<div class="sumnote">\u2764 Heart rate avg <b>${Math.round(s.hrSum / s.hrN)}</b> \xB7 max <b>${s.hrMax}</b> bpm</div>`;
-      if (this.online.mode === "server" && this.online.url) {
-        const c = new SocialClient(this.online.url), wk = isoWeek(), m = totals().week;
+      if (this._srvBase()) {
+        const c = new SocialClient(this._srvBase()), wk = isoWeek(), m = totals().week;
         c.submitWeek(this.profile, wk, m).catch(() => {
         });
         for (const cl of this.clubs.list) if (cl.mode === "server") c.clubMetres(this.profile, cl.code, m).catch(() => {
@@ -31331,14 +31350,29 @@ ${pts}
         $("lgNote").textContent = `Top 20 % (green) move up a division next week, bottom 20 % (red) move down. You: ${myAge || "age not set"} \xB7 ${myWc ? myWc === "LW" ? "lightweight" : "heavyweight" : "weight not set"} (Profile \u203A Me).`;
       };
       render(null, true);
-      if (this.online.mode === "server" && this.online.url) new SocialClient(this.online.url).league(wk, this.ui.lgAge, this.ui.lgWc).then((j) => {
-        if (this.ui.pfTabs === "league") render(j.rows.filter((r) => r.id !== p.id), false);
-      }).catch(() => {
-        $("lgNote").textContent += " (server unreachable - showing example data)";
-      });
+      const base = this._srvBase();
+      if (base) {
+        const sc = new SocialClient(base), tok = this._lgTok = (this._lgTok || 0) + 1;
+        (me.m > 0 ? sc.submitWeek(p, wk, me.m).catch(() => {
+        }) : Promise.resolve()).then(() => sc.league(wk, this.ui.lgAge, this.ui.lgWc)).then((j) => {
+          if (this.ui.pfTabs !== "league" || tok !== this._lgTok) return;
+          const rows = (j.rows || []).filter((r) => r.id !== p.id);
+          render(rows, false);
+          $("lgNote").textContent = (rows.length ? "Live table from the race server. " : "Live table from the race server - nobody else has rowed this week yet. ") + $("lgNote").textContent;
+        }).catch(() => {
+          if (tok === this._lgTok) $("lgNote").textContent += " (race server unreachable - showing example data)";
+        });
+      }
     }
-    _paintClubs() {
+    _paintClubs(noFetch) {
       const $ = (id) => document.getElementById(id), st = this.clubs, c = st.list.find((x) => x.code === st.active);
+      if (!noFetch && c && c.mode === "server" && this._srvBase()) new SocialClient(this._srvBase())._j("/clubs/" + c.code).then((j) => {
+        c.name = j.club.name;
+        c.members = Object.entries(j.club.members).filter(([id]) => id !== this.profile.id).map(([id, m]) => ({ id, name: m.name, m: m.m }));
+        saveClubs(st);
+        if (this.ui.pfTabs === "clubs") this._paintClubs(true);
+      }).catch(() => {
+      });
       $("clList").innerHTML = st.list.length ? st.list.map((x) => `<div class="plitem"><div><div class="pt">${esc(x.name)}</div><div class="pd">Code ${x.code} \xB7 ${(x.members || []).length + 1} members${x.example ? " \xB7 example club" : ""}</div></div><div>${x.code === st.active ? '<button class="small sel" disabled>Open</button>' : `<button class="small" data-open="${x.code}">Open</button>`}</div></div>`).join("") : `<div class="note">No club yet. Create one and share its code, or join a friend's club with theirs.</div>`;
       $("clActive").classList.toggle("hidden", !c);
       if (!c) return;
@@ -31392,21 +31426,98 @@ ${pts}
     _olMe() {
       return { name: (this.profile.name || "Rower").slice(0, 20), ship: this.ship.def.id, color: this.choice.color || this.ship.def.color };
     }
-    _olEnsure() {
-      const want = this.online.mode === "server" ? "server" : "local";
-      if (this.lobby && this.lobby.mode === want && (want === "local" || this.lobby.url === this.online.url)) return;
+    /** server base URL for leagues/clubs ('' = examples only). file:// copies can't pass the server's origin check, so they stay local. */
+    _srvBase() {
+      const u = this.online.url || DEFAULT_SERVER;
+      return this.online.mode === "server" && u && !this._olBlocked(u) ? u : "";
+    }
+    _olBlocked(u) {
+      return location.protocol === "file:" && !/^wss?:\/\/(localhost|127\.)/.test(u);
+    }
+    _olEff() {
+      const u = this.online.url || DEFAULT_SERVER;
+      return this.online.mode === "server" && u && !this._olPracticeNow && !this._olBlocked(u) ? "server" : "local";
+    }
+    _olEnsure(force) {
+      const want = this._olEff(), url = this.online.url || DEFAULT_SERVER;
+      if (!force && want === "server" && this._olWaking && !this._olWaking.failed) return;
+      if (!force && this.lobby && this.lobby.mode === want && (want === "local" || this.lobby.url === url && this._olStatus && this._olStatus.online)) return;
       if (this.lobby && this.olRoom && this.olRoom.state !== "open") return;
       if (this.lobby) {
         this.lobby.close();
         this.lobby = null;
         this.olRoom = null;
       }
+      this._olTok++;
+      this._olWaking = null;
       if (want === "local") {
         this._olAttach(new SimLobby());
         this.lobby.connect(this._olMe());
         this.lobby.schedule();
-      } else if (this.online.url) this._olConnect();
-      else this._olStatus = { mode: "server", online: false, msg: "Enter your server address (wss://\u2026) and press Connect." };
+      } else this._olConnect(url);
+    }
+    /** Render free tier sleeps: ping /health (no-cors = any answer counts) until it answers, then open the WebSocket. */
+    async _olConnect(url) {
+      const tok = this._olTok, t0 = Date.now(), deadline = t0 + this._olWakeLimit, health = url.replace(/^ws/, "http").replace(/\/$/, "") + "/health";
+      this._olWaking = { t0, failed: false, tries: 0 };
+      this._olStatus = { mode: "server", online: false, msg: "" };
+      this._paintOnline();
+      clearInterval(this._olWakeIv);
+      this._olWakeIv = setInterval(() => {
+        if (!this._olWaking || this._olWaking.failed) clearInterval(this._olWakeIv);
+        if (this.state === "online") this._paintOnline();
+      }, 1e3);
+      while (tok === this._olTok) {
+        this._olWaking.tries++;
+        let up = false;
+        try {
+          const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), Math.max(1e3, Math.min(15e3, deadline - Date.now())));
+          await fetch(health, { mode: "no-cors", cache: "no-store", signal: ctl.signal });
+          clearTimeout(to);
+          up = true;
+        } catch (e) {
+        }
+        if (tok !== this._olTok) return;
+        if (up) {
+          const L = new WsLobby(url);
+          try {
+            await L.connect(this._olMe());
+            if (tok !== this._olTok) {
+              L.close();
+              return;
+            }
+            this._olAttach(L);
+            this._olWaking = null;
+            this._olStatus = { mode: "server", online: true, msg: "Connected to " + url.replace(/^wss?:\/\//, "") };
+            L.schedule();
+            this._paintOnline();
+            return;
+          } catch (e) {
+            try {
+              L.close();
+            } catch (e2) {
+            }
+            this._olLastErr = e.message;
+          }
+        }
+        if (tok !== this._olTok) return;
+        if (Date.now() >= deadline) {
+          this._olWaking.failed = true;
+          this._paintOnline();
+          return;
+        }
+        await new Promise((r) => setTimeout(r, 2500));
+      }
+    }
+    _olPractice() {
+      this._olPracticeNow = true;
+      this._olEnsure(true);
+      this._paintOnline();
+    }
+    _olRetry() {
+      this._olPracticeNow = false;
+      this._olEnsure(true);
+      this._paintOnline();
     }
     _olAttach(L) {
       const $ = (id) => document.getElementById(id);
@@ -31437,19 +31548,6 @@ ${pts}
           if (m.finished && m.ft != null) rr.finishT = m.ft;
         }
       });
-    }
-    async _olConnect() {
-      const L = new WsLobby(this.online.url.trim());
-      this._olAttach(L);
-      this._olStatus = { mode: "server", online: false, msg: "Connecting\u2026" };
-      this._paintOnline();
-      try {
-        await L.connect(this._olMe());
-        L.schedule();
-      } catch (e) {
-        this._olStatus = { mode: "server", online: false, msg: e.message };
-        this._paintOnline();
-      }
     }
     _olClock() {
       return this.workout && this.workout.online && this.lobby ? Math.max(0, (this.lobby.now() - this.workout.online.startAt) / 1e3) : 0;
@@ -31517,15 +31615,23 @@ ${pts}
       document.getElementById("olCount").classList.add("hidden");
     }
     _paintOnline() {
-      const $ = (id) => document.getElementById(id), R = this.olRoom, st = this._olStatus || {}, srv = this.online.mode === "server";
-      $("olSrvS").textContent = srv ? st.online ? "Connected" : "Not connected" : "Simulated lobby";
-      document.querySelectorAll("#olMode button").forEach((b) => b.classList.toggle("sel", b.dataset.m === (srv ? "server" : "local")));
-      $("olUrlRow").classList.toggle("hidden", !srv);
-      if (document.activeElement !== $("olUrl")) $("olUrl").value = this.online.url || "";
-      $("olConnNote").textContent = st.msg || "";
+      const $ = (id) => document.getElementById(id), R = this.olRoom, st = this._olStatus || {}, pref = this.online.mode === "server", srv = this._olEff() === "server", wk = srv && this._olWaking;
+      const url = this.online.url || DEFAULT_SERVER, fileBlock = pref && this._olBlocked(url);
+      $("olSrvS").textContent = srv ? st.online ? "Race server \xB7 online" : wk ? wk.failed ? "Server asleep" : "Waking up\u2026" : "Not connected" : "Practice (offline)";
+      document.querySelectorAll("#olMode button").forEach((b) => b.classList.toggle("sel", b.dataset.m === (pref ? "server" : "local")));
+      $("olUrlRow").classList.toggle("hidden", !pref);
+      if (document.activeElement !== $("olUrl")) $("olUrl").value = url;
+      $("olConnNote").textContent = fileBlock ? "Online races need the web version: klamintson.github.io/cosmicrow-play (this file copy practises offline)." : srv ? st.msg || (wk ? "Waking up\u2026" : "") : this._olPracticeNow ? 'Practising offline - press "Race server" to try again.' : "";
+      const sec = wk ? Math.round((Date.now() - wk.t0) / 1e3) : 0;
+      $("olWake").classList.toggle("hidden", !wk);
+      if (wk) {
+        $("olWakeT").innerHTML = wk.failed ? `The race server didn't wake up (${sec} s). Free servers sleep when nobody has raced for a while - try again, or practise against simulated rowers.` : `<span class="spin"></span> Waking up the race server\u2026 (up to ~1 min) \xB7 ${sec} s<br><span class="note">The free server sleeps after 15 quiet minutes. You can practise meanwhile.</span>`;
+        $("olRetry").textContent = wk.failed ? "Try again" : "Retry now";
+      }
+      $("olStale").classList.toggle("hidden", !(srv && !wk && !st.online && this.lobby));
       if (document.activeElement !== $("olName")) $("olName").value = this.profile.name || "";
       document.querySelectorAll("#olDist button").forEach((b) => b.classList.toggle("sel", +b.dataset.d === this.online.dist));
-      $("olLobby").classList.toggle("hidden", !!R);
+      $("olLobby").classList.toggle("hidden", !!R || !!wk);
       $("olRoom").classList.toggle("hidden", !R);
       const busy = srv && !st.online;
       $("olCreate").disabled = $("olJoin").disabled = busy;
@@ -31542,7 +31648,7 @@ ${pts}
       }
       const list = this._olSched || [];
       $("olSched").innerHTML = list.map((x) => `<div class="schedrow"><div><b>${new Date(x.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</b> \xB7 ${esc(x.name)} \xB7 ${x.dist >= 1e3 ? x.dist / 1e3 + " km" : x.dist + " m"} <span class="note">${x.players || 0} signed up</span></div><button class="small" data-id="${esc(x.id)}"${R || busy ? " disabled" : ""}>Join</button></div>`).join("") || '<div class="note">Loading\u2026</div>';
-      $("olLine").innerHTML = `${srv ? st.online ? "\u{1F7E2} Online server" : "\u26AA Server not connected" : "\u{1F7E3} Simulated lobby (local)"} \xB7 ${R ? `In race <b>${esc(R.code)}</b>` : "not in a race"}`;
+      $("olLine").innerHTML = `${srv ? st.online ? "\u{1F7E2} Race server online" : wk && !wk.failed ? "\u{1F7E1} Waking up the race server\u2026" : "\u26AA Race server not connected" : "\u{1F7E3} Practice \xB7 simulated rowers (offline)"} \xB7 ${R ? `In race <b>${esc(R.code)}</b>` : "not in a race"}`;
     }
     /* ---------- club team races ---------- */
     _teamSetupField(w) {
@@ -31657,20 +31763,25 @@ ${pts}
       });
       document.querySelectorAll("#olMode button").forEach((b) => tap(b, () => {
         this.online.mode = b.dataset.m;
+        this._olPracticeNow = false;
         this._saveOnline();
-        this._olEnsure();
+        this._olEnsure(true);
         this._paintOnline();
       }));
       tap($("olConnect"), () => {
-        this.online.url = $("olUrl").value.trim();
+        this.online.url = $("olUrl").value.trim() || DEFAULT_SERVER;
         this._saveOnline();
-        if (this.lobby) {
+        this._olPracticeNow = false;
+        if (this.lobby && !(this.olRoom && this.olRoom.state !== "open")) {
           this.lobby.close();
           this.lobby = null;
         }
-        this._olEnsure();
+        this._olEnsure(true);
         this._paintOnline();
       });
+      tap($("olRetry"), () => this._olRetry());
+      tap($("olPractice"), () => this._olPractice());
+      tap($("olReconnect"), () => this._olRetry());
       $("pfHist").addEventListener("click", (e) => {
         const b = e.target.closest("button[data-id]");
         if (!b) return;
@@ -31725,7 +31836,7 @@ ${pts}
         this._saveUi();
         this._paintLeague();
       }));
-      const srvClub = () => this.online.mode === "server" && this.online.url ? new SocialClient(this.online.url) : null;
+      const srvClub = () => this._srvBase() ? new SocialClient(this._srvBase()) : null;
       tap($("clCreate"), async () => {
         const name = $("clNewName").value.trim() || "My Club", sc = srvClub();
         $("clErr").textContent = "";

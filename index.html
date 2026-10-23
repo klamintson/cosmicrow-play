@@ -288,6 +288,9 @@
   #rivalTags { position:absolute; inset:0; pointer-events:none; overflow:hidden; }
   .rtag { position:absolute; left:0; top:0; transform:translate(-50%,-100%); white-space:nowrap; font-size:11px; letter-spacing:0.12em; padding:2px 8px 3px; color:#fff;
     background:rgba(4,8,20,0.7); border-left:2px solid var(--rc,#3ff6ff); clip-path:polygon(6px 0,100% 0,calc(100% - 6px) 100%,0 100%); will-change:transform; text-shadow:0 0 6px var(--rc,#3ff6ff); }
+  .flagb { display:inline-block; vertical-align:-0.18em; margin-left:0.35em; line-height:0; } .flagb img { height:1.15em; width:auto; display:block; }
+  #pfFlagB .flagb img { height:2.2em; }
+  .flagb.emo { line-height:1; font-size:1em; padding:0 3px; border:1px solid #c8ffff; border-radius:4px; box-shadow:0 0 6px #00f0ff; }
   .rtag b { color:var(--rc); font-weight:800; } .rtag .gp { margin-left:6px; } .rtag .gp.ahead { color:#ffb0bc; } .rtag .gp.behind { color:#7dffb7; }
   .rtag.far { font-size:9px; opacity:0.75; padding:1px 6px; } .rtag.far .sp { display:none; }
   .rarrow { position:absolute; transform:translate(-50%,-50%); font-size:11px; letter-spacing:0.1em; color:var(--rc); white-space:nowrap; text-shadow:0 0 6px var(--rc); background:rgba(4,8,20,0.55); padding:2px 7px; border-radius:3px; }
@@ -309,6 +312,7 @@
   .hicons { position:absolute; right:0; top:0; display:flex; gap:6px; }
   button.icon { font-size:11px; padding:6px 9px; letter-spacing:0.08em; text-transform:none; border-color:rgba(63,246,255,0.35); background:rgba(8,4,24,0.5); }
   button.icon.on { color:#7dffb7; border-color:#7dffb7; }
+  .lbico { display:inline-block; width:1.6em; height:1.6em; vertical-align:-0.5em; margin-right:0.45em; border-radius:22%; background:url(data:image/png;base64,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) center/cover no-repeat; box-shadow:0 0 6px rgba(255,63,216,0.55); }
   .home .tag { margin-bottom:16px; }
   button.racebtn { display:flex; flex-direction:column; align-items:center; gap:2px; margin:0 auto; width:min(440px, 86vw); padding:14px 20px 12px; border:1px solid var(--mag); color:#fff;
     background:linear-gradient(180deg, rgba(255,63,216,0.32), rgba(255,63,216,0.10)); box-shadow:0 0 26px rgba(255,63,216,0.55), inset 0 0 22px rgba(255,63,216,0.25);
@@ -563,7 +567,6 @@
   #cockpit .ceng { position:absolute; left:50%; transform:translateX(-50%); bottom:calc(clamp(130px,34vh,280px) + 6px); font-size:11px; letter-spacing:0.22em; color:var(--eng, #3fd0ff); text-shadow:0 0 8px var(--eng, #3fd0ff); }
 
   /* ---------- v10 main menu (chrome logo, vertical list, ship on a platform at the right) ---------- */
-  #title { align-items:stretch; justify-content:stretch; background:linear-gradient(90deg, rgba(3,2,14,0.82) 0%, rgba(3,2,14,0.5) 34%, rgba(3,2,14,0) 58%); }
   .home.menu10 { position:absolute; inset:0; width:auto; padding:0; text-align:left; }
   .menu10 .mleft { position:absolute; left:clamp(18px,4vw,56px); top:clamp(14px,5vh,48px); width:min(470px, 46vw); }
   .menu10 h1.logo.chrome { margin:0; padding:0 0.12em 0 0.02em; font-size:clamp(40px,6.4vw,84px); font-style:italic; font-weight:900; letter-spacing:0.02em;
@@ -595,7 +598,6 @@
   .mbottom .hint { margin:0 0 0 auto; font-size:10px; opacity:0.6; }
   @media (max-width: 900px) { .mbottom .hint { display:none; } }
   @media (max-width: 700px), (max-aspect-ratio: 1/1) {
-    #title { background:linear-gradient(0deg, rgba(3,2,14,0.88) 0%, rgba(3,2,14,0.62) 55%, rgba(3,2,14,0.1) 100%); }
     .menu10 .mleft { left:12px; right:12px; width:auto; top:auto; bottom:52px; } .menu10 h1.logo.chrome { font-size:38px; } .menu10 .tag { display:none; }
     .mlist button.mi { padding:5px 10px; } .mlist button.mi small { display:none; } .xpPanel { top:10px; right:10px; width:170px; padding:8px 10px; } .xpPanel .xpn { font-size:13px; }
     .mbottom { padding:7px 10px; gap:8px; font-size:9.5px; } .mbottom .sep { display:none; }
@@ -758,31 +760,26 @@
 
 <!-- Main screen: just the big choices -->
 <div id="title" class="overlay">
-  <div class="home menu10">
-    <div class="mleft">
-      <h1 class="logo chrome" data-t="COSMICROW">COSMICROW</h1>
-      <div class="logobar"></div>
-      <div class="tag">Row through the neon void</div>
-      <nav class="mlist" id="mainMenu">
-        <button class="mi sel" id="startBtn"><span class="chev">›</span><span class="rl">Race</span><span class="rs" id="raceSub">2000 m</span></button>
-        <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
-        <div class="pbline" id="pbLine"></div>
-        <button class="mi" id="arcadeBtn"><span class="chev">›</span><b>Games</b><small>Laser Run · Comet Tail</small></button>
-        <button class="mi" id="trainingBtn"><span class="chev">›</span><b>Training</b><small>Workouts · intervals · WOD · ghosts · pace boats · weekly sprint</small></button>
-        <button class="mi" id="onlineBtn"><span class="chev">›</span><b>Online</b><small>Live races</small></button>
-        <button class="mi" id="garageBtn"><span class="chev">›</span><b>Hangar</b><small>Ships · colours · captain's log</small></button>
-        <button class="mi" id="profileBtn"><span class="chev">›</span><b>Profile</b><small>Stats · history · leagues</small></button>
-        <button class="mi" id="settingsBtn"><span class="chev">›</span><b>Settings</b><small>Audio · view · input</small></button>
-      </nav>
-    </div>
-    <div class="xpPanel" id="mXp"><div class="xpn"><span id="mXpShip">AURORA</span><span class="star">✦</span></div><div class="xpl" id="mXpLine">XP 0 / 100</div><div class="xpbar"><i id="mXpBar"></i></div><div class="xps" id="mXpSub"></div></div>
-    <div class="mbottom">
-      <button class="icon pm5st" id="inChip" title="Rowing input (Settings › Input)"><span class="ring"></span> <span id="inChipT">Keyboard</span> <span class="dot"></span> <span id="pmStateT">PM5 NOT CONNECTED</span></button>
-      <span class="sep"></span><span class="music">Music: Johan K. Jacobsen</span><span class="sep"></span>
-      <button class="icon" id="lbChip" title="Concept2 Logbook (Settings › Logbook)">📘 Logbook</button>
+  <div class="home">
+    <div class="hicons">
+      <button class="icon" id="inChip" title="Rowing input (Settings › Input)">⚡ <span id="inChipT">Keyboard</span></button>
+      <button class="icon" id="lbChip" title="Concept2 Logbook sync (Settings › Logbook)"><i class="lbico"></i>Concept2 Logbook</button>
       <button class="icon" id="aboutBtn" title="About">ⓘ</button>
-      <span class="hint" id="keyHint">SPACE / tap = stroke · ↑↓ + Enter = menu · C = camera · M = mute · ESC = back</span>
     </div>
+    <h1 class="logo">CosmicRow</h1>
+    <div class="tag">Row through the neon void</div>
+    <button class="racebtn" id="startBtn"><span class="rl">▶ Race</span><span class="rs" id="raceSub">2000 m</span></button>
+    <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
+    <div class="pbline" id="pbLine"></div>
+    <div class="hgrid">
+      <button class="hbtn" id="trainingBtn"><b>Training</b><small>Workouts · plans · weekly sprint</small></button>
+      <button class="hbtn" id="onlineBtn"><b>Online</b><small>Live races</small></button>
+      <button class="hbtn" id="arcadeBtn"><b>Arcade</b><small>Laser Run · Comet Tail</small></button>
+      <button class="hbtn" id="profileBtn"><b>Profile</b><small>Stats · leagues · flag</small></button>
+      <button class="hbtn" id="garageBtn"><b>Garage</b><small>Ships · captain's log</small></button>
+      <button class="hbtn" id="settingsBtn"><b>Settings</b><small>Audio · view · input</small></button>
+    </div>
+    <div class="hint" id="keyHint">SPACE / tap = stroke &nbsp;·&nbsp; C = camera &nbsp;·&nbsp; M = mute &nbsp;·&nbsp; ESC = back / end</div>
   </div>
 </div>
 
@@ -1012,6 +1009,7 @@
           <div class="card"><div class="ct">Profile</div><div class="note">Used for age groups, weight classes and heart-rate zones. Stays on this device unless you join a server league.</div>
             <div class="form">
               <label>Name <input type="text" id="pfName" maxlength="20" size="16"></label>
+              <label>Flag <select id="pfFlag" title="Shown after your name in races, leaderboards, online lobbies and on the share card"></select> <span id="pfFlagB"></span></label>
               <label>Birth year <input type="number" id="pfBirth" min="1920" max="2015" placeholder="1985"></label>
               <label>Sex <select id="pfSex"><option value="">-</option><option value="M">Men</option><option value="F">Women</option></select></label>
               <label>Weight (kg) <input type="number" id="pfWeight" min="30" max="200" step="0.5"></label>
@@ -1083,7 +1081,7 @@
           <div class="card"><div class="ct">Concept2 Logbook</div>
             <div class="row"><select id="lbHost"><option value="dev">Dev server (testing)</option><option value="live">Live Logbook</option></select>
               <input type="password" id="lbToken" placeholder="Paste your Logbook access token" autocomplete="off" size="26"></div>
-            <div class="row"><button class="small" id="lbConnect">Save &amp; test</button><button class="small" id="lbForget">Forget</button><button class="small" id="lbOauth" disabled title="Needs app registration at Concept2 first">Sign in with Concept2 (coming later)</button></div>
+            <div class="row"><button class="small" id="lbConnect"><i class="lbico"></i>Save &amp; test</button><button class="small" id="lbForget">Forget</button><button class="small" id="lbOauth" disabled title="Needs app registration at Concept2 first">Sign in with Concept2 (coming later)</button></div>
             <div class="status" id="lbSetStatus"></div>
             <label class="chk"><input type="checkbox" id="optLbPm5"> Offer "Save to Logbook" for PM5 rows</label>
             <div class="note warnnote" id="lbDupNote">⚠ Off by default: your PM5 already records every piece (a Just Row or the programmed workout) and ErgData / the PM5 Logbook sync uploads it. Saving from the game too creates a <b>duplicate</b> Logbook entry. Only turn this on if your PM5 results are not synced any other way.</div>
@@ -1148,7 +1146,7 @@
     </table>
     <div id="sumExtra"></div>
     <div class="row" id="sumActs"><button class="small" id="sumStats">Stats ▸</button><button class="small" id="sumTcx">Export .tcx</button><button class="small hidden" id="sumStrava">Send to Strava</button><button class="small" id="sumPoster">🖼 Poster</button></div>
-    <div class="row hidden" id="lbRow"><button id="lbSave">Save to Logbook</button></div>
+    <div class="row hidden" id="lbRow"><button id="lbSave"><i class="lbico"></i>Save to Concept2 Logbook</button></div>
     <div class="status" id="lbStatus"></div>
     <div class="row"><button class="big" id="againBtn">Row again</button><button id="menuBtn">Menu</button></div>
   </div>
@@ -29331,7 +29329,7 @@ ${pts}
           } catch (e) {
           }
         }, 12e3);
-        ws.onopen = () => ws.send(JSON.stringify({ t: "hello", name: me.name, ship: me.ship, color: me.color, v: 1 }));
+        ws.onopen = () => ws.send(JSON.stringify({ t: "hello", name: me.name, flag: me.flag || "", ship: me.ship, color: me.color, v: 1 }));
         ws.onerror = () => {
           clearTimeout(to);
           this.emit("status", { mode: "server", online: false, msg: "Could not reach " + this.url });
@@ -29556,7 +29554,7 @@ ${pts}
       p = JSON.parse(localStorage.getItem(PKEY) || "{}");
     } catch (e) {
     }
-    return Object.assign({ id: rid(), name: "", birthYear: 0, sex: "", weightKg: 0, hrMax: 0, share: false }, p);
+    return Object.assign({ id: rid(), name: "", flag: "fo", birthYear: 0, sex: "", weightKg: 0, hrMax: 0, share: false }, p);
   }
   function saveProfile(p) {
     localStorage.setItem(PKEY, JSON.stringify(p));
@@ -29609,7 +29607,7 @@ ${pts}
     return out;
   }
   function leagueTable(week, me, { age: age2 = "all", wc = "all", rows = null } = {}) {
-    const list = (rows || exampleLeague(week)).concat([{ id: "you", name: me.name || "YOU", age: me.age, wc: me.wc, m: me.m, you: true }]);
+    const list = (rows || exampleLeague(week)).concat([{ id: "you", name: me.name || "YOU", flag: me.flag, age: me.age, wc: me.wc, m: me.m, you: true }]);
     return list.filter((x) => x.you || (age2 === "all" || x.age === age2) && (wc === "all" || x.wc === wc)).sort((a, b) => b.m - a.m).map((x, i) => ({ ...x, pos: i + 1 }));
   }
   function zoneFor(pos, n) {
@@ -29684,7 +29682,7 @@ ${pts}
       return j;
     }
     submitWeek(p, week, m) {
-      return this._j("/league/submit", { week, id: p.id, name: p.name || "Rower", age: ageGroup(p) || "30-39", wc: weightClass(p) || "HW", m });
+      return this._j("/league/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", age: ageGroup(p) || "30-39", wc: weightClass(p) || "HW", m });
     }
     league(week, age2 = "all", wc = "all") {
       return this._j(`/league?week=${week}&age=${encodeURIComponent(age2)}&wc=${wc}`);
@@ -29696,7 +29694,7 @@ ${pts}
       return this._j("/clubs/join", { id: p.id, member: p.name || "Rower", code });
     }
     submitWeekly(p, week, d, time, ship) {
-      return this._j("/weekly/submit", { week, id: p.id, name: p.name || "Rower", d, time, ship });
+      return this._j("/weekly/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", d, time, ship });
     }
     weekly(week) {
       return this._j(`/weekly?week=${encodeURIComponent(week)}`);
@@ -30021,7 +30019,18 @@ ${pts}
     const sub = d.score ? d.scoreSub || "" : `${d.split || "--"} /500m${d.spm ? " \xB7 " + d.spm + " spm" : ""}`;
     if (sub) neon(sub, W / 2, 900, 38, "#ffffff", 600, "center", 10);
     if (d.badge) neon(d.badge, W / 2, 978, 34, "#ffe46b", 700, "center", 16, 2);
-    neon(`${(d.ship || "").toUpperCase()}  \xB7  ${(d.stage || "").toUpperCase()}${d.name ? "  \xB7  " + d.name.toUpperCase() : ""}`, W / 2, d.badge ? 1018 : 990, 26, acc2, 600, "center", 10, 2);
+    {
+      const txt = `${(d.ship || "").toUpperCase()}  \xB7  ${(d.stage || "").toUpperCase()}${d.name ? "  \xB7  " + d.name.toUpperCase() : ""}`, fy = d.badge ? 1018 : 990;
+      if (d.flagImg && d.name) {
+        g.font = '600 26px "Segoe UI", Arial, sans-serif';
+        if ("letterSpacing" in g) g.letterSpacing = "2px";
+        const tw = g.measureText(txt).width;
+        if ("letterSpacing" in g) g.letterSpacing = "0px";
+        const fh = 40, fw = fh * d.flagImg.width / d.flagImg.height, x0 = (W - tw - 6 - fw) / 2;
+        neon(txt, x0, fy, 26, acc2, 600, "left", 10, 2);
+        g.drawImage(d.flagImg, x0 + tw + 6, fy - 29, fw, fh);
+      } else neon(txt, W / 2, fy, 26, acc2, 600, "center", 10, 2);
+    }
     neon(`${POSTER_CREDIT}   \xB7   ${GAME_URL.replace(/^https:\/\//, "").replace(/\/$/, "")}`, W / 2, 1056, 24, "#ff9fe8", 500, "center", 8);
     g.save();
     g.strokeStyle = acc;
@@ -30163,6 +30172,51 @@ ${pts}
     }, 1e3);
     return "downloaded";
   }
+
+  // flags.js
+  var FLAG_CODES = ["ad", "ae", "af", "ag", "ai", "al", "am", "ao", "aq", "ar", "as", "at", "au", "aw", "ax", "az", "ba", "bb", "bd", "be", "bf", "bg", "bh", "bi", "bj", "bl", "bm", "bn", "bo", "bq", "br", "bs", "bt", "bv", "bw", "by", "bz", "ca", "cc", "cd", "cf", "cg", "ch", "ci", "ck", "cl", "cm", "cn", "co", "cp", "cr", "cu", "cv", "cw", "cx", "cy", "cz", "de", "dg", "dj", "dk", "dm", "do", "dz", "ec", "ee", "eg", "eh", "er", "es", "et", "eu", "fi", "fj", "fk", "fm", "fo", "fr", "ga", "gb-eng", "gb-nir", "gb-sct", "gb-wls", "gb", "gd", "ge", "gf", "gg", "gh", "gi", "gl", "gm", "gn", "gp", "gq", "gr", "gs", "gt", "gu", "gw", "gy", "hk", "hm", "hn", "hr", "ht", "hu", "ic", "id", "ie", "il", "im", "in", "io", "iq", "ir", "is", "it", "je", "jm", "jo", "jp", "ke", "kg", "kh", "ki", "km", "kn", "kp", "kr", "kw", "ky", "kz", "la", "lb", "lc", "li", "lk", "lr", "ls", "lt", "lu", "lv", "ly", "ma", "mc", "md", "me", "mf", "mg", "mh", "mk", "ml", "mm", "mn", "mo", "mp", "mq", "mr", "ms", "mt", "mu", "mv", "mw", "mx", "my", "mz", "na", "nc", "ne", "nf", "ng", "ni", "nl", "no", "np", "nr", "nu", "nz", "om", "pa", "pc", "pe", "pf", "pg", "ph", "pk", "pl", "pm", "pn", "pr", "ps", "pt", "pw", "py", "qa", "re", "ro", "rs", "ru", "rw", "sa", "sb", "sc", "sd", "se", "sg", "sh", "si", "sj", "sk", "sl", "sm", "sn", "so", "sr", "ss", "st", "sv", "sx", "sy", "sz", "tc", "td", "tf", "tg", "th", "tj", "tk", "tl", "tm", "tn", "to", "tr", "tt", "tv", "tw", "tz", "ua", "ug", "um", "un", "us", "uy", "uz", "va", "vc", "ve", "vg", "vi", "vn", "vu", "wf", "ws", "xk", "ye", "yt", "za", "zm", "zw"];
+  var DEFAULT_FLAG = "fo";
+  var EXTRA = { "gb-eng": "England", "gb-sct": "Scotland", "gb-wls": "Wales", "gb-nir": "Northern Ireland", eu: "European Union", un: "United Nations", xk: "Kosovo", cp: "Clipperton Island", dg: "Diego Garcia" };
+  var _dn = null;
+  function flagName(c) {
+    if (EXTRA[c]) return EXTRA[c];
+    try {
+      _dn = _dn || new Intl.DisplayNames(["en"], { type: "region" });
+      const n = _dn.of(c.toUpperCase());
+      if (n && n !== c.toUpperCase()) return n;
+    } catch (e) {
+    }
+    return c.toUpperCase();
+  }
+  var validFlag = (c) => typeof c === "string" && FLAG_CODES.includes(c.toLowerCase()) ? c.toLowerCase() : "";
+  var flagUrl = (c) => `flags/${c}.png`;
+  function flagEmoji(c) {
+    if (c === "gb-eng" || c === "gb-sct" || c === "gb-wls" || c === "gb-nir") return "\u{1F1EC}\u{1F1E7}";
+    return /^[a-z]{2}$/.test(c) ? String.fromCodePoint(...[...c.toUpperCase()].map((ch) => 127462 + ch.charCodeAt(0) - 65)) : "";
+  }
+  function flagBadge(c) {
+    c = validFlag(c);
+    if (!c) return "";
+    return `<span class="flagb" title="${flagName(c)}"><img src="${flagUrl(c)}" alt="${flagEmoji(c)}" onerror="this.parentNode.classList.add('emo');this.replaceWith(this.alt)"></span>`;
+  }
+  var flagOptions = () => FLAG_CODES.map((c) => [c, flagName(c)]).sort((a, b) => a[1].localeCompare(b[1], "en"));
+  var loadFlagImg = async (c) => {
+    c = validFlag(c);
+    if (!c || location.protocol === "file:") return null;
+    try {
+      const r = await fetch(flagUrl(c));
+      if (!r.ok) return null;
+      const u = URL.createObjectURL(await r.blob());
+      return await new Promise((res) => {
+        const im = new Image();
+        im.onload = () => res(im);
+        im.onerror = () => res(null);
+        im.src = u;
+      });
+    } catch (e) {
+      return null;
+    }
+  };
 
   // weekly.js
   var WEEKLY_DIST = [100, 250, 300, 350, 500, 750, 1e3];
@@ -32948,7 +33002,7 @@ ${pts}
       const c = this.pm5 && this.pm5.connected, name = c ? "PM5" : IS_MOBILE ? "Tap" : "Keyboard", $ = (id) => document.getElementById(id);
       $("inChipT").textContent = name;
       $("inChip").classList.toggle("on", !!c);
-      $("pmStateT").textContent = c ? "PM5 CONNECTED" : "PM5 NOT CONNECTED";
+      if ($("pmStateT")) $("pmStateT").textContent = c ? "PM5 CONNECTED" : "PM5 NOT CONNECTED";
       $("setInS").textContent = "Now: " + name;
       $("inputInfo").innerHTML = c ? "Connected to a <b>Concept2 PM5</b> - just row. Pace, rate, watts, heart rate and drag come from the monitor." : `Now: <b>${IS_MOBILE ? "tap simulator" : "keyboard simulator"}</b> - ${IS_MOBILE ? "tap anywhere" : "press SPACE (or tap)"} for each stroke. Connect a PM5 below to row for real.`;
       $("lbChip").classList.toggle("on", !!(this.lb && this.lb.user));
@@ -33062,7 +33116,7 @@ ${pts}
       $("trWeekS").textContent = mine.length ? `${d} m \xB7 best ${fmtTime(mine[0].time)}` : `${d} m this week`;
       const src = this.ui.wkSrc || "local";
       document.querySelectorAll("#wkSrc button").forEach((b) => b.classList.toggle("sel", b.dataset.w === src));
-      const row = (r, i, me) => `<tr class="${me ? "me" : ""}"><td class="r">${i + 1}</td><td>${esc(r.name || "Rower")}</td><td class="s">${esc(r.ship ? (SHIPS.find((x) => x.id === r.ship) || { name: r.ship }).name : "")}</td><td class="t">${fmtTime(r.time)}</td></tr>`;
+      const row = (r, i, me) => `<tr class="${me ? "me" : ""}"><td class="r">${i + 1}</td><td>${esc(r.name || "Rower")}${flagBadge(r.flag)}</td><td class="s">${esc(r.ship ? (SHIPS.find((x) => x.id === r.ship) || { name: r.ship }).name : "")}</td><td class="t">${fmtTime(r.time)}</td></tr>`;
       if (src === "local") {
         $("wkTable").innerHTML = mine.map((r, i) => row(r, i, false)).join("") || '<tr><td class="s">Nobody has rowed it on this device yet.</td></tr>';
         $("wkNote").textContent = "Top 10 attempts on this device.";
@@ -33899,6 +33953,7 @@ ${pts}
     /** ↑ / ↓ moves the magenta bar through the main menu, Enter opens the selected item */
     _menuStep(d) {
       const items = [...document.querySelectorAll("#mainMenu button.mi")];
+      if (!items.length) return;
       let i = items.findIndex((b) => b.classList.contains("sel"));
       i = (i + d + items.length) % items.length;
       items.forEach((b, k) => b.classList.toggle("sel", k === i));
@@ -33985,6 +34040,7 @@ ${pts}
         const tag = document.createElement("div");
         tag.className = "rtag";
         tag.style.setProperty("--rc", css);
+        tag.innerHTML = `<b></b>${flagBadge(r.flag)} <span class="sp"></span><span class="gp"></span>`;
         tags.appendChild(tag);
         const arrow = document.createElement("div");
         arrow.className = "rarrow hidden";
@@ -34021,7 +34077,11 @@ ${pts}
         const onScreen = show && v.z < 1 && Math.abs(v.x) < 1.05 && Math.abs(v.y) < 1.05;
         if (slow) {
           const gs = `${gap >= 0 ? "+" : "\u2212"}${Math.abs(gap).toFixed(0)} m`, cls = gap >= 0 ? "ahead" : "behind";
-          rv.tag.innerHTML = `<b>${rv.r.name}</b> <span class="sp">${fmtSplit(rv.r.split).replace(/\.\d$/, "")}</span><span class="gp ${cls}">${gs}</span>`;
+          const tq = rv.tq || (rv.tq = [rv.tag.querySelector("b"), rv.tag.querySelector(".sp"), rv.tag.querySelector(".gp")]);
+          tq[0].textContent = rv.r.name;
+          tq[1].textContent = fmtSplit(rv.r.split).replace(/\.\d$/, "");
+          tq[2].textContent = gs;
+          tq[2].className = "gp " + cls;
           rv.arrow.textContent = `${z >= 1.5 ? "\u25BC" : "\u25B2"} ${rv.r.name} ${gs}`;
         }
         rv.tag.classList.toggle("hidden", !onScreen || !this.session.started);
@@ -34063,7 +34123,7 @@ ${pts}
         document.getElementById("leaderPos").textContent = `${me + 1}/${st.length}`;
         document.getElementById("leaderRows").innerHTML = st.map((x, i) => {
           const rv = this.rivalViews.find((q) => q.r.id === x.id), gap = x.d - myD;
-          return `<div class="lr${x.id === "you" ? " you" : ""}" style="--rc:${rv ? rv.css : "#fff"}"><span class="p">${i + 1}</span><span class="n">${x.name}</span><span>${x.id === "you" ? fmtSplit(r.workD > 5 ? r.workT / r.workD * 500 : NaN).replace(/\.\d$/, "") : (gap >= 0 ? "+" : "\u2212") + Math.abs(gap).toFixed(0) + " m"}</span></div>`;
+          return `<div class="lr${x.id === "you" ? " you" : ""}" style="--rc:${rv ? rv.css : "#fff"}"><span class="p">${i + 1}</span><span class="n">${x.name}${x.id === "you" ? flagBadge(this.profile.flag) : flagBadge(rv && rv.r.flag)}</span><span>${x.id === "you" ? fmtSplit(r.workD > 5 ? r.workT / r.workD * 500 : NaN).replace(/\.\d$/, "") : (gap >= 0 ? "+" : "\u2212") + Math.abs(gap).toFixed(0) + " m"}</span></div>`;
         }).join("");
       }
     }
@@ -34470,7 +34530,7 @@ ${pts}
         streakMsg = `Daily challenge complete \u2713 Streak: ${st} day${st === 1 ? "" : "s"}`;
       }
       if (w.weekly && complete && time > 0) {
-        const wr = addWeeklyScore(w.weekly, { name: this.profile.name || "Rower", ship: this.ship.def.id, time: +time.toFixed(1), date: localDate() });
+        const wr = addWeeklyScore(w.weekly, { name: this.profile.name || "Rower", flag: validFlag(this.profile.flag), ship: this.ship.def.id, time: +time.toFixed(1), date: localDate() });
         this._weeklyMsg = `Weekly sprint ${fmtTime(time)} \xB7 #${wr} on this device this week`;
         if (this._srvBase()) new SocialClient(this._srvBase()).submitWeekly(this.profile, w.weekly, weeklyDistance(w.weekly), +time.toFixed(1), this.ship.def.id).then((j) => {
           this._weeklyMsg += ` \xB7 #${j.rank} online`;
@@ -34573,7 +34633,7 @@ ${pts}
       const lbPm5Off = s.source === "pm5" && !this.opts.lbPm5;
       $("lbRow").classList.toggle("hidden", !(this.lb.token && dist >= 100 && w.kind !== "calm") || lbPm5Off);
       $("lbSave").disabled = false;
-      $("lbSave").textContent = `Save to Logbook${this.lb.host === "live" ? "" : " (dev)"}`;
+      $("lbSave").innerHTML = `<i class="lbico"></i>Save to Concept2 Logbook${this.lb.host === "live" ? "" : " (dev)"}`;
       $("lbStatus").textContent = this.lb.token && dist >= 100 && w.kind !== "calm" && s.source === "pm5" ? lbPm5Off ? "Logbook: your PM5 already logged this piece - the game upload is off to avoid a duplicate (Settings \u203A Logbook to change)." : "\u26A0 Your PM5 may already log this piece - saving here too can create a duplicate Logbook entry." : "";
       this._posterData = {
         title: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name,
@@ -34585,11 +34645,16 @@ ${pts}
         scoreSub: this._posterSub || "",
         badge: isPB ? cmStats ? "\u2605 NEW LONGEST TAIL \u2605" : "\u2605 NEW PERSONAL BEST \u2605" : "",
         name: this.profile.name || "Rower",
+        flag: validFlag(this.profile.flag),
         ship: this.ship.def.name,
         stage: this.stageDef().name,
         stageId: this.stageId,
         date: localDate()
       };
+      this._posterFlag = null;
+      loadFlagImg(this._posterData.flag).then((im) => {
+        this._posterFlag = im;
+      });
       $("sumPoster").disabled = dist < 50;
       $("sumTcx").disabled = !this._lastRow;
       $("sumStrava").classList.toggle("hidden", !(this._lastRow && stravaReady() && loadStrava()));
@@ -34789,7 +34854,7 @@ ${pts}
       const render = (rows, example) => {
         const t = leagueTable(wk, me, { age: this.ui.lgAge, wc: this.ui.lgWc, rows }), n = t.length, mi = t.findIndex((x) => x.you);
         const show = t.filter((x, i) => i < 12 || Math.abs(i - mi) <= 1);
-        $("lgTable").innerHTML = "<tr><td>#</td><td>Rower</td><td>Age</td><td>Class</td><td>Metres</td></tr>" + show.map((x) => `<tr class="${x.you ? "you " : ""}${zoneFor(x.pos, n)}"><td>${x.pos}</td><td>${esc(x.name)}${x.example ? ' <span class="note">example</span>' : ""}</td><td>${x.age}</td><td>${x.wc}</td><td>${x.m.toLocaleString("en-US")}</td></tr>`).join("");
+        $("lgTable").innerHTML = "<tr><td>#</td><td>Rower</td><td>Age</td><td>Class</td><td>Metres</td></tr>" + show.map((x) => `<tr class="${x.you ? "you " : ""}${zoneFor(x.pos, n)}"><td>${x.pos}</td><td>${esc(x.name)}${flagBadge(x.you ? this.profile.flag : x.flag)}${x.example ? ' <span class="note">example</span>' : ""}</td><td>${x.age}</td><td>${x.wc}</td><td>${x.m.toLocaleString("en-US")}</td></tr>`).join("");
         $("lgMode").classList.toggle("hidden", !example);
         $("lgNote").textContent = `Top 20 % (green) move up a division next week, bottom 20 % (red) move down. You: ${myAge || "age not set"} \xB7 ${myWc ? myWc === "LW" ? "lightweight" : "heavyweight" : "weight not set"} (Profile \u203A Me).`;
       };
@@ -34826,13 +34891,15 @@ ${pts}
       $("clEx").classList.toggle("hidden", !(c.members || []).some((m) => m.example));
       $("clBar").style.width = (ch.pct * 100).toFixed(1) + "%";
       $("clChal").textContent = `${ch.name}: ${Math.round(ch.total / 1e3)} / ${ch.target / 1e3} km this week${ch.done ? " - challenge complete \u2713" : ""}`;
-      $("clMembers").innerHTML = "<tr><td>Member</td><td>This week</td><td>Avg split</td></tr>" + [{ name: this.profile.name ? this.profile.name + " (you)" : "You", m: myW, you: true }].concat(c.members || []).sort((a, b) => b.m - a.m).map((m) => `<tr class="${m.you ? "you" : ""}"><td>${esc(m.name)}${m.example ? ' <span class="note">example</span>' : ""}</td><td>${Math.round(m.m).toLocaleString("en-US")} m</td><td>${m.split ? fmtSplit(m.split).replace(/\.\d$/, "") : ""}</td></tr>`).join("");
+      $("clMembers").innerHTML = "<tr><td>Member</td><td>This week</td><td>Avg split</td></tr>" + [{ name: this.profile.name ? this.profile.name + " (you)" : "You", m: myW, you: true }].concat(c.members || []).sort((a, b) => b.m - a.m).map((m) => `<tr class="${m.you ? "you" : ""}"><td>${esc(m.name)}${flagBadge(m.you ? this.profile.flag : m.flag)}${m.example ? ' <span class="note">example</span>' : ""}</td><td>${Math.round(m.m).toLocaleString("en-US")} m</td><td>${m.split ? fmtSplit(m.split).replace(/\.\d$/, "") : ""}</td></tr>`).join("");
       const rv = rivalClub(c);
       $("clRaces").innerHTML = TEAM_FORMATS.map((f) => `<div class="teamrace"><div><b>${esc(f.name)}</b> vs ${esc(rv.name)} <span class="note">example rival</span><br><span class="note">${esc(f.desc)}</span></div><button class="small" data-fmt="${f.id}">Race \u25B8</button></div>`).join("");
     }
     _paintMe() {
       const $ = (id) => document.getElementById(id), p = this.profile;
       for (const [id, k] of [["pfName", "name"], ["pfBirth", "birthYear"], ["pfSex", "sex"], ["pfWeight", "weightKg"], ["pfHrMax", "hrMax"]]) if (document.activeElement !== $(id)) $(id).value = p[k] || "";
+      $("pfFlag").value = validFlag(p.flag) || DEFAULT_FLAG;
+      $("pfFlagB").innerHTML = flagBadge(p.flag);
       const ag = ageGroup(p), wc = weightClass(p), hm = hrMaxFor(p);
       $("pfDerived").textContent = `Age group: ${ag || "set birth year"} \xB7 Weight class: ${wc ? wc === "LW" ? `Lightweight (${p.sex === "M" ? "\u2264 75" : "\u2264 61.5"} kg)` : "Heavyweight" : "set sex + weight"} \xB7 Max HR: ${hm}${p.hrMax > 100 ? "" : " (estimated)"}`;
       {
@@ -34914,7 +34981,7 @@ ${pts}
     }
     /* ---------- online races ---------- */
     _olMe() {
-      return { name: (this.profile.name || "Rower").slice(0, 20), ship: this.ship.def.id, color: this.choice.color || this.ship.def.color };
+      return { name: (this.profile.name || "Rower").slice(0, 20), flag: validFlag(this.profile.flag), ship: this.ship.def.id, color: this.choice.color || this.ship.def.color };
     }
     /** server base URL for leagues/clubs ('' = examples only). file:// copies can't pass the server's origin check, so they stay local. */
     _srvBase() {
@@ -35065,6 +35132,7 @@ ${pts}
       const others = (this.olRoom ? this.olRoom.players : []).filter((p) => p.id !== "me").slice(0, 11);
       const list = others.map((p) => {
         const rr2 = new RemoteRacer({ id: p.id, name: String(p.name || "Rower").slice(0, 12).toUpperCase(), ship: okShip(p.ship), color: okCol(p.color) });
+        rr2.flag = validFlag(p.flag);
         rr2.wall = true;
         return rr2;
       });
@@ -35161,7 +35229,7 @@ ${pts}
         const me = R.players.find((p) => p.id === "me"), host = R.host === "me";
         $("olRoomCode").textContent = R.code;
         $("olRoomInfo").textContent = `\xB7 ${R.dist >= 1e3 ? R.dist / 1e3 + " km" : R.dist + " m"}${R.name ? " \xB7 " + R.name : ""}${R.scheduled && R.startAt ? " \xB7 starts " + new Date(R.startAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}`;
-        $("olPlayers").innerHTML = R.players.map((p) => `<span class="${p.ready ? "rdy" : ""} ${p.id === "me" ? "me" : ""}">${p.ready ? "\u2713 " : "\u2026 "}${esc(p.id === "me" ? (p.name || "You") + " (you)" : p.name)}${p.id === R.host ? " \u2605" : ""}</span>`).join("");
+        $("olPlayers").innerHTML = R.players.map((p) => `<span class="${p.ready ? "rdy" : ""} ${p.id === "me" ? "me" : ""}">${p.ready ? "\u2713 " : "\u2026 "}${esc(p.id === "me" ? (p.name || "You") + " (you)" : p.name)}${flagBadge(p.id === "me" ? this.profile.flag : p.flag)}${p.id === R.host ? " \u2605" : ""}</span>`).join("");
         $("olReady").textContent = me && me.ready ? "Not ready" : "I'm ready";
         $("olReady").classList.toggle("hidden", !!R.scheduled);
         $("olStart").classList.toggle("hidden", !host);
@@ -35427,6 +35495,15 @@ ${pts}
         w.team = { fmt: f.id, fmtName: f.name, leg: f.leg, clubName: c.name, rivalName: rv.name, legs, rivalLegs: rlegs, rivalSplit: anchor.split };
         this.startRace(w);
       });
+      {
+        const fs = $("pfFlag");
+        fs.innerHTML = flagOptions().map(([c, n]) => `<option value="${c}">${n}</option>`).join("");
+        fs.addEventListener("change", () => {
+          this.profile.flag = validFlag(fs.value) || DEFAULT_FLAG;
+          saveProfile(this.profile);
+          this._paintMe();
+        });
+      }
       for (const [id, k, num3] of [["pfName", "name"], ["pfBirth", "birthYear", 1], ["pfSex", "sex"], ["pfWeight", "weightKg", 1], ["pfHrMax", "hrMax", 1]])
         $(id).addEventListener("change", () => {
           const v = $(id).value;
@@ -35769,7 +35846,7 @@ ${pts}
       if (!this._posterData) return;
       const cv = $("posterCv");
       if (!this._posterShip) this._posterShip = this._shipSnapshot();
-      drawPoster(cv, { ...this._posterData, shipImg: this._posterShip });
+      drawPoster(cv, { ...this._posterData, shipImg: this._posterShip, flagImg: this._posterFlag });
       $("posterBox").classList.remove("hidden");
       $("posterSave").textContent = IS_MOBILE ? "Share" : "Download PNG";
       if (share) {
@@ -36256,15 +36333,6 @@ ${pts}
           this.audio.milestone();
         }
         this._revealBloom = 0.5 + (p < 1 ? 0.4 * e : 0.25 + 0.35 * Math.max(0, 1 - (t - this._revealT0 - 2.4)));
-      } else if (this.state === "title") {
-        this.garageSpin += dt * 0.4;
-        const narrow = this.camera.aspect < 1.2, px2 = narrow ? 0 : 4.6;
-        g.position.set(px2, 0.55 + Math.sin(t * 1.2) * 0.08, 0);
-        g.rotation.set(0.06, this.garageSpin + Math.PI * 0.72, 0);
-        this.camera.position.set(0.4, narrow ? 3.6 : 3.1, narrow ? 15 : 11);
-        this.camera.lookAt(narrow ? 0 : 1.4, narrow ? -2.6 : -0.2, 0);
-        fovTarget = this.baseFov;
-        this.platform.position.set(px2, -0.55, 0);
       } else if (this.state === "garage") {
         this.garageSpin += dt * 0.55;
         g.position.set(0, 0.2 + Math.sin(t * 1.2) * 0.08, 0);
@@ -36305,7 +36373,7 @@ ${pts}
         this.camera.lookAt(la);
       }
       {
-        const on = this.state === "title" || this.state === "garage";
+        const on = this.state === "garage";
         this.platform.visible = on;
         if (on) {
           if (this.state === "garage") this.platform.position.set(0, -0.75, 0);

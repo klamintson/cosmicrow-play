@@ -49,6 +49,7 @@
   .hint { font-size:12px; opacity:0.75; margin-top:14px; letter-spacing:0.1em; }
   label.chk { font-size:12px; letter-spacing:0.08em; cursor:pointer; color:#bdefff; }
   label.chk input { accent-color:#ff3fd8; }
+  label.vol { display:flex; align-items:center; gap:6px; } label.vol input { width:110px; }
 
   /* ---------- Holographic HUD ---------- */
   #hud { position:fixed; inset:0; z-index:10; pointer-events:none; perspective:900px; }
@@ -160,7 +161,7 @@
   .newpb { color:#ffe46b; text-shadow:0 0 12px #ffb13f; font-size:20px; letter-spacing:0.25em; margin:6px 0; }
 </style>
 </head>
-<body data-build="cosmicrow-garage-cockpit-v2">
+<body data-build="cosmicrow-cosmic-drift-v3">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -234,6 +235,9 @@
       <button id="aboutBtn">About</button>
     </div>
     <div class="status" id="pm5Status"></div>
+    <div class="label">Music</div>
+    <div class="row" id="musicBtns"><button data-m="cosmic">Cosmic Drift</button><button data-m="drive">Neon Drive</button><button data-m="off">Off</button>
+      <label class="chk vol">Vol <input type="range" id="volSlider" min="0" max="100" step="1"></label></div>
     <div class="label">HUD tiles</div>
     <div class="row" id="hudChecks">
       <label class="chk"><input type="checkbox" data-t="hr" checked> Heart rate</label>
@@ -33175,8 +33179,422 @@ void main() {
     });
   }
 
+  // music/cosmicDrift.js
+  var BPM = 84;
+  var STEP = 60 / BPM / 4;
+  var BAR = STEP * 16;
+  var LOOP_BARS = 72;
+  var COSMIC_DRIFT = { BPM, STEP, BAR, LOOP_BARS, LOOP_SECONDS: BAR * LOOP_BARS };
+  var P1 = [[38, 50, 57, 60, 64, 65], [34, 53, 57, 62, 64], [41, 53, 57, 60, 64], [36, 55, 57, 62, 64]];
+  var P2 = [[43, 55, 58, 62, 65, 69], [39, 51, 55, 58, 62], [34, 53, 57, 58, 62], [33, 52, 55, 57, 62]];
+  var P3 = [[38, 50, 57, 62, 64], [36, 55, 60, 65, 67]];
+  var P4 = [[34, 53, 57, 62, 65], [33, 53, 57, 60, 64], [38, 50, 57, 60, 65, 69], [36, 55, 60, 62, 64]];
+  var SCALE = [2, 4, 5, 7, 9, 10, 12];
+  var SECTIONS = [
+    [0, 8, P1, 2, { pad: 1, sub: "long", bells: 0.1 }],
+    [8, 16, P1, 2, { pad: 1, sub: "pulse", arp: "A", bells: 0.08 }],
+    [24, 16, P2, 2, { pad: 1, sub: "pulse", arp: "B", lead: 1, tick: 1, bells: 0.05 }],
+    [40, 8, P3, 4, { pad: 1, sub: "long", lead: 0.6, bells: 0.16 }],
+    [48, 16, P4, 2, { pad: 1, sub: "pulse", arp: "C", lead: 1, tick: 1, thump: 1, bells: 0.06 }],
+    [64, 8, P1, 2, { pad: 1, sub: "long", arp: "A", arpFade: 1, bells: 0.1 }]
+  ];
+  var ARP = { A: { div: 2, pat: [0, 2, 1, 3, 2, 4, 3, 1] }, B: { div: 1, pat: [0, 1, 2, 3, 4, 3, 2, 1, 0, 2, 1, 3, 2, 4, 3, 2] }, C: { div: 1, pat: [0, 2, 4, 2, 1, 3, 5, 3, 0, 2, 4, 6, 4, 3, 2, 1] } };
+  function rng(seed) {
+    let a = seed >>> 0;
+    return () => {
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+  var CosmicDrift = class {
+    /** ctx: (Offline)AudioContext; out: destination node; opts.light = fewer voices (phones); opts.seed */
+    constructor(ctx, out, opts = {}) {
+      this.ctx = ctx;
+      this.light = !!opts.light;
+      this.seed = opts.seed || 2026;
+      this.intensity = 0.25;
+      this.step = 0;
+      this.nextTime = 0;
+      this.running = false;
+      this._buildBus(out);
+    }
+    _buildBus(out) {
+      const c = this.ctx;
+      this.out = c.createGain();
+      this.out.gain.value = 1;
+      const comp = c.createDynamicsCompressor();
+      comp.threshold.value = -14;
+      comp.knee.value = 12;
+      comp.ratio.value = 2.5;
+      comp.attack.value = 0.02;
+      comp.release.value = 0.4;
+      this.mix = c.createGain();
+      this.mix.gain.value = 0.88;
+      this.mix.connect(comp);
+      comp.connect(this.out);
+      this.out.connect(out);
+      this.verb = c.createConvolver();
+      this.verb.buffer = this._impulse(5);
+      this.verbIn = c.createGain();
+      this.verbIn.gain.value = 1;
+      const verbOut = c.createGain();
+      verbOut.gain.value = 0.55;
+      this.verbIn.connect(this.verb);
+      this.verb.connect(verbOut);
+      verbOut.connect(this.mix);
+      const dl = c.createDelay(2), dr = c.createDelay(2), fb = c.createGain(), lp = c.createBiquadFilter();
+      dl.delayTime.value = STEP * 3;
+      dr.delayTime.value = STEP * 4;
+      fb.gain.value = 0.42;
+      lp.type = "lowpass";
+      lp.frequency.value = 2400;
+      this.delayIn = c.createGain();
+      this.delayIn.gain.value = 1;
+      const pl = this._pan(-0.6), pr = this._pan(0.6), dOut = c.createGain();
+      dOut.gain.value = 0.38;
+      this.delayIn.connect(dl);
+      dl.connect(pl);
+      dl.connect(dr);
+      dr.connect(pr);
+      dr.connect(lp);
+      lp.connect(fb);
+      fb.connect(dl);
+      pl.connect(dOut);
+      pr.connect(dOut);
+      dOut.connect(this.mix);
+      dOut.connect(this.verbIn);
+      const bus = (g, verb, delay) => {
+        const n = c.createGain();
+        n.gain.value = g;
+        n.connect(this.mix);
+        if (verb) {
+          const s = c.createGain();
+          s.gain.value = verb;
+          n.connect(s);
+          s.connect(this.verbIn);
+        }
+        if (delay) {
+          const s = c.createGain();
+          s.gain.value = delay;
+          n.connect(s);
+          s.connect(this.delayIn);
+        }
+        return n;
+      };
+      this.padBus = bus(0.5, 0.9, 0.15);
+      this.subBus = bus(0.32, 0.05, 0);
+      this.pulseBus = bus(0.45, 0.15, 0.1);
+      this.arpFilter = c.createBiquadFilter();
+      this.arpFilter.type = "lowpass";
+      this.arpFilter.frequency.value = 2e3;
+      this.arpFilter.Q.value = 0.7;
+      this.arpBus = bus(0.32, 0.6, 0.7);
+      this.arpFilter.connect(this.arpBus);
+      this.leadBus = bus(0.36, 0.9, 0.55);
+      this.bellBus = bus(0.26, 1.2, 0.6);
+      this.tickBus = bus(0.08, 0.4, 0.2);
+      this.thumpBus = bus(0.45, 0.1, 0);
+      this.noise = c.createBuffer(1, c.sampleRate, c.sampleRate);
+      const d = this.noise.getChannelData(0);
+      const r = rng(7);
+      for (let i = 0; i < d.length; i++) d[i] = r() * 2 - 1;
+      this.setIntensity(this.intensity, true);
+    }
+    _pan(p) {
+      const c = this.ctx;
+      if (c.createStereoPanner) {
+        const n = c.createStereoPanner();
+        n.pan.value = p;
+        return n;
+      }
+      return c.createGain();
+    }
+    _impulse(sec) {
+      const c = this.ctx, len = Math.floor(c.sampleRate * sec), buf = c.createBuffer(2, len, c.sampleRate), r = rng(99);
+      for (let ch = 0; ch < 2; ch++) {
+        const d = buf.getChannelData(ch);
+        let lp = 0;
+        for (let i = 0; i < len; i++) {
+          const t = i / len, k = 0.75 - 0.55 * t;
+          lp += k * (r() * 2 - 1 - lp);
+          const pre = Math.min(1, i / (c.sampleRate * 0.02));
+          d[i] = lp * Math.pow(1 - t, 2.2) * pre * 0.9;
+        }
+      }
+      return buf;
+    }
+    /** 0..1 - rises a little with stroke rate; stays calm. */
+    setIntensity(x, now) {
+      this.intensity = Math.max(0, Math.min(1, x));
+      const t = this.ctx.currentTime, k = now ? 0.01 : 2.5, i = this.intensity;
+      this.arpFilter.frequency.setTargetAtTime(1500 + 2300 * i, t, k);
+      this.arpBus.gain.setTargetAtTime(0.27 + 0.13 * i, t, k);
+      this.pulseBus.gain.setTargetAtTime(0.42 + 0.22 * i, t, k);
+      this.tickBus.gain.setTargetAtTime(0.04 + 0.05 * i, t, k);
+    }
+    /* ---------- transport ---------- */
+    start(when) {
+      this.running = true;
+      this.step = 0;
+      this.nextTime = when;
+    }
+    stop(fade = 1.5) {
+      this.running = false;
+      const t = this.ctx.currentTime;
+      this.out.gain.cancelScheduledValues(t);
+      this.out.gain.setValueAtTime(this.out.gain.value, t);
+      this.out.gain.linearRampToValueAtTime(0, t + fade);
+      setTimeout(() => {
+        try {
+          this.out.disconnect();
+        } catch (e) {
+        }
+      }, (fade + 6) * 1e3);
+    }
+    /** Schedule every 16th step that starts before tEnd (call often for live play, once for offline). */
+    scheduleUntil(tEnd) {
+      if (!this.running) return;
+      if (this.nextTime < this.ctx.currentTime - 0.2) {
+        const skip = Math.ceil((this.ctx.currentTime - this.nextTime) / STEP);
+        this.step += skip;
+        this.nextTime += skip * STEP;
+      }
+      while (this.nextTime < tEnd) {
+        this._step(this.step, this.nextTime);
+        this.step++;
+        this.nextTime += STEP;
+      }
+    }
+    _section(bar) {
+      for (let i = SECTIONS.length - 1; i >= 0; i--) if (bar >= SECTIONS[i][0]) return SECTIONS[i];
+      return SECTIONS[0];
+    }
+    _step(step, t) {
+      const loop = Math.floor(step / (16 * LOOP_BARS)), inLoop = step % (16 * LOOP_BARS), bar = Math.floor(inLoop / 16), s = inLoop % 16;
+      const [start, len, prog, bpc, f] = this._section(bar);
+      const rel = bar - start, ci = Math.floor(rel / bpc) % prog.length, chord = prog[ci];
+      const r = rng(this.seed + loop * 7919 + inLoop * 31);
+      const chordStart = rel % bpc === 0 && s === 0, chordDur = bpc * BAR;
+      if (f.pad && chordStart) this._pad(t, chord.slice(1), chordDur, rel === 0 && start === 0);
+      if (f.sub === "long" && chordStart) this._sub(t, chord[0], chordDur);
+      if (f.sub === "pulse") {
+        if (s % 2 === 0) this._pulse(t, chord[0], s % 8 === 0 ? 1 : s % 4 === 0 ? 0.75 : 0.55);
+        if (chordStart) this._sub(t, chord[0], chordDur, 0.55);
+      }
+      if (f.arp) {
+        const a = ARP[f.arp];
+        if (s % a.div === 0) {
+          const idx = a.pat[s / a.div % a.pat.length], tones = chord.slice(1).map((m) => m + 12);
+          let note = tones[idx % tones.length] + (idx >= tones.length ? 12 : 0);
+          if (r() < 0.12) note += 12;
+          const restP = a.div === 1 ? s % 2 ? 0.35 : 0.1 : 0.08;
+          let vel = (s % 4 === 0 ? 1 : 0.7) * (f.arpFade ? 1 - rel / len * 0.85 : 1) * (rel < 2 && start !== 64 ? 0.5 + rel * 0.25 : 1);
+          if (r() > restP) this._arp(t, note, STEP * a.div * 0.9, vel);
+        }
+      }
+      if (f.lead && (s === 0 || s === 8)) this._leadPhrase(t, s, rel, chord, f.lead, r, loop);
+      if (f.bells && s % 4 === 2 && r() < f.bells) {
+        const tones = chord.slice(1);
+        this._bell(t, tones[Math.floor(r() * tones.length)] + 24 + (r() < 0.3 ? 12 : 0), 0.5 + r() * 0.5);
+      }
+      if (f.tick && s % 4 === 2) this._tick(t, 0.6 + r() * 0.4);
+      if (f.tick && s % 2 === 1 && r() < 0.25) this._tick(t, 0.3);
+      if (f.thump && (s === 0 || s === 8)) this._thump(t, s === 0 ? 1 : 0.7);
+    }
+    /* ---------- instruments ---------- */
+    _env(g, t, a, peak, hold, rel) {
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(peak, t + a);
+      g.gain.setValueAtTime(peak, t + a + hold);
+      g.gain.linearRampToValueAtTime(0, t + a + hold + rel);
+      return t + a + hold + rel;
+    }
+    _pad(t, notes, dur, first) {
+      const c = this.ctx, att = first ? 3.5 : 1.6, rel = 2.6, hold = Math.max(0.1, dur - att * 0.5), end = t + att + hold + rel;
+      const filt = c.createBiquadFilter();
+      filt.type = "lowpass";
+      filt.Q.value = 0.8;
+      filt.frequency.setValueAtTime(800, t);
+      filt.frequency.linearRampToValueAtTime(2600 + 700 * this.intensity, t + dur * 0.55);
+      filt.frequency.linearRampToValueAtTime(1100, end);
+      const g = c.createGain();
+      this._env(g, t, att, 0.11, hold, rel);
+      filt.connect(g);
+      g.connect(this.padBus);
+      const dets = this.light ? [-7, 7] : [-9, 0, 9];
+      notes.forEach((m, ni) => dets.forEach((det, di) => {
+        const o = c.createOscillator();
+        o.type = di === 1 ? "triangle" : "sawtooth";
+        o.frequency.value = hz(m);
+        o.detune.value = det + (ni % 2 ? 2 : -2);
+        const p = this._pan((di - (dets.length - 1) / 2) * 0.55);
+        const vg = c.createGain();
+        vg.gain.value = m < 52 ? 0.45 : 1;
+        o.connect(vg);
+        vg.connect(p);
+        p.connect(filt);
+        o.start(t);
+        o.stop(end + 0.05);
+      }));
+    }
+    _sub(t, m, dur, level = 1) {
+      const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+      o.type = "sine";
+      o.frequency.value = hz(m >= 40 ? m - 12 : m);
+      const end = this._env(g, t, 0.5, 0.42 * level, Math.max(0.1, dur - 0.6), 0.9);
+      o.connect(g);
+      g.connect(this.subBus);
+      o.start(t);
+      o.stop(end + 0.05);
+    }
+    _pulse(t, m, vel) {
+      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), f = c.createBiquadFilter(), g = c.createGain();
+      o.type = "sawtooth";
+      o2.type = "sine";
+      o.frequency.value = hz(m);
+      o2.frequency.value = hz(m);
+      f.type = "lowpass";
+      f.Q.value = 2;
+      f.frequency.setValueAtTime(260 + 380 * vel * (0.6 + this.intensity * 0.6), t);
+      f.frequency.exponentialRampToValueAtTime(110, t + 0.3);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.2 * vel, t + 0.012);
+      g.gain.exponentialRampToValueAtTime(8e-4, t + 0.42);
+      g.gain.linearRampToValueAtTime(0, t + 0.45);
+      o.connect(f);
+      o2.connect(f);
+      f.connect(g);
+      g.connect(this.pulseBus);
+      o.start(t);
+      o2.start(t);
+      o.stop(t + 0.47);
+      o2.stop(t + 0.47);
+    }
+    _arp(t, m, dur, vel) {
+      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain();
+      o.type = "square";
+      o2.type = "triangle";
+      o.frequency.value = hz(m);
+      o2.frequency.value = hz(m);
+      o2.detune.value = 6;
+      const sq = c.createGain();
+      sq.gain.value = 0.35;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.16 * vel, t + 8e-3);
+      g.gain.exponentialRampToValueAtTime(1e-3, t + dur + 0.25);
+      g.gain.linearRampToValueAtTime(0, t + dur + 0.28);
+      o.connect(sq);
+      sq.connect(g);
+      o2.connect(g);
+      g.connect(this.arpFilter);
+      o.start(t);
+      o2.start(t);
+      o.stop(t + dur + 0.3);
+      o2.stop(t + dur + 0.3);
+    }
+    _leadPhrase(t, s, rel, chord, amount, r, loop) {
+      if (r() > 0.62 * amount + 0.1) return;
+      const tones = chord.slice(1).map((m2) => m2 + 12).filter((m2) => m2 >= 64 && m2 <= 81);
+      const pool = [];
+      for (let o = 60; o <= 84; o += 12) for (const d of SCALE) {
+        const m2 = o + d;
+        if (m2 >= 64 && m2 <= 81) pool.push(m2);
+      }
+      this._lastLead = this._lastLead || 69;
+      let m = r() < 0.6 && tones.length ? tones.reduce((a, b) => Math.abs(b - this._lastLead) < Math.abs(a - this._lastLead) ? b : a) : pool[Math.max(0, Math.min(pool.length - 1, pool.indexOf(this._nearest(pool, this._lastLead)) + Math.floor(r() * 5) - 2))];
+      this._lastLead = m;
+      const dur = STEP * (r() < 0.5 ? 8 : r() < 0.6 ? 12 : 6);
+      this._lead(t, m, dur, 0.8 + r() * 0.2);
+    }
+    _nearest(pool, m) {
+      return pool.reduce((a, b) => Math.abs(b - m) < Math.abs(a - m) ? b : a);
+    }
+    _lead(t, m, dur, vel) {
+      const c = this.ctx, o = c.createOscillator(), o2 = c.createOscillator(), lfo = c.createOscillator(), lg = c.createGain(), g = c.createGain(), f = c.createBiquadFilter();
+      o.type = "triangle";
+      o2.type = "sine";
+      o.frequency.value = hz(m);
+      o2.frequency.value = hz(m + 12);
+      lfo.frequency.value = 4.6;
+      lg.gain.value = 0;
+      lg.gain.setValueAtTime(0, t);
+      lg.gain.linearRampToValueAtTime(9, t + dur * 0.6);
+      lfo.connect(lg);
+      lg.connect(o.detune);
+      lg.connect(o2.detune);
+      f.type = "lowpass";
+      f.frequency.value = 2600;
+      const o2g = c.createGain();
+      o2g.gain.value = 0.18;
+      const end = this._env(g, t, 0.18, 0.13 * vel, Math.max(0.05, dur - 0.2), 1.4);
+      o.connect(f);
+      o2.connect(o2g);
+      o2g.connect(f);
+      f.connect(g);
+      g.connect(this.leadBus);
+      [o, o2, lfo].forEach((n) => {
+        n.start(t);
+        n.stop(end + 0.05);
+      });
+    }
+    _bell(t, m, vel) {
+      const c = this.ctx, g = c.createGain(), o = c.createOscillator(), o2 = c.createOscillator(), g2 = c.createGain(), p = this._pan(m % 5 / 5 - 0.4);
+      o.type = "sine";
+      o2.type = "sine";
+      o.frequency.value = hz(m);
+      o2.frequency.value = hz(m) * 2.76;
+      g2.gain.value = 0.12;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.09 * vel, t + 6e-3);
+      g.gain.exponentialRampToValueAtTime(5e-4, t + 3.2);
+      g.gain.linearRampToValueAtTime(0, t + 3.25);
+      o.connect(g);
+      o2.connect(g2);
+      g2.connect(g);
+      g.connect(p);
+      p.connect(this.bellBus);
+      o.start(t);
+      o2.start(t);
+      o.stop(t + 3.3);
+      o2.stop(t + 3.3);
+    }
+    _tick(t, vel) {
+      const c = this.ctx, s = c.createBufferSource(), f = c.createBiquadFilter(), g = c.createGain();
+      s.buffer = this.noise;
+      f.type = "bandpass";
+      f.frequency.value = 7500;
+      f.Q.value = 0.8;
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.5 * vel, t + 3e-3);
+      g.gain.exponentialRampToValueAtTime(1e-3, t + 0.07);
+      g.gain.linearRampToValueAtTime(0, t + 0.075);
+      s.connect(f);
+      f.connect(g);
+      g.connect(this.tickBus);
+      s.start(t, t * 7.31 % 0.5);
+      s.stop(t + 0.08);
+    }
+    _thump(t, vel) {
+      const c = this.ctx, o = c.createOscillator(), g = c.createGain();
+      o.type = "sine";
+      o.frequency.setValueAtTime(78, t);
+      o.frequency.exponentialRampToValueAtTime(42, t + 0.22);
+      g.gain.setValueAtTime(0, t);
+      g.gain.linearRampToValueAtTime(0.5 * vel, t + 5e-3);
+      g.gain.exponentialRampToValueAtTime(1e-3, t + 0.45);
+      g.gain.linearRampToValueAtTime(0, t + 0.46);
+      o.connect(g);
+      g.connect(this.thumpBus);
+      o.start(t);
+      o.stop(t + 0.48);
+    }
+  };
+
   // main.js
-  var BUILD_ID = "cosmicrow-garage-cockpit-v2";
+  var BUILD_ID = "cosmicrow-cosmic-drift-v3";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -33614,22 +34032,40 @@ void main() {
     }
   };
   var SynthAudio = class {
+    /* Music tracks: 'cosmic' = Cosmic Drift (default, meditative, see music/cosmicDrift.js),
+     * 'drive' = the original Neon Drive loop, 'off'. Track + volume are remembered. */
     constructor() {
       this.ctx = null;
       this.muted = localStorage.getItem("cosmicrow.muted") === "1";
       this.playing = false;
+      let m = null;
+      try {
+        m = JSON.parse(localStorage.getItem("cosmicrow.music.v1") || "null");
+      } catch (e) {
+      }
+      this.track = m && ["cosmic", "drive", "off"].includes(m.track) ? m.track : "cosmic";
+      this.volume = m && typeof m.vol === "number" ? Math.max(0, Math.min(1, m.vol)) : 0.7;
+      this.current = null;
     }
     init() {
       if (this.ctx) {
-        if (this.ctx.state === "suspended") this.ctx.resume();
+        if (this.ctx.state !== "running") this.ctx.resume();
         return;
       }
       const AC = window.AudioContext || window.webkitAudioContext;
       if (!AC) return;
+      try {
+        if (navigator.audioSession) navigator.audioSession.type = "playback";
+      } catch (e) {
+      }
       const ctx = this.ctx = new AC();
+      if (ctx.state !== "running") ctx.resume();
       this.master = ctx.createGain();
       this.master.gain.value = this.muted ? 0 : 0.55;
       this.master.connect(ctx.destination);
+      this.musicVol = ctx.createGain();
+      this.musicVol.gain.value = this._volGain();
+      this.musicVol.connect(this.master);
       this.delay = ctx.createDelay(1);
       this.delay.delayTime.value = 0.375;
       const fb = ctx.createGain();
@@ -33639,10 +34075,10 @@ void main() {
       this.delay.connect(fb);
       fb.connect(this.delay);
       this.delay.connect(dl);
-      dl.connect(this.master);
+      dl.connect(this.musicVol);
       this.music = ctx.createGain();
       this.music.gain.value = 0.7;
-      this.music.connect(this.master);
+      this.music.connect(this.musicVol);
       this.music.connect(this.delay);
       this.sfx = ctx.createGain();
       this.sfx.gain.value = 0.9;
@@ -33650,22 +34086,74 @@ void main() {
       this.noiseBuf = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
       const d = this.noiseBuf.getChannelData(0);
       for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+      document.addEventListener("visibilitychange", () => {
+        if (!this.ctx) return;
+        if (document.hidden) this.ctx.suspend();
+        else this.ctx.resume();
+      });
       this.startLoop();
+    }
+    _volGain() {
+      return this.volume * this.volume * 1.4;
+    }
+    // perceptual curve
+    setVolume(v) {
+      this.volume = Math.max(0, Math.min(1, v));
+      this._save();
+      if (this.musicVol) this.musicVol.gain.setTargetAtTime(this._volGain(), this.ctx.currentTime, 0.05);
+    }
+    setTrack(t) {
+      if (t === this.track) return;
+      this.track = t;
+      this._save();
+      if (!this.ctx) return;
+      this._stopMusic();
+      this.startLoop();
+    }
+    _save() {
+      localStorage.setItem("cosmicrow.music.v1", JSON.stringify({ track: this.track, vol: this.volume }));
     }
     setMuted(m) {
       this.muted = m;
       localStorage.setItem("cosmicrow.muted", m ? "1" : "0");
       if (this.master) this.master.gain.setTargetAtTime(m ? 0 : 0.55, this.ctx.currentTime, 0.05);
     }
-    /** Step sequencer with look-ahead scheduling. 96 BPM, 16th notes, A-minor progression. */
+    /** 0..1 from stroke rate; only Cosmic Drift reacts (gently). */
+    setIntensity(x) {
+      if (this.current && this.current.setIntensity) this.current.setIntensity(x);
+    }
+    _stopMusic() {
+      if (this.timer) {
+        clearInterval(this.timer);
+        this.timer = null;
+      }
+      if (this.current) {
+        this.current.stop(1.2);
+        this.current = null;
+      }
+      this.playing = false;
+    }
     startLoop() {
-      if (this.playing) return;
+      if (this.playing || this.track === "off") return;
       this.playing = true;
+      if (this.track === "cosmic") {
+        const m = this.current = new CosmicDrift(this.ctx, this.musicVol, { light: IS_MOBILE, seed: Date.now() / 864e5 | 0 });
+        m.start(this.ctx.currentTime + 0.1);
+        const tick = () => m.scheduleUntil(this.ctx.currentTime + 0.6);
+        this.timer = setInterval(tick, 100);
+        tick();
+        return;
+      }
+      this._startDrive();
+    }
+    /** Original "Neon Drive" step sequencer. 96 BPM, 16th notes, A-minor progression. */
+    _startDrive() {
       const bpm = 96, step = 60 / bpm / 4;
       let next = this.ctx.currentTime + 0.1, n = 0;
       const roots = [45, 41, 48, 43];
       const arp = [0, 7, 12, 15, 12, 7, 3, 7];
       const tick = () => {
+        if (next < this.ctx.currentTime - 0.1) next = this.ctx.currentTime + 0.05;
         while (next < this.ctx.currentTime + 0.2) {
           const bar = Math.floor(n / 16) % 4, s = n % 16, root = roots[bar];
           if (s % 4 === 0) this._kick(next);
@@ -34056,6 +34544,24 @@ void main() {
         cb.checked = !!this.hud.tiles[cb.dataset.t];
         cb.addEventListener("change", () => this.hud.setTile(cb.dataset.t, cb.checked));
       });
+      const paintMusic = () => document.querySelectorAll("#musicBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.m === this.audio.track));
+      document.querySelectorAll("#musicBtns button").forEach((b) => tap(b, () => {
+        this.audio.init();
+        this.audio.setTrack(b.dataset.m);
+        paintMusic();
+      }));
+      const vol = $("volSlider");
+      vol.value = Math.round(this.audio.volume * 100);
+      vol.addEventListener("input", () => {
+        this.audio.init();
+        this.audio.setVolume(vol.value / 100);
+      });
+      paintMusic();
+      const unlock = () => {
+        this.audio.init();
+        if (this.audio.ctx && this.audio.ctx.state === "running") ["pointerup", "click", "keydown", "touchend"].forEach((ev) => window.removeEventListener(ev, unlock, true));
+      };
+      ["pointerup", "click", "keydown", "touchend"].forEach((ev) => window.addEventListener(ev, unlock, true));
       attachKeyboard({
         onStroke: () => this.onStroke(),
         onKey: (e) => {
@@ -34223,18 +34729,18 @@ void main() {
       const dt = Math.min(0.25, this.timer.getDelta());
       const src = this.source;
       this.acc += dt;
-      const STEP = 1 / 120;
+      const STEP2 = 1 / 120;
       let steps = 0;
       const d0 = src.distanceM;
-      while (this.acc >= STEP && steps < 40) {
+      while (this.acc >= STEP2 && steps < 40) {
         if (this.state === "race") {
-          src.update(STEP);
+          src.update(STEP2);
           if (this.session.started || src.distanceM > 0 || src.speedMps > 0) {
             this.session.started = true;
-            this.session.time += STEP;
+            this.session.time += STEP2;
           }
         }
-        this.acc -= STEP;
+        this.acc -= STEP2;
         steps++;
       }
       if (steps >= 40) this.acc = 0;
@@ -34278,6 +34784,11 @@ void main() {
           strokes: s.strokes
         });
         this.visualSpeed = speed;
+        this._musicT = (this._musicT || 0) + dt;
+        if (this._musicT > 1) {
+          this._musicT = 0;
+          this.audio.setIntensity(src.spm > 0 ? Math.min(1, Math.max(0, (src.spm - 18) / 14)) : 0.2);
+        }
       } else {
         const cruise = this.state === "garage" ? 0.5 : 1.2;
         this.visualSpeed += (cruise - this.visualSpeed) * Math.min(1, dt * 0.8);

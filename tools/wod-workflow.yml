@@ -1,0 +1,18 @@
+# Copy to .github/workflows/wod.yml in klamintson/cosmicrow-play (needs the GitHub 'workflow' permission
+# to push, or add it in the GitHub web UI: Add file > Create new file > .github/workflows/wod.yml).
+name: Daily Concept2 WOD
+on:
+  schedule: [{ cron: '17 4 * * *' }]   # 04:17 UTC daily
+  workflow_dispatch:
+permissions: { contents: write }
+jobs:
+  wod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node tools/fetch-wod.mjs wod.json
+      - run: |
+          git config user.name "CosmicRow WOD bot"; git config user.email "actions@users.noreply.github.com"
+          git add wod.json; git diff --cached --quiet || (git commit -m "WOD $(date -u +%F)" && git push)

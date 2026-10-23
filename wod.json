@@ -1,0 +1,22 @@
+{
+  "updated": "2026-10-23T03:24:28.733Z",
+  "credit": "Workout of the Day by Concept2 - https://www.concept2.com/training/wod",
+  "erg": "rowerg",
+  "days": {
+    "2026-10-22": {
+      "title": "12 x 250m / 45 sec easy",
+      "description": "Pre-set a work distance of 250 meters and a rest time of 45 seconds. Do 12 intervals at a challenging intensity, with light exercise between pieces. (BikeErg: 12 x 500m)",
+      "url": "https://log.concept2.com/wod/2026-10-22/rowerg"
+    },
+    "2026-10-23": {
+      "title": "8 x 2 min / 1 min easy",
+      "description": "Eight 2 minute pieces. One minute at light pressure between each piece.",
+      "url": "https://log.concept2.com/wod/2026-10-23/rowerg"
+    },
+    "2026-10-24": {
+      "title": "4 x 4 min / 3 min easy",
+      "description": "Four 4 minute pieces. Three minutes at light pressure between each piece.",
+      "url": "https://log.concept2.com/wod/2026-10-24/rowerg"
+    }
+  }
+}

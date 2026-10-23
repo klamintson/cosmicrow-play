@@ -140,8 +140,8 @@
   /* ---------- Phone / small screens ---------- */
   #rotateHint { display:none; position:fixed; left:50%; top:118px; transform:translateX(-50%); z-index:40; padding:8px 14px; border:1px solid var(--cyan); border-radius:10px;
     background:rgba(6,8,20,0.8); font-size:12px; letter-spacing:0.12em; color:#fff; pointer-events:none; white-space:nowrap; }
-  @media (orientation: portrait) and (pointer: coarse) { #rotateHint { display:block; } }
-  @media (orientation: portrait) and (max-width: 600px) and (pointer: coarse) { #rotateHint { display:block; } }
+  @media (orientation: portrait) and (pointer: coarse) { body.inrace #rotateHint { display:block; } }
+  @media (orientation: portrait) and (max-width: 600px) and (pointer: coarse) { body.inrace #rotateHint { display:block; } }
   @media (orientation: portrait) and (max-width: 600px) { .holo.left, .holo.right { top:auto; bottom:70px; transform:none; } .holo.left { left:8px; } .holo.right { right:8px; } }
   @media (max-height: 520px) {
     .panel { padding:12px 18px; max-height:96vh; overflow-y:auto; touch-action:pan-y; }
@@ -187,14 +187,14 @@
   /* ---------- stage select ---------- */
   #stages { align-items:flex-end; background:linear-gradient(to top, rgba(3,3,12,0.92) 0%, rgba(3,3,12,0.55) 55%, rgba(3,3,12,0) 100%); }
   .panel.stagepanel { background:none; border:none; box-shadow:none; margin-bottom:3vh; max-width:860px; }
-  .stagecards { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
-  .stagecard { width:min(380px, 44vw); text-align:left; padding:0; overflow:hidden; border-radius:12px; border:1px solid rgba(63,246,255,0.35); background:rgba(6,10,28,0.78); cursor:pointer; color:#dfe8ff; font:inherit; }
+  .stagecards { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+  .stagecard { width:min(290px, 28.5vw); text-align:left; padding:0; overflow:hidden; border-radius:12px; border:1px solid rgba(63,246,255,0.35); background:rgba(6,10,28,0.78); cursor:pointer; color:#dfe8ff; font:inherit; }
   .stagecard.sel { border-color:var(--cyan); box-shadow:0 0 22px rgba(63,246,255,0.55), inset 0 0 12px rgba(63,246,255,0.15); }
   .stagecard img, .stagecard .ph { display:block; width:100%; aspect-ratio:16/8; object-fit:cover; background:#0a0820; }
   .stagecard .sn { font-size:17px; font-weight:800; letter-spacing:0.16em; color:#fff; padding:8px 12px 2px; text-transform:uppercase; }
   .stagecard .sd { font-size:12px; line-height:1.45; padding:0 12px 10px; opacity:0.85; letter-spacing:0.02em; }
   .stagecard.sel .sn::after { content:' ✓'; color:var(--cyan); }
-  @media (max-height: 520px) { .stagecard { width:min(330px, 44vw); } .stagecard img, .stagecard .ph { aspect-ratio:16/6.5; } .stagecard .sn { font-size:13px; padding:5px 9px 1px; } .stagecard .sd { font-size:10px; padding:0 9px 6px; } .panel.stagepanel { margin-bottom:1vh; } }
+  @media (max-height: 520px) { .stagecard { width:min(250px, 28.5vw); } .stagecard img, .stagecard .ph { aspect-ratio:16/6.5; } .stagecard .sn { font-size:13px; padding:5px 9px 1px; } .stagecard .sd { font-size:10px; padding:0 9px 6px; } .panel.stagepanel { margin-bottom:1vh; } }
 
   /* ---------- cockpit-style HUD (v4): chamfered holo panels, hex metal, scanlines ---------- */
   :root { --hexbg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48'%3E%3Cg fill='none' stroke='%237fb8ff' stroke-opacity='0.13' stroke-width='1'%3E%3Cpath d='M14 0L28 8V24L14 32L0 24V8Z'/%3E%3Cpath d='M0 24L14 32V48L0 56L-14 48V32Z'/%3E%3Cpath d='M28 24L42 32V48L28 56L14 48V32Z'/%3E%3C/g%3E%3C/svg%3E");
@@ -282,9 +282,147 @@
   table.sum td:first-child { text-align:left; font-size:11px; letter-spacing:0.25em; opacity:0.8; text-transform:uppercase; }
   table.sum td:last-child { text-align:right; color:#fff; font-weight:700; }
   .newpb { color:#ffe46b; text-shadow:0 0 12px #ffb13f; font-size:20px; letter-spacing:0.25em; margin:6px 0; }
+  /* ---------- menu system v6: main screen + panels (Training / Arcade / Settings) ---------- */
+  .home { position:relative; text-align:center; width:min(760px, 94vw); padding:22px 20px 16px; }
+  .hicons { position:absolute; right:0; top:0; display:flex; gap:6px; }
+  button.icon { font-size:11px; padding:6px 9px; letter-spacing:0.08em; text-transform:none; border-color:rgba(63,246,255,0.35); background:rgba(8,4,24,0.5); }
+  button.icon.on { color:#7dffb7; border-color:#7dffb7; }
+  .home .tag { margin-bottom:16px; }
+  button.racebtn { display:flex; flex-direction:column; align-items:center; gap:2px; margin:0 auto; width:min(440px, 86vw); padding:14px 20px 12px; border:1px solid var(--mag); color:#fff;
+    background:linear-gradient(180deg, rgba(255,63,216,0.32), rgba(255,63,216,0.10)); box-shadow:0 0 26px rgba(255,63,216,0.55), inset 0 0 22px rgba(255,63,216,0.25);
+    clip-path:polygon(16px 0, calc(100% - 16px) 0, 100% 16px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 16px 100%, 0 calc(100% - 16px), 0 16px); border-radius:0; }
+  button.racebtn .rl { font-size:30px; font-weight:800; letter-spacing:0.3em; }
+  button.racebtn .rs { font-size:12px; letter-spacing:0.08em; text-transform:none; color:#ffd9f6; opacity:0.9; }
+  button.racebtn:hover { box-shadow:0 0 34px rgba(255,63,216,0.85), inset 0 0 26px rgba(255,63,216,0.35); }
+  .setup { display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; margin:10px 0 0; font-size:12px; color:#bdefff; }
+  button.chipb { font-size:11px; padding:5px 10px; letter-spacing:0.1em; border-radius:20px; }
+  .home .pbline { margin-top:6px; min-height:14px; }
+  .hgrid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:16px; }
+  button.hbtn { display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center; padding:14px 8px; min-height:74px; border-radius:0; background:rgba(8,14,34,0.62) var(--hexbg);
+    clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); box-shadow:inset 0 0 18px rgba(63,246,255,0.12); }
+  button.hbtn b { font-size:15px; letter-spacing:0.22em; color:#fff; text-shadow:0 0 10px rgba(63,246,255,0.9); }
+  button.hbtn small { font-size:9.5px; letter-spacing:0.06em; text-transform:none; color:#9feaff; opacity:0.8; line-height:1.3; }
+  #title .hint { margin-top:12px; }
+  @media (max-width: 640px) { .hgrid { grid-template-columns:1fr 1fr; } .hicons { position:static; justify-content:center; margin-bottom:8px; } }
+  @media (max-height: 520px) {
+    .home { padding:6px 12px 4px; } .home h1.logo { font-size:34px; } .home .tag { margin-bottom:8px; font-size:10px; }
+    button.racebtn { padding:8px 16px 7px; } button.racebtn .rl { font-size:22px; } .setup { margin-top:6px; } .home .pbline { margin-top:3px; font-size:11px; }
+    .hgrid { margin-top:8px; gap:8px; } button.hbtn { min-height:52px; padding:8px 6px; } button.hbtn b { font-size:13px; } button.hbtn small { font-size:8.5px; }
+  }
+  .mpanel { display:flex; flex-direction:column; width:min(960px, 96vw); height:min(640px, 92vh); color:#d8e4ff; background:linear-gradient(180deg, rgba(10,8,34,0.9), rgba(6,4,20,0.92)), var(--hexbg);
+    border:1px solid rgba(63,246,255,0.55); box-shadow:0 0 28px rgba(63,246,255,0.25), inset 0 0 40px rgba(255,63,216,0.08);
+    clip-path:polygon(22px 0, calc(100% - 22px) 0, 100% 22px, 100% calc(100% - 22px), calc(100% - 22px) 100%, 22px 100%, 0 calc(100% - 22px), 0 22px); }
+  .mhead { display:flex; align-items:center; gap:14px; padding:12px 22px; border-bottom:1px solid rgba(63,246,255,0.25); background:linear-gradient(90deg, rgba(63,246,255,0.10), transparent 60%); }
+  .mtitle { font-size:20px; font-weight:800; letter-spacing:0.32em; text-transform:uppercase; color:#fff; text-shadow:0 0 12px rgba(63,246,255,0.9); }
+  .msub { font-size:11px; letter-spacing:0.12em; color:#9feaff; opacity:0.7; margin-left:auto; text-align:right; }
+  button.back { font-size:12px; padding:7px 12px; }
+  .mwrap { flex:1; display:flex; min-height:0; }
+  .mtabs { display:flex; flex-direction:column; gap:6px; padding:12px 10px; width:190px; flex:none; border-right:1px solid rgba(63,246,255,0.18); overflow-y:auto; }
+  .mtabs button { display:flex; flex-direction:column; align-items:flex-start; gap:2px; text-align:left; padding:9px 12px; border-radius:0; border-color:rgba(63,246,255,0.25); background:rgba(63,246,255,0.04);
+    clip-path:polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px); }
+  .mtabs button b { font-size:12px; letter-spacing:0.16em; color:#e8f6ff; } .mtabs button small { font-size:9.5px; letter-spacing:0.04em; text-transform:none; opacity:0.65; }
+  .mtabs button.sel { background:linear-gradient(90deg, rgba(63,246,255,0.26), rgba(63,246,255,0.06)); border-color:var(--cyan); box-shadow:0 0 12px rgba(63,246,255,0.45); }
+  .mtabs button.dim { opacity:0.55; }
+  .mbody { flex:1; overflow-y:auto; padding:14px 18px; touch-action:pan-y; -webkit-overflow-scrolling:touch; }
+  .msec { display:none; } .msec.show { display:block; animation:secIn .18s ease-out; }
+  @keyframes secIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+  .card { position:relative; padding:10px 14px 12px; margin:0 0 12px; border:1px solid rgba(63,246,255,0.22); background:rgba(63,246,255,0.035); text-align:left;
+    clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px)); }
+  .card .ct { font-size:11px; letter-spacing:0.26em; text-transform:uppercase; color:#ffc8f3; margin-bottom:8px; }
+  .card .row { justify-content:flex-start; margin:8px 0 0; } .card .infobox { margin:0; max-width:none; }
+  .note { font-size:11px; color:#9feaff; opacity:0.75; margin-top:6px; letter-spacing:0.03em; text-transform:none; }
+  .seg { display:flex; flex-wrap:wrap; gap:0; margin:0 0 10px; }
+  .seg button { border-radius:0; margin-right:-1px; font-size:12px; padding:8px 14px; transition:none; } .presets button { transition:none; }
+  .seg button:first-child { border-radius:8px 0 0 8px; } .seg button:last-child { border-radius:0 8px 8px 0; }
+  .seg button.sel, .presets button.sel { background:rgba(63,246,255,0.22); border-color:var(--cyan); color:#fff; box-shadow:0 0 12px rgba(63,246,255,0.5); }
+  .presets button { font-size:11px; padding:6px 10px; }
+  .msec .row { justify-content:flex-start; } #modeOpts .row { margin:4px 0 10px; } #modeOpts .infobox { text-align:left; margin:4px 0; }
+  button.pick.sel { background:rgba(255,63,216,0.25); border-color:var(--mag); }
+  .mfoot { display:flex; align-items:center; gap:12px; padding:10px 22px; border-top:1px solid rgba(63,246,255,0.25); background:linear-gradient(270deg, rgba(255,63,216,0.10), transparent 60%); }
+  .mfoot .modeline { flex:1; text-align:left; margin:0; font-size:13px; }
+  .fbtns { display:flex; gap:10px; align-items:center; } .mfoot button.big { padding:10px 30px; font-size:18px; }
+  .mpanel .settings input[type=password], .mpanel input[type=password] { width:240px; }
+  .mpanel input[type=number], .mpanel input[type=text], .mpanel input[type=password] { font:inherit; font-size:12px; background:rgba(0,0,0,0.4); color:#fff; border:1px solid rgba(63,246,255,0.5); border-radius:6px; padding:4px 6px; width:62px; }
+  .mpanel input[type=password] { width:240px; }
+  #setAbout { text-align:center; } #setAbout p { margin:6px 0; }
+  /* arcade panel */
+  .arcTop { display:flex; gap:14px; align-items:stretch; margin-bottom:12px; }
+  .arcArt { width:240px; flex:none; border:1px solid rgba(63,246,255,0.35); }
+  .arcInfo { flex:1; text-align:left; } .arcInfo .ct { font-size:18px; letter-spacing:0.25em; color:#fff; text-transform:uppercase; margin-bottom:6px; text-shadow:0 0 10px rgba(255,63,216,0.8); }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 12px; margin-top:8px; font-size:11px; color:#d8e4ff; }
+  .lg.a { color:#b79bff; } .lg.d { color:#ff7be6; } .lg.c { color:#8ffcff; } .lg.h { color:#ff6a78; }
+  table.hs { width:100%; } table.hs td { padding:3px 8px; font-size:12px; } table.hs tr.me td { color:#ffd59a; }
+  /* phones */
+  @media (max-width: 700px) {
+    .mwrap { flex-direction:column; } .mtabs { flex-direction:row; width:auto; border-right:none; border-bottom:1px solid rgba(63,246,255,0.18); overflow-x:auto; overflow-y:hidden; padding:8px; flex:none; }
+    .mtabs button { flex:none; padding:7px 10px; } .mtabs button small { display:none; }
+    .mhead { padding:10px 14px; } .msub { display:none; } .mbody { padding:10px 12px; } .mfoot { padding:8px 12px; flex-wrap:wrap; } .mfoot .modeline { font-size:11px; flex-basis:100%; }
+    .fbtns { margin-left:auto; } .arcTop { flex-direction:column; } .arcArt { width:100%; height:110px; }
+    .mpanel { height:94vh; width:97vw; }
+  }
+  @media (max-height: 520px) {
+    .mpanel { height:96vh; width:min(960px, 97vw); } .mhead { padding:6px 14px; } .mtitle { font-size:15px; } .mtabs { width:150px; padding:8px 6px; gap:4px; } .mtabs button { padding:6px 9px; } .mtabs button small { font-size:8.5px; }
+    .mbody { padding:8px 12px; } .card { padding:7px 10px 8px; margin-bottom:8px; } .mfoot { padding:5px 14px; } .mfoot button.big { padding:6px 20px; font-size:15px; } .seg button { padding:6px 10px; font-size:11px; }
+    .arcArt { width:170px; } .card .row { margin-top:5px; }
+  }
+  /* ---------- pre-race story / loading screen ---------- */
+  #loading { background:radial-gradient(ellipse at center, rgba(5,1,13,0.25), rgba(5,1,13,0.8)); z-index:40; cursor:pointer; }
+  #loading .crt { position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(0deg, rgba(0,0,0,0.28) 0 1px, transparent 1px 3px); animation:crtRoll 7s linear infinite; }
+  @keyframes crtRoll { from { background-position:0 0; } to { background-position:0 120px; } }
+  .lpanel { position:relative; width:min(760px, 94vw); padding:16px 22px 14px; font-family:"Courier New", ui-monospace, monospace; color:#9ffcff; background:rgba(2,6,14,0.78);
+    border:1px solid rgba(63,246,255,0.6); box-shadow:0 0 30px rgba(63,246,255,0.35), inset 0 0 40px rgba(63,246,255,0.12); text-shadow:0 0 6px rgba(63,246,255,0.9), 0 0 18px rgba(63,246,255,0.4);
+    clip-path:polygon(18px 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%, 0 18px); animation:crtOn .35s ease-out; }
+  @keyframes crtOn { from { transform:scaleY(0.02); filter:brightness(3); } 60% { transform:scaleY(1.04); } to { transform:none; filter:none; } }
+  .lhead { display:flex; justify-content:space-between; gap:10px; font-family:inherit; font-size:13px; letter-spacing:0.3em; color:#ff9be9; text-shadow:0 0 8px rgba(255,63,216,0.9); border-bottom:1px dashed rgba(63,246,255,0.35); padding-bottom:8px; }
+  .lhead .lsys { color:#7dffb7; font-size:11px; letter-spacing:0.15em; text-shadow:0 0 6px rgba(125,255,183,0.8); }
+  .lbody { display:flex; gap:16px; align-items:flex-start; margin:12px 0; }
+  .lbody img { width:200px; flex:none; aspect-ratio:2/1; object-fit:cover; border:1px solid rgba(63,246,255,0.4); filter:saturate(1.2) contrast(1.1); box-shadow:0 0 14px rgba(63,246,255,0.35); }
+  .lbody img[src=""], .lbody img:not([src]) { display:none; }
+  .ltext { flex:1; min-height:132px; font-size:15px; line-height:1.55; white-space:pre-wrap; letter-spacing:0.02em; }
+  .ltext .cur { display:inline-block; width:0.6em; height:1em; vertical-align:-0.12em; background:#9ffcff; box-shadow:0 0 8px #3ff6ff; animation:blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity:0; } }
+  .lmission { font-size:13px; letter-spacing:0.12em; color:#ffd59a; text-shadow:0 0 8px rgba(255,177,63,0.8); text-transform:uppercase; }
+  .lbar { height:6px; margin:10px 0 8px; background:rgba(63,246,255,0.12); border:1px solid rgba(63,246,255,0.3); }
+  .lbar > i { display:block; height:100%; width:0; background:repeating-linear-gradient(90deg, #3ff6ff 0 10px, transparent 10px 13px); box-shadow:0 0 10px #3ff6ff; }
+  .lskip { text-align:center; font-size:13px; letter-spacing:0.35em; color:#fff; animation:blink 1.2s steps(1) infinite; }
+  .lskip.ready { color:#7dffb7; animation-duration:.7s; }
+  @media (max-width: 640px) { .lbody { flex-direction:column; } .lbody img { width:100%; } .ltext { font-size:13px; min-height:150px; } .lhead { font-size:11px; flex-direction:column; } }
+  @media (max-height: 520px) { .lpanel { padding:8px 16px 8px; } .lbody { margin:6px 0; } .lbody img { width:150px; } .ltext { font-size:12.5px; min-height:96px; line-height:1.45; } .lbar { margin:5px 0; } .lskip, .lmission { font-size:11px; } }
+  .arcsum { margin:8px 0; font-size:13px; line-height:1.7; color:#d8e4ff; } .arcsum .big { font-size:34px; font-weight:800; color:#fff; text-shadow:0 0 14px rgba(255,63,216,0.9); } .arcsum .big small { font-size:13px; opacity:.7; }
+  body.inpanel #topBtns { display:none; }
+  body:not(.inrace) #nowPlaying { left:14px; top:auto; bottom:14px; transform:translate(0, 10px); max-width:60vw; }
+  body:not(.inrace) #nowPlaying.show { transform:none; }
+  .panel.stagepanel { max-width:min(1060px, 99vw) !important; padding-left:10px; padding-right:10px; max-height:96vh; overflow-y:auto; touch-action:pan-y; }
+  @media (max-width: 640px) { .stagecard { width:92vw; display:flex; } .stagecard img, .stagecard .ph { width:42%; aspect-ratio:auto; object-fit:cover; } .stagecard .sn { font-size:13px; } .stagecard .sd { font-size:10.5px; } }
+  /* ---------- arcade HUD (Laser Run) ---------- */
+  body.arcade #hud .holo.right, body.arcade #powerWrap, body.arcade #chips, body.arcade #srcBadge { display:none; }
+  #arcHud { position:absolute; inset:0; pointer-events:none; }
+  #arcHud .ascore { position:absolute; left:3vw; top:16px; padding:8px 16px 10px; border:1px solid rgba(255,63,216,0.6); background:linear-gradient(180deg, rgba(255,63,216,0.16), rgba(63,246,255,0.05)); text-shadow:0 0 10px rgba(255,63,216,0.9);
+    clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); min-width:150px; }
+  #arcHud .k { font-size:10px; letter-spacing:0.3em; opacity:0.8; }
+  #arcHud .ascore .v { font-size:clamp(26px, 3.6vw, 42px); font-weight:800; color:#fff; font-variant-numeric:tabular-nums; }
+  #arcHud .am { font-size:18px; font-weight:800; color:#ffd59a; text-shadow:0 0 10px rgba(255,177,63,0.9); }
+  #arcHud .am.hot { color:#ff7be6; animation:pulse .5s infinite alternate; } @keyframes pulse { to { transform:scale(1.12); } }
+  #arcHud .ashield { position:absolute; right:3vw; top:16px; text-align:right; padding:8px 12px; border:1px solid rgba(63,246,255,0.5); background:rgba(63,246,255,0.08);
+    clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
+  #aShields { display:flex; gap:6px; margin-top:4px; justify-content:flex-end; }
+  #aShields i { width:22px; height:24px; background:#3ff6ff; box-shadow:0 0 10px #3ff6ff; clip-path:polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); }
+  #aShields i.off { background:rgba(63,246,255,0.12); box-shadow:none; }
+  #aShields.hit i { background:#ff2a3a; }
+  .agauge { position:absolute; right:3vw; top:50%; transform:translateY(-50%); width:16px; height:min(46vh, 260px); border:1px solid rgba(63,246,255,0.5); background:linear-gradient(0deg, rgba(63,246,255,0.05), rgba(143,252,255,0.18)); }
+  .agauge .cruise { position:absolute; left:-6px; right:-6px; top:50%; height:1px; background:#ffd59a; box-shadow:0 0 6px #ffb13f; }
+  .agauge .me { position:absolute; left:-9px; width:34px; height:10px; margin-top:-5px; background:#fff; box-shadow:0 0 10px #3ff6ff; clip-path:polygon(0 0, 100% 50%, 0 100%); }
+  .agauge .bl { position:absolute; right:-14px; width:8px; height:8px; margin-top:-4px; border-radius:50%; }
+  .agauge .bl.t { background:#8ffcff; box-shadow:0 0 6px #3ff6ff; } .agauge .bl.h { background:#ff2a3a; box-shadow:0 0 6px #ff2a3a; border-radius:0; transform:rotate(45deg); }
+  #aPops .pop { position:absolute; transform:translate(-50%, -50%); font-weight:800; font-size:20px; color:#fff; text-shadow:0 0 10px rgba(255,63,216,0.95); animation:popUp .8s ease-out forwards; white-space:nowrap; }
+  #aPops .pop.bad { color:#ff6a78; text-shadow:0 0 10px #ff2a3a; } #aPops .pop.c { color:#8ffcff; }
+  @keyframes popUp { from { opacity:1; margin-top:0; } to { opacity:0; margin-top:-46px; } }
+  body.arcade.hurt #hud { box-shadow:inset 0 0 120px rgba(255,30,50,0.6); }
+  @media (max-height: 520px) { #arcHud .ascore { top:8px; left:10px; padding:4px 10px 6px; min-width:110px; } #arcHud .ashield { top:8px; right:10px; padding:4px 8px; } #aShields i { width:16px; height:18px; } .agauge { height:44vh; right:14px; } #aPops .pop { font-size:15px; } }
+  @media (orientation: portrait) and (max-width: 600px) { body.arcade .holo.top { top:96px; } }
 </style>
 </head>
-<body data-build="cosmicrow-rivals-v5">
+<body data-build="cosmicrow-menus-v6">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -317,6 +455,12 @@
   <div id="rowHint">PRESS SPACE / TAP TO ROW</div>
   <div id="srcBadge">KEYBOARD</div>
   <div id="flash">500 M</div>
+  <div id="arcHud" class="hidden">
+    <div class="ascore"><div class="k">SCORE</div><div class="v" id="aScore">0</div><div class="am" id="aMult">×1</div></div>
+    <div class="ashield"><div class="k">SHIELDS</div><div id="aShields"><i></i><i></i><i></i></div></div>
+    <div class="agauge" id="aGauge"><div class="cruise"></div><div class="me" id="aMe"></div></div>
+    <div id="aPops"></div>
+  </div>
 </div>
 
 <!-- Cockpit view (toggle with C / the view button): dark hex panels + holographic screens -->
@@ -354,95 +498,194 @@
 <div id="nowPlaying" class="hidden"></div>
 <div id="rotateHint">↻ Turn your phone sideways for the best view</div>
 
-<!-- Title screen -->
+<!-- Main screen: just the big choices -->
 <div id="title" class="overlay">
-  <div class="panel">
+  <div class="home">
+    <div class="hicons">
+      <button class="icon" id="inChip" title="Rowing input (Settings › Input)">⚡ <span id="inChipT">Keyboard</span></button>
+      <button class="icon" id="lbChip" title="Concept2 Logbook (Settings › Logbook)">📘 Logbook</button>
+      <button class="icon" id="aboutBtn" title="About">ⓘ</button>
+    </div>
     <h1 class="logo">CosmicRow</h1>
     <div class="tag">Row through the neon void</div>
-    <div class="row tabs" id="modeTabs">
-      <button data-tab="distance">Distance</button><button data-tab="time">Time</button><button data-tab="intervals">Intervals</button>
-      <button data-tab="wod">Today's WOD</button><button data-tab="daily">Daily</button><button data-tab="calm">Calm</button><button data-tab="free">Free row</button>
-    </div>
-    <div id="modeOpts">
-      <div class="row opt" data-for="distance" id="distBtns">
-        <button data-d="500">500 m</button><button data-d="1000">1000 m</button><button data-d="2000">2000 m</button><button data-d="5000">5000 m</button><button data-d="6000">6000 m</button>
-      </div>
-      <div class="row opt" data-for="time" id="timeBtns"><button data-s="60">1 min</button><button data-s="240">4 min</button><button data-s="1800">30 min</button></div>
-      <div class="opt" data-for="intervals">
-        <div class="row" id="intBtns"></div>
-        <div class="row custom hidden" id="customRow">
-          <label class="chk">Reps <input type="number" id="cReps" min="1" max="40" value="6"></label>
-          <label class="chk">Work <input type="number" id="cWork" min="10" max="20000" value="500"></label>
-          <select id="cUnit"><option value="distance">metres</option><option value="time">seconds</option></select>
-          <label class="chk">Rest <input type="number" id="cRest" min="0" max="900" value="60"> s</label>
-        </div>
-      </div>
-      <div class="opt infobox" data-for="wod" id="wodBox">Loading today's Concept2 Workout of the Day…</div>
-      <div class="opt infobox" data-for="daily" id="dailyBox"></div>
-      <div class="opt infobox" data-for="calm">Just you, the music and the stars. No race, no pressure – only time and metres on screen. End with ■ End or ESC.</div>
-      <div class="opt infobox" data-for="free">Row as long as you like. ESC or ■ End stops the session.</div>
-    </div>
-    <div class="modeline" id="modeLine"></div>
+    <button class="racebtn" id="startBtn"><span class="rl">▶ Race</span><span class="rs" id="raceSub">2000 m</span></button>
+    <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
     <div class="pbline" id="pbLine"></div>
-    <div class="shipline" id="shipLine"></div>
-    <div class="row" style="margin-top:12px"><button class="big" id="startBtn">Start</button></div>
-    <div class="row">
-      <button id="stageBtn">Stage</button>
-      <button id="garageBtn">Garage</button>
-      <button id="settingsBtn">Settings</button>
-      <button id="pm5Btn">Connect PM5</button>
-      <button id="aboutBtn">About</button>
+    <div class="hgrid">
+      <button class="hbtn" id="trainingBtn"><b>Training</b><small>Workouts · WOD · Daily · Opponents · Zones</small></button>
+      <button class="hbtn" id="arcadeBtn"><b>Arcade</b><small>Laser Run</small></button>
+      <button class="hbtn" id="garageBtn"><b>Garage</b><small>Ships &amp; colours</small></button>
+      <button class="hbtn" id="settingsBtn"><b>Settings</b><small>Audio · View · Input · Logbook</small></button>
     </div>
-    <div class="status" id="pm5Status"></div>
-    <div class="hint">SPACE / tap = stroke &nbsp;·&nbsp; C = camera &nbsp;·&nbsp; M = mute &nbsp;·&nbsp; ESC = end session</div>
+    <div class="hint" id="keyHint">SPACE / tap = stroke &nbsp;·&nbsp; C = camera &nbsp;·&nbsp; M = mute &nbsp;·&nbsp; ESC = back / end</div>
   </div>
 </div>
 
-<!-- Stage select -->
+<!-- Training -->
+<div id="training" class="overlay hidden">
+  <div class="mpanel">
+    <div class="mhead"><button class="back" id="trBack">◀ Back</button><div class="mtitle">Training</div><div class="msub">Choose a workout and who you race</div></div>
+    <div class="mwrap">
+      <nav class="mtabs" id="trTabs">
+        <button data-sec="workouts"><b>Workouts</b><small>Distance · time · intervals</small></button>
+        <button data-sec="wod"><b>Today's WOD</b><small>Concept2</small></button>
+        <button data-sec="daily"><b>Daily</b><small id="trDailyS">Challenge &amp; streak</small></button>
+        <button data-sec="opponents"><b>Opponents</b><small>Ghost · pace · rivals</small></button>
+        <button data-sec="zones"><b>Zones &amp; Calm</b><small>Stroke rate · relax</small></button>
+      </nav>
+      <div class="mbody">
+        <section class="msec" data-sec="workouts">
+          <div class="seg" id="modeTabs"><button data-tab="distance">Distance</button><button data-tab="time">Time</button><button data-tab="intervals">Intervals</button><button data-tab="free">Free row</button></div>
+          <div id="modeOpts">
+            <div class="row opt" data-for="distance" id="distBtns"><button data-d="500">500 m</button><button data-d="1000">1000 m</button><button data-d="2000">2000 m</button><button data-d="5000">5000 m</button><button data-d="6000">6000 m</button></div>
+            <div class="row opt" data-for="time" id="timeBtns"><button data-s="60">1 min</button><button data-s="240">4 min</button><button data-s="1800">30 min</button></div>
+            <div class="opt" data-for="intervals">
+              <div class="row" id="intBtns"></div>
+              <div class="card custom hidden" id="customRow"><div class="ct">Custom interval builder</div>
+                <div class="row"><label class="chk">Reps <input type="number" id="cReps" min="1" max="40" value="6"></label>
+                <label class="chk">Work <input type="number" id="cWork" min="10" max="20000" value="500"></label>
+                <select id="cUnit"><option value="distance">metres</option><option value="time">seconds</option></select>
+                <label class="chk">Rest <input type="number" id="cRest" min="0" max="900" value="60"> s</label></div></div>
+            </div>
+            <div class="opt infobox" data-for="free">Row as long as you like. ESC or ■ End stops the session.</div>
+            <div class="opt infobox" data-for="other" id="otherSel"></div>
+          </div>
+        </section>
+        <section class="msec" data-sec="wod">
+          <div class="card"><div class="infobox" id="wodBox">Loading today's Concept2 Workout of the Day…</div><div class="row"><button class="pick" id="pickWod" data-pick="wod">Row today's WOD</button></div></div>
+        </section>
+        <section class="msec" data-sec="daily">
+          <div class="card"><div class="infobox" id="dailyBox"></div><div class="row"><button class="pick" id="pickDaily" data-pick="daily">Take the challenge</button></div></div>
+        </section>
+        <section class="msec" data-sec="opponents">
+          <div class="card"><div class="ct">👻 Ghost</div><label class="chk"><input type="checkbox" id="optGhost"> Race a ghost of my best run of the same workout</label><div class="note" id="ghostNote"></div></div>
+          <div class="card"><div class="ct">⛵ Pace boat</div><label class="chk"><input type="checkbox" id="optPace"> A steady pace boat at <input type="text" id="optPaceSplit" value="2:00" size="5" inputmode="numeric"> /500m</label>
+            <div class="row presets" id="paceP"><button data-ps="105">1:45</button><button data-ps="115">1:55</button><button data-ps="120">2:00</button><button data-ps="125">2:05</button><button data-ps="135">2:15</button></div></div>
+          <div class="card"><div class="ct">🚀 Race field</div>
+            <div class="seg" id="fieldBtns"><button data-f="off">Off</button><button data-f="rivals">Rivals</button><button data-f="pace">Pace boats</button></div>
+            <div class="row"><label class="chk">How many <select id="optRivals"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
+              <label class="chk">around <input type="text" id="optRivalSplit" value="2:05" size="5" inputmode="numeric"> /500m</label></div>
+            <div class="row presets" id="rivalP"><button data-rs="140">Easy 2:20</button><button data-rs="125">Medium 2:05</button><button data-rs="115">Hard 1:55</button><button data-rs="105">Elite 1:45</button></div>
+            <div class="note" id="fieldNote"></div></div>
+        </section>
+        <section class="msec" data-sec="zones">
+          <div class="card"><div class="ct">🎯 Stroke-rate zone</div><label class="chk"><input type="checkbox" id="optZone"> Show my zone <input type="number" id="optZlo" min="10" max="50" value="24"> – <input type="number" id="optZhi" min="10" max="60" value="28"> spm</label>
+            <div class="row presets" id="zoneP"><button data-z="18-22">UT2 18–22</button><button data-z="22-26">UT1 22–26</button><button data-z="26-30">AT 26–30</button><button data-z="32-36">Race 32–36</button></div>
+            <div class="note">The track and the SPM screen turn green in the zone, amber below, red above.</div></div>
+          <div class="card"><div class="ct">🌙 Calm mode</div><div class="infobox">Just you, the music and the stars. No race, no pressure – only time and metres on screen.</div><div class="row"><button class="pick" id="pickCalm" data-pick="calm">Row in calm mode</button></div></div>
+        </section>
+      </div>
+    </div>
+    <div class="mfoot"><div class="modeline" id="modeLine"></div><div class="fbtns"><button id="trStage">Stage ▸</button><button class="big" id="trGo">Race ▶</button></div></div>
+  </div>
+</div>
+
+<!-- Arcade -->
+<div id="arcade" class="overlay hidden">
+  <div class="mpanel">
+    <div class="mhead"><button class="back" id="arBack">◀ Back</button><div class="mtitle">Arcade</div><div class="msub">Rowing games</div></div>
+    <div class="mwrap">
+      <nav class="mtabs" id="arTabs"><button data-sec="laserrun"><b>Laser Run</b><small>Shoot for points</small></button><button data-sec="soon" class="dim"><b>More games</b><small>Coming later</small></button></nav>
+      <div class="mbody">
+        <section class="msec" data-sec="laserrun">
+          <div class="arcTop">
+            <svg class="arcArt" viewBox="0 0 240 120" aria-hidden="true"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a0d52"/><stop offset="1" stop-color="#05010d"/></linearGradient></defs>
+              <rect width="240" height="120" fill="url(#ag)"/><path d="M0 120 L120 62 L240 120" fill="none" stroke="#3ff6ff" stroke-opacity=".55"/><path d="M60 120 L120 62 L180 120" fill="none" stroke="#3ff6ff" stroke-opacity=".25"/>
+              <g stroke="#ff3fd8" stroke-width="2.5"><line x1="104" y1="92" x2="150" y2="40"/><line x1="112" y1="94" x2="156" y2="44"/></g>
+              <polygon points="160,30 166,40 160,50 154,40" fill="#8ffcff"/><circle cx="160" cy="40" r="11" fill="#3ff6ff" fill-opacity=".18"/>
+              <polygon points="70,48 82,44 88,54 80,62 68,58" fill="#4b3f6e" stroke="#9a7dff"/><circle cx="196" cy="70" r="6" fill="#ff2440"/><path d="M196 60v-4M196 80v4M186 70h-4M206 70h4" stroke="#ff2440" stroke-width="2"/>
+              <path d="M96 100 L108 86 L120 100 L108 96 Z" fill="#3ff6ff"/><path d="M100 100 L116 100" stroke="#ffb13f" stroke-width="3"/></svg>
+            <div class="arcInfo"><div class="ct">Laser Run</div><div class="infobox" style="margin:0">Row <b>harder</b> to climb, <b>ease off</b> to sink. Every stroke fires a twin laser that locks onto targets near your height.</div>
+              <div class="legend"><span class="lg a">◆ Asteroid 10</span><span class="lg d">◆ Drone 25</span><span class="lg c">◆ Crystal 50 (high)</span><span class="lg h">✖ Mines &amp; void rays: −1 shield</span><span class="lg">Hit streaks build a ×5 combo</span></div></div>
+          </div>
+          <div class="card"><div class="ct">Round</div><div class="seg" id="arcRounds"></div>
+            <div class="ct" style="margin-top:8px">Level <span class="note" id="arcLevelNote"></span></div><div class="seg" id="arcLevels"></div></div>
+          <div class="card"><div class="ct">High scores <span class="note" id="arcHsKey"></span></div><table class="sum hs" id="arcHs"></table></div>
+        </section>
+        <section class="msec" data-sec="soon"><div class="card"><div class="infobox">More rowing games will land here. Laser Run is the first.</div></div></section>
+      </div>
+    </div>
+    <div class="mfoot"><div class="modeline" id="arcLine"></div><div class="fbtns"><button class="big" id="arcPlay">Play ▶</button></div></div>
+  </div>
+</div>
+
+<!-- Stage select (part of the race flow) -->
 <div id="stages" class="overlay hidden">
   <div class="panel stagepanel">
     <div class="tag" style="margin:0 0 8px">Choose your stage</div>
     <div class="stagecards" id="stageCards"></div>
-    <div class="row" style="margin-top:10px"><button id="stBack">Back</button><button class="big" id="stStart">Start race</button></div>
+    <div class="row" style="margin-top:10px"><button id="stBack">◀ Back</button><button class="big" id="stStart">Start race</button></div>
   </div>
 </div>
 
-<!-- Settings -->
+<!-- Settings: app settings only -->
 <div id="settings" class="overlay hidden">
-  <div class="panel settings">
-    <div class="tag" style="margin:0 0 6px">Settings</div>
-    <div class="label">Music</div>
-    <div class="row" id="musicBtns">
-      <label class="chk vol">Vol <input type="range" id="volSlider" min="0" max="100" step="1"></label></div>
-    <div class="row"><button class="small" id="repeatBtn">🔁 Then: loop track</button><button class="small" id="nextBtn">⏭ Next track</button></div>
-    <div class="label">Race helpers</div>
-    <div class="row"><label class="chk"><input type="checkbox" id="optGhost"> Ghost of my best run</label>
-      <label class="chk"><input type="checkbox" id="optPace"> Pace boat at <input type="text" id="optPaceSplit" value="2:00" size="5" inputmode="numeric"> /500m</label></div>
-    <div class="row"><label class="chk">Rivals <select id="optRivals"><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
-      <label class="chk">around <input type="text" id="optRivalSplit" value="2:05" size="5" inputmode="numeric"> /500m</label><span class="hint" style="margin:0">(computer ships, offline)</span></div>
-    <div class="row"><label class="chk"><input type="checkbox" id="optZone"> Stroke-rate zone <input type="number" id="optZlo" min="10" max="50" value="24"> – <input type="number" id="optZhi" min="10" max="60" value="28"> spm</label></div>
-    <div class="label">HUD tiles</div>
-    <div class="row" id="hudChecks">
-      <label class="chk"><input type="checkbox" data-t="hr" checked> Heart rate</label>
-      <label class="chk"><input type="checkbox" data-t="drag" checked> Drag</label>
-      <label class="chk"><input type="checkbox" data-t="spm" checked> SPM</label>
-      <label class="chk"><input type="checkbox" data-t="split" checked> Split</label>
-      <label class="chk"><input type="checkbox" data-t="watts"> Watts</label>
-      <label class="chk"><input type="checkbox" data-t="speed"> Speed</label>
+  <div class="mpanel settings">
+    <div class="mhead"><button class="back" id="settingsClose">◀ Done</button><div class="mtitle">Settings</div><div class="msub">Saved automatically</div></div>
+    <div class="mwrap">
+      <nav class="mtabs" id="setTabs">
+        <button data-sec="audio"><b>Audio</b><small>Music &amp; volume</small></button>
+        <button data-sec="view"><b>View</b><small>Camera · HUD · story</small></button>
+        <button data-sec="input"><b>Input</b><small id="setInS">Keyboard · tap · PM5</small></button>
+        <button data-sec="graphics"><b>Graphics</b><small>Quality</small></button>
+        <button data-sec="logbook"><b>Logbook</b><small>Concept2</small></button>
+        <button data-sec="unlocks"><b>Unlocks</b><small>Progress</small></button>
+        <button data-sec="about"><b>About</b><small>Credits</small></button>
+      </nav>
+      <div class="mbody">
+        <section class="msec" data-sec="audio">
+          <div class="card"><div class="ct">Music</div><div class="row" id="musicBtns"></div>
+            <div class="row"><label class="chk vol">Volume <input type="range" id="volSlider" min="0" max="100" step="1"></label></div>
+            <div class="row"><button class="small" id="repeatBtn">🔁 Then: loop track</button><button class="small" id="nextBtn">⏭ Next track</button></div>
+            <label class="chk"><input type="checkbox" id="optThemes"> Stage themes: Sunset Drive plays <b>Neon Horizon</b></label><div class="note" id="themeNote"></div></div>
+          <div class="card"><div class="ct">Sound</div><label class="chk"><input type="checkbox" id="optMute"> Mute everything (M)</label></div>
+        </section>
+        <section class="msec" data-sec="view">
+          <div class="card"><div class="ct">Camera</div><div class="seg" id="viewBtns"><button data-v="chase">Chase</button><button data-v="cockpit">Cockpit</button></div><div class="note">Also C or the ◉ button during a race.</div></div>
+          <div class="card"><div class="ct">HUD screens</div><div class="row" id="hudChecks">
+            <label class="chk"><input type="checkbox" data-t="hr" checked> Heart rate</label><label class="chk"><input type="checkbox" data-t="drag" checked> Drag</label>
+            <label class="chk"><input type="checkbox" data-t="spm" checked> SPM</label><label class="chk"><input type="checkbox" data-t="split" checked> Split</label>
+            <label class="chk"><input type="checkbox" data-t="watts"> Watts</label><label class="chk"><input type="checkbox" data-t="speed"> Speed</label></div></div>
+          <div class="card"><div class="ct">Story screens before a race</div><div class="seg" id="storyBtns"><button data-st="full">Full</button><button data-st="short">Short</button><button data-st="off">Off</button></div>
+            <label class="chk"><input type="checkbox" id="optStorySfx"> Terminal beeps while typing</label></div>
+        </section>
+        <section class="msec" data-sec="input">
+          <div class="card"><div class="ct">Rowing input</div><div class="infobox" id="inputInfo"></div>
+            <div class="row"><button id="pm5Btn">Connect PM5</button></div><div class="status" id="pm5Status"></div>
+            <div class="note">PM5 uses Web Bluetooth (Chrome / Edge / Android). Without it, SPACE or a tap is one stroke.</div></div>
+          <div class="card"><div class="ct">Keys</div><div class="note" style="line-height:1.8">SPACE / tap = stroke · C = camera · M = mute · ESC = back / end · ENTER = race<br>Laser Run: ← → (or A / D) slide sideways</div></div>
+        </section>
+        <section class="msec" data-sec="graphics">
+          <div class="card"><div class="ct">Quality</div><div class="seg" id="gfxBtns"><button data-q="auto">Auto</button><button data-q="high">High</button><button data-q="low">Battery saver</button></div>
+            <label class="chk"><input type="checkbox" id="optBloom"> Neon glow (bloom)</label>
+            <div class="note" id="gfxNote"></div><div class="row hidden" id="gfxReloadRow"><button class="small" id="gfxReload">Restart now to apply</button></div></div>
+        </section>
+        <section class="msec" data-sec="logbook">
+          <div class="card"><div class="ct">Concept2 Logbook</div>
+            <div class="row"><select id="lbHost"><option value="dev">Dev server (testing)</option><option value="live">Live Logbook</option></select>
+              <input type="password" id="lbToken" placeholder="Paste your Logbook access token" autocomplete="off" size="26"></div>
+            <div class="row"><button class="small" id="lbConnect">Save &amp; test</button><button class="small" id="lbForget">Forget</button><button class="small" id="lbOauth" disabled title="Needs app registration at Concept2 first">Sign in with Concept2 (coming later)</button></div>
+            <div class="status" id="lbSetStatus"></div>
+            <div class="note">Token stays only in this browser. Live saving is only offered for PM5 rows.</div></div>
+        </section>
+        <section class="msec" data-sec="unlocks">
+          <div class="card"><div class="ct">Unlocks</div><label class="chk"><input type="checkbox" id="optUnlockAll"> Unlock all ships &amp; colours</label><div class="pbline" id="statsLine"></div></div>
+        </section>
+        <section class="msec" data-sec="about"><div class="card" id="setAbout"></div></section>
+      </div>
     </div>
-    <div class="label">Unlocks</div>
-    <div class="row"><label class="chk"><input type="checkbox" id="optUnlockAll"> Unlock all ships &amp; colours</label></div>
-    <div class="pbline" id="statsLine"></div>
-    <div class="label">Concept2 Logbook</div>
-    <div class="row">
-      <select id="lbHost"><option value="dev">Dev server (testing)</option><option value="live">Live Logbook</option></select>
-      <input type="password" id="lbToken" placeholder="Paste your Logbook access token" autocomplete="off" size="26">
-      <button class="small" id="lbConnect">Save &amp; test</button><button class="small" id="lbForget">Forget</button>
-    </div>
-    <div class="status" id="lbSetStatus"></div>
-    <div class="row"><button class="small" id="lbOauth" disabled title="Needs app registration at Concept2 first">Sign in with Concept2 (coming later)</button></div>
-    <div class="hint" style="margin-top:4px">Token stays only in this browser. Live saving is only offered for PM5 rows.</div>
-    <div class="row" style="margin-top:10px"><button class="big" id="settingsClose">Done</button></div>
+  </div>
+</div>
+
+<!-- Pre-race story / loading screen -->
+<div id="loading" class="overlay hidden">
+  <div class="crt"></div>
+  <div class="lpanel">
+    <div class="lhead"><span id="ldStage">ORBITAL RUN</span><span class="lsys">KAELIS NET · LINK <b id="ldPct">0</b>%</span></div>
+    <div class="lbody"><img id="ldImg" alt=""><div class="ltext" id="ldText"></div></div>
+    <div class="lmission" id="ldMission"></div>
+    <div class="lbar"><i id="ldBar"></i></div>
+    <div class="lskip" id="ldSkip">PULL TO START · TAP OR ANY KEY</div>
   </div>
 </div>
 
@@ -450,9 +693,11 @@
 <div id="about" class="overlay hidden">
   <div class="panel">
     <h1 class="logo" style="font-size:52px">CosmicRow</h1>
+    <div id="aboutBody">
     <p style="font-size:18px;color:#fff;letter-spacing:0.1em">Developed by Johan K. Jacobsen</p>
-    <p style="font-size:12px;opacity:0.8;line-height:1.6">A Tron / Blade Runner space-rowing experience.<br>Music: <b>Sorina</b> by Johan K. Jacobsen · Cosmic Drift &amp; Neon Drive: procedural CosmicRow originals.<br>Today's WOD: Workout of the Day by <a href="https://www.concept2.com/training/wod" target="_blank" rel="noopener" style="color:#3ff6ff">Concept2</a> (personal use).<br>
-      Six ships from the CosmicRow concept sheet, chase &amp; cockpit views.<br>Browser prototype built with Three.js &amp; WebAudio. Concept2 PM5 via Web Bluetooth (Chrome).</p>
+    <p style="font-size:12px;opacity:0.8;line-height:1.6">A Tron / Blade Runner space-rowing experience.<br>Music: <b>Sorina</b> and <b>Neon Horizon</b> by Johan K. Jacobsen · Cosmic Drift &amp; Neon Drive: procedural CosmicRow originals.<br>Today's WOD: Workout of the Day by <a href="https://www.concept2.com/training/wod" target="_blank" rel="noopener" style="color:#3ff6ff">Concept2</a> (personal use).<br>
+      Seven ships (one secret), two stages, the Laser Run arcade game, chase &amp; cockpit views.<br>Browser prototype built with Three.js &amp; WebAudio. Concept2 PM5 via Web Bluetooth (Chrome).</p>
+    </div>
     <button id="aboutClose">Back</button>
   </div>
 </div>
@@ -21460,6 +21705,65 @@ void main() {
       return new _IcosahedronGeometry(data.radius, data.detail);
     }
   };
+  var OctahedronGeometry = class _OctahedronGeometry extends PolyhedronGeometry {
+    constructor(radius = 1, detail = 0) {
+      const vertices = [
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        -1
+      ];
+      const indices = [
+        0,
+        2,
+        4,
+        0,
+        4,
+        3,
+        0,
+        3,
+        5,
+        0,
+        5,
+        2,
+        1,
+        2,
+        5,
+        1,
+        5,
+        3,
+        1,
+        3,
+        4,
+        1,
+        4,
+        2
+      ];
+      super(vertices, indices, radius, detail);
+      this.type = "OctahedronGeometry";
+      this.parameters = {
+        radius,
+        detail
+      };
+    }
+    static fromJSON(data) {
+      return new _OctahedronGeometry(data.radius, data.detail);
+    }
+  };
   var RingGeometry = class _RingGeometry extends BufferGeometry {
     constructor(innerRadius = 0.5, outerRadius = 1, thetaSegments = 32, phiSegments = 1, thetaStart = 0, thetaLength = Math.PI * 2) {
       super();
@@ -21521,6 +21825,100 @@ void main() {
       return new _RingGeometry(data.innerRadius, data.outerRadius, data.thetaSegments, data.phiSegments, data.thetaStart, data.thetaLength);
     }
   };
+  var ShapeGeometry = class _ShapeGeometry extends BufferGeometry {
+    constructor(shapes = new Shape([new Vector2(0, 0.5), new Vector2(-0.5, -0.5), new Vector2(0.5, -0.5)]), curveSegments = 12) {
+      super();
+      this.type = "ShapeGeometry";
+      this.parameters = {
+        shapes,
+        curveSegments
+      };
+      const indices = [];
+      const vertices = [];
+      const normals = [];
+      const uvs = [];
+      let groupStart = 0;
+      let groupCount = 0;
+      if (Array.isArray(shapes) === false) {
+        addShape(shapes);
+      } else {
+        for (let i = 0; i < shapes.length; i++) {
+          addShape(shapes[i]);
+          this.addGroup(groupStart, groupCount, i);
+          groupStart += groupCount;
+          groupCount = 0;
+        }
+      }
+      this.setIndex(indices);
+      this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
+      this.setAttribute("normal", new Float32BufferAttribute(normals, 3));
+      this.setAttribute("uv", new Float32BufferAttribute(uvs, 2));
+      function addShape(shape) {
+        const indexOffset = vertices.length / 3;
+        const points = shape.extractPoints(curveSegments);
+        let shapeVertices = points.shape;
+        const shapeHoles = points.holes;
+        if (ShapeUtils.isClockWise(shapeVertices) === false) {
+          shapeVertices = shapeVertices.reverse();
+        }
+        for (let i = 0, l = shapeHoles.length; i < l; i++) {
+          const shapeHole = shapeHoles[i];
+          if (ShapeUtils.isClockWise(shapeHole) === true) {
+            shapeHoles[i] = shapeHole.reverse();
+          }
+        }
+        const faces = ShapeUtils.triangulateShape(shapeVertices, shapeHoles);
+        for (let i = 0, l = shapeHoles.length; i < l; i++) {
+          const shapeHole = shapeHoles[i];
+          shapeVertices = shapeVertices.concat(shapeHole);
+        }
+        for (let i = 0, l = shapeVertices.length; i < l; i++) {
+          const vertex2 = shapeVertices[i];
+          vertices.push(vertex2.x, vertex2.y, 0);
+          normals.push(0, 0, 1);
+          uvs.push(vertex2.x, vertex2.y);
+        }
+        for (let i = 0, l = faces.length; i < l; i++) {
+          const face = faces[i];
+          const a = face[0] + indexOffset;
+          const b = face[1] + indexOffset;
+          const c = face[2] + indexOffset;
+          indices.push(a, b, c);
+          groupCount += 3;
+        }
+      }
+    }
+    copy(source) {
+      super.copy(source);
+      this.parameters = Object.assign({}, source.parameters);
+      return this;
+    }
+    toJSON() {
+      const data = super.toJSON();
+      const shapes = this.parameters.shapes;
+      return toJSON(shapes, data);
+    }
+    static fromJSON(data, shapes) {
+      const geometryShapes = [];
+      for (let j = 0, jl = data.shapes.length; j < jl; j++) {
+        const shape = shapes[data.shapes[j]];
+        geometryShapes.push(shape);
+      }
+      return new _ShapeGeometry(geometryShapes, data.curveSegments);
+    }
+  };
+  function toJSON(shapes, data) {
+    data.shapes = [];
+    if (Array.isArray(shapes)) {
+      for (let i = 0, l = shapes.length; i < l; i++) {
+        const shape = shapes[i];
+        data.shapes.push(shape.uuid);
+      }
+    } else {
+      data.shapes.push(shapes.uuid);
+    }
+    return data;
+  }
   var SphereGeometry = class _SphereGeometry extends BufferGeometry {
     constructor(radius = 1, widthSegments = 32, heightSegments = 16, phiStart = 0, phiLength = Math.PI * 2, thetaStart = 0, thetaLength = Math.PI) {
       super();
@@ -21651,6 +22049,77 @@ void main() {
       return new _TorusGeometry(data.radius, data.tube, data.radialSegments, data.tubularSegments, data.arc);
     }
   };
+  var WireframeGeometry = class extends BufferGeometry {
+    constructor(geometry = null) {
+      super();
+      this.type = "WireframeGeometry";
+      this.parameters = {
+        geometry
+      };
+      if (geometry !== null) {
+        const vertices = [];
+        const edges = /* @__PURE__ */ new Set();
+        const start = new Vector3();
+        const end = new Vector3();
+        if (geometry.index !== null) {
+          const position = geometry.attributes.position;
+          const indices = geometry.index;
+          let groups = geometry.groups;
+          if (groups.length === 0) {
+            groups = [{ start: 0, count: indices.count, materialIndex: 0 }];
+          }
+          for (let o = 0, ol = groups.length; o < ol; ++o) {
+            const group = groups[o];
+            const groupStart = group.start;
+            const groupCount = group.count;
+            for (let i = groupStart, l = groupStart + groupCount; i < l; i += 3) {
+              for (let j = 0; j < 3; j++) {
+                const index1 = indices.getX(i + j);
+                const index2 = indices.getX(i + (j + 1) % 3);
+                start.fromBufferAttribute(position, index1);
+                end.fromBufferAttribute(position, index2);
+                if (isUniqueEdge(start, end, edges) === true) {
+                  vertices.push(start.x, start.y, start.z);
+                  vertices.push(end.x, end.y, end.z);
+                }
+              }
+            }
+          }
+        } else {
+          const position = geometry.attributes.position;
+          for (let i = 0, l = position.count / 3; i < l; i++) {
+            for (let j = 0; j < 3; j++) {
+              const index1 = 3 * i + j;
+              const index2 = 3 * i + (j + 1) % 3;
+              start.fromBufferAttribute(position, index1);
+              end.fromBufferAttribute(position, index2);
+              if (isUniqueEdge(start, end, edges) === true) {
+                vertices.push(start.x, start.y, start.z);
+                vertices.push(end.x, end.y, end.z);
+              }
+            }
+          }
+        }
+        this.setAttribute("position", new Float32BufferAttribute(vertices, 3));
+      }
+    }
+    copy(source) {
+      super.copy(source);
+      this.parameters = Object.assign({}, source.parameters);
+      return this;
+    }
+  };
+  function isUniqueEdge(start, end, edges) {
+    const hash1 = `${start.x},${start.y},${start.z}-${end.x},${end.y},${end.z}`;
+    const hash2 = `${end.x},${end.y},${end.z}-${start.x},${start.y},${start.z}`;
+    if (edges.has(hash1) === true || edges.has(hash2) === true) {
+      return false;
+    } else {
+      edges.add(hash1);
+      edges.add(hash2);
+      return true;
+    }
+  }
   var RawShaderMaterial = class extends ShaderMaterial {
     constructor(parameters) {
       super(parameters);
@@ -25289,8 +25758,11 @@ void main() {
     { id: "cosmic", name: "Cosmic Drift", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 205.7 },
     { id: "sorina", name: "Sorina", artist: "Johan K. Jacobsen", kind: "file", src: "music/Sorina.mp3", gainDb: -0.7 },
     // measured -15.3 LUFS -> matched to Cosmic Drift (-16)
+    { id: "neonhorizon", name: "Neon Horizon", artist: "Johan K. Jacobsen", kind: "file", src: "music/NeonHorizon.mp3", gainDb: -0.9 },
+    // measured -15.1 LUFS; theme of the Sunset Drive stage
     { id: "drive", name: "Neon Drive", artist: "CosmicRow original (procedural)", kind: "synth", seconds: 180 }
   ];
+  var STAGE_THEMES = { sunset: "neonhorizon" };
   var trackById = (id) => TRACKS.find((t) => t.id === id) || null;
 
   // workouts.js
@@ -25949,6 +26421,454 @@ void main() {
     rows.sort((a, b) => a.ft != null && b.ft != null ? a.ft - b.ft : a.ft != null ? -1 : b.ft != null ? 1 : b.d - a.d);
     return rows;
   }
+  var PaceRacer = class {
+    constructor({ id, name, ship, color, split, finishM = 0 }) {
+      Object.assign(this, { id, name, ship, color, finishM });
+      this.split = split;
+      this.targetSplit = split;
+      this.d = 0;
+      this.finished = false;
+    }
+    update(raceT) {
+      if (this.finished) return;
+      this.d = Math.max(0, raceT) * 500 / this.split;
+      if (this.finishM && this.d >= this.finishM) {
+        this.d = this.finishM;
+        this.finished = true;
+        this.finishT = this.finishM * this.split / 500;
+      }
+    }
+  };
+  function makePaceBoats(n, split, finishM) {
+    n = Math.max(0, Math.min(5, n));
+    return Array.from({ length: n }, (_, i) => split + Math.round((i - (n - 1) / 2) * 3)).map((sp, i) => {
+      const r = RIVAL_ROSTER[i], m = Math.floor(sp / 60), s = Math.round(sp - m * 60);
+      return new PaceRacer({ id: "pace" + i, name: `PACE ${m}:${String(s).padStart(2, "0")}`, ship: r.ship, color: r.color, split: sp, finishM });
+    });
+  }
+
+  // arcade.js
+  var ARCADE_ROUNDS = [{ id: "r3", label: "3 min", s: 180 }, { id: "r5", label: "5 min", s: 300 }, { id: "r10", label: "10 min", s: 600 }, { id: "endless", label: "Endless", s: 0 }];
+  var ARCADE_LEVELS = [{ id: "easy", label: "Easy", split: 150 }, { id: "normal", label: "Normal", split: 135 }, { id: "hard", label: "Hard", split: 120 }, { id: "pro", label: "Pro", split: 108 }];
+  var KINDS = {
+    asteroid: { pts: 10, r: 1.35, y: [0.5, 3.6], w: 0.42 },
+    drone: { pts: 25, r: 1.1, y: [1.6, 4.8], w: 0.24 },
+    crystal: { pts: 50, r: 1, y: [4.2, 6.4], w: 0.12 },
+    mine: { hazard: true, r: 1.05, y: [0.4, 5.6], w: 0.14 },
+    ray: { hazard: true, r: 1.5, y: [0.5, 2.6], w: 0.08 }
+  };
+  var Y_MIN = 0.3;
+  var Y_MAX = 6.6;
+  var LOCK_BAND = 1.9;
+  var SPAWN_Z = -175;
+  var HS_KEY = "cosmicrow.arcade.v1";
+  function heightFor(speed, cruiseSplit) {
+    const rel = speed / (500 / cruiseSplit);
+    return Y_MIN + Math.max(0, Math.min(1, (rel - 0.82) / 0.36)) * (Y_MAX - Y_MIN);
+  }
+  function multFor(combo) {
+    return Math.min(5, 1 + Math.floor(combo / 4));
+  }
+  function loadScores() {
+    try {
+      return JSON.parse(localStorage.getItem(HS_KEY) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+  function scoreKey(round, level) {
+    return `laserrun:${round}:${level}`;
+  }
+  function addScore(key, entry) {
+    const all = loadScores(), list = (all[key] || []).concat([entry]).sort((a, b) => b.score - a.score).slice(0, 10);
+    all[key] = list;
+    localStorage.setItem(HS_KEY, JSON.stringify(all));
+    const rank = list.indexOf(entry);
+    return rank >= 0 ? rank + 1 : 0;
+  }
+  function rng3(seed) {
+    let a = seed | 0;
+    return () => {
+      a = a + 1831565813 | 0;
+      let t = Math.imul(a ^ a >>> 15, 1 | a);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  var LaserRun = class {
+    constructor(scene, { color = 4191999, cruiseSplit = 135, seed = Date.now() & 65535 } = {}) {
+      this.scene = scene;
+      this.cruise = cruiseSplit;
+      this.rnd = rng3(seed);
+      this.group = new Group();
+      scene.add(this.group);
+      this._mkAssets(color);
+      this.objs = [];
+      this.bolts = [];
+      this.booms = [];
+      this.y = heightFor(0, cruiseSplit);
+      this.vy = 0;
+      this.x = 0;
+      this.steer = 0;
+      this.t = 0;
+      this.spawnT = 2;
+      this.score = 0;
+      this.combo = 0;
+      this.maxCombo = 0;
+      this.hits = 0;
+      this.shots = 0;
+      this.bursts = 0;
+      this.shields = 3;
+      this.hazardHits = 0;
+      this.counts = { asteroid: 0, drone: 0, crystal: 0 };
+      this.recharge = 0;
+      this.onEvent = null;
+      this.queue = [];
+    }
+    _mkAssets(color) {
+      const add = { transparent: true, blending: AdditiveBlending, depthWrite: false };
+      this.geo = {
+        rock: new IcosahedronGeometry(1.15, 0),
+        drone: new OctahedronGeometry(0.62, 0),
+        ring: new TorusGeometry(0.95, 0.07, 6, 24),
+        crystal: new OctahedronGeometry(0.55, 0),
+        halo: new SphereGeometry(1, 10, 8),
+        mine: new IcosahedronGeometry(0.62, 0),
+        spike: new ConeGeometry(0.16, 0.7, 5),
+        bolt: new BoxGeometry(0.09, 0.09, 2.4),
+        boom: new SphereGeometry(1, 12, 8)
+      };
+      const ray = new Shape();
+      ray.moveTo(0, 1);
+      ray.quadraticCurveTo(0.7, 0.3, 2.2, -0.2);
+      ray.quadraticCurveTo(0.8, -0.25, 0.25, -0.9);
+      ray.lineTo(0, -2.1);
+      ray.lineTo(-0.25, -0.9);
+      ray.quadraticCurveTo(-0.8, -0.25, -2.2, -0.2);
+      ray.quadraticCurveTo(-0.7, 0.3, 0, 1);
+      this.geo.ray = new ShapeGeometry(ray, 6);
+      this.geo.ray.rotateX(-Math.PI / 2);
+      this.geo.rayEdge = new EdgesGeometry(this.geo.ray);
+      this.geo.rockEdge = new EdgesGeometry(this.geo.rock);
+      this.mat = {
+        rock: new MeshStandardMaterial({ color: 4931438, emissive: 1379116, roughness: 0.85, flatShading: true }),
+        rockEdge: new LineBasicMaterial({ color: 10124799, transparent: true, opacity: 0.55 }),
+        drone: new MeshBasicMaterial({ color: 16728024 }),
+        ring: new MeshBasicMaterial({ color: 16757746, ...add, opacity: 0.85 }),
+        crystal: new MeshBasicMaterial({ color: 9436415 }),
+        halo: new MeshBasicMaterial({ color: 4191999, ...add, opacity: 0.18 }),
+        mine: new MeshBasicMaterial({ color: 16720960 }),
+        spike: new MeshBasicMaterial({ color: 5900048 }),
+        ray: new MeshBasicMaterial({ color: 459276, side: DoubleSide }),
+        rayEdge: new LineBasicMaterial({ color: 16722490 }),
+        bolt: new MeshBasicMaterial({ color, ...add, opacity: 0.95 })
+      };
+    }
+    _build(kind) {
+      const g = new Group(), G = this.geo, M = this.mat;
+      if (kind === "asteroid") {
+        const m = new Mesh(G.rock, M.rock);
+        m.scale.set(1, 0.8 + this.rnd() * 0.4, 0.9 + this.rnd() * 0.3);
+        g.add(m, new LineSegments(G.rockEdge, M.rockEdge));
+        g.children[1].scale.copy(m.scale);
+      } else if (kind === "drone") {
+        g.add(new Mesh(G.drone, M.drone));
+        const r = new Mesh(G.ring, M.ring);
+        r.rotation.x = Math.PI / 2;
+        g.add(r);
+      } else if (kind === "crystal") {
+        const c = new Mesh(G.crystal, M.crystal);
+        c.scale.set(1, 1.7, 1);
+        const h = new Mesh(G.halo, M.halo);
+        h.scale.setScalar(1.3);
+        g.add(c, h);
+      } else if (kind === "mine") {
+        g.add(new Mesh(G.mine, M.mine));
+        for (const d of [[1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0], [0, 0, 1], [0, 0, -1]]) {
+          const s = new Mesh(G.spike, M.spike);
+          s.position.set(d[0] * 0.75, d[1] * 0.75, d[2] * 0.75);
+          s.lookAt(d[0] * 2, d[1] * 2, d[2] * 2);
+          s.rotateX(Math.PI / 2);
+          g.add(s);
+        }
+      } else if (kind === "ray") {
+        g.add(new Mesh(G.ray, M.ray), new LineSegments(G.rayEdge, M.rayEdge));
+      }
+      return g;
+    }
+    _pickKind() {
+      const ramp = Math.min(1, this.t / 240);
+      let r = this.rnd() * (1 + ramp * 0.15), acc = 0;
+      for (const [k, d] of Object.entries(KINDS)) {
+        acc += d.w + (d.hazard ? ramp * 0.08 : 0);
+        if (r < acc) return k;
+      }
+      return "asteroid";
+    }
+    spawn(kind, opt = {}) {
+      const d = KINDS[kind], o = { kind, def: d, alive: true, hp: 1, ph: this.rnd() * 6.28 };
+      o.y0 = opt.y != null ? opt.y : d.y[0] + this.rnd() * (d.y[1] - d.y[0]);
+      o.x0 = opt.x != null ? opt.x : d.hazard ? (this.rnd() - 0.5) * 5 : (this.rnd() - 0.5) * 13;
+      o.g = this._build(kind);
+      o.g.position.set(o.x0, o.y0, opt.z != null ? opt.z : SPAWN_Z);
+      this.group.add(o.g);
+      this.objs.push(o);
+      return o;
+    }
+    _spawnWave() {
+      const r = this.rnd();
+      if (r < 0.12) {
+        const y = 4.4 + this.rnd() * 1.6, x = (this.rnd() - 0.5) * 8;
+        for (let i = 0; i < 3; i++) this.spawn("crystal", { y, x: x + i * 1.4, z: SPAWN_Z - i * 9 });
+      } else if (r < 0.22) {
+        for (let i = 0; i < 3; i++) this.spawn("asteroid", { z: SPAWN_Z - i * 6 });
+      } else this.spawn(this._pickKind());
+    }
+    /** a stroke: twin burst (second bolt 80 ms later) */
+    fire(power = 1) {
+      this.bursts++;
+      this.queue.push(0, 0.08);
+      this._burstHit = false;
+      this._burstBolts = 2;
+      this._emit({ type: "fire", power });
+    }
+    _shoot() {
+      const sx = this.x, sy = this.y + 0.1;
+      let best = null, bs = 1e9;
+      for (const o of this.objs) {
+        if (!o.alive || o.def.hazard) continue;
+        const p = o.g.position, dz = -p.z;
+        if (dz < 10 || dz > 125 || Math.abs(p.y - sy) > LOCK_BAND) continue;
+        const s = dz + Math.abs(p.x - sx) * 3 + (o.locks || 0) * 40;
+        if (s < bs) {
+          bs = s;
+          best = o;
+        }
+      }
+      const m = this.bolts.find((b) => !b.on) || (() => {
+        const b = { m: new Mesh(this.geo.bolt, this.mat.bolt), v: new Vector3() };
+        this.group.add(b.m);
+        this.bolts.push(b);
+        return b;
+      })();
+      m.on = true;
+      m.life = 1.1;
+      m.target = best;
+      m.burst = this.bursts;
+      m.m.visible = true;
+      m.m.position.set(sx + (this.shots % 2 ? 0.35 : -0.35), sy, -1.5);
+      if (best) best.locks = (best.locks || 0) + 1;
+      m.v.set(0, 0.02, -1);
+      this.shots++;
+    }
+    _emit(e) {
+      if (this.onEvent) this.onEvent(e);
+    }
+    _boom(pos, color, size = 1) {
+      const b = this.booms.find((x) => !x.on) || (() => {
+        const x = { m: new Mesh(this.geo.boom, new MeshBasicMaterial({ transparent: true, blending: AdditiveBlending, depthWrite: false })) };
+        this.group.add(x.m);
+        this.booms.push(x);
+        return x;
+      })();
+      b.on = true;
+      b.t = 0;
+      b.size = size;
+      b.m.visible = true;
+      b.m.position.copy(pos);
+      b.m.material.color.set(color);
+    }
+    /** dt seconds; speed = smoothed boat speed (m/s); scroll = world units/s the scenery moved */
+    update(dt, speed, scroll) {
+      this.t += dt;
+      const yt = heightFor(speed, this.cruise);
+      this.vy += ((yt - this.y) * 6 - this.vy * 4.2) * dt;
+      this.y = Math.max(Y_MIN, Math.min(Y_MAX, this.y + this.vy * dt));
+      this.x += (this.steer * 4 - this.x) * Math.min(1, dt * 3);
+      if (this.shields < 3) {
+        this.recharge += dt;
+        if (this.recharge > 40) {
+          this.recharge = 0;
+          this.shields++;
+          this._emit({ type: "shield", shields: this.shields });
+        }
+      }
+      for (let i = this.queue.length - 1; i >= 0; i--) {
+        this.queue[i] -= dt;
+        if (this.queue[i] <= 0) {
+          this.queue.splice(i, 1);
+          this._shoot();
+        }
+      }
+      this.spawnT -= dt;
+      if (this.spawnT <= 0 && this.objs.length < 22) {
+        this._spawnWave();
+        this.spawnT = Math.max(0.55, 1.2 - this.t / 300 * 0.45) * (0.75 + this.rnd() * 0.5);
+      }
+      const approach = 16 + scroll;
+      for (const o of this.objs) {
+        const p = o.g.position, z0 = p.z;
+        p.z += approach * dt;
+        if (o.kind === "drone") {
+          p.x = o.x0 + Math.sin(this.t * 1.6 + o.ph) * 2.2;
+          o.g.rotation.y += dt * 2.5;
+        } else if (o.kind === "ray") {
+          p.y = o.y0 + Math.sin(this.t * 1.1 + o.ph) * 0.9;
+          o.g.children.forEach((c) => c.scale.set(1 + Math.sin(this.t * 5 + o.ph) * 0.12, 1, 1));
+          o.g.rotation.z = Math.sin(this.t * 1.1 + o.ph) * 0.2;
+        } else if (o.kind === "mine") {
+          const s = 1 + Math.sin(this.t * 6 + o.ph) * 0.08;
+          o.g.scale.setScalar(s);
+          o.g.rotation.y += dt;
+        } else if (o.kind === "crystal") {
+          o.g.rotation.y += dt * 2;
+        } else o.g.rotation.x += dt * 0.6;
+        if (o.alive && o.def.hazard && !o.hitShip && z0 < 1.4 && p.z > -1.4 && Math.abs(p.y - this.y) < o.def.r + 0.55 && Math.abs(p.x - this.x) < o.def.r + 1.4) {
+          o.hitShip = true;
+          o.alive = false;
+          this.hazardHits++;
+          this.combo = 0;
+          if (this.shields > 0) {
+            this.shields--;
+            this.recharge = 0;
+            this._emit({ type: "hazard", kind: o.kind, shields: this.shields, pts: 0, pos: p.clone() });
+          } else {
+            this.score = Math.max(0, this.score - 100);
+            this._emit({ type: "hazard", kind: o.kind, shields: 0, pts: -100, pos: p.clone() });
+          }
+          this._boom(p, 16722490, 2.2);
+        }
+      }
+      for (const b of this.bolts) {
+        if (!b.on) continue;
+        b.life -= dt;
+        const p = b.m.position;
+        if (b.target && b.target.alive) {
+          const tp = b.target.g.position;
+          const d = tp.clone().sub(p);
+          const len = d.length();
+          if (len > 0.01) {
+            d.multiplyScalar(1 / len);
+            b.v.lerp(d, Math.min(1, dt * 9)).normalize();
+          }
+        }
+        let hit = null;
+        const n = Math.max(1, Math.ceil(165 * dt / 1.8));
+        for (let k = 0; k < n && !hit; k++) {
+          p.addScaledVector(b.v, 165 * dt / n);
+          for (const o of this.objs) {
+            if (!o.alive || o.def.hazard) continue;
+            const q = o.g.position;
+            if (Math.abs(q.z - p.z) < o.def.r + 1.2 && Math.abs(q.x - p.x) < o.def.r && Math.abs(q.y - p.y) < o.def.r) {
+              hit = o;
+              break;
+            }
+          }
+        }
+        b.m.lookAt(p.x + b.v.x, p.y + b.v.y, p.z + b.v.z);
+        if (hit) {
+          hit.alive = false;
+          b.on = false;
+          b.m.visible = false;
+          this.hits++;
+          this.combo++;
+          this.maxCombo = Math.max(this.maxCombo, this.combo);
+          this.counts[hit.kind]++;
+          const mult = multFor(this.combo), pts = hit.def.pts * mult;
+          this.score += pts;
+          this._boom(hit.g.position, hit.kind === "crystal" ? 9436415 : hit.kind === "drone" ? 16728024 : 12033023, hit.kind === "asteroid" ? 1.6 : 1.2);
+          this._emit({ type: "hit", kind: hit.kind, pts, mult, combo: this.combo, pos: hit.g.position.clone() });
+        } else if (b.life <= 0 || p.z < -170) {
+          b.on = false;
+          b.m.visible = false;
+          if (this.combo > 0) {
+            this.combo = 0;
+            this._emit({ type: "miss" });
+          }
+        }
+      }
+      for (const x of this.booms) {
+        if (!x.on) continue;
+        x.t += dt;
+        const k = x.t / 0.45;
+        x.m.position.z += approach * dt;
+        x.m.scale.setScalar(x.size * (0.4 + k * 1.6));
+        x.m.material.opacity = Math.max(0, 0.9 * (1 - k));
+        if (k >= 1) {
+          x.on = false;
+          x.m.visible = false;
+        }
+      }
+      for (let i = this.objs.length - 1; i >= 0; i--) {
+        const o = this.objs[i];
+        if (!o.alive || o.g.position.z > 14) {
+          this.group.remove(o.g);
+          this.objs.splice(i, 1);
+        }
+      }
+    }
+    /** upcoming objects for the HUD height radar: [{ y, hazard, dz }] */
+    radar() {
+      return this.objs.filter((o) => o.alive && o.g.position.z < -6 && o.g.position.z > -150).slice(0, 10).map((o) => ({ y: o.g.position.y, hazard: !!o.def.hazard, kind: o.kind, dz: -o.g.position.z }));
+    }
+    stats() {
+      return { score: this.score, hits: this.hits, shots: this.shots, acc: this.shots ? this.hits / this.shots : 0, maxCombo: this.maxCombo, hazardHits: this.hazardHits, shields: this.shields, counts: { ...this.counts } };
+    }
+    dispose() {
+      this.scene.remove(this.group);
+      Object.values(this.geo).forEach((g) => g.dispose());
+      Object.values(this.mat).forEach((m) => m.dispose());
+      this.booms.forEach((b) => b.m.material.dispose());
+    }
+  };
+
+  // lore.js
+  var STAGE_LORE = {
+    orbit: [
+      ["SIGNAL ACQUIRED.", "Above the ringed world Kaelis the old freight lanes still glow. Couriers once rowed light along them; now only racers remain.", "The {ship} drops into the lane, drive coil humming."],
+      ["LOG 7.31 // ORBITAL LANE 4", "The Run was built to haul ore through the belt. The miners left; the beacons never went dark.", "Tonight the {ship} answers their call."],
+      ["RELAY MOON ECHO CONFIRMED.", "Out past the relay moons the Run never sleeps. Every stroke charges the coil, every metre is burned into the beacon chain.", "{ship}: you are cleared for launch."]
+    ],
+    city: [
+      ["DESCENT COMPLETE // VEYRA", "Beneath the rings of Kaelis the city of Veyra burns in neon. Its gate arches count every racer who passes.", "The {ship} settles onto the boulevard."],
+      ["VEYRA NEVER HAD A NIGHT.", "Only ring-light and ten thousand windows. The transit spine is closed to traffic for one lane, one machine, one rower.", "{ship}, the gates are open."],
+      ["RAIN OF LIGHT OVER VEYRA.", "The towers store starlight by day and spend it at night. Down on the speed avenue a crowd of drones turns to watch.", "The {ship} warms its drive."]
+    ],
+    sunset: [
+      ["TIME CODE 19:84 // HORIZON LOCK", "On the western plains of Kaelis the sun never finishes setting. The old highway runs straight into it, a grid of light laid over the dust.", "The {ship} points its nose at the sun."],
+      ["DUSK PROTOCOL ENGAGED.", "Nobody has ever reached the striped sun. The drivers who tried left only their neon tracks across the plain.", "{ship}, the horizon is waiting."],
+      ["SIGNAL: SUNSET DRIVE", "Chrome pillars count the kilometres; the palms stand black against the glow. Row harder and the sun seems to come closer.", "The {ship} rolls onto the grid."]
+    ]
+  };
+  var MODE_LORE = {
+    arcade: [
+      "The rings are shedding rocks and rogue drones. Veyra Defence needs a gunner who can row. Pull hard to climb, ease off to sink - every stroke fires the {ship}'s lasers.",
+      "Debris storm inbound. Crystals glow in the high lanes, mines drift low. Row harder to rise, ease to dive, and let every stroke speak in laser light.",
+      "Target practice, Kaelis style: rocks, drones and crystals. Avoid the red mines and the void rays. Your stroke is the trigger."
+    ],
+    daily: ["A new course is carved into the beacons every dawn. Keep the chain of days unbroken.", "Today's beacon course is live. One piece, once a day - the streak remembers."],
+    wod: ["The Workout of the Day has reached the beacon network. Crews across the system row it today.", "Uplink from the training deck: today's workout is loaded into the drive computer."],
+    ghost: ["Your own echo flies beside you - a ghost recorded from your best run.", "Beside you, a pale copy of your best day. Beat it and it becomes you."],
+    pace: ["A pace drone holds its split. It does not tire. It does not slow.", "The pace drone will not wait. Stay on its wing."],
+    rivals: ["Rival crews line up beside you. Nobody gives way on the Run.", "The grid is full tonight. Rival ships idle in their lanes, watching you."],
+    paceboats: ["A formation of pace drones holds the lanes - each one locked to a split.", "Pace drones take their lanes, splits burned into their cores."],
+    intervals: ["Interval protocol: work, breathe, repeat. The beacons reset between every rep.", "Rep after rep - the drive coil cools only when you rest."],
+    calm: ["No race tonight. Just the hum of the drive and the stars sliding by.", "Systems quiet. Clocks soft. Row for the joy of it."],
+    free: ["Open lane. No clock, no finish line - just you and the {ship}.", "Free flight authorised. Row until you choose to stop."]
+  };
+  var pick = (arr, rnd) => arr[Math.floor(rnd() * arr.length) % arr.length];
+  function briefing(ctx, rnd = Math.random) {
+    const fill = (s) => s.replace(/\{ship\}/g, ctx.ship);
+    const w = ctx.workout || {};
+    const lore = pick(STAGE_LORE[ctx.stageId] || STAGE_LORE.orbit, rnd).map(fill);
+    const modeKey = w.arcade ? "arcade" : w.daily ? "daily" : w.wod ? "wod" : w.kind === "calm" ? "calm" : ctx.field === "rivals" ? "rivals" : ctx.field === "pace" ? "paceboats" : ctx.ghost ? "ghost" : ctx.pace ? "pace" : w.kind === "intervals" ? "intervals" : w.kind === "free" ? "free" : null;
+    const modeLine = modeKey ? fill(pick(MODE_LORE[modeKey], rnd)) : null;
+    let lines;
+    if (ctx.short) lines = [lore[lore.length - 1]];
+    else if (modeKey === "arcade") lines = [lore[0], modeLine, lore[lore.length - 1]];
+    else lines = modeLine ? [lore[0], lore[1], modeLine, lore[2]] : lore;
+    return { title: (w.arcade ? "LASER RUN // " : "") + (ctx.stageName || "").toUpperCase(), lines, mission: ctx.mission };
+  }
 
   // logbook/oauth.js
   var OAUTH_CONFIG = {
@@ -25983,7 +26903,7 @@ void main() {
 
   // main.js
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-rivals-v5";
+  var BUILD_ID = "cosmicrow-menus-v6";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -25991,14 +26911,25 @@ void main() {
   var TRACK_HALF = 9;
   var STAGE_SKY = {
     orbit: { top: 197647, mid: 2494543, hor: 3877519, bot: 262924, fog: 1444662, density: 26e-4 },
-    city: { top: 328472, mid: 2755922, hor: 11545210, bot: 459791, fog: 2755646, density: 21e-4 }
+    city: { top: 328472, mid: 2755922, hor: 11545210, bot: 459791, fog: 2755646, density: 21e-4 },
+    sunset: { top: 655904, mid: 4000606, hor: 16732043, bot: 1180702, fog: 3803720, density: 16e-4 }
   };
   var STAGES = [
     { id: "orbit", name: "Orbital Run", desc: "A neon track through the asteroid belt, high above the banded gas giant. Nebula light, silence, and the stars sliding by." },
-    { id: "city", name: "Neon City", desc: "Down on the planet's surface: race through the glowing towers and gates of the night city, with the ringed giant and its moon hanging in the sky." }
+    { id: "city", name: "Neon City", desc: "Down on the planet's surface: race through the glowing towers and gates of the night city, with the ringed giant and its moon hanging in the sky." },
+    { id: "sunset", name: "Sunset Drive", desc: "Row straight at a giant striped sun on an endless neon grid, between chrome pillars, black palms and violet wireframe mountains at dusk." }
   ];
   var IS_MOBILE = typeof matchMedia !== "undefined" && matchMedia("(pointer: coarse)").matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  var Q = IS_MOBILE ? { pr: 1.25, stars: 1400, rocks: 150, streaks: 70, burst: 160, bloomRes: 256, aa: false } : { pr: 2, stars: 3800, rocks: 380, streaks: 170, burst: 400, bloomRes: 512, aa: true };
+  var GFX_KEY = "cosmicrow.gfx.v1";
+  var GFX = (() => {
+    try {
+      return Object.assign({ quality: "auto", bloom: true }, JSON.parse(localStorage.getItem(GFX_KEY) || "{}"));
+    } catch (e) {
+      return { quality: "auto", bloom: true };
+    }
+  })();
+  var LOWQ = GFX.quality === "low" || GFX.quality === "auto" && IS_MOBILE;
+  var Q = LOWQ ? { pr: GFX.quality === "low" ? 1 : 1.25, stars: 1400, rocks: 150, streaks: 70, burst: 160, bloomRes: 256, aa: false } : { pr: 2, stars: 3800, rocks: 380, streaks: 170, burst: 400, bloomRes: 512, aa: true };
   function fmtTime(sec) {
     if (!isFinite(sec) || sec < 0) sec = 0;
     const m = Math.floor(sec / 60);
@@ -26316,20 +27247,27 @@ void main() {
     /** 'orbit' = Orbital Run (space track), 'city' = Neon City (planet surface). City is built on first use. */
     setStage(id) {
       if (id === "city" && !this.city) this._buildCity();
+      if (id === "sunset" && !this.sunset) this._buildSunset();
       this.stage = id;
-      const city = id === "city";
-      this.orbitGroup.visible = !city;
+      const city = id === "city", sun = id === "sunset";
+      this.orbitGroup.visible = id === "orbit";
       if (this.city) this.city.group.visible = city;
-      this.stars.visible = !city;
-      const u = this.skyMat.uniforms, P = city ? STAGE_SKY.city : STAGE_SKY.orbit;
+      if (this.sunset) this.sunset.group.visible = sun;
+      this.stars.visible = id === "orbit";
+      const u = this.skyMat.uniforms, P = STAGE_SKY[id] || STAGE_SKY.orbit;
       u.top.value.set(P.top);
       u.mid.value.set(P.mid);
       u.hor.value.set(P.hor);
       u.bot.value.set(P.bot);
       this.scene.fog.color.set(P.fog);
       this.scene.fog.density = P.density;
-      this.trackMat.uniforms.uCol2.value.set(city ? 16728024 : 10116095);
-      this.farStars.material.opacity = city ? 0.45 : 0.8;
+      this.trackMat.uniforms.uCol2.value.set(id === "orbit" ? 10116095 : 16728024);
+      this.farStars.material.opacity = city ? 0.45 : sun ? 0.55 : 0.8;
+      if (sun) this._placeSun();
+    }
+    /** Sunset Drive: 0..1 race progress -> the sun grows a little and sinks slowly */
+    setSunProgress(p) {
+      if (this.sunset) this.sunset.prog = p;
     }
     _buildCity() {
       const group = new Group();
@@ -26535,6 +27473,171 @@ void main() {
       c.trafficPts.geometry.attributes.position.needsUpdate = true;
       this.groundMat.uniforms.uOffset.value = this.trackScroll;
     }
+    /* ---------- Sunset Drive: striped outrun sun, endless grid, wireframe mountains, palms + chrome gates ---------- */
+    _buildSunset() {
+      const group = new Group();
+      this.scene.add(group);
+      const rnd = mulberry32(1984);
+      const S = this.sunset = { group, gates: [], palms: [], prog: 0 };
+      S.sunMat = new ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        fog: false,
+        uniforms: { uTime: { value: 0 }, uA: { value: new Color(16765503) }, uB: { value: new Color(16742959) }, uC: { value: new Color(16723872) } },
+        vertexShader: "varying vec2 vUv; void main(){ vUv = uv * 2.0 - 1.0; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }",
+        fragmentShader: `uniform float uTime; uniform vec3 uA; uniform vec3 uB; uniform vec3 uC; varying vec2 vUv;
+        void main(){ float r = length(vUv); float y = vUv.y;
+          float t = clamp(0.5 - y * 0.5, 0.0, 1.0); vec3 col = mix(mix(uA, uB, smoothstep(0.0, 0.45, t)), uC, smoothstep(0.4, 1.0, t));
+          float disc = 1.0 - smoothstep(0.985, 1.0, r);
+          float k = clamp(0.42 - y, 0.0, 1.4); float band = fract((y - uTime * 0.01) * 8.0); float cut = (y < 0.42) ? step(band, 0.07 + k * 0.38) : 0.0;
+          float a = disc * (1.0 - cut); float glow = exp(-max(0.0, r - 1.0) * 9.0) * 0.55 * (1.0 - disc);
+          gl_FragColor = vec4(col * (1.25 + 0.2 * (1.0 - r)) * a + uC * glow, max(a, glow)); }`
+      });
+      S.sun = new Mesh(new PlaneGeometry(1, 1), S.sunMat);
+      S.sun.renderOrder = -8;
+      group.add(S.sun);
+      const halo = new Mesh(new PlaneGeometry(1, 1), new MeshBasicMaterial({ map: radialTexture("rgba(255,90,150,0.75)", "rgba(255,60,170,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
+      halo.renderOrder = -9;
+      group.add(halo);
+      S.halo = halo;
+      const haze = new Mesh(new PlaneGeometry(7e3, 700), new MeshBasicMaterial({ map: radialTexture("rgba(255,80,160,0.55)", "rgba(255,80,160,0)"), transparent: true, depthWrite: false, fog: false, blending: AdditiveBlending }));
+      haze.position.set(0, 0, -2650);
+      haze.renderOrder = -7;
+      group.add(haze);
+      const ridge = (z, width, hMax, seg, lineCol, fillCol, seed) => {
+        const r = mulberry32(seed), g = new PlaneGeometry(width, 1, seg, 4), p = g.attributes.position, tops = [];
+        for (let i = 0; i <= seg; i++) {
+          const x = (i / seg - 0.5) * width, valley = Math.min(1, Math.pow(Math.abs(x) / (width * 0.13), 1.6));
+          tops.push((0.25 + 0.75 * r()) * hMax * valley * (0.55 + 0.45 * Math.sin(i * 0.7 + seed)));
+        }
+        for (let k = 0; k < p.count; k++) {
+          const ix = k % (seg + 1), row = Math.floor(k / (seg + 1)), v = 1 - row / 4;
+          p.setY(k, tops[ix] * v + (row === 4 ? -40 : 0));
+          p.setZ(k, (rnd() - 0.5) * 30 * v);
+        }
+        g.computeVertexNormals();
+        const fill = new Mesh(g, new MeshBasicMaterial({ color: fillCol, fog: false }));
+        const wire = new LineSegments(new WireframeGeometry(g), new LineBasicMaterial({ color: lineCol, transparent: true, opacity: 0.75, fog: false }));
+        for (const m of [fill, wire]) {
+          m.position.set(0, TRACK_Y - 2, z);
+          m.renderOrder = -6;
+          group.add(m);
+        }
+      };
+      ridge(-2350, 6400, 330, 48, 10111999, 853024, 11);
+      ridge(-1900, 5200, 190, 40, 16728024, 1312298, 29);
+      S.groundMat = new ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        fog: false,
+        extensions: { derivatives: true },
+        uniforms: { uOffset: { value: 0 }, uColA: { value: new Color(16728024) }, uColB: { value: new Color(4191999) } },
+        vertexShader: "varying vec3 vW; void main(){ vec4 w = modelMatrix*vec4(position,1.0); vW=w.xyz; gl_Position=projectionMatrix*viewMatrix*w; }",
+        fragmentShader: `uniform float uOffset; uniform vec3 uColA; uniform vec3 uColB; varying vec3 vW;
+        void main(){ vec2 p = vec2(vW.x, vW.z - uOffset) / 10.0; vec2 g = abs(fract(p - 0.5) - 0.5) / fwidth(p);
+          float line = 1.0 - min(min(g.x, g.y), 1.0); float dist = length(vW.xz); float fade = exp(-dist * 0.0011);
+          vec3 col = mix(uColA, uColB, smoothstep(300.0, 1800.0, dist)); float side = smoothstep(${(TRACK_HALF + 1).toFixed(1)}, ${(TRACK_HALF + 5).toFixed(1)}, abs(vW.x));
+          gl_FragColor = vec4(col * line * (0.5 + 0.9 * fade) * (0.35 + 0.65 * side) + vec3(0.05,0.0,0.08), (line * 0.9 + 0.6) * (0.25 + 0.75 * fade)); }`
+      });
+      const ground = new Mesh(new PlaneGeometry(5600, 3e3), S.groundMat);
+      ground.rotation.x = -Math.PI / 2;
+      ground.position.set(0, TRACK_Y - 0.3, -1300);
+      ground.renderOrder = -5;
+      group.add(ground);
+      const palmTex = (() => {
+        const c = document.createElement("canvas");
+        c.width = 128;
+        c.height = 256;
+        const g = c.getContext("2d");
+        g.strokeStyle = "#120420";
+        g.lineWidth = 9;
+        g.lineCap = "round";
+        g.beginPath();
+        g.moveTo(70, 256);
+        g.quadraticCurveTo(54, 140, 68, 52);
+        g.stroke();
+        g.fillStyle = "#120420";
+        for (let i = 0; i < 7; i++) {
+          const a = -Math.PI * 0.95 + i * Math.PI * 0.32;
+          g.save();
+          g.translate(68, 52);
+          g.rotate(a);
+          g.beginPath();
+          g.moveTo(0, 0);
+          g.quadraticCurveTo(30, -16, 60, 10);
+          g.quadraticCurveTo(30, -2, 0, 6);
+          g.fill();
+          g.restore();
+        }
+        g.globalCompositeOperation = "source-atop";
+        const gr = g.createLinearGradient(0, 0, 128, 0);
+        gr.addColorStop(0, "rgba(255,63,216,0.0)");
+        gr.addColorStop(0.85, "rgba(255,63,216,0.0)");
+        gr.addColorStop(1, "rgba(255,120,200,0.6)");
+        g.fillStyle = gr;
+        g.fillRect(0, 0, 128, 256);
+        const t = new CanvasTexture(c);
+        t.colorSpace = SRGBColorSpace;
+        return t;
+      })();
+      const NP = IS_MOBILE ? 18 : 32;
+      S.palmMesh = new InstancedMesh(new PlaneGeometry(9, 18).translate(0, 9, 0), new MeshBasicMaterial({ map: palmTex, transparent: true, alphaTest: 0.4, fog: true, side: DoubleSide }), NP);
+      S.palmMesh.frustumCulled = false;
+      group.add(S.palmMesh);
+      for (let i = 0; i < NP; i++) {
+        const sd = i % 2 ? 1 : -1;
+        S.palms.push({ x: sd * (TRACK_HALF + 14 + rnd() * 40), z: RECYCLE_Z - rnd() * LOOP_LENGTH, s: 0.8 + rnd() * 0.7, f: rnd() < 0.5 ? -1 : 1 });
+      }
+      const chrome = new ShaderMaterial({
+        fog: false,
+        uniforms: {},
+        vertexShader: "varying vec3 vN; varying vec3 vP; varying float vD; void main(){ vN = normalize(normalMatrix * normal); vP = position; vec4 mv = modelViewMatrix * vec4(position,1.0); vD = -mv.z; gl_Position = projectionMatrix * mv; }",
+        fragmentShader: `varying vec3 vN; varying vec3 vP; varying float vD;
+        void main(){ float h = clamp((vP.y) / 16.0, 0.0, 1.0); float f = 0.5 + 0.5 * vN.x;
+          vec3 col = mix(vec3(0.08,0.02,0.18), vec3(1.0,0.35,0.75), smoothstep(0.2, 0.75, h + f * 0.25)); col = mix(col, vec3(1.0, 0.82, 0.45), smoothstep(0.86, 0.98, fract(h * 2.0 + f * 0.3)) * 0.9);
+          col += vec3(0.6, 0.9, 1.0) * pow(max(0.0, vN.z), 12.0) * 0.6; float fog = 1.0 - exp(-vD * 0.0016); gl_FragColor = vec4(mix(col, vec3(0.23,0.04,0.29), fog * 0.85), 1.0); }`
+      });
+      const neon = new MeshBasicMaterial({ color: new Color(4191999).multiplyScalar(2) }), neonM = new MeshBasicMaterial({ color: new Color(16728024).multiplyScalar(2) });
+      const SP = 120, nG = Math.round(LOOP_LENGTH / SP), X = TRACK_HALF + 2.2;
+      for (let i = 0; i < nG; i++) {
+        const g = new Group(), A = [], B = [];
+        for (const sd of [-1, 1]) {
+          A.push(new CylinderGeometry(0.6, 0.75, 16, 12).translate(sd * X, 8, 0));
+          B.push(new BoxGeometry(1.6, 0.35, 1.6).translate(sd * X, 16.2, 0));
+        }
+        if (i % 3 === 0) B.push(new BoxGeometry(2 * X, 0.3, 0.3).translate(0, 14.2, 0), new BoxGeometry(2 * X - 4, 0.12, 0.12).translate(0, 13.3, 0));
+        g.add(new Mesh(mergeGeometries(A), chrome), new Mesh(mergeGeometries(B), i % 2 ? neonM : neon));
+        g.position.set(0, TRACK_Y, -40 - i * SP);
+        group.add(g);
+        S.gates.push(g);
+      }
+      group.visible = false;
+    }
+    _placeSun() {
+      const S = this.sunset, p = Math.min(1, Math.max(0, S.prog)), R = 470 * (1 + 0.18 * p);
+      S.sun.scale.set(R * 2, R * 2, 1);
+      S.sun.position.set(0, TRACK_Y + 175 - 110 * p, -2700);
+      S.halo.scale.set(R * 4.6, R * 3.4, 1);
+      S.halo.position.set(0, S.sun.position.y - R * 0.15, -2720);
+    }
+    _updateSunset(dt, units) {
+      const S = this.sunset, m = this._m, v = this._v, s = this._s, q = this._q0 || (this._q0 = new Quaternion()), qf = this._qf || (this._qf = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI));
+      S.sunMat.uniforms.uTime.value = this.time;
+      S.groundMat.uniforms.uOffset.value = this.trackScroll;
+      this._placeSun();
+      for (let i = 0; i < S.palms.length; i++) {
+        const p = S.palms[i];
+        p.z += units;
+        if (p.z > RECYCLE_Z) p.z -= LOOP_LENGTH;
+        m.compose(v.set(p.x, TRACK_Y - 0.3, p.z), p.f < 0 ? qf : q, s.set(p.s, p.s, p.s));
+        S.palmMesh.setMatrixAt(i, m);
+      }
+      S.palmMesh.instanceMatrix.needsUpdate = true;
+      for (const g of S.gates) {
+        g.position.z += units;
+        if (g.position.z > RECYCLE_Z) g.position.z -= LOOP_LENGTH;
+      }
+    }
     setAccent(hex) {
       this.trackMat.uniforms.uCol.value.set(hex).lerp(new Color(4182271), 0.55);
     }
@@ -26545,6 +27648,7 @@ void main() {
       this.trackMat.uniforms.uOffset.value = this.trackScroll;
       const m = this._m, v = this._v, s = this._s, dq = this._dq;
       if (this.stage === "city") this._updateCity(dt, unitsMoved);
+      else if (this.stage === "sunset") this._updateSunset(dt, unitsMoved);
       else for (const r of this.rocks) {
         r.z += unitsMoved;
         if (r.z > RECYCLE_Z + r.s) r.z -= LOOP_LENGTH;
@@ -26553,7 +27657,7 @@ void main() {
         m.compose(v.set(r.x, r.y, r.z), r.q, s.setScalar(r.s));
         r.mesh.setMatrixAt(r.i, m);
       }
-      if (this.stage !== "city") for (const mesh of this.rockMeshes) mesh.instanceMatrix.needsUpdate = true;
+      if (this.stage === "orbit") for (const mesh of this.rockMeshes) mesh.instanceMatrix.needsUpdate = true;
       const q0 = new Quaternion();
       s.set(1, 1, 1);
       for (let i = 0; i < this.pyl.length; i++) {
@@ -26564,7 +27668,7 @@ void main() {
         this.pylons.setMatrixAt(i, m);
       }
       this.pylons.instanceMatrix.needsUpdate = true;
-      if (this.stage !== "city") {
+      if (this.stage === "orbit") {
         const sp = this.stars.geometry.attributes.position, arr = sp.array, dz = unitsMoved * 0.6;
         for (let i = 2; i < arr.length; i += 3) {
           arr[i] += dz;
@@ -26677,6 +27781,9 @@ void main() {
       this.track = m && (trackById(m.track) || m.track === "shuffle" || m.track === "off") ? m.track : "cosmic";
       this.repeat = m && m.repeat === "next" ? "next" : "loop";
       this.volume = m && typeof m.vol === "number" ? Math.max(0, Math.min(1, m.vol)) : 0.7;
+      this.themes = !(m && m.themes === false);
+      this.theme = null;
+      this._themeOff = false;
       this.current = null;
       this.nowId = null;
       this.failed = /* @__PURE__ */ new Set();
@@ -26762,6 +27869,16 @@ void main() {
       this._elVolume();
     }
     setTrack(t) {
+      if (this._themeId()) {
+        this._themeOff = true;
+        if (t === this.track) {
+          if (this.ctx) {
+            this._stopMusic();
+            this.startLoop();
+          }
+          return;
+        }
+      }
       if (t === this.track) {
         if (t === "shuffle" && this.ctx) this.next();
         return;
@@ -26779,7 +27896,7 @@ void main() {
       this._elLoop();
     }
     _save() {
-      localStorage.setItem("cosmicrow.music.v1", JSON.stringify({ track: this.track, vol: this.volume, repeat: this.repeat }));
+      localStorage.setItem("cosmicrow.music.v1", JSON.stringify({ track: this.track, vol: this.volume, repeat: this.repeat, themes: this.themes }));
     }
     setMuted(m) {
       this.muted = m;
@@ -26814,8 +27931,34 @@ void main() {
       this.endAt = null;
     }
     /** Which track to play now: the chosen one, or the next one for shuffle / "play next". */
+    /** stage soundtrack (e.g. Neon Horizon on Sunset Drive); null = the menu choice */
+    _themeId() {
+      return this.themes && !this._themeOff && this.theme && this.track !== "shuffle" && this.track !== "off" && !this.failed.has(this.theme) ? this.theme : null;
+    }
+    setTheme(id) {
+      const before = this._themeId();
+      if (id !== this.theme) {
+        this.theme = id;
+        this._themeOff = false;
+      }
+      const after = this._themeId();
+      if (before !== after && this.ctx && this.playing && this.nowId !== (after || this.track)) {
+        this._stopMusic();
+        this.startLoop();
+      }
+    }
+    setThemes(on) {
+      const before = this._themeId();
+      this.themes = on;
+      this._save();
+      if (before !== this._themeId() && this.ctx && this.playing) {
+        this._stopMusic();
+        this.startLoop();
+      }
+    }
     _pick(after) {
       const ok = TRACKS.filter((t) => !this.failed.has(t.id));
+      if (!after && this._themeId()) return trackById(this._themeId());
       if (this.track === "shuffle") {
         const pool = ok.filter((t) => t.id !== after);
         return (pool.length ? pool : ok)[Math.floor(Math.random() * (pool.length || ok.length))];
@@ -27033,6 +28176,57 @@ void main() {
       f.frequency.exponentialRampToValueAtTime(2400, t + 0.4);
     }
     /** 500 m milestone: rising arpeggio + shimmer */
+    /** terminal typing beep (story screen) */
+    blip() {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = "square";
+      o.frequency.value = 1300 + Math.random() * 600;
+      this._env(g, t, 2e-3, 0.03, 0.04);
+      o.connect(g);
+      g.connect(this.sfx);
+      o.start(t);
+      o.stop(t + 0.06);
+    }
+    laser() {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = "sawtooth";
+      o.frequency.setValueAtTime(2200, t);
+      o.frequency.exponentialRampToValueAtTime(260, t + 0.16);
+      this._env(g, t, 4e-3, 0.09, 0.18);
+      o.connect(g);
+      g.connect(this.sfx);
+      o.start(t);
+      o.stop(t + 0.2);
+    }
+    hit(big = false) {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime;
+      this._noise(t, 0.28, "bandpass", big ? 1600 : 800, 0.28, this.sfx);
+      const o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = "triangle";
+      o.frequency.setValueAtTime(big ? 1320 : 880, t);
+      o.frequency.setValueAtTime(big ? 1760 : 1175, t + 0.06);
+      this._env(g, t, 3e-3, 0.14, 0.2);
+      o.connect(g);
+      g.connect(this.sfx);
+      o.start(t);
+      o.stop(t + 0.22);
+    }
+    bad() {
+      if (!this.ctx) return;
+      const t = this.ctx.currentTime, o = this.ctx.createOscillator(), g = this.ctx.createGain();
+      o.type = "sawtooth";
+      o.frequency.setValueAtTime(180, t);
+      o.frequency.exponentialRampToValueAtTime(50, t + 0.4);
+      this._env(g, t, 5e-3, 0.32, 0.45);
+      o.connect(g);
+      g.connect(this.sfx);
+      o.start(t);
+      o.stop(t + 0.5);
+      this._noise(t, 0.35, "lowpass", 500, 0.3, this.sfx);
+    }
     milestone() {
       if (!this.ctx) return;
       const t = this.ctx.currentTime;
@@ -27304,9 +28498,12 @@ void main() {
       const back = new DirectionalLight(13222143, 2.6);
       back.position.set(0, 4, 10);
       this.scene.add(back);
-      this.opts = readJSON(OPTS_KEY, { ghost: true, pace: false, paceSplit: 120, zone: false, zlo: 24, zhi: 28, unlockAll: false, rivals: 0, rivalSplit: 125 });
+      this.opts = readJSON(OPTS_KEY, { ghost: true, pace: false, paceSplit: 120, zone: false, zlo: 24, zhi: 28, unlockAll: false, rivals: 0, rivalSplit: 125, story: "full", storySfx: true });
+      if (!this.opts.field) this.opts.field = this.opts.rivals > 0 ? "rivals" : "off";
+      if (!(this.opts.rivals >= 1)) this.opts.rivals = 3;
+      this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun" });
       this.stats = loadStats();
-      this.sel = readJSON(MODE_KEY, { tab: "distance", d: 2e3, s: 240, preset: "8x500", custom: { reps: 6, value: 500, unit: "distance", rest: 60 } });
+      this.sel = readJSON(MODE_KEY, { tab: "distance", d: 2e3, s: 240, preset: "8x500", custom: { reps: 6, value: 500, unit: "distance", rest: 60 }, arc: { round: "r3", level: "normal" } });
       const saved = (() => {
         try {
           return JSON.parse(localStorage.getItem(SHIP_KEY) || "null");
@@ -27356,7 +28553,7 @@ void main() {
         }
       }).catch((e) => console.warn("Concept2 sign-in failed", e));
       window.CosmicRow = this;
-      window.CosmicRowLib = { STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady };
+      window.CosmicRowLib = { heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady };
     }
     get target() {
       const w = this.workout;
@@ -27419,6 +28616,15 @@ void main() {
       this.source = connected ? this.pm5 : this.sim;
       this.hud.el.src.textContent = connected ? "PM5" : IS_MOBILE ? "TAP" : "KEYBOARD";
       document.getElementById("pm5Btn").textContent = connected ? "Disconnect PM5" : "Connect PM5";
+      this._paintInput();
+    }
+    _paintInput() {
+      const c = this.pm5 && this.pm5.connected, name = c ? "PM5" : IS_MOBILE ? "Tap" : "Keyboard", $ = (id) => document.getElementById(id);
+      $("inChipT").textContent = name;
+      $("inChip").classList.toggle("on", !!c);
+      $("setInS").textContent = "Now: " + name;
+      $("inputInfo").innerHTML = c ? "Connected to a <b>Concept2 PM5</b> - just row. Pace, rate, watts, heart rate and drag come from the monitor." : `Now: <b>${IS_MOBILE ? "tap simulator" : "keyboard simulator"}</b> - ${IS_MOBILE ? "tap anywhere" : "press SPACE (or tap)"} for each stroke. Connect a PM5 below to row for real.`;
+      $("lbChip").classList.toggle("on", !!(this.lb && this.lb.user));
     }
     /* ---------- workout selection ---------- */
     selectedWorkout() {
@@ -27445,22 +28651,110 @@ void main() {
           return wDistance(s.d);
       }
     }
+    /** race field size (0 = off) */
+    _fieldN() {
+      return this.opts.field === "off" ? 0 : Math.max(1, Math.min(5, this.opts.rivals | 0));
+    }
+    /** short description of the whole setup, e.g. "2000 m · vs 3 rivals ~2:05 · ghost" */
+    _setupText(w) {
+      if (!w) return "Today's WOD (not available - pick another workout)";
+      if (w.arcade) {
+        const r = ARCADE_ROUNDS.find((x) => x.id === w.arcade.round), l = ARCADE_LEVELS.find((x) => x.id === w.arcade.level);
+        return `Laser Run \xB7 ${r ? r.label : ""} \xB7 ${l ? l.label : ""}`;
+      }
+      const o = this.opts, parts = [(w.wod ? "WOD: " : w.daily ? "Daily: " : "") + w.name + (w.kind === "intervals" ? ` (${w.segs.length} reps)` : "")];
+      if (w.kind !== "calm") {
+        const n = this._fieldN(), sp = fmtSplit(o.rivalSplit).replace(/\.0$/, "");
+        if (n) parts.push(o.field === "pace" ? `${n} pace boat${n > 1 ? "s" : ""} ~${sp}` : `vs ${n} rival${n > 1 ? "s" : ""} ~${sp}`);
+        if (o.pace) parts.push("pace " + fmtSplit(o.paceSplit).replace(/\.0$/, ""));
+        if (o.ghost && w.kind !== "free") parts.push("ghost");
+        if (o.zone) parts.push(`zone ${o.zlo}-${o.zhi}`);
+      }
+      return parts.join(" \xB7 ");
+    }
     _refreshMode() {
-      const $ = (id) => document.getElementById(id), s = this.sel;
+      const $ = (id) => document.getElementById(id), s = this.sel, o = this.opts;
+      const other = ["wod", "daily", "calm"].includes(s.tab);
       document.querySelectorAll("#modeTabs button").forEach((b) => b.classList.toggle("sel", b.dataset.tab === s.tab));
-      document.querySelectorAll("#modeOpts .opt").forEach((o) => o.classList.toggle("show", o.dataset.for === s.tab));
+      document.querySelectorAll("#modeOpts .opt").forEach((x) => x.classList.toggle("show", x.dataset.for === s.tab || x.dataset.for === "other" && other));
       document.querySelectorAll("#distBtns button").forEach((b) => b.classList.toggle("sel", +b.dataset.d === s.d));
       document.querySelectorAll("#timeBtns button").forEach((b) => b.classList.toggle("sel", +b.dataset.s === s.s));
       document.querySelectorAll("#intBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.p === s.preset));
+      document.querySelectorAll(".pick").forEach((b) => {
+        const on = b.dataset.pick === s.tab;
+        b.classList.toggle("sel", on);
+        b.textContent = on ? "Selected \u2713" : b.dataset.label || (b.dataset.label = b.textContent);
+      });
       $("customRow").classList.toggle("hidden", s.preset !== "custom");
       this.workout = this.selectedWorkout();
       const w = this.workout;
-      $("modeLine").innerHTML = w ? `Selected: <b>${esc(w.name)}</b>${w.kind === "intervals" ? ` <span style="opacity:.7">(${w.segs.length} reps)</span>` : ""}` : "Selected: Today's WOD (not available - pick another mode)";
+      $("otherSel").innerHTML = other ? `Selected from another section: <b>${esc(s.tab === "wod" ? "Today's WOD" : s.tab === "daily" ? "Daily Challenge" : "Calm mode")}</b>. Pick a workout above to switch.` : "";
+      const txt = this._setupText(w);
+      $("modeLine").innerHTML = `Selected: <b>${esc(txt)}</b>`;
+      $("raceSub").textContent = txt + " \xB7 " + this.stageDef().name;
       $("startBtn").disabled = !w;
-      if (w && w.kind !== "calm" && this.opts.rivals > 0) $("modeLine").innerHTML += ` <span style="opacity:.75">\xB7 vs ${this.opts.rivals} rival${this.opts.rivals > 1 ? "s" : ""} (~${fmtSplit(this.opts.rivalSplit).replace(/\.0$/, "")})</span>`;
+      $("trGo").disabled = !w;
+      document.querySelectorAll("#fieldBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.f === o.field));
+      document.querySelectorAll("#paceP button").forEach((b) => b.classList.toggle("sel", +b.dataset.ps === o.paceSplit));
+      document.querySelectorAll("#rivalP button").forEach((b) => b.classList.toggle("sel", +b.dataset.rs === o.rivalSplit));
+      document.querySelectorAll("#zoneP button").forEach((b) => b.classList.toggle("sel", b.dataset.z === `${o.zlo}-${o.zhi}`));
+      $("optRivals").disabled = $("optRivalSplit").disabled = o.field === "off";
+      $("fieldNote").textContent = o.field === "rivals" ? "Computer ships, each in its own lane, spread a few seconds around this split with realistic surges and fades. Win against all 5 for a secret." : o.field === "pace" ? "Steady pace drones, each locked to an exact split (3 s apart around this one). Great for holding a target." : "Row alone (ghost and pace boat above still work).";
+      const gk = w && w.kind !== "calm" ? workoutKey(w) : null, gh = gk ? loadGhosts()[gk] : null;
+      $("ghostNote").textContent = !w ? "" : w.kind === "free" || w.kind === "calm" ? "No ghost for free rows and calm mode." : gh ? `Ghost ready for ${w.name} \u{1F47B}` : `No ghost yet for ${w.name} - finish it once with a personal best.`;
       const d = dailyChallenge(), streak = currentStreak(this.stats), doneToday = this.stats.lastDaily === localDate();
       $("dailyBox").innerHTML = `<div class="wt">${esc(d.name)}</div>${esc(d.segs.length > 1 ? `${d.segs.length} \xD7 ${segLabel2(d.segs[0])}, ${fmtClock(d.segs[0].rest)} rest` : segLabel2(d.segs[0]))}<br>${doneToday ? '<span class="ok">Done today \u2713</span>' : "New challenge every day."} Streak: <b>${streak}</b> day${streak === 1 ? "" : "s"} (best ${this.stats.bestStreak})`;
+      $("trDailyS").textContent = doneToday ? `Done \u2713 \xB7 streak ${streak}` : `Streak ${streak}`;
       this._showPB();
+    }
+    /* ---------- menu panels ---------- */
+    _showOnly(id) {
+      ["title", "training", "arcade", "settings", "garage", "stages", "about", "summary", "loading"].forEach((x) => document.getElementById(x).classList.toggle("hidden", x !== id));
+      document.body.classList.toggle("inpanel", ["training", "arcade", "settings", "stages", "loading"].includes(id));
+    }
+    /** select a tab in a panel nav (remembered) */
+    _tab(navId, sec) {
+      const nav = document.getElementById(navId), btns = [...nav.querySelectorAll("button")];
+      if (!btns.some((b) => b.dataset.sec === sec)) sec = btns[0].dataset.sec;
+      btns.forEach((b) => b.classList.toggle("sel", b.dataset.sec === sec));
+      const sb = btns.find((b) => b.dataset.sec === sec);
+      if (sb && nav.scrollWidth > nav.clientWidth) nav.scrollLeft = Math.max(0, sb.offsetLeft - 12);
+      nav.parentElement.querySelectorAll(".msec").forEach((x) => x.classList.toggle("show", x.dataset.sec === sec));
+      const body = nav.parentElement.querySelector(".mbody");
+      if (body) body.scrollTop = 0;
+      this.ui[navId] = sec;
+      localStorage.setItem("cosmicrow.ui.v1", JSON.stringify(this.ui));
+    }
+    openTraining(sec) {
+      this.state = "training";
+      this._showOnly("training");
+      this._tab("trTabs", sec || this.ui.trTabs);
+      this._refreshMode();
+      this._applyCamMode();
+    }
+    openArcade() {
+      this.state = "arcade";
+      this._showOnly("arcade");
+      this._tab("arTabs", this.ui.arTabs);
+      this._paintArcade();
+      this._applyCamMode();
+    }
+    _paintArcade() {
+      const $ = (id) => document.getElementById(id), a = this.sel.arc, lv = ARCADE_LEVELS.find((x) => x.id === a.level) || ARCADE_LEVELS[1], rd = ARCADE_ROUNDS.find((x) => x.id === a.round) || ARCADE_ROUNDS[0];
+      document.querySelectorAll("#arcRounds button").forEach((b) => b.classList.toggle("sel", b.dataset.r === rd.id));
+      document.querySelectorAll("#arcLevels button").forEach((b) => b.classList.toggle("sel", b.dataset.l === lv.id));
+      $("arcLevelNote").textContent = `\xB7 middle height at ${fmtSplit(lv.split).replace(/\.0$/, "")} /500m`;
+      const key = scoreKey(rd.id, lv.id), list = loadScores()[key] || [];
+      $("arcHsKey").textContent = `\xB7 ${rd.label} \xB7 ${lv.label}`;
+      $("arcHs").innerHTML = list.length ? "<tr><td>#</td><td>Score</td><td>Hits</td><td>Accuracy</td><td>Ship</td><td>Date</td></tr>" + list.slice(0, 10).map((e, i) => `<tr${e.date === this._lastHs ? ' class="me"' : ""}><td>${i + 1}</td><td><b>${e.score.toLocaleString("en-US")}</b></td><td>${e.hits}</td><td>${Math.round(e.acc * 100)}%</td><td>${esc(shipById(e.ship).name)}</td><td>${esc(String(e.date).slice(0, 10))}</td></tr>`).join("") : "<tr><td>No scores yet for this round - be the first.</td></tr>";
+      $("arcLine").innerHTML = `Selected: <b>Laser Run \xB7 ${rd.label} \xB7 ${lv.label}</b> \xB7 ${esc(this.stageDef().name)} \xB7 ${esc(shipById(this.choice.ship).name)}`;
+    }
+    arcadeWorkout() {
+      const a = this.sel.arc, rd = ARCADE_ROUNDS.find((x) => x.id === a.round) || ARCADE_ROUNDS[0], lv = ARCADE_LEVELS.find((x) => x.id === a.level) || ARCADE_LEVELS[1];
+      const w = rd.s ? { ...wTime(rd.s) } : { ...wFree() };
+      w.name = `Laser Run \xB7 ${rd.label}`;
+      w.arcade = { game: "laserrun", round: rd.id, level: lv.id, split: lv.split };
+      return w;
     }
     _renderWod() {
       const box = document.getElementById("wodBox"), w = this.wod;
@@ -27547,14 +28841,14 @@ void main() {
         this._refreshMode();
       }));
       tap($("startBtn"), () => this.startRace());
-      tap($("againBtn"), () => this.startRace());
+      tap($("againBtn"), () => this.workout && this.workout.arcade ? this.startRace(this.arcadeWorkout()) : this.startRace());
       tap($("menuBtn"), () => this.toTitle());
       tap($("endBtn"), () => this.finish(true));
       tap($("aboutBtn"), () => $("about").classList.remove("hidden"));
       tap($("aboutClose"), () => $("about").classList.add("hidden"));
       tap($("garageBtn"), () => this.openGarage());
       tap($("settingsBtn"), () => this.openSettings());
-      tap($("stageBtn"), () => this.openStages());
+      tap($("stageBtn"), () => this.openStages("title"));
       tap($("stBack"), () => this.closeStages());
       tap($("stStart"), () => this.startRace());
       const cards = $("stageCards");
@@ -27572,6 +28866,126 @@ void main() {
       tap($("gPrev"), () => this._garageStep(-1));
       tap($("gNext"), () => this._garageStep(1));
       tap($("camBtn"), () => this.toggleCam());
+      tap($("trainingBtn"), () => this.openTraining());
+      tap($("arcadeBtn"), () => this.openArcade());
+      tap($("trBack"), () => this.toTitle());
+      tap($("arBack"), () => this.toTitle());
+      tap($("trStage"), () => this.openStages("training"));
+      tap($("trGo"), () => this.startRace());
+      tap($("arcPlay"), () => this.startRace(this.arcadeWorkout()));
+      tap($("inChip"), () => this.openSettings("input"));
+      tap($("lbChip"), () => this.openSettings("logbook"));
+      for (const nav of ["trTabs", "setTabs", "arTabs"]) document.querySelectorAll(`#${nav} button`).forEach((b) => tap(b, () => this._tab(nav, b.dataset.sec)));
+      document.querySelectorAll(".pick").forEach((b) => tap(b, () => {
+        this.sel.tab = b.dataset.pick;
+        this._saveSel();
+        this._refreshMode();
+      }));
+      $("setAbout").innerHTML = $("aboutBody").innerHTML;
+      if (IS_MOBILE) $("keyHint").textContent = "Tap anywhere to row \xB7 turn sideways for the best view";
+      for (const r of ARCADE_ROUNDS) {
+        const b = document.createElement("button");
+        b.dataset.r = r.id;
+        b.textContent = r.label;
+        $("arcRounds").appendChild(b);
+        tap(b, () => {
+          this.sel.arc = { ...this.sel.arc, round: r.id };
+          this._saveSel();
+          this._paintArcade();
+        });
+      }
+      for (const l of ARCADE_LEVELS) {
+        const b = document.createElement("button");
+        b.dataset.l = l.id;
+        b.textContent = l.label;
+        $("arcLevels").appendChild(b);
+        tap(b, () => {
+          this.sel.arc = { ...this.sel.arc, level: l.id };
+          this._saveSel();
+          this._paintArcade();
+        });
+      }
+      const setOpt = (fn) => {
+        fn(this.opts);
+        this._saveOpts();
+        this._syncOptInputs();
+        this._refreshMode();
+      };
+      document.querySelectorAll("#fieldBtns button").forEach((b) => tap(b, () => setOpt((o2) => {
+        o2.field = b.dataset.f;
+      })));
+      document.querySelectorAll("#paceP button").forEach((b) => tap(b, () => setOpt((o2) => {
+        o2.paceSplit = +b.dataset.ps;
+        o2.pace = true;
+      })));
+      document.querySelectorAll("#rivalP button").forEach((b) => tap(b, () => setOpt((o2) => {
+        o2.rivalSplit = +b.dataset.rs;
+        if (o2.field === "off") o2.field = "rivals";
+      })));
+      document.querySelectorAll("#zoneP button").forEach((b) => tap(b, () => setOpt((o2) => {
+        const [lo, hi] = b.dataset.z.split("-").map(Number);
+        o2.zlo = lo;
+        o2.zhi = hi;
+        o2.zone = true;
+      })));
+      const paintSet = () => {
+        document.querySelectorAll("#viewBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.v === "cockpit" === this.cockpit));
+        document.querySelectorAll("#storyBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.st === this.opts.story));
+        document.querySelectorAll("#gfxBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.q === GFX.quality));
+        $("optStorySfx").checked = this.opts.storySfx !== false;
+        $("optBloom").checked = GFX.bloom;
+        $("optMute").checked = this.audio.muted;
+        const pending = this._gfxBoot !== GFX.quality;
+        $("gfxNote").textContent = `Auto picks ${IS_MOBILE ? "battery saver on this device" : "high quality on this device"}. Battery saver: fewer stars and rocks, lower resolution.` + (pending ? " Quality changes apply after a restart." : "");
+        $("gfxReloadRow").classList.toggle("hidden", !pending);
+      };
+      this._gfxBoot = GFX.quality;
+      this._paintSet = paintSet;
+      document.querySelectorAll("#viewBtns button").forEach((b) => tap(b, () => {
+        this.cockpit = b.dataset.v === "cockpit";
+        localStorage.setItem(CAM_KEY, this.cockpit ? "cockpit" : "chase");
+        this._applyCamMode();
+        paintSet();
+      }));
+      document.querySelectorAll("#storyBtns button").forEach((b) => tap(b, () => {
+        this.opts.story = b.dataset.st;
+        this._saveOpts();
+        paintSet();
+      }));
+      $("optStorySfx").addEventListener("change", () => {
+        this.opts.storySfx = $("optStorySfx").checked;
+        this._saveOpts();
+      });
+      document.querySelectorAll("#gfxBtns button").forEach((b) => tap(b, () => {
+        GFX.quality = b.dataset.q;
+        localStorage.setItem(GFX_KEY, JSON.stringify(GFX));
+        paintSet();
+      }));
+      $("optBloom").addEventListener("change", () => {
+        GFX.bloom = $("optBloom").checked;
+        localStorage.setItem(GFX_KEY, JSON.stringify(GFX));
+      });
+      tap($("gfxReload"), () => location.reload());
+      $("optMute").addEventListener("change", () => {
+        this.audio.init();
+        this.audio.setMuted($("optMute").checked);
+        this._paintMute && this._paintMute();
+      });
+      paintSet();
+      $("loading").addEventListener("pointerdown", (e) => {
+        e.preventDefault();
+        this._ldSkip();
+      });
+      const steer = (e, down) => {
+        if (!this.arcade || this.state !== "race") return;
+        const k = e.code;
+        if (k === "ArrowLeft" || k === "KeyA") this._steerL = down;
+        else if (k === "ArrowRight" || k === "KeyD") this._steerR = down;
+        else return;
+        this.arcade.steer = (this._steerR ? 1 : 0) - (this._steerL ? 1 : 0);
+      };
+      window.addEventListener("keydown", (e) => steer(e, true));
+      window.addEventListener("keyup", (e) => steer(e, false));
       $("pm5Btn").addEventListener("click", async () => {
         $("pm5Btn").blur();
         if (this.pm5.connected) {
@@ -27612,6 +29026,7 @@ void main() {
         this.audio.setMuted(!this.audio.muted);
         paintMute();
         mute.blur();
+        if (this._paintSet) this._paintSet();
       });
       this._paintMute = paintMute;
       document.querySelectorAll("#hudChecks input").forEach((cb) => {
@@ -27627,7 +29042,10 @@ void main() {
       }
       const rep = $("repeatBtn");
       const paintMusic = () => {
-        document.querySelectorAll("#musicBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.m === this.audio.track));
+        const th = this.audio._themeId();
+        document.querySelectorAll("#musicBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.m === (th || this.audio.track)));
+        $("themeNote").textContent = th ? `${this.stageDef().name} plays its theme, ${trackById(th).name}. Pick any track to override.` : "";
+        $("optThemes").checked = this.audio.themes;
         rep.textContent = this.audio.repeat === "next" ? "\u23ED Then: play next" : "\u{1F501} Then: loop track";
         rep.disabled = this.audio.track === "shuffle" || this.audio.track === "off";
       };
@@ -27644,6 +29062,12 @@ void main() {
         this.audio.init();
         this.audio.next();
       });
+      $("optThemes").addEventListener("change", () => {
+        this.audio.init();
+        this.audio.setThemes($("optThemes").checked);
+        paintMusic();
+      });
+      this._paintMusic = paintMusic;
       let npT = 0;
       const np = $("nowPlaying");
       this.audio.onNow = (t, note) => {
@@ -27669,7 +29093,7 @@ void main() {
       $("optGhost").checked = o.ghost;
       $("optPace").checked = o.pace;
       $("optPaceSplit").value = fmtSplit(o.paceSplit).replace(/\.0$/, "");
-      $("optRivals").value = String(o.rivals || 0);
+      $("optRivals").value = String(o.rivals || 3);
       $("optRivalSplit").value = fmtSplit(o.rivalSplit || 125).replace(/\.0$/, "");
       $("optZone").checked = o.zone;
       $("optZlo").value = o.zlo;
@@ -27684,11 +29108,23 @@ void main() {
         o.zlo = Math.max(10, +$("optZlo").value || 24);
         o.zhi = Math.max(o.zlo, +$("optZhi").value || 28);
         o.unlockAll = $("optUnlockAll").checked;
-        o.rivals = +$("optRivals").value || 0;
+        o.rivals = +$("optRivals").value || 3;
         const rs = parseSplit($("optRivalSplit").value);
         if (isFinite(rs)) o.rivalSplit = rs;
         this._saveOpts();
         this._paintStats();
+        this._refreshMode();
+      };
+      this._syncOptInputs = () => {
+        const o2 = this.opts;
+        $("optGhost").checked = o2.ghost;
+        $("optPace").checked = o2.pace;
+        $("optPaceSplit").value = fmtSplit(o2.paceSplit).replace(/\.0$/, "");
+        $("optRivals").value = String(o2.rivals);
+        $("optRivalSplit").value = fmtSplit(o2.rivalSplit).replace(/\.0$/, "");
+        $("optZone").checked = o2.zone;
+        $("optZlo").value = o2.zlo;
+        $("optZhi").value = o2.zhi;
       };
       ["optGhost", "optPace", "optPaceSplit", "optZone", "optZlo", "optZhi", "optUnlockAll", "optRivals", "optRivalSplit"].forEach((id) => $(id).addEventListener("change", readOpts));
       $("lbHost").value = this.lb.host || "dev";
@@ -27735,6 +29171,10 @@ void main() {
       attachKeyboard({
         onStroke: () => this.onStroke(),
         onKey: (e) => {
+          if (this.state === "loading") {
+            if (!/INPUT|SELECT|TEXTAREA/.test(e.target && e.target.tagName || "")) this._ldSkip();
+            return;
+          }
           if (e.target && /INPUT|SELECT|TEXTAREA/.test(e.target.tagName)) return;
           if (e.code === "KeyM") {
             this.audio.init();
@@ -27742,14 +29182,21 @@ void main() {
             paintMute();
           } else if (e.code === "KeyC") this.toggleCam();
           else if (e.code === "Escape") {
+            if (!$("about").classList.contains("hidden")) {
+              $("about").classList.add("hidden");
+              return;
+            }
             if (this.state === "race") this.finish(true);
+            else if (this.state === "loading") this._ldSkip();
             else if (this.state === "garage") this.closeGarage(false);
             else if (this.state === "settings") this.closeSettings();
             else if (this.state === "stages") this.closeStages();
-            else $("about").classList.add("hidden");
+            else if (this.state === "training" || this.state === "arcade" || this.state === "summary") this.toTitle();
           } else if (e.code === "Enter") {
             if (this.state === "garage") this.closeGarage(true);
-            else if (this.state === "title" || this.state === "summary" || this.state === "stages") this.startRace();
+            else if (this.state === "arcade") this.startRace(this.arcadeWorkout());
+            else if (this.state === "summary") $("againBtn").click();
+            else if (["title", "training", "stages"].includes(this.state)) this.startRace();
           } else if (this.state === "garage" && (e.code === "ArrowLeft" || e.code === "ArrowRight")) this._garageStep(e.code === "ArrowLeft" ? -1 : 1);
         }
       });
@@ -27761,6 +29208,8 @@ void main() {
       this._paintShipLine();
       this._paintStats();
       this.setStage(this.stageId);
+      this._paintInput();
+      this._ready = true;
     }
     _paintLogbook() {
       const $ = (id) => document.getElementById(id), lb = this.lb;
@@ -27779,8 +29228,13 @@ void main() {
       this.stageId = id;
       localStorage.setItem(STAGE_KEY, id);
       this.env.setStage(id);
+      if (this.audio) {
+        this.audio.setTheme(STAGE_THEMES[id] || null);
+        if (this._paintMusic) this._paintMusic();
+      }
       document.querySelectorAll("#stageCards .stagecard").forEach((b) => b.classList.toggle("sel", b.dataset.stage === id));
       document.getElementById("stageBtn").textContent = "Stage: " + this.stageDef().name;
+      if (this._ready) this._refreshMode();
     }
     /** Thumbnails: render each stage once from the chase camera and copy the canvas in the same task (no preserveDrawingBuffer needed). */
     _stageThumbs() {
@@ -27800,7 +29254,7 @@ void main() {
       for (const st of STAGES) {
         this.env.setStage(st.id);
         this.env.update(0.016, 0, 0);
-        if (this.composer) this.composer.render();
+        if (this.composer && GFX.bloom) this.composer.render();
         else this.renderer.render(this.scene, cam);
         const src = this.canvas, sw = src.width, sh = Math.round(sw / 2);
         g2.drawImage(src, 0, Math.max(0, (src.height - sh) / 2), sw, Math.min(sh, src.height), 0, 0, c.width, c.height);
@@ -27820,34 +29274,36 @@ void main() {
         }
       });
     }
-    openStages() {
+    openStages(from = "title") {
+      this._stageFrom = from;
       this.state = "stages";
-      document.getElementById("title").classList.add("hidden");
-      document.getElementById("stages").classList.remove("hidden");
+      this._showOnly("stages");
       this._applyCamMode();
       this._stageThumbs();
       this.setStage(this.stageId);
     }
     closeStages() {
-      document.getElementById("stages").classList.add("hidden");
-      this.toTitle();
+      if (this._stageFrom === "training") this.openTraining();
+      else this.toTitle();
     }
-    openSettings() {
+    openSettings(sec) {
       this.state = "settings";
-      document.getElementById("title").classList.add("hidden");
-      document.getElementById("settings").classList.remove("hidden");
+      this._showOnly("settings");
+      this._tab("setTabs", sec || this.ui.setTabs);
       this._paintStats();
       this._paintLogbook();
+      this._paintInput();
+      this._paintSet && this._paintSet();
       this._applyCamMode();
     }
     closeSettings() {
-      document.getElementById("settings").classList.add("hidden");
       this._enforceUnlocks();
       this.setShip(this.choice.ship, this.choice.color);
       this.toTitle();
     }
     /* ---------- camera modes ---------- */
     toggleCam() {
+      if (this.arcade) return;
       this.cockpit = !this.cockpit;
       localStorage.setItem(CAM_KEY, this.cockpit ? "cockpit" : "chase");
       this._applyCamMode();
@@ -27859,15 +29315,15 @@ void main() {
       this.ship.group.visible = rider || !(this.cockpit && inRace);
       if (rider) this.ship.rider.visible = !(this.cockpit && inRace);
       document.getElementById("camBtn").textContent = this.cockpit ? "\u25C9 Cockpit" : "\u25C9 Chase";
-      document.getElementById("camBtn").classList.toggle("hidden", !(inRace || this.state === "title"));
+      document.getElementById("camBtn").classList.toggle("hidden", !inRace || !!this.arcade);
       document.getElementById("endBtn").classList.toggle("hidden", !inRace);
+      document.body.classList.toggle("inrace", inRace);
     }
     /* ---------- garage ---------- */
     openGarage() {
       this.state = "garage";
       this.g = { idx: SHIPS.findIndex((s) => s.id === this.choice.ship), color: this.choice.color };
-      document.getElementById("title").classList.add("hidden");
-      document.getElementById("garage").classList.remove("hidden");
+      this._showOnly("garage");
       this._applyCamMode();
       this._garageShow();
     }
@@ -27924,7 +29380,6 @@ void main() {
       }
       this.setShip(this.choice.ship, this.choice.color);
       this.ship.group.rotation.set(0, 0, 0);
-      document.getElementById("garage").classList.add("hidden");
       this.toTitle();
     }
     _paintShipLine() {
@@ -28091,11 +29546,82 @@ void main() {
         }).join("");
       }
     }
-    startRace() {
-      this.workout = this.selectedWorkout();
-      if (!this.workout) return;
+    /** RACE / Play: optional story screen first, then the race. w = explicit workout (arcade), else the Training selection */
+    startRace(w) {
+      if (this.state === "race" || this.state === "loading") return;
+      const wk = w && w.segs ? w : this.selectedWorkout();
+      if (!wk) return;
+      this.workout = wk;
       this.audio.init();
-      ["title", "summary", "about", "garage", "settings", "stages"].forEach((id) => document.getElementById(id).classList.add("hidden"));
+      if (this.opts.story === "off") this._beginRace();
+      else this._showLoading();
+    }
+    _missionText(w) {
+      if (w.arcade) {
+        const l = ARCADE_LEVELS.find((x) => x.id === w.arcade.level);
+        return `${w.name} \xB7 level ${l.label} \xB7 score as many points as you can`;
+      }
+      return this._setupText(w);
+    }
+    _showLoading() {
+      const $ = (id) => document.getElementById(id), w = this.workout, st = this.stageDef(), short = this.opts.story === "short";
+      this.state = "loading";
+      this._showOnly("loading");
+      this.hud.show(false);
+      this._applyCamMode();
+      this._stageThumbs();
+      const calm = w.kind === "calm", arc = !!w.arcade, n = this._fieldN();
+      const b = briefing({
+        stageId: st.id,
+        stageName: st.name,
+        ship: this.ship.def.name.toUpperCase(),
+        workout: w,
+        short,
+        ghost: !arc && !calm && this.opts.ghost && !!loadGhosts()[workoutKey(w)],
+        pace: !arc && !calm && this.opts.pace,
+        field: !arc && !calm && n ? this.opts.field : ""
+      });
+      $("ldStage").textContent = b.title;
+      $("ldMission").textContent = "Mission \u25B8 " + this._missionText(w);
+      $("ldImg").src = this._thumbs && this._thumbs[st.id] || "";
+      const full = b.lines.join("\n"), el = $("ldText"), skip = $("ldSkip"), bar = $("ldBar"), pct = $("ldPct");
+      skip.classList.remove("ready");
+      skip.textContent = this.pm5.connected ? "PULL TO START \xB7 TAP OR ANY KEY TO SKIP" : "PULL TO START \xB7 TAP OR ANY KEY";
+      const ld = this._ld = { t0: performance.now(), min: short ? 1500 : 3e3, i: 0, readyAt: 0, strokes: this.source.strokeCount };
+      clearInterval(this._ldTimer);
+      this._ldTimer = setInterval(() => {
+        if (this._ld !== ld) return;
+        const now3 = performance.now();
+        if (ld.i < full.length) {
+          const step = full.length > 220 ? 2 : 1;
+          for (let k = 0; k < step && ld.i < full.length; k++) {
+            const ch = full[ld.i++];
+            if (ch !== " " && ch !== "\n" && ld.i % 3 === 0 && this.opts.storySfx !== false) this.audio.blip();
+          }
+        }
+        el.innerHTML = esc(full.slice(0, ld.i)) + '<span class="cur"></span>';
+        const f = Math.min(1, (now3 - ld.t0) / ld.min, ld.i / full.length * 1.02);
+        bar.style.width = (f * 100).toFixed(1) + "%";
+        pct.textContent = Math.round(f * 100);
+        if (f >= 1 && !ld.readyAt) {
+          ld.readyAt = now3;
+          skip.classList.add("ready");
+          skip.textContent = "READY \u25B8 PULL TO START";
+        }
+        if (ld.readyAt && now3 - ld.readyAt > 1600) this._ldSkip(true);
+      }, 24);
+    }
+    _ldSkip(auto = false) {
+      const ld = this._ld;
+      if (this.state !== "loading" || !ld) return;
+      if (!auto && performance.now() - ld.t0 < 350) return;
+      clearInterval(this._ldTimer);
+      this._ld = null;
+      this._beginRace();
+    }
+    _beginRace() {
+      const $ = (id) => document.getElementById(id);
+      this._showOnly(null);
       this.ship.group.rotation.set(0, 0, 0);
       this.resetSession();
       this.state = "race";
@@ -28107,33 +29633,144 @@ void main() {
       this.hud.setZone("");
       this.trackNow.copy(this.trackBase);
       this._clearRivals();
-      this.ghost = !calm && w.kind !== "free" && this.opts.ghost ? loadGhosts()[workoutKey(w)] || null : null;
+      this.ghost = !calm && !w.arcade && w.kind !== "free" && this.opts.ghost ? loadGhosts()[workoutKey(w)] || null : null;
       if (this.ghost) {
         this.ghostShip = buildProxyShip(this.ghost.ship || "aurora", this.ghost.color || null, { opacity: 0.32, tint: 10474495 });
         this.ghostShip.group.visible = false;
         this.scene.add(this.ghostShip.group);
       }
-      this.paceOn = !calm && this.opts.pace && isFinite(this.opts.paceSplit);
+      this.paceOn = !calm && !w.arcade && this.opts.pace && isFinite(this.opts.paceSplit);
       if (this.paceOn) {
         this.paceShip = buildProxyShip("raven", "red", { opacity: 1 });
         this.paceShip.group.visible = false;
         this.scene.add(this.paceShip.group);
       }
       [this.hud.el.chipGhost, this.hud.el.chipPace, this.hud.el.chipZone].forEach((el) => this.hud.chip(el, null));
-      if (!calm && this.opts.rivals > 0) this._setupRacers(makeRivals(this.opts.rivals, this.opts.rivalSplit, w.kind === "distance" ? w.segs[0].value : 0, Date.now() / 1e3 | 0));
+      const n = this._fieldN(), goal = w.kind === "distance" ? w.segs[0].value : 0;
+      this._fieldKind = "";
+      if (!calm && !w.arcade && n) {
+        this._fieldKind = this.opts.field;
+        this._setupRacers(this.opts.field === "pace" ? makePaceBoats(n, this.opts.rivalSplit, goal) : makeRivals(n, this.opts.rivalSplit, goal, Date.now() / 1e3 | 0));
+      }
+      this.env.setSunProgress(0);
+      if (w.arcade) this._startArcade(w);
       if (w.kind === "intervals") this.hud.flash(`REP 1 / ${w.segs.length}`);
     }
     toTitle() {
       this.state = "title";
       this.hud.show(false);
       this._clearRivals();
+      this._endArcade();
+      this.env.setSunProgress(0);
       this._refreshMode();
       this._paintShipLine();
-      document.getElementById("summary").classList.add("hidden");
-      document.getElementById("title").classList.remove("hidden");
+      this._paintInput();
+      this._showOnly("title");
+      this._applyCamMode();
+    }
+    /* ---------- arcade: Laser Run ---------- */
+    _startArcade(w) {
+      const $ = (id) => document.getElementById(id);
+      this._arcCam = this.cockpit;
+      this.cockpit = false;
+      this._applyCamMode();
+      const a = this.arcade = new LaserRun(this.scene, { color: this.ship.color.hex, cruiseSplit: w.arcade.split });
+      this._arcStrokes = this.source.strokeCount;
+      this._arcShown = {};
+      document.body.classList.add("arcade");
+      $("arcHud").classList.remove("hidden");
+      $("aPops").innerHTML = "";
+      const g = $("aGauge");
+      g.querySelectorAll(".bl").forEach((x) => x.remove());
+      this._blips = Array.from({ length: 10 }, () => {
+        const d = document.createElement("div");
+        d.className = "bl";
+        g.appendChild(d);
+        return d;
+      });
+      a.onEvent = (e) => {
+        if (e.type === "fire") this.audio.laser();
+        else if (e.type === "hit") {
+          this.audio.hit(e.kind === "crystal");
+          this._pop(e.pos, `+${e.pts}${e.mult > 1 ? " \xD7" + e.mult : ""}`, e.kind === "crystal" ? "c" : "");
+        } else if (e.type === "hazard") {
+          this.audio.bad();
+          this._pop(e.pos, e.pts ? `${e.pts}` : "SHIELD \u22121", "bad");
+          document.body.classList.add("hurt");
+          $("aShields").classList.add("hit");
+          clearTimeout(this._hurtT);
+          this._hurtT = setTimeout(() => {
+            document.body.classList.remove("hurt");
+            $("aShields").classList.remove("hit");
+          }, 350);
+          this.hud.flash(e.shields ? "SHIELD HIT" : "SHIELDS DOWN");
+        } else if (e.type === "shield") this.hud.flash("SHIELD RECHARGED");
+      };
+      this.hud.flash("LASER RUN");
+    }
+    _pop(pos, text, cls) {
+      const box = document.getElementById("aPops");
+      if (box.children.length > 8) box.firstChild.remove();
+      const v = pos.clone().project(this.camera), d = document.createElement("div");
+      d.className = "pop " + (cls || "");
+      d.textContent = text;
+      d.style.left = ((v.x + 1) / 2 * window.innerWidth).toFixed(0) + "px";
+      d.style.top = ((1 - v.y) / 2 * window.innerHeight).toFixed(0) + "px";
+      box.appendChild(d);
+      setTimeout(() => d.remove(), 820);
+    }
+    _arcadeTick(dt, src, speed) {
+      const a = this.arcade, $ = (id) => document.getElementById(id), sh = this._arcShown;
+      if (src.strokeCount !== this._arcStrokes) {
+        if (src.strokeCount > this._arcStrokes && this.runner.phase === "work") a.fire(Math.min(1, src.power || 1));
+        this._arcStrokes = src.strokeCount;
+      }
+      a.update(dt, this.session.smooth, speed * WORLD_UNITS_PER_M);
+      if (sh.score !== a.score) {
+        sh.score = a.score;
+        $("aScore").textContent = a.score.toLocaleString("en-US");
+      }
+      const mult = Math.min(5, 1 + Math.floor(a.combo / 4));
+      if (sh.mult !== mult || sh.combo !== a.combo) {
+        sh.mult = mult;
+        sh.combo = a.combo;
+        $("aMult").textContent = `\xD7${mult}${a.combo ? " \xB7 " + a.combo + " streak" : ""}`;
+        $("aMult").classList.toggle("hot", mult >= 3);
+      }
+      if (sh.shields !== a.shields) {
+        sh.shields = a.shields;
+        [...$("aShields").children].forEach((x, i) => x.classList.toggle("off", i >= a.shields));
+      }
+      const toPct = (y) => ((1 - (y - Y_MIN) / (Y_MAX - Y_MIN)) * 100).toFixed(1) + "%";
+      $("aMe").style.top = toPct(a.y);
+      const rad = a.radar();
+      this._blips.forEach((d, i) => {
+        const r = rad[i];
+        if (!r) {
+          d.style.display = "none";
+          return;
+        }
+        d.style.display = "";
+        d.className = "bl " + (r.hazard ? "h" : "t");
+        d.style.top = toPct(Math.max(Y_MIN, Math.min(Y_MAX, r.y)));
+        d.style.opacity = (1 - r.dz / 160).toFixed(2);
+      });
+    }
+    _endArcade() {
+      if (!this.arcade) return;
+      this.arcade.dispose();
+      this.arcade = null;
+      this.cockpit = this._arcCam;
+      document.body.classList.remove("arcade", "hurt");
+      document.getElementById("arcHud").classList.add("hidden");
+      document.getElementById("aPops").innerHTML = "";
       this._applyCamMode();
     }
     onStroke() {
+      if (this.state === "loading") {
+        this._ldSkip();
+        return;
+      }
       if (this.state !== "race") return;
       this.audio.init();
       if (this.source === this.sim && this.sim.stroke()) {
@@ -28159,7 +29796,8 @@ void main() {
       const complete = r.done && !early, dist = r.workD, time = r.workT;
       const avgSplit = dist > 1 ? time / dist * 500 : NaN;
       const avgSpm = s.spmSamples ? s.spmSum / s.spmSamples : time > 0 ? s.strokes / time * 60 : 0;
-      const key = workoutKey(w), all = this._loadPB(), prev = key ? all[key] : null;
+      const arcStats = this.arcade ? this.arcade.stats() : null;
+      const key = w.arcade ? null : workoutKey(w), all = this._loadPB(), prev = key ? all[key] : null;
       let isPB = false;
       const valid = w.kind === "free" ? dist >= 100 && isFinite(avgSplit) : w.kind !== "calm" && complete && time > 0 && dist > 0;
       if (valid && key) {
@@ -28179,7 +29817,7 @@ void main() {
       if (dist > 0) this.stats.sessions++;
       if (isPB) this.stats.pbCount++;
       let streakMsg = "";
-      if (raceRes && complete && raceRes.pos === 1 && raceRes.of === 6) this.stats.beatAll5 = true;
+      if (raceRes && complete && raceRes.pos === 1 && raceRes.of === 6 && this._fieldKind === "rivals") this.stats.beatAll5 = true;
       if (w.daily && complete) {
         const st = completeDaily(this.stats, w.daily);
         streakMsg = `Daily challenge complete \u2713 Streak: ${st} day${st === 1 ? "" : "s"}`;
@@ -28201,8 +29839,19 @@ void main() {
       $("sShip").textContent = this.ship.def.name;
       $("sStage").textContent = this.stageDef().name;
       $("sBest").textContent = best ? this._fmtPB(w, best) : "--";
+      let arcHtml = "";
+      if (arcStats) {
+        const lvl = ARCADE_LEVELS.find((x) => x.id === w.arcade.level), hk = scoreKey(w.arcade.round, w.arcade.level), date = (/* @__PURE__ */ new Date()).toISOString();
+        const rank = arcStats.score > 0 ? addScore(hk, { score: arcStats.score, hits: arcStats.hits, acc: arcStats.acc, dist: Math.round(dist), ship: this.ship.def.id, date }) : 0;
+        this._lastHs = date;
+        const top = (loadScores()[hk] || [])[0];
+        $("sBest").textContent = top ? `${top.score.toLocaleString("en-US")} pts (high score, ${lvl.label})` : "--";
+        $("sumPB").textContent = rank === 1 ? "\u2605 NEW HIGH SCORE \u2605" : "\u2605 NEW PERSONAL BEST \u2605";
+        isPB = rank === 1;
+        arcHtml = `<div class="arcsum"><div class="big">${arcStats.score.toLocaleString("en-US")} <small>points</small></div><div>Hits <b>${arcStats.hits}</b> / ${arcStats.shots} shots \xB7 accuracy <b>${Math.round(arcStats.acc * 100)}%</b> \xB7 best streak <b>${arcStats.maxCombo}</b></div><div>Asteroids ${arcStats.counts.asteroid} \xB7 drones ${arcStats.counts.drone} \xB7 crystals ${arcStats.counts.crystal} \xB7 hazards hit ${arcStats.hazardHits}</div><div>${rank ? `High-score table: <b>#${rank}</b> (${esc(w.name)}, ${lvl.label})` : "Not in the top 10 this time."}</div></div>`;
+      } else $("sumPB").textContent = "\u2605 NEW PERSONAL BEST \u2605";
       $("sumPB").classList.toggle("hidden", !isPB);
-      let extra = "";
+      let extra = arcHtml;
       if (w.kind === "intervals" && r.results.length) {
         extra += `<table class="sum ints"><tr><td>Rep</td><td>Work</td><td>Split</td><td>SPM</td></tr>` + r.results.map((x, i) => `<tr><td>${i + 1}${x.partial ? "*" : ""}</td><td>${x.type === "distance" ? Math.round(x.distance) + " m in " + fmtTime(x.time) : fmtTime(x.time) + " \xB7 " + Math.round(x.distance) + " m"}</td><td>${fmtSplit(x.distance > 1 ? x.time / x.distance * 500 : NaN)}</td><td>${x.spm ? x.spm.toFixed(0) : "--"}</td></tr>`).join("") + "</table>";
       }
@@ -28229,6 +29878,7 @@ void main() {
       $("lbSave").textContent = `Save to Logbook${this.lb.host === "live" ? "" : " (dev)"}`;
       $("lbStatus").textContent = "";
       $("summary").classList.remove("hidden");
+      this._endArcade();
       this.audio.finish();
     }
     async saveToLogbook() {
@@ -28384,6 +30034,8 @@ void main() {
       this._tmpCol.copy(zone ? this._tmpCol.set(ZONE_COL[zone]) : this.trackBase);
       this.trackNow.lerp(this._tmpCol, Math.min(1, dt * 4));
       this.env.trackMat.uniforms.uCol.value.copy(this.trackNow);
+      if (this.arcade) this._arcadeTick(dt, src, speed);
+      this.env.setSunProgress(w.kind === "distance" ? r.workD / g.value : w.kind === "time" ? r.workT / g.value : Math.min(1, r.workD / 6e3));
       this.visualSpeed = speed;
       this._musicT = (this._musicT || 0) + dt;
       if (this._musicT > 1) {
@@ -28412,6 +30064,10 @@ void main() {
         steps++;
       }
       if (steps >= 40) this.acc = 0;
+      if (this.state === "loading" && this._ld && this.source.strokeCount !== this._ld.strokes) {
+        this._ld.strokes = this.source.strokeCount;
+        this._ldSkip();
+      }
       let speed = 0, metres = 0;
       if (this.state === "race") {
         speed = src.speedMps;
@@ -28432,7 +30088,7 @@ void main() {
       this.env.update(dt, units, speed);
       this.burst.update(dt);
       this._animate(dt, speed, this.state === "race" ? src.power : 0.3);
-      if (this.composer) this.composer.render();
+      if (this.composer && GFX.bloom) this.composer.render();
       else this.renderer.render(this.scene, this.camera);
     }
     _animate(dt, speed, power) {
@@ -28457,6 +30113,13 @@ void main() {
         this.camera.position.set(0, 3.4, narrow ? 14 : short ? 11.5 : 9.2);
         this.camera.lookAt(0, narrow ? -1 : short ? -1.7 : -2.3, 0);
         fovTarget = this.baseFov;
+      } else if (this.state === "loading") {
+        const a = t * 0.16;
+        g.position.set(0, 0.2 + Math.sin(t * 1.2) * 0.08, 0);
+        g.rotation.set(0, 0, Math.sin(t * 0.6) * 0.05);
+        this.camera.position.set(Math.sin(a) * 9, 2.6, Math.cos(a) * 9);
+        this.camera.lookAt(0, 0.3, 0);
+        fovTarget = this.baseFov;
       } else if (this.cockpit && this.state === "race" && this.ship.rider) {
         g.position.set(0, Math.sin(t * 1.3) * 0.06 * feel.hover, 0);
         g.rotation.set(-power * 0.03, 0, Math.sin(t * 0.6) * 0.04);
@@ -28470,11 +30133,16 @@ void main() {
         this.camera.lookAt(0, 0, -40);
         fovTarget = this.baseFov + 8 + sp * 12;
       } else {
-        g.position.set(Math.sin(t * 0.7) * 0.15 * feel.hover, Math.sin(t * 1.3) * 0.12 * feel.hover, 0);
-        g.rotation.set(-power * 0.05, 0, Math.sin(t * 0.6) * 0.05 * feel.hover);
+        const ar = this.arcade, ay = ar ? ar.y : 0, ax = ar ? ar.x : 0;
+        g.position.set(ax + Math.sin(t * 0.7) * 0.15 * feel.hover, ay + Math.sin(t * 1.3) * 0.12 * feel.hover, 0);
+        g.rotation.set(-power * 0.05 + (ar ? -ar.vy * 0.05 : 0), 0, Math.sin(t * 0.6) * 0.05 * feel.hover - (ar ? (ar.steer * 4 - ax) * 0.08 : 0));
         const shake = sp * 0.04 * feel.shake;
-        this.camera.position.set(this.camBase.x + (Math.random() - 0.5) * shake, this.camBase.y + (Math.random() - 0.5) * shake - sp * 0.25, this.camBase.z + sp * 0.8);
-        this.camera.lookAt(this.lookAt);
+        this.camera.position.set(this.camBase.x + ax * 0.6 + (Math.random() - 0.5) * shake, this.camBase.y + ay * 0.8 + (ar ? 1.2 : 0) + (Math.random() - 0.5) * shake - sp * 0.25, this.camBase.z + sp * 0.8 + (ar ? 2.5 : 0));
+        const la = this._la || (this._la = new Vector3());
+        la.copy(this.lookAt);
+        la.y += ay * 0.85;
+        la.x += ax * 0.5;
+        this.camera.lookAt(la);
       }
       if (Math.abs(this.camera.fov - fovTarget) > 0.01) {
         this.camera.fov += (fovTarget - this.camera.fov) * Math.min(1, dt * 3);

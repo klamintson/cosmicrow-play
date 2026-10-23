@@ -297,17 +297,17 @@
   .setup { display:flex; gap:12px; justify-content:center; align-items:center; flex-wrap:wrap; margin:10px 0 0; font-size:12px; color:#bdefff; }
   button.chipb { font-size:11px; padding:5px 10px; letter-spacing:0.1em; border-radius:20px; }
   .home .pbline { margin-top:6px; min-height:14px; }
-  .hgrid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; margin-top:16px; }
+  .hgrid { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:16px; }
   button.hbtn { display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center; padding:14px 8px; min-height:74px; border-radius:0; background:rgba(8,14,34,0.62) var(--hexbg);
     clip-path:polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); box-shadow:inset 0 0 18px rgba(63,246,255,0.12); }
   button.hbtn b { font-size:15px; letter-spacing:0.22em; color:#fff; text-shadow:0 0 10px rgba(63,246,255,0.9); }
   button.hbtn small { font-size:9.5px; letter-spacing:0.06em; text-transform:none; color:#9feaff; opacity:0.8; line-height:1.3; }
   #title .hint { margin-top:12px; }
-  @media (max-width: 640px) { .hgrid { grid-template-columns:1fr 1fr; } .hicons { position:static; justify-content:center; margin-bottom:8px; } }
+  @media (max-width: 640px) { .hgrid { grid-template-columns:repeat(3, 1fr); gap:7px; } button.hbtn b { font-size:12px; letter-spacing:0.14em; } .hicons { position:static; justify-content:center; margin-bottom:8px; } }
   @media (max-height: 520px) {
     .home { padding:6px 12px 4px; } .home h1.logo { font-size:34px; } .home .tag { margin-bottom:8px; font-size:10px; }
     button.racebtn { padding:8px 16px 7px; } button.racebtn .rl { font-size:22px; } .setup { margin-top:6px; } .home .pbline { margin-top:3px; font-size:11px; }
-    .hgrid { margin-top:8px; gap:8px; } button.hbtn { min-height:52px; padding:8px 6px; } button.hbtn b { font-size:13px; } button.hbtn small { font-size:8.5px; }
+    .hgrid { margin-top:8px; gap:8px; grid-template-columns:repeat(6, 1fr); } button.hbtn { min-height:52px; padding:8px 6px; } button.hbtn b { letter-spacing:0.12em; } button.hbtn b { font-size:13px; } button.hbtn small { font-size:8.5px; }
   }
   .mpanel { display:flex; flex-direction:column; width:min(960px, 96vw); height:min(640px, 92vh); color:#d8e4ff; background:linear-gradient(180deg, rgba(10,8,34,0.9), rgba(6,4,20,0.92)), var(--hexbg);
     border:1px solid rgba(63,246,255,0.55); box-shadow:0 0 28px rgba(63,246,255,0.25), inset 0 0 40px rgba(255,63,216,0.08);
@@ -323,6 +323,35 @@
   .mtabs button b { font-size:12px; letter-spacing:0.16em; color:#e8f6ff; } .mtabs button small { font-size:9.5px; letter-spacing:0.04em; text-transform:none; opacity:0.65; }
   .mtabs button.sel { background:linear-gradient(90deg, rgba(63,246,255,0.26), rgba(63,246,255,0.06)); border-color:var(--cyan); box-shadow:0 0 12px rgba(63,246,255,0.45); }
   .mtabs button.dim { opacity:0.55; }
+  .plbar { height:8px; background:rgba(63,246,255,0.1); border:1px solid rgba(63,246,255,0.3); margin:4px 0 6px; } .plbar i { display:block; height:100%; width:0; background:linear-gradient(90deg, var(--cyan), var(--mag)); box-shadow:0 0 8px var(--cyan); }
+  .plgrid { display:grid; gap:4px; margin:8px 0; font-size:11px; } .plgrid .wk { display:grid; grid-template-columns:44px repeat(var(--n, 4), 1fr); gap:4px; align-items:stretch; }
+  .plgrid .wl { color:#ffc8f3; letter-spacing:0.12em; align-self:center; font-size:10px; }
+  .plgrid button { font-size:10.5px; padding:5px 4px; text-transform:none; letter-spacing:0.02em; border-radius:0; line-height:1.25; transition:none; } .plgrid button.done { border-color:#22ff8a; color:#b9ffd8; background:rgba(34,255,138,0.08); }
+  .plgrid button.next { border-color:var(--mag); box-shadow:0 0 8px rgba(255,63,216,0.5); } .plgrid button.sel { background:rgba(63,246,255,0.22); border-color:var(--cyan); color:#fff; }
+  .plitem { display:flex; gap:10px; align-items:center; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(63,246,255,0.12); } .plitem:last-child { border-bottom:none; }
+  .plitem .pt { font-size:13px; color:#fff; letter-spacing:0.06em; } .plitem .pd { font-size:11px; opacity:0.75; text-transform:none; line-height:1.4; margin-top:2px; } .plitem button { flex:none; font-size:11px; padding:6px 10px; }
+  #plImport { width:100%; box-sizing:border-box; background:rgba(0,0,0,0.35); color:#dff; border:1px solid rgba(63,246,255,0.35); font:12px/1.4 ui-monospace, monospace; padding:8px; resize:vertical; }
+  .olcode { font-size:13px; letter-spacing:0.1em; margin:4px 0 8px; } .olcode b { font-size:24px; letter-spacing:0.3em; color:#fff; text-shadow:0 0 12px var(--cyan); margin:0 8px; }
+  .olplayers { display:flex; flex-wrap:wrap; gap:6px; margin:6px 0; } .olplayers span { font-size:11px; padding:5px 9px; border:1px solid rgba(63,246,255,0.35); text-transform:none; letter-spacing:0.04em; }
+  .olplayers span.rdy { border-color:#22ff8a; color:#b9ffd8; } .olplayers span.me { border-color:var(--mag); }
+  .schedrow { display:flex; align-items:center; justify-content:space-between; gap:8px; padding:7px 0; border-bottom:1px solid rgba(63,246,255,0.12); font-size:12px; } .schedrow b { color:#fff; } .schedrow button { font-size:11px; padding:5px 10px; }
+  #olCount { position:fixed; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; z-index:40; pointer-events:none; text-align:center; }
+  #olCount .ot { font-size:14px; letter-spacing:0.4em; color:#9feaff; text-transform:uppercase; } #olCount .on { font-size:120px; font-weight:800; color:#fff; text-shadow:0 0 30px var(--cyan), 0 0 60px var(--mag); line-height:1.05; }
+  #olCount .os { font-size:12px; letter-spacing:0.12em; color:#ffd9f6; } #olCount.go .on { color:#b9ffd8; text-shadow:0 0 30px #22ff8a; }
+  @media (max-height: 520px) { #olCount .on { font-size:72px; } }
+  canvas.chart { display:block; width:100%; height:150px; margin-top:6px; } canvas.chart.short { height:110px; }
+  .tots { display:grid; grid-template-columns:repeat(auto-fit, minmax(110px, 1fr)); gap:8px; } .tots div { padding:8px; background:rgba(63,246,255,0.05); border:1px solid rgba(63,246,255,0.18); font-size:10px; letter-spacing:0.1em; color:#9feaff; }
+  .tots div b { display:block; font-size:18px; color:#fff; letter-spacing:0.04em; margin-top:2px; }
+  .msec table.sum { width:100%; } .msec table.sum td { padding:4px 6px; font-size:12px; white-space:nowrap; letter-spacing:0.03em; text-transform:none; } .msec table.sum tr:first-child td { font-size:10px; opacity:0.7; letter-spacing:0.12em; text-transform:uppercase; }
+  .msec table.sum td .note { display:block; margin:0; font-size:9.5px; } table.sum tr.you td { color:#ffd9f6; font-weight:700; } table.sum tr.up td:first-child { color:#22ff8a; } table.sum tr.down td:first-child { color:#ff6a7a; }
+  .hist { display:flex; flex-direction:column; } .hist button { display:flex; justify-content:space-between; gap:10px; text-align:left; font-size:11.5px; padding:7px 10px; border-radius:0; text-transform:none; letter-spacing:0.02em; margin:0 0 -1px; transition:none; }
+  .hist button span:last-child { opacity:0.75; white-space:nowrap; } .hist button.sel { background:rgba(63,246,255,0.18); border-color:var(--cyan); }
+  .exbanner { font-size:10.5px; letter-spacing:0.08em; padding:6px 9px; margin:4px 0 8px; border:1px dashed #ffb13f; color:#ffd59a; background:rgba(255,177,63,0.08); text-transform:none; }
+  .rank { display:flex; align-items:center; gap:14px; } .rank .badge { width:64px; height:64px; flex:none; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; letter-spacing:0.1em; color:#05010d;
+    clip-path:polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%); background:var(--rk); box-shadow:0 0 18px var(--rk); } .rank .rt { font-size:12px; line-height:1.6; text-transform:none; }
+  .form { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:8px 14px; margin-top:8px; } .form label { display:flex; flex-direction:column; gap:4px; font-size:10px; letter-spacing:0.14em; color:#9feaff; }
+  .teamrace { display:flex; align-items:center; justify-content:space-between; gap:10px; padding:6px 0; font-size:12px; text-transform:none; } .teamrace button { flex:none; font-size:11px; padding:6px 10px; }
+  .chip.hrz { border-color:var(--hz, #ff4f8b); color:#fff; }
   .mbody { flex:1; overflow-y:auto; padding:14px 18px; touch-action:pan-y; -webkit-overflow-scrolling:touch; }
   .msec { display:none; } .msec.show { display:block; animation:secIn .18s ease-out; }
   @keyframes secIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
@@ -422,7 +451,7 @@
   @media (orientation: portrait) and (max-width: 600px) { body.arcade .holo.top { top:96px; } }
 </style>
 </head>
-<body data-build="cosmicrow-menus-v6">
+<body data-build="cosmicrow-social-v7">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -440,7 +469,7 @@
   </div>
   <div id="rivalTags"></div>
   <div id="restBox" class="hidden"><div class="k">REST</div><div class="v" id="restT">0:00</div><div class="sub" id="restNext"></div></div>
-  <div id="chips"><div class="chip hidden" id="chipGhost"></div><div class="chip hidden" id="chipPace"></div><div class="chip hidden" id="chipZone"></div></div>
+  <div id="chips"><div class="chip hidden" id="chipGhost"></div><div class="chip hidden" id="chipPace"></div><div class="chip hidden" id="chipZone"></div><div class="chip hidden" id="chipHr"></div></div>
   <div class="holo left">
     <div class="tile split" data-tile="split"><div class="k">Split /500m</div><div class="v" id="hSplit">--:--</div></div>
     <div class="tile spm" data-tile="spm"><div class="k">Stroke rate</div><div class="v"><span id="hSpm">--</span><span class="u">spm</span></div></div>
@@ -512,10 +541,12 @@
     <div class="setup"><button class="chipb" id="stageBtn">Stage: Orbital Run</button><span class="shipline" id="shipLine"></span></div>
     <div class="pbline" id="pbLine"></div>
     <div class="hgrid">
-      <button class="hbtn" id="trainingBtn"><b>Training</b><small>Workouts · WOD · Daily · Opponents · Zones</small></button>
+      <button class="hbtn" id="trainingBtn"><b>Training</b><small>Workouts · plans · opponents</small></button>
+      <button class="hbtn" id="onlineBtn"><b>Online</b><small>Live races</small></button>
       <button class="hbtn" id="arcadeBtn"><b>Arcade</b><small>Laser Run</small></button>
+      <button class="hbtn" id="profileBtn"><b>Profile</b><small>Stats · leagues · clubs</small></button>
       <button class="hbtn" id="garageBtn"><b>Garage</b><small>Ships &amp; colours</small></button>
-      <button class="hbtn" id="settingsBtn"><b>Settings</b><small>Audio · View · Input · Logbook</small></button>
+      <button class="hbtn" id="settingsBtn"><b>Settings</b><small>Audio · view · input</small></button>
     </div>
     <div class="hint" id="keyHint">SPACE / tap = stroke &nbsp;·&nbsp; C = camera &nbsp;·&nbsp; M = mute &nbsp;·&nbsp; ESC = back / end</div>
   </div>
@@ -528,6 +559,7 @@
     <div class="mwrap">
       <nav class="mtabs" id="trTabs">
         <button data-sec="workouts"><b>Workouts</b><small>Distance · time · intervals</small></button>
+        <button data-sec="plans"><b>Plans</b><small id="trPlanS">Multi-week programmes</small></button>
         <button data-sec="wod"><b>Today's WOD</b><small>Concept2</small></button>
         <button data-sec="daily"><b>Daily</b><small id="trDailyS">Challenge &amp; streak</small></button>
         <button data-sec="opponents"><b>Opponents</b><small>Ghost · pace · rivals</small></button>
@@ -550,6 +582,16 @@
             <div class="opt infobox" data-for="free">Row as long as you like. ESC or ■ End stops the session.</div>
             <div class="opt infobox" data-for="other" id="otherSel"></div>
           </div>
+        </section>
+        <section class="msec" data-sec="plans">
+          <div class="card hidden" id="plActive"><div class="ct" id="plActT">Active plan</div><div class="plbar"><i id="plBar"></i></div><div class="note" id="plActN"></div>
+            <div class="plgrid" id="plGrid"></div>
+            <div class="row"><button class="pick" id="pickPlan" data-pick="plan">Row this session</button><button class="small" id="plStop">Stop plan</button></div></div>
+          <div class="card"><div class="ct">Programmes</div><div id="plList"></div></div>
+          <div class="card"><div class="ct">Import a coach's plan</div>
+            <textarea id="plImport" rows="5" placeholder="Paste JSON or CSV. CSV: week,day,session,note&#10;1,1,5000m,steady r20&#10;1,2,8x500m/1:30r,r28-30&#10;2,1,30:00,UT2"></textarea>
+            <div class="row"><button class="small" id="plImportBtn">Import plan</button><button class="small" id="plExample">Show example</button></div><div class="status" id="plImportNote"></div>
+            <div class="note">Sessions: 5000m · 5k · 30:00 · 20min · 8x500m/1:30r · 4x4:00/3:00r · 10x1min/1min. Add notes after @ (e.g. "@ r20-22"). JSON: {"name":"…","weeks":[["5000m","8x500m/1:30r"],["30:00"]]}</div></div>
         </section>
         <section class="msec" data-sec="wod">
           <div class="card"><div class="infobox" id="wodBox">Loading today's Concept2 Workout of the Day…</div><div class="row"><button class="pick" id="pickWod" data-pick="wod">Row today's WOD</button></div></div>
@@ -618,6 +660,102 @@
   </div>
 </div>
 
+<!-- Online -->
+<div id="online" class="overlay hidden">
+  <div class="mpanel">
+    <div class="mhead"><button class="back" id="olBack">◀ Back</button><div class="mtitle">Online</div><div class="msub" id="olSub">Live races</div></div>
+    <div class="mwrap">
+      <nav class="mtabs" id="olTabs">
+        <button data-sec="race"><b>Race now</b><small>Create · join by code</small></button>
+        <button data-sec="sched"><b>Scheduled</b><small>A race every 15 min</small></button>
+        <button data-sec="server"><b>Server</b><small id="olSrvS">Simulated lobby</small></button>
+      </nav>
+      <div class="mbody">
+        <section class="msec" data-sec="race">
+          <div class="card" id="olLobby"><div class="ct">Name shown to others</div><div class="row"><input type="text" id="olName" maxlength="20" placeholder="Your race name" size="18"></div>
+            <div class="ct" style="margin-top:12px">Create a race</div><div class="seg" id="olDist"></div><div class="row"><button id="olCreate">Create race ▸</button></div>
+            <div class="ct" style="margin-top:12px">Join with a code</div><div class="row"><input type="text" id="olCode" maxlength="5" placeholder="K7QXM" size="7" autocapitalize="characters" autocomplete="off"><button id="olJoin">Join</button></div>
+            <div class="status" id="olErr"></div></div>
+          <div class="card hidden" id="olRoom"><div class="ct">Race room</div>
+            <div class="olcode">CODE <b id="olRoomCode"></b> <span id="olRoomInfo"></span></div>
+            <div class="olplayers" id="olPlayers"></div>
+            <div class="row"><button id="olReady">I'm ready</button><button class="big" id="olStart">Start countdown ▶</button><button class="small" id="olLeave">Leave</button></div>
+            <div class="status" id="olRoomStatus"></div></div>
+        </section>
+        <section class="msec" data-sec="sched"><div class="card"><div class="ct">Public races</div><div id="olSched"></div><div class="note">Join, then wait: the 10-second countdown starts by itself before the start time.</div></div></section>
+        <section class="msec" data-sec="server">
+          <div class="card"><div class="ct">Server</div><div class="seg" id="olMode"><button data-m="local">Local / simulated</button><button data-m="server">Online server</button></div>
+            <div class="row" id="olUrlRow"><input type="text" id="olUrl" placeholder="wss://your-server.example" size="30" autocomplete="off"><button id="olConnect">Connect</button></div>
+            <div class="status" id="olConnNote"></div>
+            <div class="note">Simulated mode runs on this device with computer-controlled online rowers (5 updates a second, with network delay), so lobbies, codes and countdowns work without a server. Real races need the small server in /server/online (free hosting options in its README).</div></div>
+        </section>
+      </div>
+    </div>
+    <div class="mfoot"><div class="modeline" id="olLine"></div></div>
+  </div>
+</div>
+
+<!-- Profile: stats, history, leagues, clubs -->
+<div id="profile" class="overlay hidden">
+  <div class="mpanel">
+    <div class="mhead"><button class="back" id="pfBack">◀ Back</button><div class="mtitle">Profile</div><div class="msub" id="pfSub">Your rows, records and teams</div></div>
+    <div class="mwrap">
+      <nav class="mtabs" id="pfTabs">
+        <button data-sec="stats"><b>Stats</b><small>Totals · records</small></button>
+        <button data-sec="history"><b>History</b><small>Every row · charts</small></button>
+        <button data-sec="league"><b>Leagues</b><small id="pfLgS">Weekly · season</small></button>
+        <button data-sec="clubs"><b>Clubs</b><small>Teams · challenges</small></button>
+        <button data-sec="me"><b>Me</b><small>Age · weight · HR</small></button>
+      </nav>
+      <div class="mbody">
+        <section class="msec" data-sec="stats">
+          <div class="card"><div class="ct">Totals</div><div class="tots" id="pfTotals"></div></div>
+          <div class="card"><div class="ct">Metres per week</div><canvas class="chart short" id="pfWeek"></canvas></div>
+          <div class="card"><div class="ct">Personal bests</div><table class="sum pbs" id="pfPBs"></table><div class="note">Best efforts count inside longer rows too (e.g. your fastest 500 m within a 2k). Arcade rounds don't count.</div></div>
+        </section>
+        <section class="msec" data-sec="history">
+          <div class="card hidden" id="pfDetail"><div class="ct" id="pfDTitle"></div><div class="note" id="pfDSub"></div>
+            <div class="seg" id="pfChartSel"><button data-c="split">Split</button><button data-c="spm">Rate</button><button data-c="watts">Watts</button><button data-c="hr">Heart rate</button></div>
+            <canvas class="chart" id="pfChart"></canvas>
+            <div class="ct" style="margin-top:10px">Force curve <span class="note" id="pfForceN"></span></div><canvas class="chart short" id="pfForce"></canvas>
+            <div class="row"><button class="small" id="pfCsv">Samples .csv</button><button class="small" id="pfTcx">Export .tcx</button><button class="small" id="pfStrava" disabled>Send to Strava</button><button class="small" id="pfDel">Delete</button><button class="small" id="pfClose">Close</button></div><div class="status" id="pfDStatus"></div></div>
+          <div class="card"><div class="ct">History <span class="note" id="pfHistN"></span></div><div class="hist" id="pfHist"></div>
+            <div class="row"><button class="small" id="pfCsvAll">Export all (.csv)</button></div></div>
+        </section>
+        <section class="msec" data-sec="league">
+          <div class="card"><div class="ct" id="lgSeasonT">Season</div><div class="rank" id="lgRank"></div></div>
+          <div class="card"><div class="ct">Weekly league <span class="note" id="lgWeek"></span></div>
+            <div class="exbanner" id="lgMode">EXAMPLE DATA - these rowers are made up so you can see how leagues work. Connect a server (Online › Server) for real tables.</div>
+            <div class="seg" id="lgAge"></div><div class="seg" id="lgWc"><button data-w="all">All weights</button><button data-w="HW">Heavyweight</button><button data-w="LW">Lightweight</button></div>
+            <table class="sum lg" id="lgTable"></table><div class="note" id="lgNote"></div></div>
+        </section>
+        <section class="msec" data-sec="clubs">
+          <div class="card hidden" id="clActive"><div class="ct" id="clName"></div><div class="note" id="clInfo"></div>
+            <div class="exbanner" id="clEx">EXAMPLE TEAMMATES - made-up members so you can try club features. With a server, real members appear.</div>
+            <div class="ct" style="margin-top:10px">Weekly club challenge</div><div class="plbar"><i id="clBar"></i></div><div class="note" id="clChal"></div>
+            <table class="sum" id="clMembers"></table>
+            <div class="ct" style="margin-top:10px">Team races</div><div id="clRaces"></div>
+            <div class="row"><button class="small" id="clLeave">Leave club</button></div></div>
+          <div class="card"><div class="ct">Your clubs</div><div id="clList"></div>
+            <div class="row"><input type="text" id="clNewName" maxlength="32" placeholder="New club name" size="16"><button class="small" id="clCreate">Create club</button></div>
+            <div class="row"><input type="text" id="clCode" maxlength="5" placeholder="Club code" size="8" autocapitalize="characters" autocomplete="off"><button class="small" id="clJoin">Join</button></div><div class="status" id="clErr"></div></div>
+        </section>
+        <section class="msec" data-sec="me">
+          <div class="card"><div class="ct">Profile</div><div class="note">Used for age groups, weight classes and heart-rate zones. Stays on this device unless you join a server league.</div>
+            <div class="form">
+              <label>Name <input type="text" id="pfName" maxlength="20" size="16"></label>
+              <label>Birth year <input type="number" id="pfBirth" min="1920" max="2015" placeholder="1985"></label>
+              <label>Sex <select id="pfSex"><option value="">-</option><option value="M">Men</option><option value="F">Women</option></select></label>
+              <label>Weight (kg) <input type="number" id="pfWeight" min="30" max="200" step="0.5"></label>
+              <label>Max heart rate <input type="number" id="pfHrMax" min="120" max="230" placeholder="auto"></label>
+            </div><div class="status" id="pfDerived"></div></div>
+          <div class="card"><div class="ct">❤ Heart-rate strap</div><div class="row"><button id="hrBtn2">Connect heart-rate strap</button></div><div class="status" id="hrStatus2"></div><div class="tots" id="hrZonesT"></div></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Settings: app settings only -->
 <div id="settings" class="overlay hidden">
   <div class="mpanel settings">
@@ -629,6 +767,7 @@
         <button data-sec="input"><b>Input</b><small id="setInS">Keyboard · tap · PM5</small></button>
         <button data-sec="graphics"><b>Graphics</b><small>Quality</small></button>
         <button data-sec="logbook"><b>Logbook</b><small>Concept2</small></button>
+        <button data-sec="strava"><b>Strava</b><small>Export · sync</small></button>
         <button data-sec="unlocks"><b>Unlocks</b><small>Progress</small></button>
         <button data-sec="about"><b>About</b><small>Credits</small></button>
       </nav>
@@ -653,6 +792,8 @@
           <div class="card"><div class="ct">Rowing input</div><div class="infobox" id="inputInfo"></div>
             <div class="row"><button id="pm5Btn">Connect PM5</button></div><div class="status" id="pm5Status"></div>
             <div class="note">PM5 uses Web Bluetooth (Chrome / Edge / Android). Without it, SPACE or a tap is one stroke.</div></div>
+          <div class="card"><div class="ct">❤ Heart-rate strap</div><div class="infobox">Any Bluetooth heart-rate strap or watch that broadcasts heart rate (Polar, Garmin, Wahoo, Coospo…). Shown on the HUD with your zone and saved with every row.</div>
+            <div class="row"><button id="hrBtn">Connect heart-rate strap</button></div><div class="status" id="hrStatus"></div></div>
           <div class="card"><div class="ct">Keys</div><div class="note" style="line-height:1.8">SPACE / tap = stroke · C = camera · M = mute · ESC = back / end · ENTER = race<br>Laser Run: ← → (or A / D) slide sideways</div></div>
         </section>
         <section class="msec" data-sec="graphics">
@@ -667,6 +808,11 @@
             <div class="row"><button class="small" id="lbConnect">Save &amp; test</button><button class="small" id="lbForget">Forget</button><button class="small" id="lbOauth" disabled title="Needs app registration at Concept2 first">Sign in with Concept2 (coming later)</button></div>
             <div class="status" id="lbSetStatus"></div>
             <div class="note">Token stays only in this browser. Live saving is only offered for PM5 rows.</div></div>
+        </section>
+        <section class="msec" data-sec="strava">
+          <div class="card"><div class="ct">Strava</div><div class="infobox" id="stvInfo"></div>
+            <div class="row"><button id="stvBtn" disabled>Connect Strava</button><button class="small hidden" id="stvForget">Disconnect</button></div><div class="status" id="stvStatus"></div>
+            <div class="note">Works now: Profile › History › a row › <b>Export .tcx</b>, then upload it at strava.com/upload (choose Rowing). Automatic sync needs a Strava app + the small server in /server/strava.</div></div>
         </section>
         <section class="msec" data-sec="unlocks">
           <div class="card"><div class="ct">Unlocks</div><label class="chk"><input type="checkbox" id="optUnlockAll"> Unlock all ships &amp; colours</label><div class="pbline" id="statsLine"></div></div>
@@ -720,12 +866,14 @@
       <tr><td>Personal best</td><td id="sBest">-</td></tr>
     </table>
     <div id="sumExtra"></div>
+    <div class="row" id="sumActs"><button class="small" id="sumStats">Stats ▸</button><button class="small" id="sumTcx">Export .tcx</button><button class="small hidden" id="sumStrava">Send to Strava</button></div>
     <div class="row hidden" id="lbRow"><button id="lbSave">Save to Logbook</button></div>
     <div class="status" id="lbStatus"></div>
     <div class="row"><button class="big" id="againBtn">Row again</button><button id="menuBtn">Menu</button></div>
   </div>
 </div>
 
+<div id="olCount" class="hidden"><div class="ot" id="olCountT">Race starts in</div><div class="on" id="olCountN">10</div><div class="os" id="olCountS">Get ready - strokes count from GO</div></div>
 <div id="topBtns"><button class="small hidden" id="endBtn">■ End</button><button class="small" id="camBtn">◉ Chase</button><button class="small" id="muteBtn">♪ On</button></div>
 
 <script>
@@ -13625,8 +13773,8 @@
       state.ambient[0] = r;
       state.ambient[1] = g;
       state.ambient[2] = b;
-      const hash = state.hash;
-      if (hash.directionalLength !== directionalLength || hash.pointLength !== pointLength || hash.spotLength !== spotLength || hash.rectAreaLength !== rectAreaLength || hash.hemiLength !== hemiLength || hash.numDirectionalShadows !== numDirectionalShadows || hash.numPointShadows !== numPointShadows || hash.numSpotShadows !== numSpotShadows || hash.numSpotMaps !== numSpotMaps || hash.numLightProbes !== numLightProbes) {
+      const hash2 = state.hash;
+      if (hash2.directionalLength !== directionalLength || hash2.pointLength !== pointLength || hash2.spotLength !== spotLength || hash2.rectAreaLength !== rectAreaLength || hash2.hemiLength !== hemiLength || hash2.numDirectionalShadows !== numDirectionalShadows || hash2.numPointShadows !== numPointShadows || hash2.numSpotShadows !== numSpotShadows || hash2.numSpotMaps !== numSpotMaps || hash2.numLightProbes !== numLightProbes) {
         state.directional.length = directionalLength;
         state.spot.length = spotLength;
         state.rectArea.length = rectAreaLength;
@@ -13644,16 +13792,16 @@
         state.spotLightMap.length = numSpotMaps;
         state.numSpotLightShadowsWithMaps = numSpotShadowsWithMaps;
         state.numLightProbes = numLightProbes;
-        hash.directionalLength = directionalLength;
-        hash.pointLength = pointLength;
-        hash.spotLength = spotLength;
-        hash.rectAreaLength = rectAreaLength;
-        hash.hemiLength = hemiLength;
-        hash.numDirectionalShadows = numDirectionalShadows;
-        hash.numPointShadows = numPointShadows;
-        hash.numSpotShadows = numSpotShadows;
-        hash.numSpotMaps = numSpotMaps;
-        hash.numLightProbes = numLightProbes;
+        hash2.directionalLength = directionalLength;
+        hash2.pointLength = pointLength;
+        hash2.spotLength = spotLength;
+        hash2.rectAreaLength = rectAreaLength;
+        hash2.hemiLength = hemiLength;
+        hash2.numDirectionalShadows = numDirectionalShadows;
+        hash2.numPointShadows = numPointShadows;
+        hash2.numSpotShadows = numSpotShadows;
+        hash2.numSpotMaps = numSpotMaps;
+        hash2.numLightProbes = numLightProbes;
         state.version = nextVersion++;
       }
     }
@@ -20683,7 +20831,7 @@ void main() {
             const vecHash1 = hashes[jNext];
             const v0 = _triangle[vertKeys[j]];
             const v1 = _triangle[vertKeys[jNext]];
-            const hash = `${vecHash0}_${vecHash1}`;
+            const hash2 = `${vecHash0}_${vecHash1}`;
             const reverseHash = `${vecHash1}_${vecHash0}`;
             if (reverseHash in edgeData && edgeData[reverseHash]) {
               if (_normal.dot(edgeData[reverseHash].normal) <= thresholdDot) {
@@ -20691,8 +20839,8 @@ void main() {
                 vertices.push(v1.x, v1.y, v1.z);
               }
               edgeData[reverseHash] = null;
-            } else if (!(hash in edgeData)) {
-              edgeData[hash] = {
+            } else if (!(hash2 in edgeData)) {
+              edgeData[hash2] = {
                 index0: indexArr[j],
                 index1: indexArr[jNext],
                 normal: _normal.clone()
@@ -21088,8 +21236,8 @@ void main() {
   function onSegment(p, q, r) {
     return q.x <= Math.max(p.x, r.x) && q.x >= Math.min(p.x, r.x) && q.y <= Math.max(p.y, r.y) && q.y >= Math.min(p.y, r.y);
   }
-  function sign(num2) {
-    return num2 > 0 ? 1 : num2 < 0 ? -1 : 0;
+  function sign(num3) {
+    return num3 > 0 ? 1 : num3 < 0 ? -1 : 0;
   }
   function intersectsPolygon(a, b) {
     let p = a;
@@ -26892,7 +27040,7 @@ void main() {
   async function handleRedirect(c = OAUTH_CONFIG) {
     const q = new URLSearchParams(location.search);
     const code = q.get("code");
-    if (!code || !oauthReady(c)) return null;
+    if (!code || q.get("strava") || !oauthReady(c)) return null;
     if (q.get("state") !== sessionStorage.getItem("cosmicrow.oauth.state")) throw new Error("OAuth state mismatch");
     history.replaceState(null, "", location.pathname);
     const res = await fetch(c.workerUrl + "/token", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code, redirect_uri: c.redirectUri, host: c.host }) });
@@ -26901,9 +27049,1076 @@ void main() {
     return { ...t, expires_at: Date.now() + (t.expires_in || 3600) * 1e3 };
   }
 
+  // plans.js
+  var KEY3 = "cosmicrow.plans.v1";
+  var num2 = (s) => parseFloat(String(s).replace(",", "."));
+  function parseDur2(s) {
+    s = String(s).trim().toLowerCase();
+    let m;
+    if (m = s.match(/^(\d+):(\d{2})$/)) return +m[1] * 60 + +m[2];
+    if (m = s.match(/^(\d+(?:[.,]\d+)?)\s*(min|m(?!\w))$/)) return Math.round(num2(m[1]) * 60);
+    if (m = s.match(/^(\d+(?:[.,]\d+)?)\s*(s|sec)?$/)) return Math.round(num2(m[1]));
+    return NaN;
+  }
+  function parseDist(s) {
+    const m = String(s).trim().toLowerCase().match(/^(\d+(?:[.,]\d+)?)\s*(m|km|k)$/);
+    return m ? Math.round(num2(m[1]) * (m[2] === "m" ? 1 : 1e3)) : NaN;
+  }
+  function parseSession(text) {
+    const [body, ...noteParts] = String(text).split("@");
+    const note = noteParts.join("@").trim();
+    const t = body.trim().toLowerCase().replace(/\s+/g, "").replace(/×/g, "x");
+    let w = null, m;
+    if (m = t.match(/^(\d+)x([^/]+)(?:\/(.+?)(?:r|rest)?)?$/)) {
+      const reps = +m[1], d = parseDist(m[2]), du = isNaN(d) ? parseDur2(m[2]) : NaN, rest = m[3] ? parseDur2(m[3].replace(/(r|rest)$/, "")) : 60;
+      if (reps >= 1 && reps <= 40 && (d >= 50 || du >= 10) && rest >= 0) w = wIntervals(reps, isNaN(d) ? "time" : "distance", isNaN(d) ? du : d, rest);
+    } else if (!isNaN(parseDist(t)) && parseDist(t) >= 100) w = wDistance(parseDist(t));
+    else if (!isNaN(parseDur2(t)) && /[:a-z]/.test(t) && parseDur2(t) >= 30) w = wTime(parseDur2(t));
+    if (w && note) w.note = note;
+    return w;
+  }
+  var P = (id, name, desc, weeks) => ({ id, name, desc, weeks });
+  var BUILTIN_PLANS = [
+    P("2k-prep", "2k Prep \xB7 6 weeks", "Four sessions a week building to a 2000 m race: long steady rows, 500/1000 m intervals, a test in week 4 and a taper.", [
+      ["5000m @ steady r20-22", "6x500m/1:30r @ r28-30", "20:00 @ r20", "4x1000m/3:00r @ r24-26"],
+      ["6000m @ steady r20-22", "8x500m/1:30r @ r28-30", "25:00 @ r20-22", "5x1000m/3:00r @ r24-26"],
+      ["6000m @ steady", "4x750m/2:00r @ r28", "30:00 @ r20-22", "3x2000m/4:00r @ r24"],
+      ["5000m @ easy", "6x500m/1:30r @ r28", "20:00 @ easy", "2000m @ test piece - all out"],
+      ["7000m @ steady", "8x500m/1:15r @ r30", "30:00 @ r22", "4x1000m/2:00r @ r26-28"],
+      ["5000m @ easy", "4x500m/2:00r @ race pace", "15:00 @ easy", "2000m @ RACE DAY"]
+    ]),
+    P("500-sprint", "500 m Sprint \xB7 4 weeks", "Three short, sharp sessions a week for a faster 500 m: starts, speed endurance and a time trial at the end.", [
+      ["8x250m/1:30r @ hard", "10x1min/1min @ r30+", "3000m @ easy"],
+      ["8x250m/1:15r @ hard", "6x1:30/1:30r @ r30", "4x500m/3:00r @ race pace"],
+      ["10x250m/1:15r @ hard", "8x1min/45s @ r32", "3x500m/4:00r @ race pace"],
+      ["6x250m/2:00r @ crisp", "2000m @ easy", "500m @ TIME TRIAL"]
+    ]),
+    P("base", "Base Fitness \xB7 8 weeks", "Three steady sessions a week that slowly get longer. Easy pace you could talk at - the foundation for everything else.", [
+      ["15:00 @ easy r18-20", "2000m @ easy", "15:00 @ easy"],
+      ["20:00 @ easy", "3000m @ easy", "4x5:00/1:00r @ r20"],
+      ["20:00 @ easy", "4000m @ steady", "3x8:00/2:00r @ r20"],
+      ["25:00 @ easy", "4000m @ steady", "4x6:00/1:30r @ r22"],
+      ["25:00 @ steady", "5000m @ easy", "3x10:00/2:00r @ r20"],
+      ["30:00 @ easy", "5000m @ steady", "4x8:00/2:00r @ r22"],
+      ["30:00 @ steady", "6000m @ easy", "2x15:00/3:00r @ r20"],
+      ["35:00 @ steady", "6000m @ steady", "30:00 @ test: how far?"]
+    ])
+  ];
+  function loadPlanState() {
+    try {
+      return Object.assign({ active: null, started: null, done: {}, custom: [] }, JSON.parse(localStorage.getItem(KEY3) || "{}"));
+    } catch (e) {
+      return { active: null, started: null, done: {}, custom: [] };
+    }
+  }
+  function savePlanState(st) {
+    localStorage.setItem(KEY3, JSON.stringify(st));
+  }
+  function allPlans(st) {
+    return BUILTIN_PLANS.concat(st.custom || []);
+  }
+  function planById(st, id) {
+    return allPlans(st).find((p) => p.id === id) || null;
+  }
+  function planWorkout(plan, wi, di) {
+    const w = parseSession(plan.weeks[wi][di]);
+    if (!w) return null;
+    w.plan = { id: plan.id, w: wi, d: di };
+    w.name = `W${wi + 1}\xB7${di + 1} ${w.name}`;
+    return w;
+  }
+  function planProgress(st, plan) {
+    const done = st.done && st.done[plan.id] || {};
+    let n = 0, total = 0, next = null;
+    plan.weeks.forEach((wk, wi) => wk.forEach((_, di) => {
+      total++;
+      if (done[`${wi}-${di}`]) n++;
+      else if (!next) next = { w: wi, d: di };
+    }));
+    return { done: n, total, next, pct: total ? n / total : 0, map: done };
+  }
+  function markDone(st, planRef, date = (/* @__PURE__ */ new Date()).toISOString()) {
+    st.done[planRef.id] = st.done[planRef.id] || {};
+    st.done[planRef.id][`${planRef.w}-${planRef.d}`] = date;
+    savePlanState(st);
+  }
+  function parsePlanImport(text) {
+    text = String(text || "").trim();
+    if (!text) throw new Error("Paste a plan first (JSON or CSV).");
+    let name = "Coach plan", desc = "", weeks = [];
+    if (text[0] === "{" || text[0] === "[") {
+      let j;
+      try {
+        j = JSON.parse(text);
+      } catch (e) {
+        throw new Error("JSON could not be read: " + e.message);
+      }
+      if (Array.isArray(j)) j = { weeks: j };
+      name = j.name || name;
+      desc = j.desc || j.description || "";
+      if (Array.isArray(j.weeks)) weeks = j.weeks.map((wk) => (Array.isArray(wk) ? wk : wk.sessions || []).map((x) => typeof x === "string" ? x : (x.session || "") + (x.note ? " @ " + x.note : "")));
+      else if (Array.isArray(j.sessions)) for (const s of j.sessions) {
+        const wi = Math.max(1, s.week | 0) - 1;
+        (weeks[wi] = weeks[wi] || []).push((s.session || "") + (s.note ? " @ " + s.note : ""));
+      }
+    } else {
+      const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+      if (lines[0].startsWith("#")) name = lines.shift().replace(/^#+\s*/, "") || name;
+      for (const l of lines) {
+        const c = l.split(/[,;\t]/).map((x) => x.trim());
+        if (/^week$/i.test(c[0])) continue;
+        const wi = (parseInt(c[0], 10) || 0) - 1;
+        if (wi < 0) throw new Error(`Line "${l}": first column must be the week number.`);
+        const sess = c.length >= 3 ? c[2] : c[1], note = c.length >= 4 ? c.slice(3).join(", ") : "";
+        (weeks[wi] = weeks[wi] || []).push(sess + (note ? " @ " + note : ""));
+      }
+    }
+    weeks = weeks.map((w) => w || []);
+    if (!weeks.length || !weeks.some((w) => w.length)) throw new Error("No sessions found.");
+    if (weeks.length > 52) throw new Error("A plan can have at most 52 weeks.");
+    weeks.forEach((wk, wi) => wk.forEach((s, di) => {
+      if (!parseSession(s)) throw new Error(`Week ${wi + 1}, session ${di + 1}: "${s}" is not a workout I understand (try 5000m, 30:00, 8x500m/1:30r, 4x4:00/3:00r).`);
+    }));
+    return { id: "coach-" + Date.now().toString(36), name: String(name).slice(0, 60), desc: String(desc).slice(0, 300), weeks, custom: true };
+  }
+
+  // history.js
+  var KEY4 = "cosmicrow.history.v1";
+  var MAX_ROWS = 150;
+  var MAX_SAMPLES2 = 240;
+  var PB_DIST = [100, 500, 1e3, 2e3, 5e3, 6e3, 1e4];
+  var PB_TIME = [60, 240, 1800, 3600];
+  var watts = (pace) => pace > 0 ? 2.8 / Math.pow(pace / 500, 3) : 0;
+  var pad2 = (n) => String(n).padStart(2, "0");
+  var fmtT = (s) => {
+    if (!isFinite(s)) return "\u2013";
+    s = Math.max(0, s);
+    const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60, x = s % 60;
+    return (h ? h + ":" + pad2(m) : m) + ":" + (x < 10 ? "0" : "") + x.toFixed(1);
+  };
+  var distLabel = (m) => m >= 1e3 ? m / 1e3 + " km" : m + " m";
+  var timeLabel = (s) => s >= 3600 ? s / 3600 + " h" : s / 60 + " min";
+  function downsample(samples, max = MAX_SAMPLES2) {
+    if (samples.length <= max) return samples.slice();
+    const out = [], step = (samples.length - 1) / (max - 1);
+    for (let i = 0; i < max; i++) out.push(samples[Math.round(i * step)]);
+    return out;
+  }
+  function loadHistory() {
+    try {
+      const h = JSON.parse(localStorage.getItem(KEY4) || "[]");
+      return Array.isArray(h) ? h : [];
+    } catch (e) {
+      return [];
+    }
+  }
+  function saveHistory(h) {
+    h = h.slice(0, MAX_ROWS);
+    for (let tries = 0; tries < 6; tries++) {
+      try {
+        localStorage.setItem(KEY4, JSON.stringify(h));
+        return true;
+      } catch (e) {
+        for (let i = h.length - 1; i >= Math.max(0, h.length - 30); i--) if (h[i].samples && h[i].samples.length > 40) h[i] = { ...h[i], samples: downsample(h[i].samples, 40) };
+        if (tries > 2) h = h.slice(0, Math.max(10, h.length - 30));
+      }
+    }
+    return false;
+  }
+  function addRow(row) {
+    const h = loadHistory();
+    const r = { id: row.id || Date.now().toString(36), date: row.date || (/* @__PURE__ */ new Date()).toISOString(), ...row };
+    r.samples = downsample(row.samples || []);
+    if (!r.split && r.dist > 0) r.split = r.time / r.dist * 500;
+    if (!r.watts && r.split) r.watts = Math.round(watts(r.split));
+    h.unshift(r);
+    saveHistory(h);
+    return r;
+  }
+  function deleteRow(id) {
+    saveHistory(loadHistory().filter((r) => r.id !== id));
+  }
+  var interpT = (s, i, D) => {
+    const a = s[i - 1], b = s[i];
+    return b[1] === a[1] ? b[0] : a[0] + (b[0] - a[0]) * (D - a[1]) / (b[1] - a[1]);
+  };
+  var interpD = (s, i, T) => {
+    const a = s[i - 1], b = s[i];
+    return b[0] === a[0] ? b[1] : a[1] + (b[1] - a[1]) * (T - a[0]) / (b[0] - a[0]);
+  };
+  function bestTimeFor(samples, D) {
+    if (!samples || samples.length < 2 || samples[samples.length - 1][1] - samples[0][1] < D - 0.5) return Infinity;
+    let best = Infinity, j = 1;
+    for (let i = 0; i < samples.length; i++) {
+      const target = samples[i][1] + D;
+      while (j < samples.length && samples[j][1] < target) j++;
+      if (j >= samples.length) break;
+      best = Math.min(best, interpT(samples, j, target) - samples[i][0]);
+    }
+    return best;
+  }
+  function bestDistFor(samples, T) {
+    if (!samples || samples.length < 2 || samples[samples.length - 1][0] - samples[0][0] < T - 0.5) return 0;
+    let best = 0, j = 1;
+    for (let i = 0; i < samples.length; i++) {
+      const target = samples[i][0] + T;
+      while (j < samples.length && samples[j][0] < target) j++;
+      if (j >= samples.length) break;
+      best = Math.max(best, interpD(samples, j, target) - samples[i][1]);
+    }
+    return best;
+  }
+  function personalBests(h = loadHistory()) {
+    const out = [];
+    for (const D of PB_DIST) {
+      let b = null;
+      for (const r of h) {
+        if (r.arcade || r.sim === "demo") continue;
+        let t = r.kind === "distance" && Math.abs(r.dist - D) < 1 ? r.time : bestTimeFor(r.samples, D);
+        if (isFinite(t) && (!b || t < b.t)) b = { t, row: r, whole: r.kind === "distance" && Math.abs(r.dist - D) < 1 };
+      }
+      out.push({ key: "d" + D, label: distLabel(D), kind: "dist", value: b ? b.t : null, text: b ? fmtT(b.t) : "\u2013", split: b ? fmtT(b.t / D * 500) : "", date: b ? b.row.date : null, rowId: b ? b.row.id : null, whole: b ? b.whole : false });
+    }
+    for (const T of PB_TIME) {
+      let b = null;
+      for (const r of h) {
+        if (r.arcade) continue;
+        let d = r.kind === "time" && Math.abs(r.time - T) < 1 ? r.dist : bestDistFor(r.samples, T);
+        if (d > 0 && (!b || d > b.d)) b = { d, row: r };
+      }
+      out.push({ key: "t" + T, label: timeLabel(T), kind: "time", value: b ? b.d : null, text: b ? Math.round(b.d) + " m" : "\u2013", split: b ? fmtT(T / b.d * 500) : "", date: b ? b.row.date : null, rowId: b ? b.row.id : null });
+    }
+    return out;
+  }
+  function newPBs(before, after) {
+    const b = Object.fromEntries(before.map((x) => [x.key, x.value]));
+    return after.filter((x) => x.value != null && (b[x.key] == null || (x.kind === "dist" ? x.value < b[x.key] - 0.05 : x.value > b[x.key] + 0.5)));
+  }
+  function weekStart(d = /* @__PURE__ */ new Date()) {
+    const x = new Date(d);
+    x.setHours(0, 0, 0, 0);
+    x.setDate(x.getDate() - (x.getDay() + 6) % 7);
+    return x;
+  }
+  function totals(h = loadHistory(), now3 = /* @__PURE__ */ new Date()) {
+    const ws = weekStart(now3).getTime();
+    let all = 0, week = 0, time = 0, wk = 0;
+    const days = new Set(h.map((r) => r.date.slice(0, 10)));
+    for (const r of h) {
+      all += r.dist || 0;
+      time += r.time || 0;
+      if (new Date(r.date).getTime() >= ws) {
+        week += r.dist || 0;
+        wk++;
+      }
+    }
+    let streak = 0;
+    const d = new Date(now3);
+    if (!days.has(isoDay(d))) d.setDate(d.getDate() - 1);
+    while (days.has(isoDay(d))) {
+      streak++;
+      d.setDate(d.getDate() - 1);
+    }
+    return { sessions: h.length, metres: Math.round(all), time, week: Math.round(week), weekSessions: wk, streak };
+  }
+  function isoDay(d) {
+    return `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`;
+  }
+  function weeklyMetres(h = loadHistory(), weeks = 8, now3 = /* @__PURE__ */ new Date()) {
+    const ws = weekStart(now3).getTime(), W = 7 * 864e5, out = new Array(weeks).fill(0);
+    for (const r of h) {
+      const k = Math.floor((ws + W - new Date(r.date).getTime()) / W);
+      if (k >= 0 && k < weeks) out[weeks - 1 - k] += r.dist || 0;
+    }
+    return out;
+  }
+  var csvCell = (v) => {
+    v = v == null ? "" : String(v);
+    return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v;
+  };
+  function historyCSV(h = loadHistory()) {
+    const head = ["date", "name", "kind", "distance_m", "time_s", "avg_split", "avg_split_s", "avg_spm", "avg_watts", "avg_hr", "max_hr", "strokes", "stage", "ship", "source", "plan", "notes"];
+    const rows = h.map((r) => [r.date, r.name, r.kind, Math.round(r.dist), (+r.time).toFixed(1), fmtT(r.split), (+r.split || 0).toFixed(1), r.spm || "", r.watts || "", r.hrAvg || "", r.hrMax || "", r.strokes || "", r.stage || "", r.ship || "", r.source || "", r.plan || "", r.note || ""]);
+    return [head, ...rows].map((x) => x.map(csvCell).join(",")).join("\n") + "\n";
+  }
+  function samplesCSV(r) {
+    return "time_s,distance_m,split_s,spm,watts,hr\n" + (r.samples || []).map((s) => [s[0].toFixed(1), s[1].toFixed(1), (+s[2]).toFixed(1), s[3] | 0, Math.round(s[4] || 0), s[5] || ""].join(",")).join("\n") + "\n";
+  }
+  var xmlEsc = (s) => String(s).replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c]);
+  function rowTCX(r) {
+    const t0 = new Date(r.date).getTime() - (r.time || 0) * 1e3;
+    const iso = (sec) => new Date(t0 + sec * 1e3).toISOString().replace(/\.\d{3}Z$/, "Z");
+    const pts = (r.samples || []).map((s) => `<Trackpoint><Time>${iso(s[0])}</Time><DistanceMeters>${(+s[1]).toFixed(1)}</DistanceMeters>${s[5] ? `<HeartRateBpm><Value>${s[5] | 0}</Value></HeartRateBpm>` : ""}<Cadence>${Math.min(254, s[3] | 0)}</Cadence><Extensions><TPX xmlns="http://www.garmin.com/xmlschemas/ActivityExtension/v2"><Watts>${Math.round(s[4] || 0)}</Watts></TPX></Extensions></Trackpoint>`).join("\n");
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd">
+<Activities><Activity Sport="Other"><Id>${iso(0)}</Id>
+<Lap StartTime="${iso(0)}"><TotalTimeSeconds>${(+r.time).toFixed(1)}</TotalTimeSeconds><DistanceMeters>${(+r.dist).toFixed(1)}</DistanceMeters><Calories>${Math.round(r.cal || (r.watts || 100) * r.time * 4 / 4184 + 0.35 * r.time / 60 * 1.2)}</Calories>${r.hrAvg ? `<AverageHeartRateBpm><Value>${r.hrAvg | 0}</Value></AverageHeartRateBpm>` : ""}${r.hrMax ? `<MaximumHeartRateBpm><Value>${r.hrMax | 0}</Value></MaximumHeartRateBpm>` : ""}<Intensity>Active</Intensity>${r.spm ? `<Cadence>${r.spm | 0}</Cadence>` : ""}<TriggerMethod>Manual</TriggerMethod>
+<Track>
+${pts}
+</Track>
+<Notes>${xmlEsc(`CosmicRow: ${r.name}${r.stage ? " \xB7 " + r.stage : ""} \xB7 avg ${fmtT(r.split)}/500m`)}</Notes></Lap>
+<Creator xsi:type="Device_t"><Name>CosmicRow</Name><UnitId>0</UnitId><ProductID>0</ProductID></Creator>
+</Activity></Activities></TrainingCenterDatabase>
+`;
+  }
+  function download(name, text, type = "text/plain") {
+    const url = URL.createObjectURL(new Blob([text], { type }));
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4e3);
+  }
+  function simForceCurve(wattsAvg = 180, spm = 24, n = 32, seed = 1) {
+    const peak = 160 + Math.pow(Math.max(30, wattsAvg), 0.62) * 13 / Math.max(0.7, spm / 24) ** 0.3, out = [];
+    let r = seed * 9301 % 233280;
+    for (let i = 0; i < n; i++) {
+      const x = i / (n - 1);
+      r = (r * 9301 + 49297) % 233280;
+      const shape = Math.pow(Math.sin(Math.PI * Math.pow(x, 0.82)), 1.35);
+      out.push(Math.max(0, peak * shape * (0.97 + 0.06 * r / 233280)));
+    }
+    return out;
+  }
+  function drawLine(cv, series, opts = {}) {
+    const dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth || 300, H = cv.clientHeight || 140;
+    cv.width = W * dpr;
+    cv.height = H * dpr;
+    const g = cv.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, W, H);
+    const pts = series.flatMap((s) => s.data);
+    if (pts.length < 2) {
+      g.fillStyle = "#7fa8c0";
+      g.font = "12px sans-serif";
+      g.fillText(opts.empty || "No data yet", 10, H / 2);
+      return;
+    }
+    const L = 44, R = 8, T = 16, B = 20;
+    let x0 = Math.min(...pts.map((p) => p[0])), x1 = Math.max(...pts.map((p) => p[0])), y0 = Math.min(...pts.map((p) => p[1])), y1 = Math.max(...pts.map((p) => p[1]));
+    if (opts.y0 != null) y0 = opts.y0;
+    if (y1 - y0 < 1e-6) {
+      y1 += 1;
+      y0 -= 1;
+    }
+    const pd = (y1 - y0) * 0.08;
+    y0 -= opts.y0 != null ? 0 : pd;
+    y1 += pd;
+    if (x1 === x0) x1 = x0 + 1;
+    const X = (x) => L + (x - x0) / (x1 - x0) * (W - L - R), Y = (y) => opts.invert ? T + (y - y0) / (y1 - y0) * (H - T - B) : H - B - (y - y0) / (y1 - y0) * (H - T - B);
+    g.strokeStyle = "rgba(80,200,255,.14)";
+    g.fillStyle = "#7fa8c0";
+    g.font = "10px sans-serif";
+    g.lineWidth = 1;
+    for (let i = 0; i <= 3; i++) {
+      const y = y0 + (y1 - y0) * i / 3, py2 = Y(y);
+      g.beginPath();
+      g.moveTo(L, py2);
+      g.lineTo(W - R, py2);
+      g.stroke();
+      g.fillText((opts.yFmt || ((v) => Math.round(v)))(y), 2, py2 + 3);
+    }
+    for (let i = 0; i <= 4; i++) {
+      const x = x0 + (x1 - x0) * i / 4;
+      g.fillText((opts.xFmt || ((v) => Math.round(v)))(x), Math.min(W - 30, X(x) - 8), H - 5);
+    }
+    if (opts.title) {
+      g.fillStyle = "#bfefff";
+      g.font = "bold 11px sans-serif";
+      g.fillText(opts.title, L, 11);
+    }
+    for (const s of series) {
+      g.strokeStyle = s.color || "#29e0ff";
+      g.lineWidth = 2;
+      g.beginPath();
+      s.data.forEach((p, i) => i ? g.lineTo(X(p[0]), Y(p[1])) : g.moveTo(X(p[0]), Y(p[1])));
+      g.stroke();
+      if (opts.fill) {
+        g.lineTo(X(s.data[s.data.length - 1][0]), Y(y0));
+        g.lineTo(X(s.data[0][0]), Y(y0));
+        g.closePath();
+        g.fillStyle = (s.color || "#29e0ff") + "33";
+        g.fill();
+      }
+    }
+  }
+  function drawBars(cv, values, labels, color = "#29e0ff") {
+    const dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth || 300, H = cv.clientHeight || 110;
+    cv.width = W * dpr;
+    cv.height = H * dpr;
+    const g = cv.getContext("2d");
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+    g.clearRect(0, 0, W, H);
+    const mx = Math.max(1, ...values), bw = (W - 10) / values.length;
+    values.forEach((v, i) => {
+      const h = (H - 30) * v / mx;
+      g.fillStyle = color + (i === values.length - 1 ? "" : "99");
+      g.fillRect(5 + i * bw + 3, H - 16 - h, bw - 6, h);
+      g.fillStyle = "#7fa8c0";
+      g.font = "10px sans-serif";
+      g.fillText(labels[i], 5 + i * bw + 3, H - 4);
+      if (v) {
+        g.fillStyle = "#bfefff";
+        g.fillText(v >= 1e3 ? (v / 1e3).toFixed(1) + "k" : String(Math.round(v)), 5 + i * bw + 3, H - 20 - h);
+      }
+    });
+  }
+
+  // online/lobby.js
+  var ONLINE_DISTANCES = [500, 1e3, 2e3, 5e3];
+  var COUNTDOWN_S = 10;
+  var SEND_HZ = 5;
+  var CODE_CH = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  function makeCode(rnd = Math.random) {
+    let s = "";
+    for (let i = 0; i < 5; i++) s += CODE_CH[rnd() * CODE_CH.length | 0];
+    return s;
+  }
+  var validCode = (c) => /^[A-HJ-NP-Z2-9]{5}$/.test(String(c || "").toUpperCase());
+  function scheduledRaces(now3 = Date.now(), n = 5) {
+    const Q2 = 15 * 6e4, first = Math.ceil((now3 + 2e4) / Q2) * Q2, out = [];
+    const kinds = [[500, "Sprint 500"], [2e3, "Classic 2k"], [1e3, "Kilometre Dash"], [2e3, "Classic 2k"], [5e3, "Endurance 5k"], [1e3, "Kilometre Dash"]];
+    for (let i = 0; i < n; i++) {
+      const at = first + i * Q2, k = kinds[Math.floor(at / Q2) % kinds.length];
+      out.push({ id: "S" + Math.floor(at / Q2), name: k[1], dist: k[0], at });
+    }
+    return out;
+  }
+  var Emitter = class {
+    constructor() {
+      this._h = {};
+    }
+    on(ev, fn) {
+      (this._h[ev] = this._h[ev] || []).push(fn);
+      return this;
+    }
+    emit(ev, data) {
+      for (const fn of this._h[ev] || []) try {
+        fn(data);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+  var BOT_NAMES = [["NOVA-K", "raven", "purple"], ["Halvard", "aurora", "green"], ["rowfox", "valkyrie", "orange"], ["Mika T.", "nebula", "blue"], ["SKYLINE", "titan", "red"], ["Ingrid R", "phoenix", "purple"], ["deltaV", "aurora", "gold"], ["Oarsome", "raven", "green"]];
+  var SimLobby = class extends Emitter {
+    /** opts: { rnd, countdownS, botSplit (s/500 around which bots row), latency [min,max] ms, loss 0..1 } */
+    constructor(opts = {}) {
+      super();
+      this.mode = "local";
+      this.o = Object.assign({ rnd: Math.random, countdownS: COUNTDOWN_S, botSplit: 125, latency: [40, 160], loss: 0.03 }, opts);
+      this.room = null;
+      this.timers = [];
+      this.me = null;
+      this.offset = 0;
+    }
+    connect(me) {
+      this.me = { id: "me", ...me, ready: false };
+      this.emit("status", { mode: "local", online: true, msg: "Simulated lobby (local - no server)" });
+      return Promise.resolve();
+    }
+    now() {
+      return Date.now();
+    }
+    _t(fn, ms) {
+      const h = setTimeout(fn, ms);
+      this.timers.push(h);
+      return h;
+    }
+    _clear() {
+      this.timers.forEach(clearTimeout);
+      this.timers = [];
+      clearInterval(this._iv);
+      this._iv = null;
+    }
+    _bots(n, skip = 0) {
+      const r = this.o.rnd, pool = BOT_NAMES.slice();
+      for (let i = pool.length - 1; i > 0; i--) {
+        const j = r() * (i + 1) | 0;
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      return pool.slice(skip, skip + n).map(([name, ship, color], i) => ({ id: "b" + i + makeCode(r).slice(0, 2), name, ship, color, ready: false, bot: true, split: this.o.botSplit + (r() - 0.5) * 14 }));
+    }
+    _emitRoom() {
+      this.emit("room", JSON.parse(JSON.stringify(this.room)));
+    }
+    _joinTrickle(bots, startMs = 700) {
+      bots.forEach((b, i) => this._t(() => {
+        if (!this.room) return;
+        this.room.players.push(b);
+        this._emitRoom();
+        this._t(() => {
+          b.ready = true;
+          this._emitRoom();
+          this._maybeAuto();
+        }, 600 + this.o.rnd() * 900);
+      }, startMs + i * (500 + this.o.rnd() * 700)));
+    }
+    _maybeAuto() {
+      const R = this.room;
+      if (R && R.state === "open" && R.host !== "me" && R.players.every((p) => p.ready)) this._countdown();
+    }
+    create({ dist = 2e3 } = {}) {
+      this._clear();
+      this.room = { code: makeCode(this.o.rnd), dist, host: "me", state: "open", startAt: 0, players: [{ ...this.me, ready: false }] };
+      this._emitRoom();
+      this._joinTrickle(this._bots(2 + (this.o.rnd() * 3 | 0)));
+    }
+    join(code) {
+      code = String(code || "").toUpperCase().trim();
+      if (!validCode(code)) {
+        this.emit("error", { msg: "Race codes are 5 letters/digits, e.g. K7QXM." });
+        return;
+      }
+      this._clear();
+      const bots = this._bots(3 + (this.o.rnd() * 2 | 0)), host = bots.shift();
+      host.ready = true;
+      this.room = { code, dist: ONLINE_DISTANCES[(code.charCodeAt(0) + code.charCodeAt(4)) % 4], host: host.id, state: "open", startAt: 0, players: [host, { ...this.me, ready: false }] };
+      this._emitRoom();
+      this._joinTrickle(bots, 400);
+    }
+    schedule() {
+      this.emit("sched", scheduledRaces(this.now()).map((s, i) => ({ ...s, players: 3 + (s.at / 9e5 + i * 7) % 9 | 0 })));
+    }
+    joinScheduled(id) {
+      const s = scheduledRaces(this.now(), 8).find((x) => x.id === id);
+      if (!s) {
+        this.emit("error", { msg: "That race has already started." });
+        return;
+      }
+      this._clear();
+      this.room = { code: s.id, dist: s.dist, name: s.name, host: "server", state: "open", startAt: s.at, scheduled: true, players: [{ ...this.me, ready: true }] };
+      this._emitRoom();
+      this._joinTrickle(this._bots(4 + (this.o.rnd() * 3 | 0)), 500);
+      const wait = s.at - this.now() - this.o.countdownS * 1e3;
+      this._t(() => this._countdown(s.at), Math.max(0, wait));
+    }
+    ready(flag = true) {
+      const R = this.room;
+      if (!R) return;
+      R.players.find((p) => p.id === "me").ready = flag;
+      this._emitRoom();
+      this._maybeAuto();
+    }
+    start() {
+      const R = this.room;
+      if (!R || R.host !== "me" || R.state !== "open") return;
+      if (R.players.length < 2) {
+        this.emit("error", { msg: "Wait for at least one other rower." });
+        return;
+      }
+      this._countdown();
+    }
+    _countdown(at) {
+      const R = this.room;
+      if (!R || R.state !== "open") return;
+      R.state = "countdown";
+      R.startAt = at || this.now() + this.o.countdownS * 1e3;
+      R.players.forEach((p) => {
+        if (p.bot) p.ready = true;
+      });
+      this._emitRoom();
+      this.emit("countdown", { startAt: R.startAt });
+      this._t(() => this._go(), Math.max(0, R.startAt - this.now()));
+    }
+    _go() {
+      const R = this.room;
+      if (!R) return;
+      R.state = "racing";
+      this._emitRoom();
+      const bots = R.players.filter((p) => p.bot).map((p, i) => ({ p, d: 0, v: 0, ph: this.o.rnd() * 6, ft: null }));
+      let last = this.now();
+      this._iv = setInterval(() => {
+        const now3 = this.now(), t = (now3 - R.startAt) / 1e3, dt = (now3 - last) / 1e3;
+        last = now3;
+        for (const b of bots) {
+          if (b.ft != null) continue;
+          const target = 500 / b.p.split * (1 + 0.03 * Math.sin(t / 7 + b.ph) + (R.dist - b.d < 250 ? 0.05 : 0)) * Math.min(1, 0.3 + t / 5);
+          b.v += (target - b.v) * Math.min(1, dt * 1.5);
+          b.d += b.v * dt;
+          if (b.d >= R.dist) {
+            b.d = R.dist;
+            b.ft = t;
+          }
+          const msg = { id: b.p.id, t, d: b.d, split: b.v > 0.4 ? 500 / b.v : NaN, finished: b.ft != null, ft: b.ft };
+          if (this.o.rnd() > this.o.loss || msg.finished) this._t(() => this.emit("sample", msg), this.o.latency[0] + this.o.rnd() * (this.o.latency[1] - this.o.latency[0]));
+        }
+        this._bots_ = bots;
+      }, 1e3 / SEND_HZ);
+    }
+    send(s) {
+      if (this.room) this._mine = s;
+    }
+    /** final standings once the local rower finishes: bots still rowing are projected at their pace */
+    results(myFt) {
+      const rows = (this._bots_ || []).map((b) => ({ id: b.p.id, name: b.p.name, ft: b.ft != null ? b.ft : b.v > 0.3 ? (this.now() - this.room.startAt) / 1e3 + (this.room.dist - b.d) / b.v : Infinity }));
+      rows.push({ id: "me", name: "YOU", ft: myFt });
+      rows.sort((a, b) => a.ft - b.ft);
+      return rows;
+    }
+    leave() {
+      this._clear();
+      this.room = null;
+      this.emit("room", null);
+    }
+    close() {
+      this.leave();
+    }
+  };
+  var WsLobby = class extends Emitter {
+    constructor(url) {
+      super();
+      this.mode = "server";
+      this.url = url;
+      this.ws = null;
+      this.room = null;
+      this.offset = 0;
+      this.id = null;
+      this._last = {};
+    }
+    now() {
+      return Date.now() + this.offset;
+    }
+    connect(me) {
+      this.me = me;
+      return new Promise((res, rej) => {
+        let ws;
+        try {
+          ws = this.ws = new WebSocket(this.url);
+        } catch (e) {
+          rej(e);
+          return;
+        }
+        const to = setTimeout(() => {
+          rej(new Error("Server did not answer (is it awake? free hosts sleep - try again in 30 s)"));
+          try {
+            ws.close();
+          } catch (e) {
+          }
+        }, 12e3);
+        ws.onopen = () => ws.send(JSON.stringify({ t: "hello", name: me.name, ship: me.ship, color: me.color, v: 1 }));
+        ws.onerror = () => {
+          clearTimeout(to);
+          this.emit("status", { mode: "server", online: false, msg: "Could not reach " + this.url });
+          rej(new Error("Could not reach " + this.url));
+        };
+        ws.onclose = () => this.emit("status", { mode: "server", online: false, msg: "Disconnected" });
+        ws.onmessage = (ev) => {
+          let m;
+          try {
+            m = JSON.parse(ev.data);
+          } catch (e) {
+            return;
+          }
+          if (m.now) this.offset = m.now - Date.now();
+          if (m.t === "welcome") {
+            clearTimeout(to);
+            this.id = m.id;
+            this.emit("status", { mode: "server", online: true, msg: "Connected to " + this.url.replace(/^wss?:\/\//, "") });
+            res();
+          } else if (m.t === "room") {
+            this.room = m.room;
+            if (m.room) m.room.players.forEach((p) => {
+              if (p.id === this.id) p.id = "me";
+            });
+            if (m.room && m.room.host === this.id) m.room.host = "me";
+            this.emit("room", m.room);
+          } else if (m.t === "sched") this.emit("sched", m.list);
+          else if (m.t === "countdown") this.emit("countdown", { startAt: m.startAt });
+          else if (m.t === "ss") {
+            for (const s of m.list) if (s.id !== this.id) this.emit("sample", { id: s.id, t: s.t, d: s.d, split: s.sp, finished: !!s.f, ft: s.ft });
+            else if (m.t === "result") {
+              this._result = m.rows.map((r) => ({ ...r, id: r.id === this.id ? "me" : r.id, name: r.id === this.id ? "YOU" : r.name }));
+              this.emit("result", { rows: this._result });
+            } else if (m.t === "error") this.emit("error", { msg: m.msg });
+          }
+        };
+      });
+    }
+    _s(o) {
+      if (this.ws && this.ws.readyState === 1) this.ws.send(JSON.stringify(o));
+    }
+    create({ dist = 2e3 } = {}) {
+      this._s({ t: "create", dist });
+    }
+    join(code) {
+      code = String(code || "").toUpperCase().trim();
+      if (!validCode(code)) {
+        this.emit("error", { msg: "Race codes are 5 letters/digits, e.g. K7QXM." });
+        return;
+      }
+      this._s({ t: "join", code });
+    }
+    schedule() {
+      this._s({ t: "sched" });
+    }
+    joinScheduled(id) {
+      this._s({ t: "joinSched", id });
+    }
+    ready(flag = true) {
+      this._s({ t: "ready", ready: flag });
+    }
+    start() {
+      this._s({ t: "start" });
+    }
+    send(s) {
+      this._s({ t: "s", rt: s.t, d: s.d, sp: s.split, f: s.finished ? 1 : 0, ft: s.ft });
+    }
+    results(myFt) {
+      return this._result || [{ id: "me", name: "YOU", ft: myFt }];
+    }
+    leave() {
+      this._s({ t: "leave" });
+      this.room = null;
+      this.emit("room", null);
+    }
+    close() {
+      try {
+        this.ws && this.ws.close();
+      } catch (e) {
+      }
+    }
+  };
+
+  // online/config.js
+  var DEFAULT_SERVER = "";
+
+  // input/heartRate.js
+  function parseHeartRate(dv) {
+    const flags = dv.getUint8(0);
+    let i = 1;
+    const bpm = flags & 1 ? dv.getUint16(i, true) : dv.getUint8(i);
+    i += flags & 1 ? 2 : 1;
+    const contact = flags & 4 ? !!(flags & 2) : null;
+    let energy = null;
+    if (flags & 8) {
+      energy = dv.getUint16(i, true);
+      i += 2;
+    }
+    const rr = [];
+    if (flags & 16) for (; i + 1 < dv.byteLength; i += 2) rr.push(dv.getUint16(i, true) / 1024);
+    return { bpm, contact, energy, rr };
+  }
+  var HR_ZONES = [
+    { z: 1, name: "Recovery", lo: 0.5, hi: 0.6, color: "#7fa8c0" },
+    { z: 2, name: "Endurance", lo: 0.6, hi: 0.7, color: "#29e0ff" },
+    { z: 3, name: "Tempo", lo: 0.7, hi: 0.8, color: "#4dff9c" },
+    { z: 4, name: "Threshold", lo: 0.8, hi: 0.9, color: "#ffb347" },
+    { z: 5, name: "Max", lo: 0.9, hi: 1.01, color: "#ff4f8b" }
+  ];
+  function hrZone(bpm, hrMax) {
+    if (!bpm || !hrMax) return null;
+    const f = bpm / hrMax;
+    if (f < 0.5) return { z: 0, name: "Warm-up", color: "#55708a", f };
+    return { ...HR_ZONES.find((z) => f < z.hi) || HR_ZONES[4], f };
+  }
+  var HeartRateStrap = class _HeartRateStrap {
+    constructor() {
+      this.bpm = null;
+      this.at = 0;
+      this.device = null;
+      this.name = "";
+      this.status = "off";
+      this.battery = null;
+      this.onChange = null;
+      this._onVal = this._onVal.bind(this);
+      this._onGone = this._onGone.bind(this);
+    }
+    static supported() {
+      return typeof navigator !== "undefined" && !!navigator.bluetooth;
+    }
+    /** fresh = a reading in the last 5 s */
+    fresh(now3 = performance.now()) {
+      return this.bpm != null && now3 - this.at < 5e3;
+    }
+    _set(st) {
+      this.status = st;
+      this.onChange && this.onChange(this);
+    }
+    async connect() {
+      if (!_HeartRateStrap.supported()) throw new Error("Web Bluetooth is not available in this browser (use Chrome/Edge, or Bluefy on iPhone).");
+      this._set("connecting");
+      try {
+        this.device = await navigator.bluetooth.requestDevice({ filters: [{ services: ["heart_rate"] }], optionalServices: ["battery_service"] });
+        this.name = this.device.name || "HR strap";
+        this.device.addEventListener("gattserverdisconnected", this._onGone);
+        const server = await this.device.gatt.connect();
+        const svc = await server.getPrimaryService("heart_rate");
+        this.ch = await svc.getCharacteristic("heart_rate_measurement");
+        this.ch.addEventListener("characteristicvaluechanged", this._onVal);
+        await this.ch.startNotifications();
+        try {
+          const b = await (await (await server.getPrimaryService("battery_service")).getCharacteristic("battery_level")).readValue();
+          this.battery = b.getUint8(0);
+        } catch (e) {
+        }
+        this._set("connected");
+      } catch (e) {
+        this._set("off");
+        throw e;
+      }
+    }
+    _onVal(ev) {
+      const r = parseHeartRate(ev.target.value);
+      if (r.bpm > 0 && r.contact !== false) {
+        this.bpm = r.bpm;
+        this.at = performance.now();
+      }
+      this.onChange && this.onChange(this);
+    }
+    _onGone() {
+      this.bpm = null;
+      this._set("lost");
+    }
+    disconnect() {
+      try {
+        this.ch && this.ch.removeEventListener("characteristicvaluechanged", this._onVal);
+        this.device && this.device.gatt.connected && this.device.gatt.disconnect();
+      } catch (e) {
+      }
+      this.bpm = null;
+      this.device = null;
+      this._set("off");
+    }
+  };
+
+  // social.js
+  var PKEY = "cosmicrow.profile.v1";
+  var CKEY = "cosmicrow.clubs.v1";
+  var AGE_GROUPS = ["19-29", "30-39", "40-49", "50-59", "60+"];
+  var RANKS = [
+    { id: "bronze", name: "Bronze", min: 0, color: "#c98a52" },
+    { id: "silver", name: "Silver", min: 5e4, color: "#c9d6e2" },
+    { id: "gold", name: "Gold", min: 15e4, color: "#ffd24d" },
+    { id: "platinum", name: "Platinum", min: 3e5, color: "#8ff7ff" },
+    { id: "neon", name: "Neon", min: 6e5, color: "#ff4fd8" }
+  ];
+  var rid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+  function loadProfile() {
+    let p = {};
+    try {
+      p = JSON.parse(localStorage.getItem(PKEY) || "{}");
+    } catch (e) {
+    }
+    return Object.assign({ id: rid(), name: "", birthYear: 0, sex: "", weightKg: 0, hrMax: 0, share: false }, p);
+  }
+  function saveProfile(p) {
+    localStorage.setItem(PKEY, JSON.stringify(p));
+  }
+  function age(p, now3 = /* @__PURE__ */ new Date()) {
+    return p.birthYear > 1900 ? now3.getFullYear() - p.birthYear : 0;
+  }
+  function ageGroup(p, now3) {
+    const a = age(p, now3);
+    return !a ? "" : a < 30 ? "19-29" : a < 40 ? "30-39" : a < 50 ? "40-49" : a < 60 ? "50-59" : "60+";
+  }
+  function weightClass(p) {
+    if (!p.weightKg || !p.sex) return "";
+    return (p.sex === "M" ? p.weightKg <= 75 : p.weightKg <= 61.5) ? "LW" : "HW";
+  }
+  function hrMaxFor(p) {
+    return p.hrMax > 100 ? p.hrMax : age(p) ? Math.round(208 - 0.7 * age(p)) : 185;
+  }
+  function isoWeek(d = /* @__PURE__ */ new Date()) {
+    const x = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    const day = x.getUTCDay() || 7;
+    x.setUTCDate(x.getUTCDate() + 4 - day);
+    const y0 = new Date(Date.UTC(x.getUTCFullYear(), 0, 1));
+    return `${x.getUTCFullYear()}-W${String(Math.ceil(((x - y0) / 864e5 + 1) / 7)).padStart(2, "0")}`;
+  }
+  function season(d = /* @__PURE__ */ new Date()) {
+    const q = Math.floor(d.getMonth() / 3);
+    return { id: `${d.getFullYear()}-S${q + 1}`, name: `Season ${q + 1} \xB7 ${d.getFullYear()}`, start: new Date(d.getFullYear(), q * 3, 1), end: new Date(d.getFullYear(), q * 3 + 3, 1) };
+  }
+  function rankFor(m) {
+    let r = RANKS[0];
+    for (const x of RANKS) if (m >= x.min) r = x;
+    const i = RANKS.indexOf(r), nx = RANKS[i + 1];
+    return { ...r, next: nx || null, toNext: nx ? nx.min - m : 0, pct: nx ? (m - r.min) / (nx.min - r.min) : 1 };
+  }
+  function rng4(seed) {
+    let s = seed >>> 0 || 1;
+    return () => ((s = Math.imul(s ^ s >>> 15, 2246822507) ^ Math.imul(s ^ s >>> 13, 3266489909)) >>> 0) / 4294967296;
+  }
+  var hash = (str) => {
+    let h = 2166136261;
+    for (const c of str) h = Math.imul(h ^ c.charCodeAt(0), 16777619);
+    return h >>> 0;
+  };
+  var FIRST = ["Ane", "Bo", "Cecilie", "Dmitri", "Elif", "Frode", "Gry", "Hamid", "Ida", "Jonas", "Kirsi", "Lars", "Maja", "Nils", "Oda", "Pia", "Rasmus", "Sara", "Tobias", "Ulla", "Viggo", "Yasmin", "Aksel", "Freja", "Emil", "Sofie", "Kasper", "Nora"];
+  var LAST = "ABDEFHJKLMNPRSTV";
+  function exampleLeague(week, n = 60) {
+    const r = rng4(hash(week)), out = [];
+    for (let i = 0; i < n; i++) out.push({ id: "ex" + i, name: `${FIRST[r() * FIRST.length | 0]} ${LAST[r() * LAST.length | 0]}.`, age: AGE_GROUPS[r() * 5 | 0], wc: r() < 0.3 ? "LW" : "HW", m: Math.round((4e3 + Math.pow(r(), 1.6) * 8e4) / 10) * 10, example: true });
+    return out;
+  }
+  function leagueTable(week, me, { age: age2 = "all", wc = "all", rows = null } = {}) {
+    const list = (rows || exampleLeague(week)).concat([{ id: "you", name: me.name || "YOU", age: me.age, wc: me.wc, m: me.m, you: true }]);
+    return list.filter((x) => x.you || (age2 === "all" || x.age === age2) && (wc === "all" || x.wc === wc)).sort((a, b) => b.m - a.m).map((x, i) => ({ ...x, pos: i + 1 }));
+  }
+  function zoneFor(pos, n) {
+    return pos <= Math.max(1, Math.round(n * 0.2)) ? "up" : pos > n - Math.round(n * 0.2) ? "down" : "";
+  }
+  function loadClubs() {
+    try {
+      return Object.assign({ list: [], active: null }, JSON.parse(localStorage.getItem(CKEY) || "{}"));
+    } catch (e) {
+      return { list: [], active: null };
+    }
+  }
+  function saveClubs(c) {
+    localStorage.setItem(CKEY, JSON.stringify(c));
+  }
+  var CODE_CH2 = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  var clubCode = (rnd = Math.random) => Array.from({ length: 5 }, () => CODE_CH2[rnd() * CODE_CH2.length | 0]).join("");
+  function exampleMembers(code, n = 5) {
+    const r = rng4(hash(code + "m")), out = [];
+    for (let i = 0; i < n; i++) out.push({ id: "em" + i, name: `${FIRST[r() * FIRST.length | 0]} ${LAST[r() * LAST.length | 0]}.`, split: 112 + r() * 26, m: Math.round(5e3 + r() * 4e4), example: true });
+    return out;
+  }
+  function createClub(st, name, me, rnd) {
+    const c = { code: clubCode(rnd), name: String(name || "My Club").slice(0, 32), created: Date.now(), mode: "local", members: exampleMembers("new" + name, 3), mine: true };
+    st.list.push(c);
+    st.active = c.code;
+    saveClubs(st);
+    return c;
+  }
+  function joinClub(st, code) {
+    code = String(code || "").toUpperCase().trim();
+    if (!/^[A-HJ-NP-Z2-9]{5}$/.test(code)) throw new Error("Club codes are 5 letters/digits.");
+    let c = st.list.find((x) => x.code === code);
+    if (!c) {
+      const r = rng4(hash(code));
+      c = { code, name: ["Harbour", "Northside", "Fjord", "Lakeside", "Old Town", "Neon"][r() * 6 | 0] + " " + ["Rowing Club", "Erg Crew", "Oarsmen", "Indoor RC"][r() * 4 | 0], created: Date.now(), mode: "local", members: exampleMembers(code, 6), example: true };
+      st.list.push(c);
+    }
+    st.active = c.code;
+    saveClubs(st);
+    return c;
+  }
+  function leaveClub(st, code) {
+    st.list = st.list.filter((c) => c.code !== code);
+    if (st.active === code) st.active = st.list[0] ? st.list[0].code : null;
+    saveClubs(st);
+  }
+  function clubChallenge(club, myWeekM, week) {
+    const ms = club.members || [], target = Math.max(5e4, Math.ceil((ms.length + 1) * 4e4 / 1e4) * 1e4);
+    const total = myWeekM + ms.reduce((a, m) => a + m.m, 0);
+    return { name: `${target / 1e3} km together`, week, target, total, pct: Math.min(1, total / target), done: total >= target };
+  }
+  var TEAM_FORMATS = [
+    { id: "relay4", name: "Relay 4 \xD7 500 m", legs: 4, leg: 500, desc: "Four rowers, 500 m each. You row the anchor leg live; team times add up." },
+    { id: "agg2k", name: "Aggregate 2k", legs: 3, leg: 2e3, desc: "Three rowers each row 2000 m. The lowest combined time wins." }
+  ];
+  function rivalClub(club) {
+    const r = rng4(hash(club.code + "rival"));
+    return { name: ["Steelwater", "Ice Harbour", "Bluefin", "Kestrel", "Polar Night"][r() * 5 | 0] + " RC", members: exampleMembers(club.code + "rv", 4), example: true };
+  }
+  function teamLegs(members, fmt, rnd = Math.random) {
+    return members.slice().sort((a, b) => a.split - b.split).slice(0, fmt.legs - 1).map((m) => ({ name: m.name, time: fmt.leg / 500 * m.split * (0.985 + rnd() * 0.03), example: !!m.example }));
+  }
+  var SocialClient = class {
+    constructor(base) {
+      this.base = String(base || "").replace(/\/$/, "").replace(/^ws/, "http");
+    }
+    async _j(path, body) {
+      const r = await fetch(this.base + path, body ? { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body) } : {});
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok) throw new Error(j.error || "HTTP " + r.status);
+      return j;
+    }
+    submitWeek(p, week, m) {
+      return this._j("/league/submit", { week, id: p.id, name: p.name || "Rower", age: ageGroup(p) || "30-39", wc: weightClass(p) || "HW", m });
+    }
+    league(week, age2 = "all", wc = "all") {
+      return this._j(`/league?week=${week}&age=${encodeURIComponent(age2)}&wc=${wc}`);
+    }
+    createClub(p, name) {
+      return this._j("/clubs/create", { id: p.id, member: p.name || "Rower", name });
+    }
+    joinClub(p, code) {
+      return this._j("/clubs/join", { id: p.id, member: p.name || "Rower", code });
+    }
+    clubMetres(p, code, m) {
+      return this._j("/clubs/metres", { id: p.id, code, m });
+    }
+  };
+
+  // strava.js
+  var STRAVA_CONFIG = {
+    clientId: "",
+    // Strava app "Client ID" (public) - fill in after registering at strava.com/settings/api
+    workerUrl: "",
+    // e.g. https://cosmicrow-strava.<you>.workers.dev
+    redirectUri: "https://klamintson.github.io/cosmicrow-play/?strava=1",
+    scope: "activity:write"
+  };
+  var KEY5 = "cosmicrow.strava.v1";
+  var stravaReady = (c = STRAVA_CONFIG) => !!(c.clientId && c.workerUrl);
+  function loadStrava() {
+    try {
+      return JSON.parse(localStorage.getItem(KEY5) || "null");
+    } catch (e) {
+      return null;
+    }
+  }
+  function saveStrava(t) {
+    t ? localStorage.setItem(KEY5, JSON.stringify(t)) : localStorage.removeItem(KEY5);
+  }
+  function stravaAuthUrl(c = STRAVA_CONFIG, state = Math.random().toString(36).slice(2)) {
+    sessionStorage.setItem("cosmicrow.strava.state", state);
+    return "https://www.strava.com/oauth/authorize?" + new URLSearchParams({ client_id: c.clientId, redirect_uri: c.redirectUri, response_type: "code", approval_prompt: "auto", scope: c.scope, state });
+  }
+  async function stravaHandleRedirect(c = STRAVA_CONFIG) {
+    const q = new URLSearchParams(location.search);
+    if (!q.get("strava") || !stravaReady(c)) return null;
+    history.replaceState(null, "", location.pathname);
+    if (q.get("error")) throw new Error("Strava: " + q.get("error"));
+    if (q.get("state") !== sessionStorage.getItem("cosmicrow.strava.state")) throw new Error("Strava sign-in state mismatch");
+    const r = await fetch(c.workerUrl + "/token", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ code: q.get("code") }) });
+    if (!r.ok) throw new Error("Strava token exchange failed (" + r.status + ")");
+    const t = await r.json();
+    const tok = { access_token: t.access_token, refresh_token: t.refresh_token, expires_at: t.expires_at, athlete: t.athlete ? (t.athlete.firstname || "") + " " + (t.athlete.lastname || "") : "" };
+    saveStrava(tok);
+    return tok;
+  }
+  async function fresh(c, tok) {
+    if (tok.expires_at * 1e3 > Date.now() + 6e4) return tok;
+    const r = await fetch(c.workerUrl + "/refresh", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: tok.refresh_token }) });
+    if (!r.ok) throw new Error("Strava token refresh failed");
+    const t = await r.json();
+    const n = { ...tok, access_token: t.access_token, refresh_token: t.refresh_token, expires_at: t.expires_at };
+    saveStrava(n);
+    return n;
+  }
+  async function stravaUpload(tcx, { name, description, externalId }, c = STRAVA_CONFIG) {
+    let tok = loadStrava();
+    if (!tok || !stravaReady(c)) throw new Error("Strava is not connected");
+    tok = await fresh(c, tok);
+    const fd = new FormData();
+    fd.append("file", new Blob([tcx], { type: "application/xml" }), (externalId || "cosmicrow") + ".tcx");
+    fd.append("data_type", "tcx");
+    fd.append("sport_type", "Rowing");
+    fd.append("trainer", "1");
+    fd.append("name", name || "CosmicRow row");
+    if (description) fd.append("description", description);
+    if (externalId) fd.append("external_id", externalId);
+    const r = await fetch(c.workerUrl + "/upload", { method: "POST", headers: { Authorization: "Bearer " + tok.access_token }, body: fd });
+    let up = await r.json();
+    if (!r.ok || up.error) throw new Error("Strava: " + (up.error || r.status));
+    for (let i = 0; i < 15 && !up.activity_id && !up.error; i++) {
+      await new Promise((res) => setTimeout(res, 1500));
+      up = await (await fetch(c.workerUrl + "/upload/" + up.id, { headers: { Authorization: "Bearer " + tok.access_token } })).json();
+    }
+    if (up.error) throw new Error("Strava: " + up.error);
+    return up;
+  }
+
   // main.js
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-menus-v6";
+  var BUILD_ID = "cosmicrow-social-v7";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -27254,13 +28469,13 @@ void main() {
       if (this.city) this.city.group.visible = city;
       if (this.sunset) this.sunset.group.visible = sun;
       this.stars.visible = id === "orbit";
-      const u = this.skyMat.uniforms, P = STAGE_SKY[id] || STAGE_SKY.orbit;
-      u.top.value.set(P.top);
-      u.mid.value.set(P.mid);
-      u.hor.value.set(P.hor);
-      u.bot.value.set(P.bot);
-      this.scene.fog.color.set(P.fog);
-      this.scene.fog.density = P.density;
+      const u = this.skyMat.uniforms, P5 = STAGE_SKY[id] || STAGE_SKY.orbit;
+      u.top.value.set(P5.top);
+      u.mid.value.set(P5.mid);
+      u.hor.value.set(P5.hor);
+      u.bot.value.set(P5.bot);
+      this.scene.fog.color.set(P5.fog);
+      this.scene.fog.density = P5.density;
       this.trackMat.uniforms.uCol2.value.set(id === "orbit" ? 10116095 : 16728024);
       this.farStars.material.opacity = city ? 0.45 : sun ? 0.55 : 0.8;
       if (sun) this._placeSun();
@@ -28501,7 +29716,7 @@ void main() {
       this.opts = readJSON(OPTS_KEY, { ghost: true, pace: false, paceSplit: 120, zone: false, zlo: 24, zhi: 28, unlockAll: false, rivals: 0, rivalSplit: 125, story: "full", storySfx: true });
       if (!this.opts.field) this.opts.field = this.opts.rivals > 0 ? "rivals" : "off";
       if (!(this.opts.rivals >= 1)) this.opts.rivals = 3;
-      this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun" });
+      this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun", olTabs: "race", pfTabs: "stats", pfChart: "split", lgAge: "", lgWc: "all" });
       this.stats = loadStats();
       this.sel = readJSON(MODE_KEY, { tab: "distance", d: 2e3, s: 240, preset: "8x500", custom: { reps: 6, value: 500, unit: "distance", rest: 60 }, arc: { round: "r3", level: "normal" } });
       const saved = (() => {
@@ -28529,6 +29744,18 @@ void main() {
       this.cockpit = localStorage.getItem(CAM_KEY) === "cockpit";
       this.lb = loadLogbookSettings();
       this.wod = null;
+      this.plans = loadPlanState();
+      this.profile = loadProfile();
+      saveProfile(this.profile);
+      this.clubs = loadClubs();
+      this.hr = new HeartRateStrap();
+      this.hr.onChange = () => this._paintHr();
+      this.online = readJSON("cosmicrow.online.v1", { mode: DEFAULT_SERVER ? "server" : "local", url: DEFAULT_SERVER, dist: 2e3 });
+      this.lobby = null;
+      this.olRoom = null;
+      this._olHold = false;
+      this.racers = [];
+      this.rivalViews = [];
       this._setupPost();
       this.state = "title";
       this.workout = this.selectedWorkout();
@@ -28552,8 +29779,14 @@ void main() {
           this._paintLogbook();
         }
       }).catch((e) => console.warn("Concept2 sign-in failed", e));
+      if (stravaReady()) stravaHandleRedirect().then((t) => {
+        if (t) {
+          this._paintStrava();
+          this.toast && this.toast("Strava connected");
+        }
+      }).catch((e) => console.warn("Strava sign-in failed", e));
       window.CosmicRow = this;
-      window.CosmicRowLib = { heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady };
+      window.CosmicRowLib = { parseSession, parsePlanImport, personalBests, bestTimeFor, rowTCX, historyCSV, hrZone, leagueTable, rankFor, scheduledRaces, SimLobby, heightFor, briefing, makePaceBoats, PaceRacer, ARCADE_ROUNDS, ARCADE_LEVELS, STAGES, AIRacer, RemoteRacer, makeRivals, standings, parseWod, buildResult, workoutKey, WorkoutRunner, wIntervals, wDistance, wTime, dailyChallenge, LogbookClient, oauthReady };
     }
     get target() {
       const w = this.workout;
@@ -28647,6 +29880,8 @@ void main() {
           return wCalm();
         case "free":
           return wFree();
+        case "plan":
+          return this._planWorkout();
         default:
           return wDistance(s.d);
       }
@@ -28674,7 +29909,7 @@ void main() {
     }
     _refreshMode() {
       const $ = (id) => document.getElementById(id), s = this.sel, o = this.opts;
-      const other = ["wod", "daily", "calm"].includes(s.tab);
+      const other = ["wod", "daily", "calm", "plan"].includes(s.tab);
       document.querySelectorAll("#modeTabs button").forEach((b) => b.classList.toggle("sel", b.dataset.tab === s.tab));
       document.querySelectorAll("#modeOpts .opt").forEach((x) => x.classList.toggle("show", x.dataset.for === s.tab || x.dataset.for === "other" && other));
       document.querySelectorAll("#distBtns button").forEach((b) => b.classList.toggle("sel", +b.dataset.d === s.d));
@@ -28688,9 +29923,10 @@ void main() {
       $("customRow").classList.toggle("hidden", s.preset !== "custom");
       this.workout = this.selectedWorkout();
       const w = this.workout;
-      $("otherSel").innerHTML = other ? `Selected from another section: <b>${esc(s.tab === "wod" ? "Today's WOD" : s.tab === "daily" ? "Daily Challenge" : "Calm mode")}</b>. Pick a workout above to switch.` : "";
+      $("otherSel").innerHTML = other ? `Selected from another section: <b>${esc(s.tab === "wod" ? "Today's WOD" : s.tab === "daily" ? "Daily Challenge" : s.tab === "plan" ? "Training plan" : "Calm mode")}</b>. Pick a workout above to switch.` : "";
       const txt = this._setupText(w);
-      $("modeLine").innerHTML = `Selected: <b>${esc(txt)}</b>`;
+      $("modeLine").innerHTML = `Selected: <b>${esc(txt)}</b>${w && w.note ? ` <span class="note">\xB7 ${esc(w.note)}</span>` : ""}`;
+      this._paintPlans();
       $("raceSub").textContent = txt + " \xB7 " + this.stageDef().name;
       $("startBtn").disabled = !w;
       $("trGo").disabled = !w;
@@ -28709,8 +29945,8 @@ void main() {
     }
     /* ---------- menu panels ---------- */
     _showOnly(id) {
-      ["title", "training", "arcade", "settings", "garage", "stages", "about", "summary", "loading"].forEach((x) => document.getElementById(x).classList.toggle("hidden", x !== id));
-      document.body.classList.toggle("inpanel", ["training", "arcade", "settings", "stages", "loading"].includes(id));
+      ["title", "training", "arcade", "online", "profile", "settings", "garage", "stages", "about", "summary", "loading"].forEach((x) => document.getElementById(x).classList.toggle("hidden", x !== id));
+      document.body.classList.toggle("inpanel", ["training", "arcade", "online", "profile", "settings", "stages", "loading"].includes(id));
     }
     /** select a tab in a panel nav (remembered) */
     _tab(navId, sec) {
@@ -28723,6 +29959,11 @@ void main() {
       const body = nav.parentElement.querySelector(".mbody");
       if (body) body.scrollTop = 0;
       this.ui[navId] = sec;
+      this._saveUi();
+      if (navId === "pfTabs" && this.state === "profile") this._paintProfile();
+      if (navId === "olTabs" && sec === "sched" && this.lobby) this.lobby.schedule();
+    }
+    _saveUi() {
       localStorage.setItem("cosmicrow.ui.v1", JSON.stringify(this.ui));
     }
     openTraining(sec) {
@@ -28841,7 +30082,15 @@ void main() {
         this._refreshMode();
       }));
       tap($("startBtn"), () => this.startRace());
-      tap($("againBtn"), () => this.workout && this.workout.arcade ? this.startRace(this.arcadeWorkout()) : this.startRace());
+      tap($("againBtn"), () => {
+        const w = this.workout;
+        if (w && w.online) {
+          $("summary").classList.add("hidden");
+          this.openOnline("race");
+        } else if (w && w.team) this.startRace({ ...w });
+        else if (w && w.arcade) this.startRace(this.arcadeWorkout());
+        else this.startRace();
+      });
       tap($("menuBtn"), () => this.toTitle());
       tap($("endBtn"), () => this.finish(true));
       tap($("aboutBtn"), () => $("about").classList.remove("hidden"));
@@ -28868,6 +30117,11 @@ void main() {
       tap($("camBtn"), () => this.toggleCam());
       tap($("trainingBtn"), () => this.openTraining());
       tap($("arcadeBtn"), () => this.openArcade());
+      tap($("onlineBtn"), () => this.openOnline());
+      tap($("profileBtn"), () => this.openProfile());
+      tap($("olBack"), () => this.toTitle());
+      tap($("pfBack"), () => this.toTitle());
+      this._bindSocial($, tap);
       tap($("trBack"), () => this.toTitle());
       tap($("arBack"), () => this.toTitle());
       tap($("trStage"), () => this.openStages("training"));
@@ -28875,7 +30129,7 @@ void main() {
       tap($("arcPlay"), () => this.startRace(this.arcadeWorkout()));
       tap($("inChip"), () => this.openSettings("input"));
       tap($("lbChip"), () => this.openSettings("logbook"));
-      for (const nav of ["trTabs", "setTabs", "arTabs"]) document.querySelectorAll(`#${nav} button`).forEach((b) => tap(b, () => this._tab(nav, b.dataset.sec)));
+      for (const nav of ["trTabs", "setTabs", "arTabs", "olTabs", "pfTabs"]) document.querySelectorAll(`#${nav} button`).forEach((b) => tap(b, () => this._tab(nav, b.dataset.sec)));
       document.querySelectorAll(".pick").forEach((b) => tap(b, () => {
         this.sel.tab = b.dataset.pick;
         this._saveSel();
@@ -29191,7 +30445,7 @@ void main() {
             else if (this.state === "garage") this.closeGarage(false);
             else if (this.state === "settings") this.closeSettings();
             else if (this.state === "stages") this.closeStages();
-            else if (this.state === "training" || this.state === "arcade" || this.state === "summary") this.toTitle();
+            else if (["training", "arcade", "online", "profile", "summary"].includes(this.state)) this.toTitle();
           } else if (e.code === "Enter") {
             if (this.state === "garage") this.closeGarage(true);
             else if (this.state === "arcade") this.startRace(this.arcadeWorkout());
@@ -29430,7 +30684,10 @@ void main() {
         hrN: 0,
         hrMax: 0,
         rec: new GhostRecorder(),
-        source: this.source === this.pm5 ? "pm5" : "tap"
+        source: this.source === this.pm5 ? "pm5" : "tap",
+        hist: [],
+        histLast: -1,
+        olSend: 0
       };
     }
     _clearRivals() {
@@ -29485,7 +30742,7 @@ void main() {
     _updateRacers(dt, r, w) {
       if (!this.racers.length) return;
       const myD = r.workD, cam = this.camera, W = window.innerWidth, H = window.innerHeight, v = this._pv || (this._pv = new Vector3());
-      for (const x of this.racers) x.update(r.workT, dt);
+      for (const x of this.racers) x.update(x.wall ? this._olClock() : r.workT, dt);
       const slow = (this._tagT = (this._tagT || 0) + dt) > 0.2;
       if (slow) this._tagT = 0;
       const t = this.timer.getElapsed();
@@ -29633,13 +30890,14 @@ void main() {
       this.hud.setZone("");
       this.trackNow.copy(this.trackBase);
       this._clearRivals();
-      this.ghost = !calm && !w.arcade && w.kind !== "free" && this.opts.ghost ? loadGhosts()[workoutKey(w)] || null : null;
+      const solo = !w.arcade && !w.online && !w.team;
+      this.ghost = !calm && solo && w.kind !== "free" && this.opts.ghost ? loadGhosts()[workoutKey(w)] || null : null;
       if (this.ghost) {
         this.ghostShip = buildProxyShip(this.ghost.ship || "aurora", this.ghost.color || null, { opacity: 0.32, tint: 10474495 });
         this.ghostShip.group.visible = false;
         this.scene.add(this.ghostShip.group);
       }
-      this.paceOn = !calm && !w.arcade && this.opts.pace && isFinite(this.opts.paceSplit);
+      this.paceOn = !calm && solo && this.opts.pace && isFinite(this.opts.paceSplit);
       if (this.paceOn) {
         this.paceShip = buildProxyShip("raven", "red", { opacity: 1 });
         this.paceShip.group.visible = false;
@@ -29648,15 +30906,22 @@ void main() {
       [this.hud.el.chipGhost, this.hud.el.chipPace, this.hud.el.chipZone].forEach((el) => this.hud.chip(el, null));
       const n = this._fieldN(), goal = w.kind === "distance" ? w.segs[0].value : 0;
       this._fieldKind = "";
-      if (!calm && !w.arcade && n) {
+      if (w.online) this._olSetupField(w);
+      else if (w.team) this._teamSetupField(w);
+      else if (!calm && !w.arcade && n) {
         this._fieldKind = this.opts.field;
         this._setupRacers(this.opts.field === "pace" ? makePaceBoats(n, this.opts.rivalSplit, goal) : makeRivals(n, this.opts.rivalSplit, goal, Date.now() / 1e3 | 0));
       }
       this.env.setSunProgress(0);
       if (w.arcade) this._startArcade(w);
       if (w.kind === "intervals") this.hud.flash(`REP 1 / ${w.segs.length}`);
+      if (w.team) this.hud.flash(`ANCHOR LEG \xB7 ${w.team.fmtName}`);
     }
     toTitle() {
+      if (this._olHold) {
+        this._olHold = false;
+        document.getElementById("olCount").classList.add("hidden");
+      }
       this.state = "title";
       this.hud.show(false);
       this._clearRivals();
@@ -29773,6 +31038,7 @@ void main() {
       }
       if (this.state !== "race") return;
       this.audio.init();
+      if (this._olHold) return;
       if (this.source === this.sim && this.sim.stroke()) {
         this.audio.stroke(0.6 + 0.4 * Math.min(1, this.sim.speedMps / 5));
         this.session.started = true;
@@ -29788,9 +31054,11 @@ void main() {
       let raceRes = null;
       if (this.racers && this.racers.length) {
         const goal = w.kind === "distance" ? w.segs[0].value : 0;
-        const st = standings(r.workD, this.racers, r.done && goal ? r.workT : null);
+        const st = standings(r.workD, this.racers, r.done && goal ? w.online ? this._olClock() : r.workT : null);
         raceRes = { pos: st.findIndex((x) => x.id === "you") + 1, of: st.length, rows: st };
       }
+      const teamRes = w.team ? this._teamResult(w, r) : null;
+      if (w.online) this._olFinish(r);
       this._clearRivals();
       if (!r.done) r.close();
       const complete = r.done && !early, dist = r.workD, time = r.workT;
@@ -29823,7 +31091,7 @@ void main() {
         streakMsg = `Daily challenge complete \u2713 Streak: ${st} day${st === 1 ? "" : "s"}`;
       }
       saveStats(this.stats);
-      const fresh = unlockedSet(this.stats).filter((x) => !before.includes(x)).map((x) => {
+      const fresh2 = unlockedSet(this.stats).filter((x) => !before.includes(x)).map((x) => {
         const [k, id] = x.split(":");
         return k === "ship" ? shipById(id).name : COLORS[id].name + " colour";
       });
@@ -29863,12 +31131,13 @@ void main() {
         const pd = 500 / this.opts.paceSplit * time;
         extra += `<div class="sumnote">vs pace boat ${fmtSplit(this.opts.paceSplit)}: <b>${dist >= pd ? Math.round(dist - pd) + " m ahead" : Math.round(pd - dist) + " m behind"}</b></div>`;
       }
-      if (raceRes) {
+      if (raceRes && !w.team) {
         const ord = (n) => n + (["th", "st", "nd", "rd"][n % 100 > 10 && n % 100 < 14 ? 0 : n % 10] || "th");
         extra += `<div class="sumnote">Race: <b>${ord(raceRes.pos)} of ${raceRes.of}</b> \xB7 ${raceRes.rows.map((x, i) => `${i + 1}. ${x.name}`).join("  ")}</div>`;
       }
       if (streakMsg) extra += `<div class="sumnote"><b>${streakMsg}</b></div>`;
-      if (fresh.length) extra += `<div class="sumnote" style="color:#ffd59a">\u{1F513} Unlocked: <b>${fresh.join(", ")}</b> - find it in the Garage</div>`;
+      extra += this._afterRow({ w, s, r, complete, dist, time, avgSplit, avgSpm, raceRes, teamRes });
+      if (fresh2.length) extra += `<div class="sumnote" style="color:#ffd59a">\u{1F513} Unlocked: <b>${fresh2.join(", ")}</b> - find it in the Garage</div>`;
       extra += `<div class="sumnote" style="opacity:.7">Lifetime: ${Math.floor(this.stats.lifetimeM).toLocaleString("en-US")} m</div>`;
       $("sumExtra").innerHTML = extra;
       this.lastResult = { workout: w, runner: r, strokes: s.strokeLog, endDate: /* @__PURE__ */ new Date(), avgSpm, strokeCount: s.strokes, hrAvg: s.hrN ? s.hrSum / s.hrN : 0, hrMax: s.hrMax, dragFactor: this.source.dragFactor, source: s.source, clientVersion: BUILD_ID };
@@ -29877,9 +31146,700 @@ void main() {
       $("lbSave").disabled = false;
       $("lbSave").textContent = `Save to Logbook${this.lb.host === "live" ? "" : " (dev)"}`;
       $("lbStatus").textContent = "";
+      $("sumTcx").disabled = !this._lastRow;
+      $("sumStrava").classList.toggle("hidden", !(this._lastRow && stravaReady() && loadStrava()));
       $("summary").classList.remove("hidden");
       this._endArcade();
       this.audio.finish();
+    }
+    /* ---------- history, PBs, plans, leagues & clubs after a row (returns summary HTML) ---------- */
+    _afterRow({ w, s, r, complete, dist, time, avgSplit, avgSpm, raceRes, teamRes }) {
+      let html = "";
+      this._lastRow = null;
+      if (teamRes) html += teamRes.html;
+      if (w.plan && complete) {
+        markDone(this.plans, w.plan);
+        if (this.sel.planAt) {
+          this.sel.planAt = null;
+          this._saveSel();
+        }
+        const p = planById(this.plans, w.plan.id), pr = p ? planProgress(this.plans, p) : null;
+        if (pr) html += `<div class="sumnote">\u{1F4C5} Plan: week ${w.plan.w + 1} session ${w.plan.d + 1} done \u2713 (${pr.done}/${pr.total})${pr.next ? "" : " - plan complete! \u{1F389}"}</div>`;
+      }
+      if (dist < 50) return html;
+      const before = personalBests();
+      const samples = s.hist.slice();
+      if (dist > 0) samples.push([+time.toFixed(1), +dist.toFixed(1), isFinite(avgSplit) ? +avgSplit.toFixed(1) : 0, Math.round(avgSpm), samples.length ? samples[samples.length - 1][4] : 0, 0]);
+      const wsum = s.hist.reduce((a, x) => a + x[4], 0);
+      const row = addRow({
+        name: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : "") + w.name,
+        kind: w.kind,
+        key: w.arcade ? null : workoutKey(w),
+        dist,
+        time,
+        split: avgSplit,
+        spm: +avgSpm.toFixed(1),
+        strokes: s.strokes,
+        watts: s.hist.length ? Math.round(wsum / s.hist.length) : 0,
+        hrAvg: s.hrN ? Math.round(s.hrSum / s.hrN) : 0,
+        hrMax: s.hrMax | 0,
+        stage: this.stageDef().name,
+        ship: this.ship.def.name,
+        source: s.source,
+        complete,
+        arcade: !!w.arcade,
+        plan: w.plan ? `${(planById(this.plans, w.plan.id) || {}).name || ""} W${w.plan.w + 1}.${w.plan.d + 1}` : "",
+        online: w.online ? w.online.code : "",
+        team: w.team ? w.team.fmtName : "",
+        place: raceRes ? `${raceRes.pos}/${raceRes.of}` : "",
+        samples
+      });
+      this._lastRow = row;
+      if (!w.arcade) {
+        const fresh2 = newPBs(before, personalBests());
+        if (fresh2.length) html += `<div class="sumnote" style="color:#ffd59a">\u{1F3C5} New record${fresh2.length > 1 ? "s" : ""}: <b>${fresh2.slice(0, 4).map((x) => `${x.label} ${x.text}`).join(" \xB7 ")}</b></div>`;
+      }
+      if (s.hrN) html += `<div class="sumnote">\u2764 Heart rate avg <b>${Math.round(s.hrSum / s.hrN)}</b> \xB7 max <b>${s.hrMax}</b> bpm</div>`;
+      if (this.online.mode === "server" && this.online.url) {
+        const c = new SocialClient(this.online.url), wk = isoWeek(), m = totals().week;
+        c.submitWeek(this.profile, wk, m).catch(() => {
+        });
+        for (const cl of this.clubs.list) if (cl.mode === "server") c.clubMetres(this.profile, cl.code, m).catch(() => {
+        });
+      }
+      return html;
+    }
+    /* ---------- training plans ---------- */
+    _planWorkout() {
+      const p = planById(this.plans, this.plans.active);
+      if (!p) return null;
+      const at = this.sel.planAt && this.sel.planAt.id === p.id ? this.sel.planAt : planProgress(this.plans, p).next;
+      if (!at) return null;
+      return planWorkout(p, at.w, at.d);
+    }
+    _paintPlans() {
+      const $ = (id) => document.getElementById(id), st = this.plans, act = planById(st, st.active);
+      $("plActive").classList.toggle("hidden", !act);
+      const pr = act ? planProgress(st, act) : null;
+      $("trPlanS").textContent = act ? `${act.name.split(" \xB7")[0]} \xB7 ${pr.done}/${pr.total}` : "Multi-week programmes";
+      if (act) {
+        $("plActT").textContent = "Active plan \xB7 " + act.name;
+        $("plBar").style.width = (pr.pct * 100).toFixed(1) + "%";
+        $("plActN").textContent = `${pr.done} of ${pr.total} sessions done${st.started ? " \xB7 started " + String(st.started).slice(0, 10) : ""}` + (pr.next ? ` \xB7 next up: week ${pr.next.w + 1}, session ${pr.next.d + 1}` : " \xB7 plan complete! \u{1F389}");
+        const at = this.sel.planAt && this.sel.planAt.id === act.id ? this.sel.planAt : pr.next, n = Math.max(...act.weeks.map((x) => x.length));
+        $("plGrid").innerHTML = act.weeks.map((wk, wi) => `<div class="wk" style="--n:${n}"><span class="wl">WEEK ${wi + 1}</span>` + wk.map((x, di) => {
+          const [body, ...nt] = x.split("@");
+          const cls = [pr.map[`${wi}-${di}`] ? "done" : "", pr.next && pr.next.w === wi && pr.next.d === di ? "next" : "", at && at.w === wi && at.d === di && this.sel.tab === "plan" ? "sel" : ""].join(" ");
+          return `<button class="${cls}" data-w="${wi}" data-d="${di}" title="${esc(x)}">${pr.map[`${wi}-${di}`] ? "\u2713 " : ""}${esc(body.trim())}${nt.length ? `<br><small>${esc(nt.join("@").trim())}</small>` : ""}</button>`;
+        }).join("") + "</div>").join("");
+      }
+      $("plList").innerHTML = allPlans(st).map((p) => {
+        const q = planProgress(st, p), on = p.id === st.active;
+        return `<div class="plitem"><div><div class="pt">${esc(p.name)}${p.custom ? ' <span class="note">\xB7 coach plan</span>' : ""}</div><div class="pd">${esc(p.desc || "")} ${p.weeks.length} weeks \xB7 ${q.total} sessions${q.done ? ` \xB7 ${q.done} done` : ""}</div></div><div>${on ? '<button class="small sel" disabled>Active</button>' : `<button class="small" data-start="${esc(p.id)}">Start</button>`}${p.custom ? ` <button class="small" data-del="${esc(p.id)}" title="Remove">\u2715</button>` : ""}</div></div>`;
+      }).join("");
+    }
+    /* ---------- profile: stats, history, leagues, clubs, me ---------- */
+    openOnline(sec) {
+      this.state = "online";
+      this._showOnly("online");
+      this._tab("olTabs", sec || this.ui.olTabs);
+      this._olEnsure();
+      this._paintOnline();
+      this._applyCamMode();
+    }
+    openProfile(sec) {
+      this.state = "profile";
+      this._showOnly("profile");
+      this._tab("pfTabs", sec || this.ui.pfTabs);
+      this._applyCamMode();
+    }
+    _paintProfile() {
+      const sec = this.ui.pfTabs;
+      if (sec === "stats") this._paintStatsTab();
+      else if (sec === "history") this._paintHistory();
+      else if (sec === "league") this._paintLeague();
+      else if (sec === "clubs") this._paintClubs();
+      else this._paintMe();
+    }
+    _paintStatsTab() {
+      const $ = (id) => document.getElementById(id), h = loadHistory(), t = totals(h);
+      const hm = (x) => `${Math.floor(x / 3600)}:${String(Math.floor(x / 60) % 60).padStart(2, "0")}`;
+      $("pfTotals").innerHTML = [["Total metres", t.metres.toLocaleString("en-US")], ["Sessions", t.sessions], ["This week", t.week.toLocaleString("en-US") + " m"], ["Day streak", t.streak], ["Time rowed", hm(t.time)]].map(([a, b]) => `<div>${a}<b>${b}</b></div>`).join("");
+      const wm = weeklyMetres(h, 8), labels = wm.map((_, i) => {
+        const d = /* @__PURE__ */ new Date();
+        d.setDate(d.getDate() - 7 * (7 - i));
+        return "W" + isoWeek(d).slice(-2);
+      });
+      drawBars($("pfWeek"), wm, labels);
+      const pbs = personalBests(h);
+      $("pfPBs").innerHTML = "<tr><td>Piece</td><td>Best</td><td>Split</td><td>Date</td></tr>" + pbs.map((x) => `<tr><td>${x.label}</td><td><b>${x.text}</b></td><td>${x.split ? x.split + "/500m" : ""}</td><td>${x.date ? esc(new Date(x.date).toLocaleDateString([], { day: "numeric", month: "short" })) : ""}</td></tr>`).join("");
+    }
+    _paintHistory() {
+      const $ = (id) => document.getElementById(id), h = loadHistory();
+      $("pfHistN").textContent = `\xB7 ${h.length} row${h.length === 1 ? "" : "s"} saved on this device`;
+      $("pfHist").innerHTML = h.length ? h.slice(0, 80).map((r) => `<button data-id="${esc(r.id)}" class="${this._histSel === r.id ? "sel" : ""}"><span><b>${esc(r.name)}</b>${r.place ? " \xB7 " + esc(r.place) : ""}${r.arcade ? " \xB7 arcade" : ""}</span><span>${Math.round(r.dist)} m \xB7 ${fmtSplit(r.split).replace(/\.\d$/, "")} \xB7 ${esc(new Date(r.date).toLocaleDateString())}</span></button>`).join("") : '<div class="note">No rows yet. Every finished row lands here with its splits, rate, watts and heart rate.</div>';
+      const row = this._histSel && h.find((r) => r.id === this._histSel);
+      $("pfDetail").classList.toggle("hidden", !row);
+      if (row) this._paintRowDetail(row);
+    }
+    _paintRowDetail(row) {
+      const $ = (id) => document.getElementById(id), sm = row.samples || [], kind = this.ui.pfChart || "split";
+      $("pfDTitle").textContent = row.name;
+      $("pfDStatus").textContent = "";
+      $("pfDSub").textContent = `${new Date(row.date).toLocaleString()} \xB7 ${Math.round(row.dist)} m in ${fmtTime(row.time)} \xB7 avg ${fmtSplit(row.split)} \xB7 ${row.spm || "--"} spm \xB7 ${row.watts || "--"} W${row.hrAvg ? ` \xB7 HR ${row.hrAvg}/${row.hrMax}` : ""} \xB7 ${row.stage || ""} \xB7 ${row.ship || ""}`;
+      const hasHr = sm.some((x) => x[5] > 0);
+      document.querySelectorAll("#pfChartSel button").forEach((b) => {
+        b.classList.toggle("sel", b.dataset.c === kind);
+        b.disabled = b.dataset.c === "hr" && !hasHr;
+      });
+      const idx = { split: 2, spm: 3, watts: 4, hr: 5 }[kind], col = { split: "#29e0ff", spm: "#ff4fd8", watts: "#ffd24d", hr: "#ff4f8b" }[kind];
+      const data = sm.filter((x) => x[idx] > 0).map((x) => [x[0] / 60, x[idx]]);
+      drawLine($("pfChart"), [{ data, color: col }], { invert: kind === "split", xFmt: (v) => v.toFixed(1) + "'", yFmt: kind === "split" ? (v) => fmtSplit(v).replace(/\.\d$/, "") : (v) => Math.round(v), title: { split: "Split /500m (faster = higher)", spm: "Stroke rate (spm)", watts: "Watts", hr: "Heart rate (bpm)" }[kind], empty: "Not enough samples for a chart" });
+      const fc = simForceCurve(row.watts || 150, row.spm || 24, 32, (row.id || "").length + Math.round(row.dist));
+      drawLine($("pfForce"), [{ data: fc.map((v, i) => [i / 31 * 100, v]), color: "#4dff9c" }], { fill: true, y0: 0, xFmt: (v) => Math.round(v) + "%", title: "Force (N) over the drive" });
+      $("pfForceN").textContent = "\xB7 SIMULATED placeholder - the real curve comes from the PM5 once its force-curve data is read";
+      $("pfStrava").disabled = !(stravaReady() && loadStrava());
+    }
+    _rowFile(row, ext) {
+      return `cosmicrow-${String(row.date).slice(0, 16).replace(/[:T]/g, "-")}-${String(row.name).replace(/[^\w]+/g, "_").slice(0, 30)}.${ext}`;
+    }
+    async _sendStrava(row, statusEl) {
+      statusEl.textContent = "Uploading to Strava\u2026";
+      try {
+        const up = await stravaUpload(rowTCX(row), { name: "CosmicRow \xB7 " + row.name, description: `${Math.round(row.dist)} m \xB7 avg ${fmtSplit(row.split)} /500m \xB7 ${row.stage || ""}`, externalId: "cosmicrow-" + row.id });
+        statusEl.textContent = `On Strava \u2713 (activity ${up.activity_id})`;
+      } catch (e) {
+        statusEl.textContent = e.message;
+      }
+    }
+    _paintLeague() {
+      const $ = (id) => document.getElementById(id), p = this.profile, h = loadHistory(), wk = isoWeek(), se = season();
+      const seasonM = h.filter((r) => new Date(r.date) >= se.start).reduce((a, r) => a + (r.dist || 0), 0), rk = rankFor(seasonM);
+      $("lgSeasonT").textContent = se.name + " \xB7 rank";
+      $("lgRank").innerHTML = `<div class="badge" style="--rk:${rk.color}">${rk.name.toUpperCase()}</div><div class="rt"><b>${Math.round(seasonM).toLocaleString("en-US")} m</b> this season (ends ${se.end.toLocaleDateString()}).<br>${rk.next ? `${Math.ceil(rk.toNext / 1e3)} km to <b>${rk.next.name}</b>` : "Top rank - well rowed!"}<div class="plbar"><i style="width:${(rk.pct * 100).toFixed(1)}%"></i></div>Ranks: ${["Bronze", "Silver 50 km", "Gold 150 km", "Platinum 300 km", "Neon 600 km"].join(" \xB7 ")}</div>`;
+      const myAge = ageGroup(p), myWc = weightClass(p);
+      if (!this.ui.lgAge) this.ui.lgAge = myAge || "all";
+      $("lgAge").innerHTML = ["all"].concat(AGE_GROUPS).map((a) => `<button data-a="${a}" class="${this.ui.lgAge === a ? "sel" : ""}">${a === "all" ? "All ages" : a}</button>`).join("");
+      document.querySelectorAll("#lgWc button").forEach((b) => b.classList.toggle("sel", b.dataset.w === this.ui.lgWc));
+      $("lgWeek").textContent = `\xB7 ${wk} \xB7 resets Monday`;
+      const me = { name: p.name ? p.name + " (you)" : "You", age: myAge || "30-39", wc: myWc || "HW", m: totals(h).week };
+      const render = (rows, example) => {
+        const t = leagueTable(wk, me, { age: this.ui.lgAge, wc: this.ui.lgWc, rows }), n = t.length, mi = t.findIndex((x) => x.you);
+        const show = t.filter((x, i) => i < 12 || Math.abs(i - mi) <= 1);
+        $("lgTable").innerHTML = "<tr><td>#</td><td>Rower</td><td>Age</td><td>Class</td><td>Metres</td></tr>" + show.map((x) => `<tr class="${x.you ? "you " : ""}${zoneFor(x.pos, n)}"><td>${x.pos}</td><td>${esc(x.name)}${x.example ? ' <span class="note">example</span>' : ""}</td><td>${x.age}</td><td>${x.wc}</td><td>${x.m.toLocaleString("en-US")}</td></tr>`).join("");
+        $("lgMode").classList.toggle("hidden", !example);
+        $("lgNote").textContent = `Top 20 % (green) move up a division next week, bottom 20 % (red) move down. You: ${myAge || "age not set"} \xB7 ${myWc ? myWc === "LW" ? "lightweight" : "heavyweight" : "weight not set"} (Profile \u203A Me).`;
+      };
+      render(null, true);
+      if (this.online.mode === "server" && this.online.url) new SocialClient(this.online.url).league(wk, this.ui.lgAge, this.ui.lgWc).then((j) => {
+        if (this.ui.pfTabs === "league") render(j.rows.filter((r) => r.id !== p.id), false);
+      }).catch(() => {
+        $("lgNote").textContent += " (server unreachable - showing example data)";
+      });
+    }
+    _paintClubs() {
+      const $ = (id) => document.getElementById(id), st = this.clubs, c = st.list.find((x) => x.code === st.active);
+      $("clList").innerHTML = st.list.length ? st.list.map((x) => `<div class="plitem"><div><div class="pt">${esc(x.name)}</div><div class="pd">Code ${x.code} \xB7 ${(x.members || []).length + 1} members${x.example ? " \xB7 example club" : ""}</div></div><div>${x.code === st.active ? '<button class="small sel" disabled>Open</button>' : `<button class="small" data-open="${x.code}">Open</button>`}</div></div>`).join("") : `<div class="note">No club yet. Create one and share its code, or join a friend's club with theirs.</div>`;
+      $("clActive").classList.toggle("hidden", !c);
+      if (!c) return;
+      const myW = totals().week, ch = clubChallenge(c, myW, isoWeek());
+      $("clName").textContent = c.name;
+      $("clInfo").textContent = `Code ${c.code} - share it with your crew \xB7 ${c.mode === "server" ? "on the server" : "stored on this device"}`;
+      $("clEx").classList.toggle("hidden", !(c.members || []).some((m) => m.example));
+      $("clBar").style.width = (ch.pct * 100).toFixed(1) + "%";
+      $("clChal").textContent = `${ch.name}: ${Math.round(ch.total / 1e3)} / ${ch.target / 1e3} km this week${ch.done ? " - challenge complete \u2713" : ""}`;
+      $("clMembers").innerHTML = "<tr><td>Member</td><td>This week</td><td>Avg split</td></tr>" + [{ name: this.profile.name ? this.profile.name + " (you)" : "You", m: myW, you: true }].concat(c.members || []).sort((a, b) => b.m - a.m).map((m) => `<tr class="${m.you ? "you" : ""}"><td>${esc(m.name)}${m.example ? ' <span class="note">example</span>' : ""}</td><td>${Math.round(m.m).toLocaleString("en-US")} m</td><td>${m.split ? fmtSplit(m.split).replace(/\.\d$/, "") : ""}</td></tr>`).join("");
+      const rv = rivalClub(c);
+      $("clRaces").innerHTML = TEAM_FORMATS.map((f) => `<div class="teamrace"><div><b>${esc(f.name)}</b> vs ${esc(rv.name)} <span class="note">example rival</span><br><span class="note">${esc(f.desc)}</span></div><button class="small" data-fmt="${f.id}">Race \u25B8</button></div>`).join("");
+    }
+    _paintMe() {
+      const $ = (id) => document.getElementById(id), p = this.profile;
+      for (const [id, k] of [["pfName", "name"], ["pfBirth", "birthYear"], ["pfSex", "sex"], ["pfWeight", "weightKg"], ["pfHrMax", "hrMax"]]) if (document.activeElement !== $(id)) $(id).value = p[k] || "";
+      const ag = ageGroup(p), wc = weightClass(p), hm = hrMaxFor(p);
+      $("pfDerived").textContent = `Age group: ${ag || "set birth year"} \xB7 Weight class: ${wc ? wc === "LW" ? `Lightweight (${p.sex === "M" ? "\u2264 75" : "\u2264 61.5"} kg)` : "Heavyweight" : "set sex + weight"} \xB7 Max HR: ${hm}${p.hrMax > 100 ? "" : " (estimated)"}`;
+      $("hrZonesT").innerHTML = HR_ZONES.map((z) => `<div style="border-color:${z.color}">Z${z.z} ${z.name}<b>${Math.round(z.lo * hm)}-${Math.min(hm, Math.round(z.hi * hm))}</b></div>`).join("");
+      this._paintHr();
+    }
+    _paintHr() {
+      const h = this.hr, txt = h.status === "connected" ? `Connected: <b>${esc(h.name)}</b> \xB7 ${h.bpm ? h.bpm + " bpm" : "waiting for a reading\u2026"}${h.battery != null ? " \xB7 battery " + h.battery + "%" : ""}` : h.status === "connecting" ? "Connecting\u2026" : h.status === "lost" ? "Strap disconnected - press Connect to retry." : HeartRateStrap.supported() ? "Not connected." : "This browser has no Web Bluetooth (use Chrome/Edge, or Bluefy on iPhone).";
+      for (const [b, st] of [["hrBtn", "hrStatus"], ["hrBtn2", "hrStatus2"]]) {
+        const be = document.getElementById(b);
+        if (!be) continue;
+        be.textContent = h.status === "connected" ? "Disconnect strap" : "Connect heart-rate strap";
+        document.getElementById(st).innerHTML = txt + (this._hrErr ? `<br>${esc(this._hrErr)}` : "");
+      }
+    }
+    _hrChip(src) {
+      const el = this._chipHr || (this._chipHr = document.getElementById("chipHr"));
+      if (!this.hr.fresh()) {
+        if (!el.classList.contains("hidden")) el.classList.add("hidden");
+        return;
+      }
+      const z = hrZone(this.hr.bpm, hrMaxFor(this.profile)), txt = `\u2764 ${this.hr.bpm} \xB7 ${z && z.z ? "Z" + z.z : "WARM-UP"}`;
+      if (el.textContent !== txt) {
+        this.hud.chip(el, txt, "hrz");
+        el.style.setProperty("--hz", z ? z.color : "#ff4f8b");
+      }
+    }
+    _paintStrava() {
+      const $ = (id) => document.getElementById(id), ready = stravaReady(), tok = loadStrava();
+      $("stvInfo").innerHTML = !ready ? "Not set up yet: automatic sync needs a Strava API app and the small server in <b>/server/strava</b> (keeps the secret off this page). Until then, export .tcx files." : tok ? `Connected${tok.athlete ? " as <b>" + esc(tok.athlete) + "</b>" : ""}. Finished rows can be sent from the summary or History.` : "Ready - press Connect to link your Strava account.";
+      $("stvBtn").disabled = !ready || !!tok;
+      $("stvBtn").textContent = tok ? "Strava connected \u2713" : "Connect Strava";
+      $("stvForget").classList.toggle("hidden", !tok);
+    }
+    /* ---------- online races ---------- */
+    _olMe() {
+      return { name: (this.profile.name || "Rower").slice(0, 20), ship: this.ship.def.id, color: this.choice.color || this.ship.def.color };
+    }
+    _olEnsure() {
+      const want = this.online.mode === "server" ? "server" : "local";
+      if (this.lobby && this.lobby.mode === want && (want === "local" || this.lobby.url === this.online.url)) return;
+      if (this.lobby && this.olRoom && this.olRoom.state !== "open") return;
+      if (this.lobby) {
+        this.lobby.close();
+        this.lobby = null;
+        this.olRoom = null;
+      }
+      if (want === "local") {
+        this._olAttach(new SimLobby());
+        this.lobby.connect(this._olMe());
+        this.lobby.schedule();
+      } else if (this.online.url) this._olConnect();
+      else this._olStatus = { mode: "server", online: false, msg: "Enter your server address (wss://\u2026) and press Connect." };
+    }
+    _olAttach(L) {
+      const $ = (id) => document.getElementById(id);
+      this.lobby = L;
+      this.olRoom = null;
+      L.on("status", (st) => {
+        this._olStatus = st;
+        this._paintOnline();
+      });
+      L.on("room", (R) => {
+        this.olRoom = R;
+        $("olErr").textContent = "";
+        this._paintOnline();
+      });
+      L.on("sched", (list) => {
+        this._olSched = list;
+        this._paintOnline();
+      });
+      L.on("error", (e) => {
+        $("olErr").textContent = e.msg;
+        $("olRoomStatus").textContent = e.msg;
+      });
+      L.on("countdown", ({ startAt }) => this._olCountdown(startAt));
+      L.on("sample", (m) => {
+        const rr = this.racers.find((x) => x.id === m.id);
+        if (rr && rr.push) {
+          rr.push({ t: m.t, d: m.d, split: m.split, finished: m.finished });
+          if (m.finished && m.ft != null) rr.finishT = m.ft;
+        }
+      });
+    }
+    async _olConnect() {
+      const L = new WsLobby(this.online.url.trim());
+      this._olAttach(L);
+      this._olStatus = { mode: "server", online: false, msg: "Connecting\u2026" };
+      this._paintOnline();
+      try {
+        await L.connect(this._olMe());
+        L.schedule();
+      } catch (e) {
+        this._olStatus = { mode: "server", online: false, msg: e.message };
+        this._paintOnline();
+      }
+    }
+    _olClock() {
+      return this.workout && this.workout.online && this.lobby ? Math.max(0, (this.lobby.now() - this.workout.online.startAt) / 1e3) : 0;
+    }
+    _olCountdown(startAt) {
+      const R = this.olRoom;
+      if (!R) return;
+      if (this.state === "race" && this.workout && this.workout.online) return;
+      if (this.state === "race") this.finish(true);
+      if (this.state === "loading") {
+        clearInterval(this._ldTimer);
+        this._ld = null;
+      }
+      const w = wDistance(R.dist);
+      w.online = { code: R.code, startAt, name: R.name || "" };
+      w.name = `${R.name || "Online"} \xB7 ${w.name}`;
+      this.workout = w;
+      this.audio.init();
+      document.getElementById("summary").classList.add("hidden");
+      this._beginRace();
+    }
+    _olSetupField(w) {
+      const okShip = (id) => SHIPS.some((x) => x.id === id && x.id !== "starrider") ? id : "aurora", okCol = (c) => COLORS[c] ? c : null;
+      const others = (this.olRoom ? this.olRoom.players : []).filter((p) => p.id !== "me").slice(0, 11);
+      const list = others.map((p) => {
+        const rr = new RemoteRacer({ id: p.id, name: String(p.name || "Rower").slice(0, 12).toUpperCase(), ship: okShip(p.ship), color: okCol(p.color) });
+        rr.wall = true;
+        return rr;
+      });
+      this._fieldKind = "online";
+      if (list.length) this._setupRacers(list);
+      this._olHold = true;
+      this._olLastN = null;
+      document.getElementById("olCount").classList.remove("hidden", "go");
+    }
+    _olTick() {
+      const left = (this.workout.online.startAt - this.lobby.now()) / 1e3, n = Math.ceil(left), $ = (id) => document.getElementById(id);
+      if (left > 0) {
+        if (n !== this._olLastN) {
+          this._olLastN = n;
+          $("olCountN").textContent = n;
+          $("olCountT").textContent = `${this.workout.name} \xB7 race starts in`;
+          if (n <= 5) this.audio.blip();
+        }
+        return;
+      }
+      this._olHold = false;
+      this.resetSession();
+      this.session.started = true;
+      const box = $("olCount");
+      box.classList.add("go");
+      $("olCountN").textContent = "GO!";
+      $("olCountT").textContent = "Row!";
+      this.audio.milestone();
+      this.hud.flash("GO!");
+      clearTimeout(this._olGoT);
+      this._olGoT = setTimeout(() => box.classList.add("hidden"), 1100);
+    }
+    _olFinish(r) {
+      if (this.lobby) {
+        this.lobby.send({ t: this._olClock(), d: r.workD, split: NaN, finished: !!r.done, ft: r.done ? this._olClock() : null });
+        setTimeout(() => this.lobby && this.olRoom && this.lobby.leave(), 400);
+      }
+      this._olHold = false;
+      document.getElementById("olCount").classList.add("hidden");
+    }
+    _paintOnline() {
+      const $ = (id) => document.getElementById(id), R = this.olRoom, st = this._olStatus || {}, srv = this.online.mode === "server";
+      $("olSrvS").textContent = srv ? st.online ? "Connected" : "Not connected" : "Simulated lobby";
+      document.querySelectorAll("#olMode button").forEach((b) => b.classList.toggle("sel", b.dataset.m === (srv ? "server" : "local")));
+      $("olUrlRow").classList.toggle("hidden", !srv);
+      if (document.activeElement !== $("olUrl")) $("olUrl").value = this.online.url || "";
+      $("olConnNote").textContent = st.msg || "";
+      if (document.activeElement !== $("olName")) $("olName").value = this.profile.name || "";
+      document.querySelectorAll("#olDist button").forEach((b) => b.classList.toggle("sel", +b.dataset.d === this.online.dist));
+      $("olLobby").classList.toggle("hidden", !!R);
+      $("olRoom").classList.toggle("hidden", !R);
+      const busy = srv && !st.online;
+      $("olCreate").disabled = $("olJoin").disabled = busy;
+      if (R) {
+        const me = R.players.find((p) => p.id === "me"), host = R.host === "me";
+        $("olRoomCode").textContent = R.code;
+        $("olRoomInfo").textContent = `\xB7 ${R.dist >= 1e3 ? R.dist / 1e3 + " km" : R.dist + " m"}${R.name ? " \xB7 " + R.name : ""}${R.scheduled && R.startAt ? " \xB7 starts " + new Date(R.startAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : ""}`;
+        $("olPlayers").innerHTML = R.players.map((p) => `<span class="${p.ready ? "rdy" : ""} ${p.id === "me" ? "me" : ""}">${p.ready ? "\u2713 " : "\u2026 "}${esc(p.id === "me" ? (p.name || "You") + " (you)" : p.name)}${p.id === R.host ? " \u2605" : ""}</span>`).join("");
+        $("olReady").textContent = me && me.ready ? "Not ready" : "I'm ready";
+        $("olReady").classList.toggle("hidden", !!R.scheduled);
+        $("olStart").classList.toggle("hidden", !host);
+        $("olStart").disabled = R.players.length < 2 || R.state !== "open";
+        $("olRoomStatus").textContent = R.state === "countdown" ? "Countdown running - get on the erg!" : R.scheduled ? "You are in. The countdown starts automatically 10 s before the start." : host ? R.players.length < 2 ? "Share the code - waiting for rowers to join\u2026" : "Start the countdown when everyone is ready." : "Waiting for the host to start\u2026";
+      }
+      const list = this._olSched || [];
+      $("olSched").innerHTML = list.map((x) => `<div class="schedrow"><div><b>${new Date(x.at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</b> \xB7 ${esc(x.name)} \xB7 ${x.dist >= 1e3 ? x.dist / 1e3 + " km" : x.dist + " m"} <span class="note">${x.players || 0} signed up</span></div><button class="small" data-id="${esc(x.id)}"${R || busy ? " disabled" : ""}>Join</button></div>`).join("") || '<div class="note">Loading\u2026</div>';
+      $("olLine").innerHTML = `${srv ? st.online ? "\u{1F7E2} Online server" : "\u26AA Server not connected" : "\u{1F7E3} Simulated lobby (local)"} \xB7 ${R ? `In race <b>${esc(R.code)}</b>` : "not in a race"}`;
+    }
+    /* ---------- club team races ---------- */
+    _teamSetupField(w) {
+      const t = w.team, ai = new AIRacer({ id: "rival", name: t.rivalName.slice(0, 12).toUpperCase(), ship: "raven", color: "red", targetSplit: t.rivalSplit, seed: Date.now() / 1e3 | 0, finishM: t.leg });
+      this._fieldKind = "team";
+      this._setupRacers([ai]);
+    }
+    _teamResult(w, r) {
+      const t = w.team, ai = this.racers[0], mine = r.done ? r.workT : r.workD > 10 ? r.workT * t.leg / r.workD : Infinity;
+      const theirs = ai ? ai.finished ? ai.finishT : ai.d > 10 ? r.workT * t.leg / ai.d : t.leg / 500 * t.rivalSplit : Infinity;
+      const us = t.legs.reduce((a, x) => a + x.time, 0) + mine, them = t.rivalLegs.reduce((a, x) => a + x.time, 0) + theirs, win = us < them;
+      const rows = t.legs.map((x) => [x.name, x.time]).concat([["YOU (live)", mine]]);
+      const html = `<div class="sumnote"><b>${esc(t.fmtName)}</b>: ${esc(t.clubName)} <b>${fmtTime(us)}</b> vs ${esc(t.rivalName)} <b>${fmtTime(them)}</b> - <b style="color:${win ? "#22ff8a" : "#ff6a7a"}">${win ? "YOUR TEAM WINS" : "beaten by " + (us - them).toFixed(1) + " s"}</b><br><span style="opacity:.8">${rows.map(([n, x]) => `${esc(n)} ${fmtTime(x)}`).join(" \xB7 ")} \xB7 example teammates</span></div>`;
+      return { win, us, them, html };
+    }
+    _bindSocial($, tap) {
+      $("plList").addEventListener("click", (e) => {
+        const b = e.target.closest("button");
+        if (!b) return;
+        if (b.dataset.start) {
+          this.plans.active = b.dataset.start;
+          this.plans.started = (/* @__PURE__ */ new Date()).toISOString();
+          savePlanState(this.plans);
+          this.sel.tab = "plan";
+          this.sel.planAt = null;
+          this._saveSel();
+          this._refreshMode();
+        } else if (b.dataset.del) {
+          this.plans.custom = this.plans.custom.filter((p) => p.id !== b.dataset.del);
+          if (this.plans.active === b.dataset.del) {
+            this.plans.active = null;
+            if (this.sel.tab === "plan") this.sel.tab = "distance";
+          }
+          savePlanState(this.plans);
+          this._saveSel();
+          this._refreshMode();
+        }
+      });
+      $("plGrid").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-w]");
+        if (!b) return;
+        this.sel.planAt = { id: this.plans.active, w: +b.dataset.w, d: +b.dataset.d };
+        this.sel.tab = "plan";
+        this._saveSel();
+        this._refreshMode();
+      });
+      tap($("plStop"), () => {
+        this.plans.active = null;
+        savePlanState(this.plans);
+        if (this.sel.tab === "plan") this.sel.tab = "distance";
+        this._saveSel();
+        this._refreshMode();
+      });
+      tap($("plImportBtn"), () => {
+        try {
+          const p = parsePlanImport($("plImport").value);
+          this.plans.custom.push(p);
+          savePlanState(this.plans);
+          const n = p.weeks.reduce((a, w) => a + w.length, 0);
+          $("plImportNote").textContent = `Imported "${p.name}": ${p.weeks.length} weeks, ${n} sessions. Press Start to follow it.`;
+          $("plImport").value = "";
+          this._paintPlans();
+        } catch (e) {
+          $("plImportNote").textContent = e.message;
+        }
+      });
+      tap($("plExample"), () => {
+        $("plImport").value = "# Toni's 2k block\nweek,day,session,note\n1,1,5000m,steady r20\n1,2,8x500m/1:30r,r28-30\n1,3,30:00,UT2\n2,1,6000m,steady\n2,2,4x1000m/3:00r,r24-26\n2,3,2000m,test";
+      });
+      for (const d of ONLINE_DISTANCES) {
+        const b = document.createElement("button");
+        b.dataset.d = d;
+        b.textContent = d >= 1e3 ? d / 1e3 + " km" : d + " m";
+        $("olDist").appendChild(b);
+        tap(b, () => {
+          this.online.dist = d;
+          this._saveOnline();
+          this._paintOnline();
+        });
+      }
+      const nameOk = () => {
+        const v = $("olName").value.trim();
+        if (v !== (this.profile.name || "")) {
+          this.profile.name = v.slice(0, 20);
+          saveProfile(this.profile);
+        }
+        return true;
+      };
+      $("olName").addEventListener("change", nameOk);
+      tap($("olCreate"), () => {
+        nameOk();
+        this._olEnsure();
+        this.lobby && this.lobby.create({ dist: this.online.dist });
+      });
+      tap($("olJoin"), () => {
+        nameOk();
+        this._olEnsure();
+        this.lobby && this.lobby.join($("olCode").value);
+      });
+      tap($("olReady"), () => {
+        const me = this.olRoom && this.olRoom.players.find((p) => p.id === "me");
+        this.lobby.ready(!(me && me.ready));
+      });
+      tap($("olStart"), () => this.lobby.start());
+      tap($("olLeave"), () => this.lobby.leave());
+      $("olSched").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-id]");
+        if (!b || b.disabled) return;
+        nameOk();
+        this.lobby.joinScheduled(b.dataset.id);
+        this._tab("olTabs", "race");
+      });
+      document.querySelectorAll("#olMode button").forEach((b) => tap(b, () => {
+        this.online.mode = b.dataset.m;
+        this._saveOnline();
+        this._olEnsure();
+        this._paintOnline();
+      }));
+      tap($("olConnect"), () => {
+        this.online.url = $("olUrl").value.trim();
+        this._saveOnline();
+        if (this.lobby) {
+          this.lobby.close();
+          this.lobby = null;
+        }
+        this._olEnsure();
+        this._paintOnline();
+      });
+      $("pfHist").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-id]");
+        if (!b) return;
+        this._histSel = b.dataset.id;
+        this._paintHistory();
+      });
+      document.querySelectorAll("#pfChartSel button").forEach((b) => tap(b, () => {
+        this.ui.pfChart = b.dataset.c;
+        this._saveUi();
+        this._paintHistory();
+      }));
+      const cur = () => loadHistory().find((r) => r.id === this._histSel);
+      tap($("pfCsv"), () => {
+        const r = cur();
+        if (r) download(this._rowFile(r, "csv"), samplesCSV(r), "text/csv");
+      });
+      tap($("pfTcx"), () => {
+        const r = cur();
+        if (r) download(this._rowFile(r, "tcx"), rowTCX(r), "application/vnd.garmin.tcx+xml");
+      });
+      tap($("pfStrava"), () => {
+        const r = cur();
+        if (r) this._sendStrava(r, $("pfDStatus"));
+      });
+      tap($("pfDel"), () => {
+        if (!this._histSel) return;
+        if ($("pfDel").dataset.arm !== "1") {
+          $("pfDel").dataset.arm = "1";
+          $("pfDel").textContent = "Tap again to delete";
+          return;
+        }
+        $("pfDel").dataset.arm = "";
+        $("pfDel").textContent = "Delete";
+        deleteRow(this._histSel);
+        this._histSel = null;
+        this._paintHistory();
+      });
+      tap($("pfClose"), () => {
+        this._histSel = null;
+        this._paintHistory();
+      });
+      tap($("pfCsvAll"), () => download(`cosmicrow-history-${localDate()}.csv`, historyCSV(), "text/csv"));
+      $("lgAge").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-a]");
+        if (!b) return;
+        this.ui.lgAge = b.dataset.a;
+        this._saveUi();
+        this._paintLeague();
+      });
+      document.querySelectorAll("#lgWc button").forEach((b) => tap(b, () => {
+        this.ui.lgWc = b.dataset.w;
+        this._saveUi();
+        this._paintLeague();
+      }));
+      const srvClub = () => this.online.mode === "server" && this.online.url ? new SocialClient(this.online.url) : null;
+      tap($("clCreate"), async () => {
+        const name = $("clNewName").value.trim() || "My Club", sc = srvClub();
+        $("clErr").textContent = "";
+        if (sc) {
+          try {
+            const j = await sc.createClub(this.profile, name);
+            this.clubs.list.push({ code: j.code, name, mode: "server", members: [] });
+            this.clubs.active = j.code;
+            saveClubs(this.clubs);
+            $("clNewName").value = "";
+            this._paintClubs();
+            return;
+          } catch (e) {
+            $("clErr").textContent = "Server: " + e.message + " - created locally instead.";
+          }
+        }
+        createClub(this.clubs, name, this.profile);
+        $("clNewName").value = "";
+        this._paintClubs();
+      });
+      tap($("clJoin"), async () => {
+        const code = $("clCode").value.trim().toUpperCase(), sc = srvClub();
+        $("clErr").textContent = "";
+        if (sc) {
+          try {
+            const j = await sc.joinClub(this.profile, code);
+            this.clubs.list = this.clubs.list.filter((c) => c.code !== code);
+            this.clubs.list.push({ code, name: j.club.name, mode: "server", members: Object.entries(j.club.members).filter(([id]) => id !== this.profile.id).map(([id, m]) => ({ id, name: m.name, m: m.m })) });
+            this.clubs.active = code;
+            saveClubs(this.clubs);
+            this._paintClubs();
+            return;
+          } catch (e) {
+            $("clErr").textContent = "Server: " + e.message;
+            return;
+          }
+        }
+        try {
+          joinClub(this.clubs, code);
+          $("clCode").value = "";
+          this._paintClubs();
+        } catch (e) {
+          $("clErr").textContent = e.message;
+        }
+      });
+      $("clList").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-open]");
+        if (!b) return;
+        this.clubs.active = b.dataset.open;
+        saveClubs(this.clubs);
+        this._paintClubs();
+      });
+      tap($("clLeave"), () => {
+        if (this.clubs.active) leaveClub(this.clubs, this.clubs.active);
+        this._paintClubs();
+      });
+      $("clRaces").addEventListener("click", (e) => {
+        const b = e.target.closest("button[data-fmt]");
+        if (!b) return;
+        const c = this.clubs.list.find((x) => x.code === this.clubs.active), f = TEAM_FORMATS.find((x) => x.id === b.dataset.fmt), rv = rivalClub(c);
+        if (!c || !f) return;
+        const pool = (c.members || []).filter((m) => m.split).length >= f.legs - 1 ? c.members.filter((m) => m.split) : (c.members || []).concat(rivalClub({ code: c.code + "x" }).members).map((m) => ({ ...m, split: m.split || 125, example: true }));
+        const legs = teamLegs(pool, f), rlegs = teamLegs(rv.members, f), anchor = rv.members.slice().sort((a, b2) => a.split - b2.split)[f.legs - 1] || rv.members[0];
+        const w = wDistance(f.leg);
+        w.name = `${f.name} \xB7 anchor`;
+        w.team = { fmt: f.id, fmtName: f.name, leg: f.leg, clubName: c.name, rivalName: rv.name, legs, rivalLegs: rlegs, rivalSplit: anchor.split };
+        this.startRace(w);
+      });
+      for (const [id, k, num3] of [["pfName", "name"], ["pfBirth", "birthYear", 1], ["pfSex", "sex"], ["pfWeight", "weightKg", 1], ["pfHrMax", "hrMax", 1]])
+        $(id).addEventListener("change", () => {
+          const v = $(id).value;
+          this.profile[k] = num3 ? +v || 0 : v.trim().slice(0, 20);
+          saveProfile(this.profile);
+          this._paintMe();
+        });
+      const hrToggle = async () => {
+        this._hrErr = "";
+        if (this.hr.status === "connected") {
+          this.hr.disconnect();
+          return;
+        }
+        try {
+          await this.hr.connect();
+        } catch (e) {
+          this._hrErr = /cancel/i.test(e.message) ? "No strap chosen." : e.message;
+          this._paintHr();
+        }
+      };
+      tap($("hrBtn"), hrToggle);
+      tap($("hrBtn2"), hrToggle);
+      this._paintHr();
+      tap($("stvBtn"), () => {
+        if (stravaReady()) location.assign(stravaAuthUrl());
+      });
+      tap($("stvForget"), () => {
+        saveStrava(null);
+        this._paintStrava();
+      });
+      this._paintStrava();
+      tap($("sumTcx"), () => {
+        const r = this._lastRow;
+        if (r) download(this._rowFile(r, "tcx"), rowTCX(r), "application/vnd.garmin.tcx+xml");
+      });
+      tap($("sumStrava"), () => {
+        if (this._lastRow) this._sendStrava(this._lastRow, $("lbStatus"));
+      });
+      tap($("sumStats"), () => {
+        $("summary").classList.add("hidden");
+        if (this._lastRow) this._histSel = this._lastRow.id;
+        this.openProfile(this._lastRow ? "history" : "stats");
+      });
+    }
+    _saveOnline() {
+      localStorage.setItem("cosmicrow.online.v1", JSON.stringify(this.online));
     }
     async saveToLogbook() {
       const $ = (id) => document.getElementById(id), st = $("lbStatus"), res = this.lastResult;
@@ -29949,6 +31909,18 @@ void main() {
         if (s.strokeLog.length > 6e3) s.strokeLog.shift();
         s.rec.sample(s.time, r.workD, true);
       } else s.rec.sample(s.time, r.workD);
+      if (r.phase === "work" && s.started && r.workT - s.histLast >= 1) {
+        s.histLast = r.workT;
+        s.hist.push([+r.workT.toFixed(1), +r.workD.toFixed(1), s.smooth > 0.4 ? +(500 / s.smooth).toFixed(1) : 0, src.spm | 0, Math.round(wattsFromSpeed(s.smooth)), src.heartRate | 0]);
+        if (s.hist.length > 2e4) s.hist.splice(0, 2);
+      }
+      if (w.online) {
+        s.olSend += dt;
+        if (s.olSend >= 0.2) {
+          s.olSend = 0;
+          this.lobby && this.lobby.send({ t: this._olClock(), d: r.workD, split: s.smooth > 0.4 ? 500 / s.smooth : NaN, finished: false });
+        }
+      }
       if (!calm) while (r.workD >= s.nextMilestone && (w.kind !== "distance" || s.nextMilestone < w.segs[0].value)) {
         this.burst.fire(new Vector3(0, 0.5, this.cockpit ? -10 : -6));
         this.audio.milestone();
@@ -30026,6 +31998,7 @@ void main() {
       }
       this.hud.setGap(gapL, gapM);
       this._updateRacers(dt, r, w);
+      this._hrChip(src);
       let zone = "";
       if (this.opts.zone && !calm && src.spm > 0 && r.phase === "work") zone = src.spm < this.opts.zlo ? "below" : src.spm > this.opts.zhi ? "above" : "in";
       this.hud.setZone(zone);
@@ -30053,7 +32026,7 @@ void main() {
       let steps = 0;
       const d0 = src.distanceM;
       while (this.acc >= STEP2 && steps < 40) {
-        if (this.state === "race") {
+        if (this.state === "race" && !this._olHold) {
           src.update(STEP2);
           if (this.session.started || src.distanceM > 0 || src.speedMps > 0) {
             this.session.started = true;
@@ -30068,8 +32041,16 @@ void main() {
         this._ld.strokes = this.source.strokeCount;
         this._ldSkip();
       }
+      if (this.hr.fresh()) {
+        src.heartRate = this.hr.bpm;
+        this._hrInj = true;
+      } else if (this._hrInj) {
+        src.heartRate = null;
+        this._hrInj = false;
+      }
+      if (this._olHold) this._olTick();
       let speed = 0, metres = 0;
-      if (this.state === "race") {
+      if (this.state === "race" && !this._olHold) {
         speed = src.speedMps;
         metres = Math.max(0, src.distanceM - d0);
         this._raceTick(dt, src, metres, speed);

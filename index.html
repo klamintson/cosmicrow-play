@@ -283,6 +283,59 @@
   .stlong { margin-top:8px; gap:6px; flex-wrap:wrap; justify-content:center; } .stlong button { font-size:11px; padding:5px 10px; } .stlong button.sel { border-color:#ffc94d; color:#ffe46b; box-shadow:0 0 10px rgba(255,201,77,0.5); }
   /* colour themes: HUD accent per stage / game (hue shift from the cyan look); HR colours keep their zone meaning */
   body:not([data-ctheme="classic"]) #hud .holo, body:not([data-ctheme="classic"]) #cleanHud > :not(#clHr), body:not([data-ctheme="classic"]) #raceBar, body:not([data-ctheme="classic"]) #leader { filter:hue-rotate(var(--hudHue, 0deg)); }
+  /* ---- neon bridge camera (2 pilots) - original art: window frame, two suited pilots seen from behind, centre handle ---- */
+  #cockpit .bridgeArt { display:none; } #cockpit.bridge .bridgeArt { display:block; }
+  #cockpit.bridge .frameL, #cockpit.bridge .frameR, #cockpit.bridge .strut, #cockpit.bridge .canopy, #cockpit.bridge .pod { display:none; }
+  #cockpit .bwin { position:absolute; inset:0; width:100%; height:100%; filter:drop-shadow(0 0 8px rgba(255,63,216,0.6)); }
+  #cockpit .pilot { position:absolute; bottom:-1vh; height:min(64vh, 40vw); z-index:2; filter:drop-shadow(0 0 6px rgba(255,63,216,0.5)); }
+  #cockpit .pilot.l { left:-2vw; } #cockpit .pilot.r { right:-2vw; transform:scaleX(-1); }
+  #cockpit .pilot .body { transform:translateY(calc(var(--pull, 0) * -6px)); transition:transform 0.12s; }
+  #cockpit .bmon { position:absolute; right:3vw; top:12vh; z-index:3; width:clamp(110px,13vw,170px); padding:6px 10px 8px; border:2px solid #3fd0ff; border-radius:10px; transform:perspective(500px) rotateY(-14deg) rotateZ(3deg);
+    background:linear-gradient(180deg, rgba(40,10,70,0.9), rgba(5,3,15,0.95)); box-shadow:0 0 14px rgba(63,208,255,0.5); color:#e8d8ff; text-align:center; font-variant-numeric:tabular-nums; }
+  #cockpit .bmon .k { font-size:9px; letter-spacing:0.25em; color:#ff8ae8; } #cockpit .bmon .bv { font-size:clamp(16px,2vw,24px); font-weight:800; color:#fff; text-shadow:0 0 10px #ff3fd8; }
+  #cockpit .bmon .bgrid { height:26px; margin:4px 0; background:repeating-linear-gradient(90deg, rgba(255,63,216,0.6) 0 1px, transparent 1px 14px), repeating-linear-gradient(0deg, rgba(255,63,216,0.6) 0 1px, transparent 1px 7px), linear-gradient(180deg,#2a0a4a,#4a0e5a); }
+  #cockpit.bridge .dashWrap { filter:drop-shadow(0 0 10px rgba(255,63,216,0.65)); width:min(900px,70vw); }
+  #cockpit.bridge .dashEdge { background:linear-gradient(90deg,#ff3fd8,#3fd0ff,#ff3fd8) !important; }
+  #cockpit.bridge .dash { background:linear-gradient(180deg,#1a1030 0%,#0b0818 45%,#05040c 100%) !important; }
+  #cockpit.bridge .screen { top:8% !important; height:62% !important; } #cockpit.bridge .screen::before { border-color:#ff3fd8; }
+  #cockpit.bridge .screen .big { color:#ffd8f6; text-shadow:0 0 14px #ff3fd8 !important; }
+  #cockpit.bridge .side { top:10% !important; height:56% !important; } #cockpit.bridge .side .v { color:#bff3ff; }
+  #cockpit.bridge .lights { display:none; }
+  #cockpit .bhandle { position:absolute; left:50%; bottom:0; z-index:3; width:clamp(120px,15vw,200px); height:clamp(50px,11vh,100px); transform:translateX(-50%); }
+  #cockpit .bring { position:absolute; left:10%; right:10%; bottom:-30%; height:60%; border-radius:50%; border:3px solid #ff3fd8; box-shadow:0 0 14px #ff3fd8, inset 0 0 10px #3fd0ff; background:radial-gradient(ellipse, rgba(63,208,255,0.25), rgba(5,3,12,0.9) 70%); }
+  #cockpit .bstem { position:absolute; left:50%; bottom:10%; width:12%; height:64%; transform:translateX(-50%) translateY(calc(var(--pull, 0) * -14%)); background:linear-gradient(90deg,#1a1430,#3a2a5a,#1a1430); border:2px solid #ff3fd8; border-radius:6px; transition:transform 0.12s; }
+  #cockpit .bbar { position:absolute; left:8%; right:8%; top:calc(14% - var(--pull, 0) * 14%); height:16%; border-radius:8px; background:linear-gradient(180deg,#2a2444,#0d0a1a); border:2px solid #ff3fd8; box-shadow:0 0 12px #ff3fd8; transition:top 0.12s; }
+  @media (max-height: 520px) { #cockpit .pilot { height:min(56vh, 30vw); } #cockpit .bmon { display:none; } #cockpit .bhandle { display:none; } }
+  /* Power 10 */
+  #p10Btn.offer { animation:p10pulse 0.6s ease-in-out infinite alternate; border-color:#ffd04a; color:#ffe9a0; }
+  @keyframes p10pulse { from { box-shadow:0 0 4px #ffd04a; } to { box-shadow:0 0 22px #ffd04a, 0 0 6px #fff inset; } }
+  #p10Hud { position:fixed; z-index:12; left:50%; top:20vh; transform:translateX(-50%); pointer-events:none; text-align:center; padding:8px 22px 10px; color:#fff3c8;
+    background:linear-gradient(180deg, rgba(60,30,0,0.75), rgba(20,8,0,0.6)); border:2px solid #ffd04a; clip-path:polygon(10% 0,90% 0,100% 30%,100% 100%,0 100%,0 30%); box-shadow:0 0 20px rgba(255,208,74,0.6); }
+  #p10Hud .k { font-size:10px; letter-spacing:0.3em; color:#ffd04a; } #p10Hud .n { font-size:clamp(34px,6vw,58px); font-weight:800; line-height:1; text-shadow:0 0 16px #ffb020; font-variant-numeric:tabular-nums; } #p10Hud .n small { font-size:0.4em; }
+  #p10Fx { position:fixed; inset:0; z-index:8; pointer-events:none; opacity:0; transition:opacity 0.4s; background:radial-gradient(ellipse at 50% 55%, transparent 45%, rgba(255,190,40,0.28) 80%, rgba(255,120,20,0.45) 100%), repeating-conic-gradient(from 0deg at 50% 50%, rgba(255,220,120,0.10) 0 2deg, transparent 2deg 9deg); }
+  body.p10 #p10Fx { opacity:1; animation:p10fx 0.5s linear infinite; } @keyframes p10fx { from { filter:brightness(1); } 50% { filter:brightness(1.4); } to { filter:brightness(1); } }
+  @media (max-height: 520px) { #p10Hud { top:14vh; padding:4px 14px 6px; } }
+  .chip.echo { color:#f0d8ff; border-color:#d08cff; box-shadow:0 0 10px rgba(208,140,255,0.5); }
+  /* photo mode */
+  body.photo #hud, body.photo #cockpit, body.photo #topBtns, body.photo #rivalTags, body.photo #chips, body.photo #p10Hud, body.photo #p10Fx, body.photo #nowPlaying, body.photo #flash, body.photo .rtag, body.photo #leader { display:none !important; }
+  body.photo #gl { cursor:grab; touch-action:none; }
+  #photoBar { position:fixed; z-index:61; left:50%; bottom:14px; transform:translateX(-50%); width:min(720px,94vw); padding:10px 14px; color:#dff6ff; text-align:center;
+    background:linear-gradient(180deg, rgba(8,10,28,0.9), rgba(4,4,14,0.92)); border:1px solid rgba(63,208,255,0.6); clip-path:polygon(2% 0,98% 0,100% 20%,100% 100%,0 100%,0 20%); box-shadow:0 0 18px rgba(63,208,255,0.35); }
+  #photoBar .pt { font-size:11px; letter-spacing:0.3em; color:#7fdcff; margin-bottom:6px; } #photoBar .seg { justify-content:center; flex-wrap:wrap; }
+  #photoBar .prow { display:flex; gap:8px; justify-content:center; margin-top:8px; } #photoBar .note { font-size:10px; opacity:0.7; margin-top:6px; }
+  body.photoClean #photoBar { display:none; }
+  @media (max-height: 520px) { #photoBar { padding:5px 8px; bottom:6px; } #photoBar .note { display:none; } }
+  /* pilot card */
+  .pcard .pchead { display:flex; gap:14px; align-items:center; } .pcav { width:180px; height:105px; flex:none; border:1px solid rgba(63,208,255,0.5); background:radial-gradient(ellipse at 50% 60%, rgba(63,208,255,0.25), rgba(4,6,20,0.9) 70%); clip-path:polygon(8% 0,100% 0,100% 80%,92% 100%,0 100%,0 20%); }
+  .pcav canvas { width:100%; height:100%; object-fit:contain; display:block; } .pcwho { flex:1; min-width:0; } .pcname { font-size:22px; font-weight:800; letter-spacing:0.06em; color:#fff; text-shadow:0 0 10px #3fd0ff; }
+  .pcship { font-size:11px; letter-spacing:0.2em; color:#7fdcff; text-transform:uppercase; margin:2px 0 6px; } .pcbar { height:6px; margin-top:4px; background:rgba(63,208,255,0.15); } .pcbar i { display:block; height:100%; background:linear-gradient(90deg,#3fd0ff,#ff3fd8); box-shadow:0 0 8px #3fd0ff; }
+  .pcper { display:flex; flex-wrap:wrap; gap:6px 14px; font-size:11px; opacity:0.85; margin-top:6px; }
+  .pcpbs { display:grid; grid-template-columns:repeat(auto-fill, minmax(120px,1fr)); gap:6px; } .pcpbs div { display:flex; justify-content:space-between; gap:6px; padding:4px 8px; border:1px solid rgba(63,208,255,0.2); font-size:12px; opacity:0.55; } .pcpbs div.got { opacity:1; border-color:rgba(63,208,255,0.55); } .pcpbs b { color:#fff; font-variant-numeric:tabular-nums; }
+  .pcrecent div { display:flex; gap:10px; align-items:baseline; padding:3px 0; border-bottom:1px solid rgba(63,208,255,0.12); font-size:12px; } .pcrecent .d { width:52px; opacity:0.7; } .pcrecent .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .pcrecent .m { font-size:10px; opacity:0.6; } .pcrecent b { font-variant-numeric:tabular-nums; } .pcrecent .pl { color:#ffd59a; }
+  .pcships { display:flex; flex-wrap:wrap; gap:6px; } .pcships span { padding:3px 10px; border:1px solid rgba(255,255,255,0.15); font-size:12px; opacity:0.5; } .pcships span.got { opacity:1; border-color:#3fd0ff; box-shadow:0 0 8px rgba(63,208,255,0.35); }
+  .pcbadges { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:8px; } .pcbadges .bd { display:grid; grid-template-columns:30px 1fr; gap:0 8px; padding:6px 8px; border:1px solid rgba(255,255,255,0.12); opacity:0.42; filter:grayscale(1); }
+  .pcbadges .bd.got { opacity:1; filter:none; border-color:#ffd04a; box-shadow:0 0 10px rgba(255,208,74,0.3); } .pcbadges .bd i { grid-row:span 2; font-style:normal; font-size:22px; color:#ffd04a; text-align:center; } .pcbadges .bd b { font-size:12px; } .pcbadges .bd span { font-size:10px; opacity:0.75; }
+  @media (max-width: 600px) { .pcav { width:120px; height:70px; } .pcname { font-size:17px; } }
   #toast { position:fixed; left:50%; top:12%; transform:translateX(-50%); z-index:60; max-width:min(560px,90vw); padding:10px 18px; border:1px solid #3ff6ff; border-radius:10px; background:rgba(4,8,24,0.92); color:#e8fbff; font-size:13px; letter-spacing:0.04em; box-shadow:0 0 18px rgba(63,246,255,0.45); text-align:center; }
   #nowPlaying { position:fixed; left:50%; top:22%; transform:translate(-50%, -10px); z-index:45; pointer-events:none; opacity:0; transition:opacity .5s, transform .5s;
     padding:7px 18px; font-size:12px; letter-spacing:0.12em; color:#dff6ff; text-align:center; background:linear-gradient(90deg, rgba(4,10,24,0.2), rgba(4,10,24,0.85), rgba(4,10,24,0.2));
@@ -670,7 +723,7 @@
   @media (max-width: 640px) { #capLog .clBody { grid-template-columns:1fr; } #capLog .lgList { display:flex; flex-wrap:wrap; gap:4px; } #capLog .lgList button { width:auto; margin:0; font-size:10.5px; } }
 </style>
 </head>
-<body data-build="cosmicrow-v11a1">
+<body data-build="cosmicrow-v11b">
 <canvas id="gl"></canvas>
 <div class="vignette"></div>
 <div class="scan"></div>
@@ -688,21 +741,21 @@
     <div class="racebar hidden" id="raceBar"><div class="line"></div></div>
   </div>
   <div id="cleanHud">
-    <div class="ch tl"><div class="cv"><span id="clSplit">--:--</span><small>/500m</small></div><div class="cl">SPLIT TIME</div></div>
+    <div class="ch tl"><div class="cv"><span id="clSplit">--:--</span><small class="pu">/500m</small></div><div class="cl">SPLIT TIME</div></div>
     <div class="ch tr"><div class="cv"><span id="clDist">0</span><small id="clDistU"> m</small></div><div class="cl" id="clDistK">DISTANCE</div><div class="csub" id="clTime">0:00.0</div></div>
     <div class="ch tc"><div class="cbar"><i id="clProg"></i></div><div class="cmarks" id="clMarks"><b class="me" id="clMe">▲</b></div><div class="crep" id="clRep"></div></div>
-    <div class="ch bl"><div class="cv"><span id="clSpm">--</span><small>spm</small></div><div class="cl">STROKE RATE</div><div class="cv"><span id="clW">--</span><small>W</small></div><div class="cl">POWER</div></div>
+    <div class="ch bl"><div class="cv"><span id="clSpm">--</span><small class="ru">spm</small></div><div class="cl">STROKE RATE</div><div class="cv"><span id="clW">--</span><small>W</small></div><div class="cl">POWER</div></div>
     <div class="ch br hidden" id="clHr"><span class="heart">♥</span><b id="clBand">--</b><span class="ps"></span><span id="clBpm">--</span><small>bpm</small></div>
   </div>
   <div id="rivalTags"></div>
   <div id="fcCard" class="hidden"><div class="k">FORCE CURVE · PM5</div><canvas id="hFc" width="220" height="70"></canvas><div class="fcTxt" id="hFcTxt"></div></div>
   <div id="restBox" class="hidden"><div class="k">REST</div><div class="v" id="restT">0:00</div><div class="sub" id="restNext"></div></div>
-  <div id="chips"><div class="chip hidden" id="chipGhost"></div><div class="chip hidden" id="chipPace"></div><div class="chip hidden" id="chipZone"></div><div class="chip hidden" id="chipHr"></div><div class="chip hidden" id="chipRamp"></div><div class="chip hidden" id="chipPen"></div></div>
+  <div id="chips"><div class="chip hidden" id="chipGhost"></div><div class="chip hidden" id="chipEcho"></div><div class="chip hidden" id="chipPace"></div><div class="chip hidden" id="chipZone"></div><div class="chip hidden" id="chipHr"></div><div class="chip hidden" id="chipRamp"></div><div class="chip hidden" id="chipPen"></div></div>
   <div id="upNext" class="hidden"></div>
   <div class="rhythm hidden" id="hRhythm" title="Stroke rhythm: one pulse = one stroke at the target rate"><i></i><span>24</span><b>SPM</b></div>
   <div id="emoLayer"></div>
   <div class="holo left">
-    <div class="tile split" data-tile="split"><div class="k">Split /500m</div><div class="v" id="hSplit">--:--</div></div>
+    <div class="tile split" data-tile="split"><div class="k">Split <span class="pu">/500m</span></div><div class="v" id="hSplit">--:--</div></div>
     <div class="tile spm" data-tile="spm"><div class="k">Stroke rate</div><div class="v"><span id="hSpm">--</span><span class="u">spm</span></div></div>
     <div class="tile watts" data-tile="watts"><div class="k">Power</div><div class="v"><span id="hWatts">--</span><span class="u">W</span></div></div>
   </div>
@@ -726,16 +779,42 @@
 </div>
 
 <!-- Cockpit view (toggle with C / the view button): dark hex panels + holographic screens -->
+<div id="p10Hud" class="hidden"></div><div id="p10Fx"></div>
 <div id="cockpit" class="hidden"><div class="engGlow l"></div><div class="engGlow r"></div><div class="ceng hidden" id="cEng"></div>
+  <div class="bridgeArt">
+    <svg class="bwin" viewBox="0 0 1600 900" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="bwM" x1="0" x2="1"><stop offset="0" stop-color="#ff3fd8"/><stop offset="0.5" stop-color="#3fd0ff"/><stop offset="1" stop-color="#ff3fd8"/></linearGradient></defs>
+      <path fill="#05030d" fill-opacity="0.97" fill-rule="evenodd" d="M0 0H1600V900H0Z M250 70 Q800 30 1350 70 Q1440 80 1450 170 L1480 560 Q800 610 120 560 L150 170 Q160 80 250 70Z"/>
+      <path fill="none" stroke="url(#bwM)" stroke-width="6" d="M250 70 Q800 30 1350 70 Q1440 80 1450 170 L1480 560 Q800 610 120 560 L150 170 Q160 80 250 70Z"/>
+      <path fill="none" stroke="#3fd0ff" stroke-opacity="0.55" stroke-width="2" d="M232 52 Q800 10 1368 52 Q1462 64 1470 165 L1502 578"/><path fill="none" stroke="#3fd0ff" stroke-opacity="0.55" stroke-width="2" d="M1368 52 M232 52 Q138 64 130 165 L98 578"/>
+      <path fill="none" stroke="#ff3fd8" stroke-width="3" d="M0 120 L120 150 M1600 120 L1480 150 M60 0 L210 60 M1540 0 L1390 60 M560 0 L600 40 M1040 0 L1000 40"/>
+    </svg>
+    <div class="bmon"><div class="k">NAV · <span id="bStage">ORBIT</span></div><div class="bgrid"></div><div class="bv" id="bLeft">--</div><div class="k">PROGRESS</div></div>
+    <svg class="pilot l" viewBox="0 0 400 560" aria-hidden="true"><g id="pilotG">
+      <path d="M8 560 L22 300 Q30 220 110 210 L250 210 Q330 220 344 300 L372 560Z" fill="#0b0918" stroke="#ff3fd8" stroke-width="4"/>
+      <path d="M40 520 L52 320 Q60 260 120 252 M330 520 L320 320 Q312 262 262 252" fill="none" stroke="#3fd0ff" stroke-width="3" stroke-opacity="0.8"/>
+      <g class="body"><path d="M70 560 L80 360 Q90 290 150 280 L250 280 Q310 290 318 360 L330 560Z" fill="#141228"/>
+        <path d="M150 280 Q200 300 250 280 L246 330 Q200 350 154 330Z" fill="#1d1a3a" stroke="#ff3fd8" stroke-width="3"/>
+        <path d="M95 430 Q120 380 150 370 M300 430 Q275 380 250 370" fill="none" stroke="#ff3fd8" stroke-width="4"/><path d="M80 330 Q100 292 150 286 L160 316 Q112 322 92 352Z M320 330 Q300 292 250 286 L240 316 Q288 322 308 352Z" fill="#221d44" stroke="#3fd0ff" stroke-width="3"/>
+        <rect x="104" y="400" width="44" height="30" rx="4" fill="#0b0918" stroke="#3fd0ff" stroke-width="3"/><path d="M114 410h24M114 418h18" stroke="#ff3fd8" stroke-width="3"/>
+        
+        <g class="helmet"><defs><radialGradient id="hG" cx="0.35" cy="0.3" r="0.8"><stop offset="0" stop-color="#3a2f6a"/><stop offset="0.55" stop-color="#151230"/><stop offset="1" stop-color="#07060f"/></radialGradient></defs><circle cx="200" cy="200" r="104" fill="url(#hG)" stroke="#3fd0ff" stroke-width="4"/><path d="M128 150 Q150 118 186 108" fill="none" stroke="#bff3ff" stroke-opacity="0.45" stroke-width="7" stroke-linecap="round"/>
+          <path d="M106 170 Q200 90 294 170" fill="none" stroke="#3fd0ff" stroke-width="5"/><path d="M118 240 Q200 290 282 240" fill="none" stroke="#ff3fd8" stroke-width="4"/>
+          <circle cx="300" cy="206" r="30" fill="#0b0918" stroke="#ff3fd8" stroke-width="4"/><circle cx="300" cy="206" r="13" fill="none" stroke="#3fd0ff" stroke-width="3"/>
+          <path d="M150 110 Q200 96 250 110" fill="none" stroke="#ff3fd8" stroke-width="3" stroke-opacity="0.8"/></g></g></g>
+    </svg>
+    <svg class="pilot r" viewBox="0 0 400 560" aria-hidden="true"><use href="#pilotG"/></svg>
+    <div class="bhandle"><div class="bring"></div><div class="bstem"></div><div class="bbar"></div></div>
+  </div>
   <div class="canopy"></div>
   <div class="leader hexmetal hidden" id="leader"><div class="lt">RACE · <span id="leaderPos">1/1</span></div><div id="leaderRows"></div></div>
   <div class="frameL hexmetal"></div><div class="frameR hexmetal"></div><div class="strut l"></div><div class="strut r"></div>
   <div class="pod l hexmetal"><div class="g"><b class="k">HR</b><span id="cHr">--</span><i>bpm</i></div><div class="g"><b class="k">DRAG</b><span id="cDrag">--</span></div><div class="g"><b class="k">STROKES</b><span id="cStrokes">0</span></div><div class="led"><i></i><i></i><i></i></div></div>
   <div class="pod r hexmetal"><div class="g"><b class="k">DIST</b><span id="cDist">0 m</span></div><div class="g"><b class="k">TIME</b><span id="cTime">0:00.0</span></div><div class="g gap"><b class="k" id="cGapK">GAP</b><span id="cGap">--</span></div><div class="led"><i></i><i></i><i></i></div></div>
   <div class="dashWrap"><div class="dash hexmetal"></div><div class="dashEdge"></div>
-    <div class="side l scr"><div class="k">STROKE RATE</div><div class="v" id="cSpm">--</div><div class="k">SPM</div><div class="zbar"><i id="cZone"></i></div></div>
+    <div class="side l scr"><div class="k">STROKE RATE</div><div class="v" id="cSpm">--</div><div class="k ruU">SPM</div><div class="zbar"><i id="cZone"></i></div></div>
     <div class="screen scr">
-      <div class="k">SPLIT /500M</div><div class="big" id="cSplit">--:--</div>
+      <div class="k">SPLIT <span class="puU">/500M</span></div><div class="big" id="cSplit">--:--</div>
       <div class="row2"><span><b class="k">AVG</b> <span id="cAvg">--:--</span></span><span><b class="k" id="cProjK">PROJ</b> <span id="cProj">--</span></span></div>
       <canvas id="cForce" width="200" height="44"></canvas><div class="cFcTxt" id="cFcTxt"></div>
       <div class="cbar"><i id="cProg"></i></div><div class="cbarK"><span id="cRep"></span><span id="cProgT"></span></div>
@@ -762,6 +841,10 @@
 
 <div id="nowPlaying" class="hidden"></div>
 <div id="toast" class="hidden"></div>
+<div id="photoBar" class="hidden"><div class="pt">📷 PHOTO MODE · race paused</div>
+  <div class="seg" id="phFilters"><button data-f="none">Clean</button><button data-f="synth">Synthwave</button><button data-f="noir">Noir</button><button data-f="warm">Warm</button><button data-f="cool">Cool</button><button data-f="vhs">VHS</button></div>
+  <div class="prow"><button id="phSave" class="primary">⤓ Save PNG</button><button id="phHide">Hide bar (H)</button><button id="phExit">▸ Resume</button></div>
+  <div class="note">Drag to orbit · wheel / Q E to zoom · arrows / WASD · Enter saves · F or Esc resumes. With a PM5 the monitor keeps running.</div></div>
 <div id="rotateHint">↻ Turn your phone sideways for the best view</div>
 
 <!-- Main screen: just the big choices -->
@@ -846,6 +929,7 @@
         </section>
         <section class="msec" data-sec="opponents">
           <div class="card"><div class="ct">👻 Ghost</div><label class="chk"><input type="checkbox" id="optGhost"> Race a ghost of my best run of the same workout</label><div class="note" id="ghostNote"></div></div>
+          <div class="card"><div class="ct">◌ Echo Rival</div><label class="chk"><input type="checkbox" id="optEcho"> Race my Echo: a see-through ship replaying my best recent row on this stage and distance</label><div class="note">Uses your last 5 finished rows of the same workout on the same stage (and machine). Your PB ghost is separate.</div></div>
           <div class="card"><div class="ct">⛵ Pace boat</div><label class="chk"><input type="checkbox" id="optPace"> A steady pace boat at <input type="text" id="optPaceSplit" value="2:00" size="5" inputmode="numeric"> /500m</label>
             <div class="row presets" id="paceP"><button data-ps="105">1:45</button><button data-ps="115">1:55</button><button data-ps="120">2:00</button><button data-ps="125">2:05</button><button data-ps="135">2:15</button></div>
             <div class="ct" style="margin-top:10px">🏁 Race plan <span class="note">(distance pieces)</span></div>
@@ -973,6 +1057,7 @@
     <div class="mhead"><button class="back" id="pfBack">◀ Back</button><div class="mtitle">Profile</div><div class="msub" id="pfSub">Your rows, records and teams</div></div>
     <div class="mwrap">
       <nav class="mtabs" id="pfTabs">
+        <button data-sec="card"><b>Pilot card</b><small>Level · badges · ships</small></button>
         <button data-sec="stats"><b>Stats</b><small>Totals · records</small></button>
         <button data-sec="history"><b>History</b><small>Every row · charts</small></button>
         <button data-sec="league"><b>Leagues</b><small id="pfLgS">Weekly · season</small></button>
@@ -980,6 +1065,15 @@
         <button data-sec="me"><b>Me</b><small>Age · weight · HR</small></button>
       </nav>
       <div class="mbody">
+        <section class="msec" data-sec="card">
+          <div class="card pcard"><div class="pchead"><div class="pcav" id="pcAvatar"></div><div class="pcwho"><div class="pcname" id="pcName"></div><div class="pcship" id="pcShip"></div><div id="pcLevel"></div></div></div>
+            <div class="tots" id="pcTotals"></div><div class="pcper" id="pcPer"></div></div>
+          <div class="card"><div class="ct" id="pcPbT">Personal bests</div><div class="pcpbs" id="pcPbs"></div></div>
+          <div class="card"><div class="ct">Recent races</div><div class="pcrecent" id="pcRecent"></div></div>
+          <div class="card"><div class="ct">Ships</div><div class="pcships" id="pcShips"></div></div>
+          <div class="card"><div class="ct">Badges <span class="note" id="pcBadgeN"></span></div><div class="pcbadges" id="pcBadges"></div></div>
+          <div class="card"><div class="ct">Account</div><div class="note" id="pcAcct"></div><div class="note">Name and flag: Profile › Me. Machine: Settings › Input.</div></div>
+        </section>
         <section class="msec" data-sec="stats">
           <div class="card"><div class="ct">🚀 Pilot level</div><div id="pfPilot"></div></div>
           <div class="card"><div class="ct">Totals</div><div class="tots" id="pfTotals"></div></div>
@@ -1059,7 +1153,8 @@
         </section>
         <section class="msec" data-sec="view">
           <div class="card"><div class="ct">🎨 Colour theme</div><div class="seg" id="cthemeBtns"></div><div class="note" id="cthemeNote"></div><div class="note">Saved with your profile. Classic Cyan is the original look.</div></div>
-          <div class="card"><div class="ct">Camera</div><div class="seg" id="viewBtns"><button data-v="chase">Chase</button><button data-v="cockpit">Cockpit</button></div><div class="note">Also C or the ◉ button during a race.</div></div>
+          <div class="card"><div class="ct">⚡ Power 10</div><div class="seg" id="p10Btns"><button data-p="0">Only when I ask</button><button data-p="180">Offer every 3 min</button><button data-p="300">Every 5 min</button></div><div class="note">A 10-stroke burst: press P or ⚡ P10 in a race. The HUD counts the strokes down, then shows your average watts. Your speed still comes only from your rowing.</div></div>
+          <div class="card"><div class="ct">Camera</div><div class="seg" id="viewBtns"><button data-v="chase">Chase</button><button data-v="cockpit">Cockpit</button><button data-v="bridge">Neon bridge</button></div><div class="note">Neon bridge: sit behind two pilots on a neon flight deck. Also C or the ◉ button during a race (Chase → Cockpit → Bridge).</div></div>
           <div class="card"><div class="ct">HUD screens</div><div class="row" id="hudChecks">
             <label class="chk"><input type="checkbox" data-t="hr" checked> Heart rate</label><label class="chk"><input type="checkbox" data-t="drag" checked> Drag</label>
             <label class="chk"><input type="checkbox" data-t="spm" checked> SPM</label><label class="chk"><input type="checkbox" data-t="split" checked> Split</label>
@@ -1074,6 +1169,7 @@
             <label class="chk"><input type="checkbox" id="optStorySfx"> Terminal beeps while typing</label></div>
         </section>
         <section class="msec" data-sec="input">
+          <div class="card"><div class="ct">Machine</div><div class="seg" id="machineBtns"><button data-m="row">RowErg</button><button data-m="ski">SkiErg</button><button data-m="bike">BikeErg</button></div><div class="note" id="machineNote"></div></div>
           <div class="card"><div class="ct">Rowing input</div><div class="infobox" id="inputInfo"></div>
             <div class="row"><button id="pm5Btn">Connect PM5</button></div><div class="status" id="pm5Status"></div>
             <div class="note">PM5 uses Web Bluetooth (Chrome / Edge / Android). Without it, SPACE or a tap is one stroke.</div></div>
@@ -1174,11 +1270,11 @@
   <div class="row"><button class="big" id="posterSave">Download / share</button><button id="posterClose">Close</button></div><div class="status" id="posterNote"></div></div></div>
 <div id="emoWheel" class="hidden"><button data-e="up" title="1">👍</button><button data-e="fire" title="2">🔥</button><button data-e="gg" title="3">GG</button></div>
 <div id="olCount" class="hidden"><div class="ot" id="olCountT">Race starts in</div><div class="on" id="olCountN">10</div><div class="os" id="olCountS">Get ready - strokes count from GO</div></div>
-<div id="topBtns"><button class="small hidden" id="skipBtn">Skip ▸</button><button class="small hidden" id="endBtn">■ End</button><button class="small" id="camBtn">◉ Chase</button><button class="small" id="muteBtn">♪ On</button></div>
+<div id="topBtns"><button class="small hidden" id="skipBtn">Skip ▸</button><button class="small hidden" id="endBtn">■ End</button><button class="small hidden" id="p10Btn" title="Power 10 (P)">⚡ P10</button><button class="small hidden" id="photoBtn" title="Photo mode (F)">📷</button><button class="small" id="camBtn">◉ Chase</button><button class="small" id="muteBtn">♪ On</button></div>
 
 <script>
 (() => {
-  // ../../workspace/cosmicrow/src/node_modules/three/build/three.module.js
+  // node_modules/three/build/three.module.js
   /**
    * @license
    * Copyright 2010-2023 Three.js Authors
@@ -24746,7 +24842,7 @@ void main() {
     }
   }
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/CopyShader.js
+  // node_modules/three/examples/jsm/shaders/CopyShader.js
   var CopyShader = {
     name: "CopyShader",
     uniforms: {
@@ -24786,7 +24882,7 @@ void main() {
     )
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/Pass.js
+  // node_modules/three/examples/jsm/postprocessing/Pass.js
   var Pass = class {
     constructor() {
       this.isPass = true;
@@ -24830,7 +24926,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/ShaderPass.js
+  // node_modules/three/examples/jsm/postprocessing/ShaderPass.js
   var ShaderPass = class extends Pass {
     constructor(shader, textureID) {
       super();
@@ -24870,7 +24966,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/MaskPass.js
+  // node_modules/three/examples/jsm/postprocessing/MaskPass.js
   var MaskPass = class extends Pass {
     constructor(scene, camera) {
       super();
@@ -24927,7 +25023,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/EffectComposer.js
+  // node_modules/three/examples/jsm/postprocessing/EffectComposer.js
   var EffectComposer = class {
     constructor(renderer, renderTarget) {
       this.renderer = renderer;
@@ -25049,7 +25145,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/RenderPass.js
+  // node_modules/three/examples/jsm/postprocessing/RenderPass.js
   var RenderPass = class extends Pass {
     constructor(scene, camera, overrideMaterial = null, clearColor = null, clearAlpha = null) {
       super();
@@ -25100,7 +25196,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
+  // node_modules/three/examples/jsm/shaders/LuminosityHighPassShader.js
   var LuminosityHighPassShader = {
     name: "LuminosityHighPassShader",
     shaderID: "luminosityHighPass",
@@ -25155,7 +25251,7 @@ void main() {
     )
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
+  // node_modules/three/examples/jsm/postprocessing/UnrealBloomPass.js
   var UnrealBloomPass = class _UnrealBloomPass extends Pass {
     constructor(resolution, strength, radius, threshold) {
       super();
@@ -25411,7 +25507,7 @@ void main() {
   UnrealBloomPass.BlurDirectionX = new Vector2(1, 0);
   UnrealBloomPass.BlurDirectionY = new Vector2(0, 1);
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/shaders/OutputShader.js
+  // node_modules/three/examples/jsm/shaders/OutputShader.js
   var OutputShader = {
     name: "OutputShader",
     uniforms: {
@@ -25495,7 +25591,7 @@ void main() {
     )
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/postprocessing/OutputPass.js
+  // node_modules/three/examples/jsm/postprocessing/OutputPass.js
   var OutputPass = class extends Pass {
     constructor() {
       super();
@@ -25542,7 +25638,7 @@ void main() {
     }
   };
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/misc/Timer.js
+  // node_modules/three/examples/jsm/misc/Timer.js
   var Timer = class {
     constructor() {
       this._previousTime = 0;
@@ -25599,7 +25695,7 @@ void main() {
     if (document.hidden === false) this.reset();
   }
 
-  // ../../workspace/cosmicrow/src/node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
+  // node_modules/three/examples/jsm/utils/BufferGeometryUtils.js
   function mergeGeometries(geometries, useGroups = false) {
     const isIndexed = geometries[0].index !== null;
     const attributesUsed = new Set(Object.keys(geometries[0].attributes));
@@ -25767,6 +25863,7 @@ void main() {
       this.D_LIN = 0.12;
       this.F_CONST = 0.12;
       this.paceSec = NaN;
+      this.speedScale = 1;
       this.reset();
     }
     /** Ship flavour: { driveS, impulseTrim } */
@@ -25776,6 +25873,7 @@ void main() {
     }
     reset() {
       this.speedMps = 0;
+      this._v = 0;
       this.distanceM = 0;
       this.strokeCount = 0;
       this.spm = 0;
@@ -25820,10 +25918,11 @@ void main() {
         d.left -= step;
       }
       this._drives = this._drives.filter((d) => d.left > 1e-6);
-      const v = this.speedMps;
+      const v = this._v;
       const decel = this.C_DRAG * v * v + this.D_LIN * v + (v > 0 ? this.F_CONST : 0);
-      this.speedMps = Math.max(0, v + (drive - decel) * dt);
-      if (this.speedMps < 0.03 && drive === 0) this.speedMps = 0;
+      this._v = Math.max(0, v + (drive - decel) * dt);
+      if (this._v < 0.03 && drive === 0) this._v = 0;
+      this.speedMps = this._v * this.speedScale;
       this.distanceM += this.speedMps * dt;
       const target = drive > 0 ? 1 : 0;
       this.power += (target - this.power) * Math.min(1, dt * (target ? 14 : 3));
@@ -25894,6 +25993,7 @@ void main() {
       this.heartRate = null;
       this.dragFactor = null;
       this.paceSec = NaN;
+      this.ergType = null;
       this.strokeCount = 0;
       this.power = 0;
       this.hrAt = 0;
@@ -25966,6 +26066,13 @@ void main() {
       if (this.heartRate) this.hrAt = performance.now();
       const pace = dv.getUint16(7, true) / 100;
       this.paceSec = pace > 0 ? pace : NaN;
+      if (dv.byteLength >= 19) {
+        const t = dv.getUint8(18);
+        if (t !== this.ergType) {
+          this.ergType = t;
+          if (this.onErgType) this.onErgType(t);
+        }
+      }
       this._lastPacket = performance.now();
     }
     _stroke(dv) {
@@ -27353,8 +27460,157 @@ void main() {
     return stats.lastDaily === localDate(y) ? stats.streak : 0;
   }
 
+  // echo.js
+  var KEY2 = "cosmicrow.echo.v1";
+  var KEEP = 5;
+  var PTS = 400;
+  var MAXKEYS = 40;
+  var echoKey = (stage, wkey, machine = "row") => `${machine}|${stage}|${wkey}`;
+  function loadEchoes() {
+    try {
+      return JSON.parse(localStorage.getItem(KEY2) || "{}");
+    } catch (e) {
+      return {};
+    }
+  }
+  function thinTrace(t, d, n = PTS) {
+    if (t.length <= n) return { t: t.slice(), d: d.slice() };
+    const T = [], D = [], step = (t.length - 1) / (n - 1);
+    for (let i = 0; i < n; i++) {
+      const k = Math.round(i * step);
+      T.push(t[k]);
+      D.push(d[k]);
+    }
+    return { t: T, d: D };
+  }
+  function addEcho(key, row) {
+    const all = loadEchoes(), list = all[key] = all[key] || [];
+    list.push({ ...row, ...thinTrace(row.t, row.d) });
+    while (list.length > KEEP) list.shift();
+    const keys = Object.keys(all);
+    if (keys.length > MAXKEYS) {
+      keys.sort((a, b) => lastDate(all[a]) - lastDate(all[b]));
+      for (const k of keys.slice(0, keys.length - MAXKEYS)) delete all[k];
+    }
+    try {
+      localStorage.setItem(KEY2, JSON.stringify(all));
+    } catch (e) {
+      delete all[key];
+      all[key] = list.slice(-2);
+      try {
+        localStorage.setItem(KEY2, JSON.stringify(all));
+      } catch (e2) {
+      }
+    }
+  }
+  var lastDate = (l) => l && l.length ? Date.parse(l[l.length - 1].date) || 0 : 0;
+  function bestEcho(key, byTime) {
+    const list = loadEchoes()[key];
+    if (!list || !list.length) return null;
+    return list.reduce((b, x) => !b ? x : byTime ? x.time < b.time ? x : b : x.dist > b.dist ? x : b, null);
+  }
+
+  // machines.js
+  var MACHINES = {
+    row: { id: "row", name: "RowErg", paceM: 500, rate: "spm", strokeWord: "stroke", speedScale: 1, visScale: 1, desc: "Rowing" },
+    ski: { id: "ski", name: "SkiErg", paceM: 500, rate: "spm", strokeWord: "pull", speedScale: 0.97, visScale: 1, desc: "Double-pole skiing" },
+    bike: { id: "bike", name: "BikeErg", paceM: 1e3, rate: "rpm", strokeWord: "push", speedScale: 2, visScale: 0.55, desc: "Cycling - pace per 1000 m" }
+  };
+  var MACHINE_IDS = Object.keys(MACHINES);
+  var machineById = (id) => MACHINES[id] || MACHINES.row;
+  function ergFromType(t) {
+    if (t == null || !isFinite(t)) return null;
+    if (t >= 128 && t <= 143 || t === 225) return "ski";
+    if (t >= 192 && t <= 207 || t === 226) return "bike";
+    if (t <= 64 || t === 224) return "row";
+    return null;
+  }
+  var mkey = (machine, key) => !machine || machine === "row" || key == null ? key : `${machine}:${key}`;
+  var showPace = (machine, sec500) => machineById(machine).paceM === 1e3 ? sec500 * 2 : sec500;
+  var paceUnit = (machine) => machineById(machine).paceM === 1e3 ? "/1000m" : "/500m";
+  var wattsForSpeed = (machine, v) => v > 0 ? machineById(machine).paceM === 1e3 ? 2.8 * Math.pow(v / 2, 3) : 2.8 * Math.pow(v, 3) : 0;
+
+  // profilecard.js
+  var fmtHM = (s) => {
+    s = Math.round(s || 0);
+    const h = Math.floor(s / 3600), m = Math.floor(s / 60) % 60;
+    return h ? `${h} h ${String(m).padStart(2, "0")} min` : `${m} min`;
+  };
+  var BADGES = [
+    { id: "first", icon: "\u2726", name: "First Light", text: "Finish your first row", test: (c) => c.sessions >= 1 },
+    { id: "k10", icon: "\u25C6", name: "10K Club", text: "10,000 m in total", test: (c) => c.metres >= 1e4 },
+    { id: "k100", icon: "\u2B22", name: "Centurion", text: "100,000 m in total", test: (c) => c.metres >= 1e5 },
+    { id: "m1", icon: "\u272A", name: "Megametre", text: "1,000,000 m in total", test: (c) => c.metres >= 1e6 },
+    { id: "half", icon: "\u263E", name: "Half Orbit", text: "Finish a half marathon (21,097 m) in one row", test: (c) => c.longest >= 21097 },
+    { id: "full", icon: "\u2600", name: "Full Orbit", text: "Finish a marathon (42,195 m) in one row", test: (c) => c.longest >= 42195 },
+    { id: "ultra", icon: "\u221E", name: "Ringrunner", text: "Finish 100 km in one row", test: (c) => c.longest >= 1e5 },
+    { id: "hour", icon: "\u29D7", name: "Hour Pilot", text: "Row 60 minutes in one go", test: (c) => c.longestT >= 3600 },
+    { id: "win", icon: "\u265B", name: "Podium Top", text: "Win a race against rivals", test: (c) => c.wins >= 1 },
+    { id: "races10", icon: "\u2691", name: "Grid Regular", text: "10 races with rivals", test: (c) => c.races >= 10 },
+    { id: "p10", icon: "\u26A1", name: "Power Surge", text: "Complete a Power 10", test: (c) => c.p10 >= 1 },
+    { id: "stages", icon: "\u2727", name: "Star Tourist", text: "Row on all 5 stages", test: (c) => c.stages >= 5 },
+    { id: "streak7", icon: "\u2756", name: "Seven Suns", text: "A 7-day streak", test: (c) => c.bestStreak >= 7 },
+    { id: "multi", icon: "\u27C1", name: "Tri-Erg", text: "Use RowErg, SkiErg and BikeErg", test: (c) => c.machines >= 3 }
+  ];
+  function careerStats(h, stats) {
+    const c = { sessions: 0, metres: 0, time: 0, races: 0, wins: 0, longest: 0, longestT: 0, p10: 0, stages: 0, machines: 0, bestStreak: stats.bestStreak || stats.streak || 0, per: {} };
+    const st = /* @__PURE__ */ new Set(), ms = /* @__PURE__ */ new Set();
+    for (const r of h) {
+      if (r.sim === "demo") continue;
+      const m = r.machine || "row", P2 = c.per[m] = c.per[m] || { sessions: 0, metres: 0, time: 0 };
+      c.sessions++;
+      c.metres += r.dist || 0;
+      c.time += r.time || 0;
+      P2.sessions++;
+      P2.metres += r.dist || 0;
+      P2.time += r.time || 0;
+      ms.add(m);
+      if (r.place) {
+        c.races++;
+        if (/^1\//.test(r.place)) c.wins++;
+      }
+      if (r.complete !== false && !r.arcade) {
+        c.longest = Math.max(c.longest, r.dist || 0);
+        c.longestT = Math.max(c.longestT, r.time || 0);
+      }
+      if (r.p10) c.p10 += r.p10.length || 0;
+      if (r.stage) st.add(r.stage);
+    }
+    c.stages = st.size;
+    c.machines = ms.size;
+    c.metres = Math.round(c.metres);
+    return c;
+  }
+  function earnedBadges(c) {
+    return BADGES.map((b) => ({ ...b, got: !!b.test(c) }));
+  }
+  function buildPilotCard({ profile, level, xp, career, pbs, ships }) {
+    return {
+      v: 1,
+      name: profile.name || "Rower",
+      flag: profile.flag || "",
+      level,
+      xp,
+      totals: { metres: career.metres, time: Math.round(career.time), sessions: career.sessions, races: career.races },
+      pbs: pbs.filter((x) => x.value != null).map((x) => ({ key: x.key, text: x.text })),
+      ships,
+      badges: earnedBadges(career).filter((b) => b.got).map((b) => b.id),
+      machines: Object.keys(career.per)
+    };
+  }
+  var machineName = (m) => (MACHINES[m] || MACHINES.row).name;
+
+  // account.js
+  var provider = null;
+  function accountProvider() {
+    return provider;
+  }
+  function accountState() {
+    return provider ? { available: true, name: provider.name } : { available: false, name: null };
+  }
+
   // ghost.js
-  var KEY2 = "cosmicrow.ghost.v1";
+  var KEY3 = "cosmicrow.ghost.v1";
   var GhostRecorder = class {
     constructor(max = 8e3) {
       this.t = [0];
@@ -27383,7 +27639,7 @@ void main() {
   };
   function loadGhosts() {
     try {
-      return JSON.parse(localStorage.getItem(KEY2) || "{}");
+      return JSON.parse(localStorage.getItem(KEY3) || "{}");
     } catch (e) {
       return {};
     }
@@ -27392,13 +27648,13 @@ void main() {
     const all = loadGhosts();
     all[key] = data;
     try {
-      localStorage.setItem(KEY2, JSON.stringify(all));
+      localStorage.setItem(KEY3, JSON.stringify(all));
     } catch (e) {
       const k = Object.keys(all).filter((x) => x !== key);
       while (k.length) {
         delete all[k.shift()];
         try {
-          localStorage.setItem(KEY2, JSON.stringify(all));
+          localStorage.setItem(KEY3, JSON.stringify(all));
           return;
         } catch (e2) {
         }
@@ -28289,7 +28545,7 @@ void main() {
   }
 
   // plans.js
-  var KEY3 = "cosmicrow.plans.v1";
+  var KEY4 = "cosmicrow.plans.v1";
   var num2 = (s) => parseFloat(String(s).replace(",", "."));
   function parseDur2(s) {
     s = String(s).trim().toLowerCase();
@@ -28345,13 +28601,13 @@ void main() {
   ];
   function loadPlanState() {
     try {
-      return Object.assign({ active: null, started: null, done: {}, custom: [] }, JSON.parse(localStorage.getItem(KEY3) || "{}"));
+      return Object.assign({ active: null, started: null, done: {}, custom: [] }, JSON.parse(localStorage.getItem(KEY4) || "{}"));
     } catch (e) {
       return { active: null, started: null, done: {}, custom: [] };
     }
   }
   function savePlanState(st) {
-    localStorage.setItem(KEY3, JSON.stringify(st));
+    localStorage.setItem(KEY4, JSON.stringify(st));
   }
   function allPlans(st) {
     return BUILTIN_PLANS.concat(st.custom || []);
@@ -28422,7 +28678,7 @@ void main() {
   }
 
   // history.js
-  var KEY4 = "cosmicrow.history.v1";
+  var KEY5 = "cosmicrow.history.v1";
   var MAX_ROWS = 150;
   var MAX_SAMPLES2 = 240;
   var PB_DIST = [100, 500, 1e3, 2e3, 5e3, 6e3, 1e4, 21097, 42195, 5e4, 1e5];
@@ -28445,7 +28701,7 @@ void main() {
   }
   function loadHistory() {
     try {
-      const h = JSON.parse(localStorage.getItem(KEY4) || "[]");
+      const h = JSON.parse(localStorage.getItem(KEY5) || "[]");
       return Array.isArray(h) ? h : [];
     } catch (e) {
       return [];
@@ -28455,7 +28711,7 @@ void main() {
     h = h.slice(0, MAX_ROWS);
     for (let tries = 0; tries < 6; tries++) {
       try {
-        localStorage.setItem(KEY4, JSON.stringify(h));
+        localStorage.setItem(KEY5, JSON.stringify(h));
         return true;
       } catch (e) {
         for (let i = h.length - 1; i >= Math.max(0, h.length - 30); i--) if (h[i].samples && h[i].samples.length > 40) h[i] = { ...h[i], samples: downsample(h[i].samples, 40) };
@@ -29300,11 +29556,11 @@ ${pts}
       if (!r.ok) throw new Error(j.error || "HTTP " + r.status);
       return j;
     }
-    submitWeek(p, week, m) {
-      return this._j("/league/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", age: ageGroup(p) || "30-39", wc: weightClass(p) || "HW", m });
+    submitWeek(p, week, m, machine = "row") {
+      return this._j("/league/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", age: ageGroup(p) || "30-39", wc: weightClass(p) || "HW", m, machine });
     }
-    league(week, age2 = "all", wc = "all") {
-      return this._j(`/league?week=${week}&age=${encodeURIComponent(age2)}&wc=${wc}`);
+    league(week, age2 = "all", wc = "all", machine = "row") {
+      return this._j(`/league?week=${week}&age=${encodeURIComponent(age2)}&wc=${wc}&machine=${machine}`);
     }
     createClub(p, name) {
       return this._j("/clubs/create", { id: p.id, member: p.name || "Rower", name });
@@ -29312,11 +29568,11 @@ ${pts}
     joinClub(p, code) {
       return this._j("/clubs/join", { id: p.id, member: p.name || "Rower", code });
     }
-    submitWeekly(p, week, d, time, ship) {
-      return this._j("/weekly/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", d, time, ship });
+    submitWeekly(p, week, d, time, ship, machine = "row") {
+      return this._j("/weekly/submit", { week, id: p.id, name: p.name || "Rower", flag: p.flag || "", d, time, ship, machine });
     }
-    weekly(week) {
-      return this._j(`/weekly?week=${encodeURIComponent(week)}`);
+    weekly(week, machine = "row") {
+      return this._j(`/weekly?week=${encodeURIComponent(week)}&machine=${machine}`);
     }
     clubMetres(p, code, m) {
       return this._j("/clubs/metres", { id: p.id, code, m });
@@ -29332,17 +29588,17 @@ ${pts}
     redirectUri: "https://klamintson.github.io/cosmicrow-play/?strava=1",
     scope: "activity:write"
   };
-  var KEY5 = "cosmicrow.strava.v1";
+  var KEY6 = "cosmicrow.strava.v1";
   var stravaReady = (c = STRAVA_CONFIG) => !!(c.clientId && c.workerUrl);
   function loadStrava() {
     try {
-      return JSON.parse(localStorage.getItem(KEY5) || "null");
+      return JSON.parse(localStorage.getItem(KEY6) || "null");
     } catch (e) {
       return null;
     }
   }
   function saveStrava(t) {
-    t ? localStorage.setItem(KEY5, JSON.stringify(t)) : localStorage.removeItem(KEY5);
+    t ? localStorage.setItem(KEY6, JSON.stringify(t)) : localStorage.removeItem(KEY6);
   }
   function stravaAuthUrl(c = STRAVA_CONFIG, state = Math.random().toString(36).slice(2)) {
     sessionStorage.setItem("cosmicrow.strava.state", state);
@@ -29394,20 +29650,20 @@ ${pts}
   }
 
   // calibration.js
-  var KEY6 = "cosmicrow.calib.v1";
+  var KEY7 = "cosmicrow.calib.v1";
   var LEVELS = [{ id: "easy", label: "Easy", off: 3 }, { id: "normal", label: "Normal", off: 0 }, { id: "hard", label: "Hard", off: -2 }];
   var RAMP = { start: 150, step: 3, every: 60, tol: 2, failFor: 12 };
   var WARMUP_S = 300;
   var COOLDOWN_S = 240;
   function loadCal() {
     try {
-      return Object.assign({ T: 0, test: "", date: "", level: "normal", scale: true, warm: true, history: [] }, JSON.parse(localStorage.getItem(KEY6) || "{}"));
+      return Object.assign({ T: 0, test: "", date: "", level: "normal", scale: true, warm: true, history: [] }, JSON.parse(localStorage.getItem(KEY7) || "{}"));
     } catch (e) {
       return { T: 0, level: "normal", scale: true, warm: true, history: [] };
     }
   }
   function saveCal(c) {
-    localStorage.setItem(KEY6, JSON.stringify(c));
+    localStorage.setItem(KEY7, JSON.stringify(c));
   }
   function recordCal(c, test, T, date = (/* @__PURE__ */ new Date()).toISOString()) {
     T = Math.round(T * 10) / 10;
@@ -29840,7 +30096,7 @@ ${pts}
   // weekly.js
   var WEEKLY_DIST = [100, 250, 300, 350, 500, 750, 1e3];
   var NAMES = { 100: "Rocket 100", 250: "Quarter Blast", 300: "Three Hundred Thunder", 350: "Light-speed 350", 500: "Sprint 500", 750: "Comet 750", 1e3: "Kilometre Dash" };
-  var KEY7 = "cosmicrow.weekly.v1";
+  var KEY8 = "cosmicrow.weekly.v1";
   function weeklyDistance(week) {
     let h = 2166136261;
     for (const c of "wk" + week) {
@@ -29862,7 +30118,7 @@ ${pts}
   }
   function loadWeekly() {
     try {
-      return JSON.parse(localStorage.getItem(KEY7) || "{}") || {};
+      return JSON.parse(localStorage.getItem(KEY8) || "{}") || {};
     } catch (e) {
       return {};
     }
@@ -29873,7 +30129,7 @@ ${pts}
     list.sort((a, b) => a.time - b.time);
     all[week] = list.slice(0, 10);
     for (const k of Object.keys(all).sort().slice(0, -12)) delete all[k];
-    localStorage.setItem(KEY7, JSON.stringify(all));
+    localStorage.setItem(KEY8, JSON.stringify(all));
     const i = all[week].indexOf(row);
     return i < 0 ? 0 : i + 1;
   }
@@ -30783,7 +31039,7 @@ ${pts}
   var fmtKm = (m) => (Math.round(m / 100) / 10).toLocaleString("en-US") + " KM";
   var downsampleHist = (h, n) => h.length <= n ? h.slice() : Array.from({ length: n }, (_, i) => h[Math.round(i * (h.length - 1) / (n - 1))]);
   var OAUTH_HOST = () => OAUTH_CONFIG.host;
-  var BUILD_ID = "cosmicrow-v11a1";
+  var BUILD_ID = "cosmicrow-v11b";
   var WORLD_UNITS_PER_M = 7;
   var LOOP_LENGTH = 900;
   var RECYCLE_Z = 30;
@@ -32462,6 +32718,10 @@ ${pts}
       e.cProg.style.width = `${Math.max(0, Math.min(100, (s.progress || 0) * 100))}%`;
       e.cRep.textContent = s.rep || (s.distUnit && s.distUnit !== " m" ? `${Math.floor(s.distance)}${s.distUnit}` : s.timeClock ? `${fmtClock(Math.ceil(s.time))} LEFT` : "FREE ROW");
       e.cProgT.textContent = s.progress ? `${Math.round(Math.min(1, s.progress) * 100)}%` : "";
+      if (this.cockOn) {
+        const bl = this._bLeft || (this._bLeft = document.getElementById("bLeft")), v = s.progress ? `${Math.round(Math.min(1, s.progress) * 100)}%` : `${Math.floor(s.distance)} m`;
+        if (bl.textContent !== v) bl.textContent = v;
+      }
       e.cWbar.style.width = `${Math.min(100, (s.watts || 0) / 4)}%`;
       e.cBar.style.width = `${Math.round(s.thrust * 100)}%`;
       if (this.clean) this._clean(s);
@@ -32524,6 +32784,8 @@ ${pts}
       if (cls) f.classList.add(cls);
     }
   };
+  var PHOTO_FILTERS = { none: "", synth: "saturate(1.5) contrast(1.1) hue-rotate(-12deg)", noir: "grayscale(1) contrast(1.35) brightness(0.95)", warm: "sepia(0.35) saturate(1.4) hue-rotate(-18deg) brightness(1.05)", cool: "saturate(1.2) hue-rotate(28deg) brightness(1.02)", vhs: "saturate(1.7) contrast(1.2) blur(0.6px)" };
+  var MACHINE_KEY = "cosmicrow.machine.v1";
   var STAGE_KEY = "cosmicrow.stage.v1";
   var SHIP_KEY = "cosmicrow.ship.v1";
   var CAM_KEY = "cosmicrow.camera";
@@ -32576,7 +32838,7 @@ ${pts}
       this.opts = readJSON(OPTS_KEY, { ghost: true, pace: false, paceSplit: 120, zone: false, zlo: 24, zhi: 28, unlockAll: false, rivals: 0, rivalSplit: 125, story: "full", storySfx: true });
       if (!this.opts.field) this.opts.field = this.opts.rivals > 0 ? "rivals" : "off";
       if (!(this.opts.rivals >= 1)) this.opts.rivals = 3;
-      this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun", olTabs: "race", pfTabs: "stats", pfChart: "split", lgAge: "", lgWc: "all" });
+      this.ui = readJSON("cosmicrow.ui.v1", { trTabs: "workouts", setTabs: "audio", arTabs: "laserrun", olTabs: "race", pfTabs: "card", pfChart: "split", lgAge: "", lgWc: "all" });
       this.stats = loadStats();
       if (migrateXP(this.stats)) saveStats(this.stats);
       if (!this.stats.shipMV) {
@@ -32598,6 +32860,7 @@ ${pts}
       this.env = new Environment(this.scene);
       this.stageId = STAGES.some((x) => x.id === localStorage.getItem(STAGE_KEY)) ? localStorage.getItem(STAGE_KEY) : "orbit";
       this.env.setStage(this.stageId);
+      this.machine = MACHINES[localStorage.getItem(MACHINE_KEY)] ? localStorage.getItem(MACHINE_KEY) : "row";
       this.trackBase = new Color();
       this.trackNow = new Color();
       this.setShip(this.choice.ship, this._themeColor());
@@ -32609,8 +32872,24 @@ ${pts}
       this.sim = new TapRowSimulator();
       this.sim.setFeel(this.ship.def.feel);
       this.pm5 = new PM5Source(new WebBluetoothTransport(), (msg) => this.setPmStatus(msg));
+      this.sim.speedScale = machineById(this.machine).speedScale;
+      this.pm5.onErgType = (t) => {
+        const m = ergFromType(t);
+        this._pmErg = m;
+        if (!m) return;
+        if (this.state === "race") {
+          if (m !== this.machine) this._pendingMachine = m;
+          return;
+        }
+        if (m !== this.machine) this.setMachine(m, true);
+        else this._paintMachine(true);
+      };
       this.source = this.sim;
-      this.cockpit = localStorage.getItem(CAM_KEY) === "cockpit";
+      {
+        const cm = localStorage.getItem(CAM_KEY);
+        this.cockpit = cm === "cockpit" || cm === "bridge";
+        this.bridge = cm === "bridge";
+      }
       this.lb = loadLogbookSettings();
       this.wod = null;
       this.plans = loadPlanState();
@@ -32717,6 +32996,7 @@ ${pts}
       }
       this.ship = buildShip(id, colorKey);
       this.ship.colorKey = colorKey || null;
+      this._ergKit(this.ship);
       this.scene.add(this.ship.group);
       this._posterShip = null;
       this.env.setAccent(this.ship.color.hex);
@@ -32759,7 +33039,7 @@ ${pts}
     }
     _paintInput() {
       const c = this.pm5 && this.pm5.connected, name = c ? "PM5" : IS_MOBILE ? "Tap" : "Keyboard", $ = (id) => document.getElementById(id);
-      $("inChipT").textContent = name;
+      $("inChipT").textContent = name + (this.machine !== "row" ? " \xB7 " + machineById(this.machine).name : "");
       $("inChip").classList.toggle("on", !!c);
       if ($("pmStateT")) $("pmStateT").textContent = c ? "PM5 CONNECTED" : "PM5 NOT CONNECTED";
       $("setInS").textContent = "Now: " + name;
@@ -32859,7 +33139,7 @@ ${pts}
       document.querySelectorAll("#zoneP button").forEach((b) => b.classList.toggle("sel", b.dataset.z === `${o.zlo}-${o.zhi}`));
       $("optRivals").disabled = $("optRivalSplit").disabled = o.field === "off";
       $("fieldNote").textContent = o.field === "rivals" ? "Computer ships, each in its own lane, spread a few seconds around this split with realistic surges and fades. Win against all 5 for a secret." : o.field === "pace" ? "Steady pace drones, each locked to an exact split (3 s apart around this one). Great for holding a target." : "Row alone (ghost and pace boat above still work).";
-      const gk = w && w.kind !== "calm" ? workoutKey(w) : null, gh = gk ? loadGhosts()[gk] : null;
+      const gk = w && w.kind !== "calm" ? this._wk(w) : null, gh = gk ? loadGhosts()[gk] : null;
       $("ghostNote").textContent = !w ? "" : w.kind === "free" || w.kind === "calm" ? "No ghost for free rows and calm mode." : gh ? `Ghost ready for ${w.name} \u{1F47B}` : `No ghost yet for ${w.name} - finish it once with a personal best.`;
       const d = dailyChallenge(), streak = currentStreak(this.stats), doneToday = this.stats.lastDaily === localDate();
       $("dailyBox").innerHTML = `<div class="wt">${esc(d.name)}</div>${esc(d.segs.length > 1 ? `${d.segs.length} \xD7 ${segLabel2(d.segs[0])}, ${fmtClock(d.segs[0].rest)} rest` : segLabel2(d.segs[0]))}<br>${doneToday ? '<span class="ok">Done today \u2713</span>' : "New challenge every day."} Streak: <b>${streak}</b> day${streak === 1 ? "" : "s"} (best ${this.stats.bestStreak})`;
@@ -32889,7 +33169,7 @@ ${pts}
       }
       $("wkNote").textContent = "Loading the online board\u2026 (a sleeping free-tier server can take a minute to wake)";
       const tok = this._wkTok = (this._wkTok || 0) + 1;
-      new SocialClient(base).weekly(wk).then((j) => {
+      new SocialClient(base).weekly(wk, this.machine).then((j) => {
         if (tok !== this._wkTok) return;
         const rows = j.rows || [];
         $("wkTable").innerHTML = rows.slice(0, 20).map((r, i) => row(r, i, r.id === this.profile.id)).join("") || '<tr><td class="s">No online times yet this week - be the first.</td></tr>';
@@ -33061,7 +33341,21 @@ ${pts}
         else this.startRace();
       });
       tap($("menuBtn"), () => this.toTitle());
+      tap($("photoBtn"), () => this.enterPhoto());
+      tap($("phExit"), () => this.exitPhoto());
+      tap($("phSave"), () => this.savePhoto());
+      tap($("phHide"), () => document.body.classList.toggle("photoClean"));
+      document.querySelectorAll("#phFilters button").forEach((b) => tap(b, () => this.setPhotoFilter(b.dataset.f)));
+      document.querySelectorAll("#machineBtns button").forEach((b) => tap(b, () => this.setMachine(b.dataset.m)));
+      this._paintMachine(false);
       tap($("endBtn"), () => this.finish(true));
+      tap($("p10Btn"), () => this.power10());
+      document.querySelectorAll("#p10Btns button").forEach((b) => tap(b, () => {
+        this.opts.p10Offer = +b.dataset.p;
+        this._saveOpts();
+        document.querySelectorAll("#p10Btns button").forEach((x) => x.classList.toggle("sel", x === b));
+      }));
+      document.querySelectorAll("#p10Btns button").forEach((b) => b.classList.toggle("sel", +b.dataset.p === (+this.opts.p10Offer || 0)));
       tap($("aboutBtn"), () => $("about").classList.remove("hidden"));
       tap($("aboutClose"), () => $("about").classList.add("hidden"));
       tap($("garageBtn"), () => this.openGarage());
@@ -33223,7 +33517,7 @@ ${pts}
         o2.zone = true;
       })));
       const paintSet = () => {
-        document.querySelectorAll("#viewBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.v === "cockpit" === this.cockpit));
+        document.querySelectorAll("#viewBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.v === this.camName()));
         document.querySelectorAll("#storyBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.st === this.opts.story));
         document.querySelectorAll("#gfxBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.q === GFX.quality));
         $("optStorySfx").checked = this.opts.storySfx !== false;
@@ -33236,9 +33530,7 @@ ${pts}
       this._gfxBoot = GFX.quality;
       this._paintSet = paintSet;
       document.querySelectorAll("#viewBtns button").forEach((b) => tap(b, () => {
-        this.cockpit = b.dataset.v === "cockpit";
-        localStorage.setItem(CAM_KEY, this.cockpit ? "cockpit" : "chase");
-        this._applyCamMode();
+        this.setCam(b.dataset.v);
         paintSet();
       }));
       document.querySelectorAll("#storyBtns button").forEach((b) => tap(b, () => {
@@ -33385,6 +33677,7 @@ ${pts}
       ["pointerup", "click", "keydown", "touchend"].forEach((ev) => window.addEventListener(ev, unlock, true));
       const o = this.opts;
       $("optGhost").checked = o.ghost;
+      $("optEcho").checked = o.echo !== false;
       $("optPace").checked = o.pace;
       $("optPaceSplit").value = fmtSplit(o.paceSplit).replace(/\.0$/, "");
       $("optRivals").value = String(o.rivals || 3);
@@ -33395,6 +33688,7 @@ ${pts}
       $("optUnlockAll").checked = o.unlockAll;
       const readOpts = () => {
         o.ghost = $("optGhost").checked;
+        o.echo = $("optEcho").checked;
         o.pace = $("optPace").checked;
         const ps = parseSplit($("optPaceSplit").value);
         if (isFinite(ps)) o.paceSplit = ps;
@@ -33414,6 +33708,7 @@ ${pts}
       this._syncOptInputs = () => {
         const o2 = this.opts;
         $("optGhost").checked = o2.ghost;
+        $("optEcho").checked = o2.echo !== false;
         $("optPace").checked = o2.pace;
         $("optPaceSplit").value = fmtSplit(o2.paceSplit).replace(/\.0$/, "");
         $("optRivals").value = String(o2.rivals);
@@ -33422,7 +33717,7 @@ ${pts}
         $("optZlo").value = o2.zlo;
         $("optZhi").value = o2.zhi;
       };
-      ["optGhost", "optPace", "optPaceSplit", "optZone", "optZlo", "optZhi", "optUnlockAll", "optRivals", "optRivalSplit"].forEach((id) => $(id).addEventListener("change", readOpts));
+      ["optGhost", "optEcho", "optPace", "optPaceSplit", "optZone", "optZlo", "optZhi", "optUnlockAll", "optRivals", "optRivalSplit"].forEach((id) => $(id).addEventListener("change", readOpts));
       $("lbHost").value = this.lb.host || "dev";
       $("lbToken").value = this.lb.token || "";
       $("lbHost").addEventListener("change", () => {
@@ -33478,8 +33773,16 @@ ${pts}
             this.audio.setMuted(!this.audio.muted);
             paintMute();
           } else if (e.code === "KeyC") this.toggleCam();
+          else if (e.code === "KeyP" && !this.photo) this.power10();
           else if (/^Digit[123]$/.test(e.code) && this.olRoom) this._emote(["up", "fire", "gg"][+e.code.slice(5) - 1]);
-          else if (e.code === "Escape") {
+          else if (this.photo && e.code !== "KeyF" && e.code !== "Escape") {
+            this._photoKey(e);
+            return;
+          } else if (e.code === "KeyF" && (this.state === "race" || this.photo)) {
+            this.photo ? this.exitPhoto() : this.enterPhoto();
+          } else if (e.code === "Escape" && this.photo) {
+            this.exitPhoto();
+          } else if (e.code === "Escape") {
             if (!$("about").classList.contains("hidden")) {
               $("about").classList.add("hidden");
               return;
@@ -33625,22 +33928,37 @@ ${pts}
       this.toTitle();
     }
     /* ---------- camera modes ---------- */
+    camName() {
+      return this.bridge ? "bridge" : this.cockpit ? "cockpit" : "chase";
+    }
+    setCam(v) {
+      this.cockpit = v === "cockpit" || v === "bridge";
+      this.bridge = v === "bridge";
+      localStorage.setItem(CAM_KEY, this.camName());
+      this._applyCamMode();
+    }
     toggleCam() {
       if (this.arcade) return;
-      this.cockpit = !this.cockpit;
-      localStorage.setItem(CAM_KEY, this.cockpit ? "cockpit" : "chase");
-      this._applyCamMode();
+      const c = this.camName();
+      this.setCam(c === "chase" ? "cockpit" : c === "cockpit" ? "bridge" : "chase");
     }
     _applyCamMode() {
       const inRace = this.state === "race";
       const rider = !!this.ship.rider;
       this.hud.setCockpit(this.cockpit && inRace && !rider);
+      document.getElementById("cockpit").classList.toggle("bridge", !!this.bridge);
+      {
+        const st = STAGES.find((x) => x.id === this.stageId);
+        document.getElementById("bStage").textContent = (st ? st.name : "").toUpperCase();
+      }
       this.hud.setClean(this.opts.hudStyle !== "classic" && !(this.cockpit && inRace && !rider));
       this.ship.group.visible = rider || !(this.cockpit && inRace);
       if (rider) this.ship.rider.visible = !(this.cockpit && inRace);
-      document.getElementById("camBtn").textContent = this.cockpit ? "\u25C9 Cockpit" : "\u25C9 Chase";
+      document.getElementById("camBtn").textContent = this.bridge ? "\u25C9 Bridge" : this.cockpit ? "\u25C9 Cockpit" : "\u25C9 Chase";
       document.getElementById("camBtn").classList.toggle("hidden", !inRace || !!this.arcade);
       document.getElementById("endBtn").classList.toggle("hidden", !inRace);
+      document.getElementById("photoBtn").classList.toggle("hidden", !inRace);
+      document.getElementById("p10Btn").classList.toggle("hidden", !inRace || !!this.arcade || !!(this.workout && (this.workout.kind === "calm" || this.workout.comet)));
       if (!inRace) document.getElementById("skipBtn").classList.add("hidden");
       document.body.classList.toggle("inrace", inRace);
     }
@@ -33764,11 +34082,18 @@ ${pts}
         el.textContent = w ? "Calm mode: nothing is timed or scored." : "";
         return;
       }
-      const key = workoutKey(w), pb = this._loadPB()[key], gh = loadGhosts()[key];
+      const key = this._wk(w), pb = this._loadPB()[key], gh = loadGhosts()[key];
       el.textContent = pb ? `Personal best: ${this._fmtPB(w, pb)}${gh && this.opts.ghost && w.kind !== "free" ? " \xB7 ghost ready \u{1F47B}" : ""}` : "No personal best yet for this workout";
     }
     /* ---------- state machine ---------- */
     resetSession() {
+      document.body.classList.remove("p10");
+      {
+        const ph = document.getElementById("p10Hud");
+        if (ph) ph.classList.add("hidden");
+        const pb = document.getElementById("p10Btn");
+        if (pb) pb.classList.remove("offer");
+      }
       this.sim.reset();
       this.pm5.startSession();
       const w = this.workout || wFree();
@@ -33798,7 +34123,7 @@ ${pts}
       };
     }
     _clearRivals() {
-      for (const k of ["ghostShip", "paceShip"]) if (this[k]) {
+      for (const k of ["ghostShip", "paceShip", "echoShip"]) if (this[k]) {
         this.scene.remove(this[k].group);
         this[k].dispose();
         this[k] = null;
@@ -33951,7 +34276,7 @@ ${pts}
         ship: this.ship.def.name.toUpperCase(),
         workout: w,
         short,
-        ghost: !arc && !calm && this.opts.ghost && !!loadGhosts()[workoutKey(w)],
+        ghost: !arc && !calm && this.opts.ghost && !!loadGhosts()[this._wk(w)],
         pace: !arc && !calm && this.opts.pace,
         field: !arc && !calm && n ? this.opts.field : ""
       });
@@ -34012,11 +34337,17 @@ ${pts}
       this.trackNow.copy(this.trackBase);
       this._clearRivals();
       const solo = !w.arcade && !w.online && !w.team;
-      this.ghost = !calm && solo && w.kind !== "free" && this.opts.ghost ? loadGhosts()[workoutKey(w)] || null : null;
+      this.ghost = !calm && solo && w.kind !== "free" && this.opts.ghost ? loadGhosts()[this._wk(w)] || null : null;
       if (this.ghost) {
         this.ghostShip = buildProxyShip(this.ghost.ship || "aurora", this.ghost.color || null, { opacity: 0.32, tint: 10474495 });
         this.ghostShip.group.visible = false;
         this.scene.add(this.ghostShip.group);
+      }
+      this.echo = !calm && solo && w.kind !== "free" && !w.arcade && !w.comet && this.opts.echo !== false ? bestEcho(this._echoKey(w), scoredOnTime(w)) : null;
+      if (this.echo) {
+        this.echoShip = buildProxyShip(this.echo.ship || "aurora", this.echo.color || null, { opacity: 0.42, tint: 14721279 });
+        this.echoShip.group.visible = false;
+        this.scene.add(this.echoShip.group);
       }
       this.paceOn = !calm && solo && this.opts.pace && isFinite(this.opts.paceSplit);
       this._plan = this.paceOn ? this._paceProfile(w) : null;
@@ -34025,14 +34356,14 @@ ${pts}
         this.paceShip.group.visible = false;
         this.scene.add(this.paceShip.group);
       }
-      [this.hud.el.chipGhost, this.hud.el.chipPace, this.hud.el.chipZone, $("chipPen"), $("chipRamp")].forEach((el) => this.hud.chip(el, null));
+      [this.hud.el.chipGhost, this.hud.el.chipPace, this.hud.el.chipZone, $("chipPen"), $("chipRamp"), $("chipEcho")].forEach((el) => this.hud.chip(el, null));
       const n = this._fieldN(), goal = w.kind === "distance" ? w.segs[0].value : 0;
       this._fieldKind = "";
       if (w.online) this._olSetupField(w);
       else if (w.team) this._teamSetupField(w);
       else if (!calm && !w.arcade && n) {
         this._fieldKind = this.opts.field;
-        this._setupRacers(this.opts.field === "pace" ? makePaceBoats(n, this.opts.rivalSplit, goal) : makeRivals(n, this.opts.rivalSplit, goal, Date.now() / 1e3 | 0));
+        this._setupRacers(this.opts.field === "pace" ? makePaceBoats(n, this.opts.rivalSplit / this._pf(), goal) : makeRivals(n, this.opts.rivalSplit / this._pf(), goal, Date.now() / 1e3 | 0));
       }
       this.env.setSunProgress(0);
       this._setupTimeline(w);
@@ -34050,6 +34381,11 @@ ${pts}
       this.state = "title";
       this._applyTheme();
       this._hudHue();
+      if (this._pendingMachine) {
+        const m = this._pendingMachine;
+        this._pendingMachine = null;
+        if (m !== this.machine) this.setMachine(m, true);
+      }
       clearTimeout(this._logT);
       this.closeLog();
       document.querySelectorAll("#mainMenu button.mi").forEach((b) => b.classList.toggle("sel", b.id === "startBtn"));
@@ -34072,8 +34408,9 @@ ${pts}
     /* ---------- arcade: Laser Run ---------- */
     _startArcade(w) {
       const $ = (id) => document.getElementById(id);
-      this._arcCam = this.cockpit;
+      this._arcCam = this.camName();
       this.cockpit = false;
+      this.bridge = false;
       this._applyCamMode();
       const a = this.arcade = new LaserRun(this.scene, { color: this.ship.color.hex, cruiseSplit: w.arcade.split });
       this._arcStrokes = this.source.strokeCount;
@@ -34246,13 +34583,15 @@ ${pts}
       if (!this.arcade) return;
       this.arcade.dispose();
       this.arcade = null;
-      this.cockpit = this._arcCam;
+      this.cockpit = this._arcCam === "cockpit" || this._arcCam === "bridge";
+      this.bridge = this._arcCam === "bridge";
       document.body.classList.remove("arcade", "hurt");
       document.getElementById("arcHud").classList.add("hidden");
       document.getElementById("aPops").innerHTML = "";
       this._applyCamMode();
     }
     onStroke() {
+      if (this.photo) return;
       if (this.state === "loading") {
         this._ldSkip();
         return;
@@ -34293,6 +34632,289 @@ ${pts}
     _themeShip() {
       const k = this._themeColor();
       if (this.ship && this.state !== "garage" && this.ship.colorKey !== k) this.setShip(this.choice.ship, k);
+    }
+    /* ---------- Power 10: a 10-stroke burst. Visual boost only - speed still comes from your rowing ---------- */
+    power10() {
+      const s = this.session, w = this.workout, r = this.runner;
+      if (this.state !== "race" || !s || this.arcade || !w || w.kind === "calm" || w.comet || r && r.phase !== "work") return false;
+      if (s.p10 && s.p10.on) return false;
+      s.p10 = { on: true, n0: s.strokes, left: 10, wT: 0, wE: 0, t0: s.time, peak: 0 };
+      s.p10Offer = 0;
+      document.body.classList.add("p10");
+      document.getElementById("p10Btn").classList.remove("offer");
+      this.audio.milestone();
+      this.hud.flash("POWER 10 \xB7 GO");
+      this._p10Paint();
+      return true;
+    }
+    _p10Paint() {
+      const p = this.session.p10, el = document.getElementById("p10Hud");
+      if (!el) return;
+      if (!p || !p.on && !p.done) {
+        el.classList.add("hidden");
+        return;
+      }
+      el.classList.remove("hidden");
+      el.innerHTML = p.on ? `<div class="k">\u26A1 POWER 10</div><div class="n">${p.left}</div><div class="k">STROKES LEFT</div>` : `<div class="k">\u26A1 POWER 10 DONE</div><div class="n">${p.avg}<small> W</small></div><div class="k">AVERAGE \xB7 PEAK ${p.peak} W</div>`;
+    }
+    _p10Tick(dt, watts2, r, w) {
+      const s = this.session;
+      if (!s) return;
+      const every = +this.opts.p10Offer || 0, btn = this._p10B || (this._p10B = document.getElementById("p10Btn"));
+      if (every && r.phase === "work" && !(s.p10 && s.p10.on) && w.kind !== "calm" && !w.comet && !this.arcade) {
+        s.p10Next = s.p10Next || every;
+        if (r.workT >= s.p10Next) {
+          s.p10Next = r.workT + every;
+          s.p10Offer = 12;
+          btn.classList.add("offer");
+          this.hud.flash("POWER 10? \xB7 P or \u26A1");
+          this.audio.milestone();
+        }
+      }
+      if (s.p10Offer > 0) {
+        s.p10Offer -= dt;
+        if (s.p10Offer <= 0) btn.classList.remove("offer");
+      }
+      const p = s.p10;
+      if (!p) return;
+      if (p.done) {
+        p.showT -= dt;
+        if (p.showT <= 0) {
+          s.p10 = null;
+          this._p10Paint();
+        }
+        return;
+      }
+      if (r.phase !== "work") {
+        s.p10 = null;
+        document.body.classList.remove("p10");
+        this._p10Paint();
+        return;
+      }
+      if (watts2 > 0 && dt > 0) {
+        p.wT += dt;
+        p.wE += watts2 * dt;
+        p.peak = Math.max(p.peak, Math.round(watts2));
+      }
+      const left = Math.max(0, 10 - (s.strokes - p.n0));
+      if (left !== p.left) {
+        p.left = left;
+        this._p10Paint();
+      }
+      if (left === 0) {
+        p.on = false;
+        p.done = true;
+        p.showT = 6;
+        p.avg = p.wT > 0 ? Math.round(p.wE / p.wT) : 0;
+        document.body.classList.remove("p10");
+        (s.p10Log = s.p10Log || []).push({ t: +r.workT.toFixed(1), avg: p.avg, peak: p.peak, dur: +(s.time - p.t0).toFixed(1) });
+        if (s.p10Log.length > 50) s.p10Log.shift();
+        this.hud.flash(`POWER 10 \xB7 ${p.avg} W AVG`, "big");
+        this.audio.milestone();
+        this._p10Paint();
+      }
+    }
+    _echoKey(w) {
+      return echoKey(this.stageId, workoutKey(w), this.machine || "row");
+    }
+    /* ---------- Photo mode: pause, free camera, hide HUD, filters, save PNG ---------- */
+    enterPhoto() {
+      if (this.state !== "race" || this.photo) return;
+      const g = this.ship.group.position, c = this.camera.position, dx = c.x - g.x, dy = c.y - g.y, dz = c.z - g.z, r = Math.max(3, Math.hypot(dx, dy, dz));
+      this.photo = { yaw: Math.atan2(dx, dz), pitch: Math.asin(Math.max(-0.9, Math.min(0.9, dy / r))), dist: Math.min(30, r), tx: g.x, ty: g.y + 0.3, tz: g.z, filter: this._photoF || "none", drag: null, shipVis: this.ship.group.visible };
+      this.ship.group.visible = true;
+      if (this.ship.rider) this.ship.rider.visible = true;
+      for (const k of ["ghostShip", "echoShip", "paceShip"]) if (this[k]) this[k].group.visible = this[k].group.visible;
+      document.body.classList.add("photo");
+      this.audio.setEffort && this.audio.setEffort(null);
+      document.getElementById("photoBar").classList.remove("hidden");
+      this._photoPaint();
+      const cv = this.canvas, P2 = this.photo;
+      P2.onDown = (e) => {
+        P2.drag = { x: e.clientX, y: e.clientY, yaw: P2.yaw, pitch: P2.pitch, id: e.pointerId };
+      };
+      P2.onMove = (e) => {
+        if (!P2.drag || P2.drag.id !== e.pointerId) return;
+        P2.yaw = P2.drag.yaw - (e.clientX - P2.drag.x) * 8e-3;
+        P2.pitch = Math.max(-0.35, Math.min(1.3, P2.drag.pitch + (e.clientY - P2.drag.y) * 6e-3));
+      };
+      P2.onUp = () => {
+        P2.drag = null;
+      };
+      P2.onWheel = (e) => {
+        e.preventDefault();
+        P2.dist = Math.max(2.5, Math.min(60, P2.dist * (1 + Math.sign(e.deltaY) * 0.1)));
+      };
+      cv.addEventListener("pointerdown", P2.onDown);
+      window.addEventListener("pointermove", P2.onMove);
+      window.addEventListener("pointerup", P2.onUp);
+      cv.addEventListener("wheel", P2.onWheel, { passive: false });
+      this.timer.update();
+    }
+    exitPhoto() {
+      const P2 = this.photo;
+      if (!P2) return;
+      const cv = this.canvas;
+      cv.removeEventListener("pointerdown", P2.onDown);
+      window.removeEventListener("pointermove", P2.onMove);
+      window.removeEventListener("pointerup", P2.onUp);
+      cv.removeEventListener("wheel", P2.onWheel);
+      this.photo = null;
+      document.body.classList.remove("photo", "photoClean");
+      this.canvas.style.filter = "";
+      document.getElementById("photoBar").classList.add("hidden");
+      this.timer.update();
+      this.acc = 0;
+      this._applyCamMode();
+    }
+    _photoKey(e) {
+      const P2 = this.photo;
+      if (!P2) return;
+      if (e.code === "ArrowLeft" || e.code === "KeyA") P2.yaw += 0.08;
+      else if (e.code === "ArrowRight" || e.code === "KeyD") P2.yaw -= 0.08;
+      else if (e.code === "ArrowUp" || e.code === "KeyW") P2.pitch = Math.min(1.3, P2.pitch + 0.06);
+      else if (e.code === "ArrowDown" || e.code === "KeyS") P2.pitch = Math.max(-0.35, P2.pitch - 0.06);
+      else if (e.code === "Equal" || e.code === "NumpadAdd" || e.code === "KeyE") P2.dist = Math.max(2.5, P2.dist * 0.9);
+      else if (e.code === "Minus" || e.code === "NumpadSubtract" || e.code === "KeyQ") P2.dist = Math.min(60, P2.dist * 1.1);
+      else if (e.code === "KeyH") document.body.classList.toggle("photoClean");
+      else if (e.code === "Enter") this.savePhoto();
+    }
+    setPhotoFilter(f) {
+      this._photoF = f;
+      if (this.photo) this.photo.filter = f;
+      this._photoPaint();
+    }
+    _photoPaint() {
+      const P2 = this.photo;
+      if (!P2) return;
+      this.canvas.style.filter = PHOTO_FILTERS[P2.filter] || "";
+      document.querySelectorAll("#phFilters button").forEach((b) => b.classList.toggle("sel", b.dataset.f === P2.filter));
+    }
+    _photoFrame(dt) {
+      const P2 = this.photo, c = this.camera, cp = Math.cos(P2.pitch);
+      c.position.set(P2.tx + Math.sin(P2.yaw) * cp * P2.dist, P2.ty + Math.sin(P2.pitch) * P2.dist, P2.tz + Math.cos(P2.yaw) * cp * P2.dist);
+      c.lookAt(P2.tx, P2.ty, P2.tz);
+      if (Math.abs(c.fov - this.baseFov) > 0.01) {
+        c.fov = this.baseFov;
+        c.updateProjectionMatrix();
+      }
+      this.env.update(0, 0, 0);
+      this.burst.update(0);
+      if (this.composer && GFX.bloom) this.composer.render();
+      else this.renderer.render(this.scene, this.camera);
+    }
+    /** render one frame and copy it in the same task (no preserveDrawingBuffer), apply the filter, add a small credit, download PNG */
+    savePhoto() {
+      if (!this.photo) return null;
+      this._photoFrame(0);
+      const src = this.canvas, W = src.width, H = src.height, out = document.createElement("canvas");
+      out.width = W;
+      out.height = H;
+      const g = out.getContext("2d");
+      const f = PHOTO_FILTERS[this.photo.filter] || "none";
+      try {
+        g.filter = f;
+      } catch (e) {
+      }
+      g.drawImage(src, 0, 0);
+      g.filter = "none";
+      if (this.photo.filter === "vhs") {
+        g.fillStyle = "rgba(0,0,0,0.18)";
+        for (let y = 0; y < H; y += 4) g.fillRect(0, y, W, 1);
+      }
+      const vg = g.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.45, W / 2, H / 2, Math.max(W, H) * 0.75);
+      vg.addColorStop(0, "rgba(0,0,0,0)");
+      vg.addColorStop(1, "rgba(0,0,0,0.35)");
+      g.fillStyle = vg;
+      g.fillRect(0, 0, W, H);
+      g.font = `600 ${Math.round(H * 0.022)}px sans-serif`;
+      g.fillStyle = "rgba(255,255,255,0.75)";
+      g.textAlign = "right";
+      g.fillText("COSMICROW", W - H * 0.03, H - H * 0.03);
+      const url = out.toDataURL("image/png"), a = document.createElement("a"), st = (STAGES.find((x) => x.id === this.stageId) || { id: "stage" }).id;
+      a.href = url;
+      a.download = `cosmicrow-photo-${st}-${(() => {
+        const d = /* @__PURE__ */ new Date(), z = (n) => String(n).padStart(2, "0");
+        return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}-${z(d.getHours())}${z(d.getMinutes())}${z(d.getSeconds())}`;
+      })()}.png`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      this._lastPhoto = { w: W, h: H, bytes: url.length, filter: this.photo.filter };
+      this.toast("Photo saved (PNG)", 2e3);
+      return this._lastPhoto;
+    }
+    /* ---------- erg classes ---------- */
+    /** class marker on your ship (original shapes after the concept sketch): SkiErg = twin swept tail fins, BikeErg = a neon hover ring */
+    _ergKit(ship) {
+      const m = this.machine || "row";
+      if (m === "row" || ship.rider) return;
+      const box = new Box3().setFromObject(ship.group), sz = box.getSize(new Vector3()), c = box.getCenter(new Vector3()), kit = new Group();
+      kit.name = "ergKit";
+      if (m === "bike") {
+        const r = Math.max(sz.x, sz.z) * 0.62, ring = new Mesh(new TorusGeometry(r, Math.max(0.03, r * 0.025), 8, 64), new MeshBasicMaterial({ color: 16742938, transparent: true, opacity: 0.8, blending: AdditiveBlending, depthWrite: false }));
+        ring.rotation.x = Math.PI / 2;
+        ring.position.set(c.x, box.min.y + sz.y * 0.15, c.z);
+        kit.add(ring);
+      } else {
+        const sh = new Shape();
+        sh.moveTo(0, 0);
+        sh.lineTo(sz.z * 0.28, 0);
+        sh.lineTo(sz.z * 0.34, sz.y * 0.8);
+        sh.lineTo(sz.z * 0.26, sz.y * 0.8);
+        sh.closePath();
+        const g = new ShapeGeometry(sh), mat = new MeshBasicMaterial({ color: 16728024, transparent: true, opacity: 0.85, side: DoubleSide, blending: AdditiveBlending, depthWrite: false });
+        for (const sx of [-1, 1]) {
+          const f = new Mesh(g, mat);
+          f.rotation.y = Math.PI / 2;
+          f.rotation.z = -sx * 0.18;
+          f.position.set(c.x + sx * sz.x * 0.16, c.y + sz.y * 0.2, box.max.z - sz.z * 0.05);
+          kit.add(f);
+        }
+      }
+      ship.group.add(kit);
+    }
+    _wk(w) {
+      return mkey(this.machine, workoutKey(w));
+    }
+    _pf() {
+      return machineById(this.machine).paceM / 500;
+    }
+    _hist() {
+      return loadHistory().filter((r) => (r.machine || "row") === this.machine);
+    }
+    setMachine(m, auto = false) {
+      if (!MACHINES[m] || this.state === "race") return;
+      this.machine = m;
+      localStorage.setItem(MACHINE_KEY, m);
+      this.sim.speedScale = machineById(m).speedScale;
+      this._paintMachine(auto);
+      this._paintInput();
+      if (this.ship) this.setShip(this.choice.ship, this._themeColor());
+      if (this._ready) {
+        this._refreshMode();
+        this._paintStats();
+      }
+      if (auto) this.toast(`PM5 reports a ${machineById(m).name} - switched to ${machineById(m).name}`, 3500);
+    }
+    _paintMachine(auto) {
+      const M = machineById(this.machine);
+      document.body.dataset.machine = M.id;
+      document.querySelectorAll(".pu").forEach((e) => {
+        e.textContent = paceUnit(M.id);
+      });
+      document.querySelectorAll(".puU").forEach((e) => {
+        e.textContent = paceUnit(M.id).toUpperCase();
+      });
+      document.querySelectorAll(".ru").forEach((e) => {
+        e.textContent = M.rate;
+      });
+      document.querySelectorAll(".ruU").forEach((e) => {
+        e.textContent = M.rate.toUpperCase();
+      });
+      document.querySelectorAll("#machineBtns button").forEach((b) => b.classList.toggle("sel", b.dataset.m === M.id));
+      const n = document.getElementById("machineNote");
+      if (n) n.textContent = (this._pmErg ? `Detected from the PM5: ${machineById(this._pmErg).name}. ` : "Not detected (no PM5, or it did not report the machine) - pick it here. ") + `${M.name}: ${M.desc}. PBs, ghosts, echoes and leaderboards are kept separately per machine.`;
     }
     _hudHue() {
       const T = themeById(this.profile.colourTheme), w = this.state === "race" ? this.workout : null, key = w && w.comet ? "comet" : w && w.arcade ? "laserrun" : this.stageId;
@@ -34382,8 +35004,16 @@ ${pts}
       const avgSplit = dist > 1 ? time / dist * 500 : NaN;
       const avgSpm = s.spmSamples ? s.spmSum / s.spmSamples : time > 0 ? s.strokes / time * 60 : 0;
       const arcStats = this.arcade ? this.arcade.stats() : null, cmStats = this.comet ? this.comet.stats() : null;
-      const key = w.arcade || w.comet ? null : workoutKey(w), all = this._loadPB(), prev = key ? all[key] : null;
+      const key = w.arcade || w.comet ? null : this._wk(w), all = this._loadPB(), prev = key ? all[key] : null;
       let isPB = false;
+      if (key && w.kind !== "free" && w.kind !== "calm" && complete && time > 0 && dist > 0 && !w.online && !w.team) {
+        const T = s.rec.t.slice(), D = s.rec.d.slice(), te = s.time - r.warmT - r.coolT;
+        if (te > T[T.length - 1]) {
+          T.push(+te.toFixed(2));
+          D.push(+dist.toFixed(2));
+        }
+        addEcho(this._echoKey(w), { t: T, d: D, time, dist, ship: this.ship.def.id, color: this.choice.color, date: (/* @__PURE__ */ new Date()).toISOString(), workT: time });
+      }
       const valid = w.kind === "free" ? dist >= 100 && isFinite(avgSplit) : w.kind !== "calm" && complete && time > 0 && dist > 0;
       if (valid && key) {
         const better = w.kind === "free" ? !prev || avgSplit < prev.split : scoredOnTime(w) ? !prev || time < prev.time : !prev || dist > prev.dist;
@@ -34416,7 +35046,7 @@ ${pts}
       if (w.weekly && complete && time > 0) {
         const wr = addWeeklyScore(w.weekly, { name: this.profile.name || "Rower", flag: validFlag(this.profile.flag), ship: this.ship.def.id, time: +time.toFixed(1), date: localDate() });
         this._weeklyMsg = `Weekly sprint ${fmtTime(time)} \xB7 #${wr} on this device this week`;
-        if (this._srvBase()) new SocialClient(this._srvBase()).submitWeekly(this.profile, w.weekly, weeklyDistance(w.weekly), +time.toFixed(1), this.ship.def.id).then((j) => {
+        if (this._srvBase()) new SocialClient(this._srvBase()).submitWeekly(this.profile, w.weekly, weeklyDistance(w.weekly), +time.toFixed(1), this.ship.def.id, this.machine).then((j) => {
           this._weeklyMsg += ` \xB7 #${j.rank} online`;
           const n = document.getElementById("wkSumNote");
           if (n) n.textContent = this._weeklyMsg;
@@ -34424,7 +35054,7 @@ ${pts}
         });
       } else this._weeklyMsg = null;
       const xpBefore = this.stats.xp || 0, place = teamRes ? teamRes.win ? 1 : 2 : raceRes && complete ? raceRes.pos : 0, of = teamRes ? 2 : raceRes ? raceRes.of : 0;
-      const xpRes = w.kind === "calm" && dist < 100 ? { total: 0, items: [] } : xpForRow(this.stats, { metres: dist + r.restD + r.warmD + r.coolD, daily: dailyFirst, pb: isPB, wod: !!(w.wod && complete), plan: !!(w.plan && complete), place, of, week: isoWeek(), day: localDate() });
+      const xpRes = w.kind === "calm" && dist < 100 ? { total: 0, items: [] } : xpForRow(this.stats, { metres: (dist + r.restD + r.warmD + r.coolD) * 500 / machineById(this.machine).paceM, daily: dailyFirst, pb: isPB, wod: !!(w.wod && complete), plan: !!(w.plan && complete), place, of, week: isoWeek(), day: localDate() });
       saveStats(this.stats);
       const fresh2 = unlockedSet(this.stats).filter((x) => !before.includes(x)).map((x) => {
         const [k, id] = x.split(":");
@@ -34435,7 +35065,7 @@ ${pts}
       $("sumTitle").textContent = (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name + (early && !r.mainDone && w.kind !== "free" && w.kind !== "calm" ? " (stopped)" : "");
       $("sTime").textContent = fmtTime(time) + (r.restT > 0.5 ? ` + ${fmtClock(r.restT)} rest` : "") + (raceRes && raceRes.pen ? ` +${raceRes.pen} s jump start` : "") + (r.warmT + r.coolT > 5 ? ` \xB7 +${fmtClock(r.warmT + r.coolT)} warm-up/cool-down` : "");
       $("sDist").textContent = `${Math.floor(dist)} m`;
-      $("sSplit").textContent = fmtSplit(avgSplit) + " /500m";
+      $("sSplit").textContent = fmtSplit(showPace(this.machine, avgSplit)) + " " + paceUnit(this.machine);
       $("sSpm").textContent = avgSpm > 0 ? avgSpm.toFixed(1) : "--";
       $("sMax").textContent = s.maxSpeed > 0 ? `${s.maxSpeed.toFixed(2)} m/s (${fmtSplit(500 / s.maxSpeed)})` : "--";
       $("sStrokes").textContent = s.strokes;
@@ -34481,7 +35111,7 @@ ${pts}
         const P2 = this._plan, d = P2.T - time;
         extra += `<div class="sumnote">vs race plan ${fmtTime(P2.T)} (${esc(RACE_PLANS.find((x) => x.id === P2.plan).name)}): <b>${d >= 0 ? d.toFixed(1) + " s ahead" : (-d).toFixed(1) + " s behind"}</b></div>`;
       } else if (this.paceOn && w.kind !== "free") {
-        const pd = 500 / this.opts.paceSplit * time;
+        const pd = 500 * this._pf() / this.opts.paceSplit * time;
         extra += `<div class="sumnote">vs pace boat ${fmtSplit(this.opts.paceSplit)}: <b>${dist >= pd ? Math.round(dist - pd) + " m ahead" : Math.round(pd - dist) + " m behind"}</b></div>`;
       }
       if (raceRes && !w.team) {
@@ -34561,7 +35191,7 @@ ${pts}
         if (pr) html += `<div class="sumnote">\u{1F4C5} Plan: week ${w.plan.w + 1} session ${w.plan.d + 1} done \u2713 (${pr.done}/${pr.total})${pr.next ? "" : " - plan complete! \u{1F389}"}</div>`;
       }
       if (dist < 50) return html;
-      const before = personalBests();
+      const before = personalBests(this._hist());
       const samples = s.hist.slice();
       if (dist > 0) samples.push([+time.toFixed(1), +dist.toFixed(1), isFinite(avgSplit) ? +avgSplit.toFixed(1) : 0, Math.round(avgSpm), samples.length ? samples[samples.length - 1][4] : 0, 0]);
       const wsum = s.hist.reduce((a, x) => a + x[4], 0);
@@ -34569,6 +35199,7 @@ ${pts}
         name: (w.wod ? "WOD \xB7 " : w.daily ? "Daily \xB7 " : w.weekly ? "Weekly \xB7 " : "") + w.name,
         kind: w.kind,
         key: w.arcade || w.comet ? null : workoutKey(w),
+        machine: this.machine,
         dist,
         time,
         split: avgSplit,
@@ -34586,6 +35217,7 @@ ${pts}
         online: w.online ? w.online.code : "",
         team: w.team ? w.team.fmtName : "",
         place: raceRes ? `${raceRes.pos}/${raceRes.of}` : "",
+        p10: s.p10Log && s.p10Log.length ? s.p10Log.slice(0, 20) : void 0,
         samples,
         fc: s.fcN ? {
           curve: s.fcSum.map((v) => +(v / s.fcN).toFixed(1)),
@@ -34598,13 +35230,13 @@ ${pts}
       });
       this._lastRow = row;
       if (!w.arcade) {
-        const fresh2 = newPBs(before, personalBests());
+        const fresh2 = newPBs(before, personalBests(this._hist()));
         if (fresh2.length) html += `<div class="sumnote" style="color:#ffd59a">\u{1F3C5} New record${fresh2.length > 1 ? "s" : ""}: <b>${fresh2.slice(0, 4).map((x) => `${x.label} ${x.text}`).join(" \xB7 ")}</b></div>`;
       }
       if (s.hrN) html += `<div class="sumnote">\u2764 Heart rate avg <b>${Math.round(s.hrSum / s.hrN)}</b> \xB7 max <b>${s.hrMax}</b> bpm</div>`;
       if (this._srvBase()) {
         const c = new SocialClient(this._srvBase()), wk = isoWeek(), m = totals().week;
-        c.submitWeek(this.profile, wk, m).catch(() => {
+        c.submitWeek(this.profile, wk, m, this.machine).catch(() => {
         });
         for (const cl of this.clubs.list) if (cl.mode === "server") c.clubMetres(this.profile, cl.code, m).catch(() => {
         });
@@ -34657,11 +35289,46 @@ ${pts}
     }
     _paintProfile() {
       const sec = this.ui.pfTabs;
-      if (sec === "stats") this._paintStatsTab();
+      if (sec === "card") this._paintCard();
+      else if (sec === "stats") this._paintStatsTab();
       else if (sec === "history") this._paintHistory();
       else if (sec === "league") this._paintLeague();
       else if (sec === "clubs") this._paintClubs();
       else this._paintMe();
+    }
+    /** Profile › Pilot card: everything local; account hook in account.js (no login today) */
+    _paintCard() {
+      const $ = (id) => document.getElementById(id), h = loadHistory(), C = careerStats(h, this.stats), L = levelInfo(this.stats.xp || 0), p = this.profile;
+      const pct = L.level >= 50 ? 100 : Math.max(0, Math.min(100, ((this.stats.xp || 0) - L.lo) / Math.max(1, L.hi - L.lo) * 100));
+      if (!this._cardShip || this._cardShipKey !== this.ship.def.id + (this.ship.colorKey || "")) {
+        this._cardShip = this._shipSnapshot(360, 210);
+        this._cardShipKey = this.ship.def.id + (this.ship.colorKey || "");
+      }
+      const av = $("pcAvatar");
+      av.innerHTML = "";
+      if (this._cardShip) av.appendChild(this._cardShip);
+      $("pcName").innerHTML = `${esc(p.name || "Rower")}${flagBadge(p.flag)}`;
+      $("pcLevel").innerHTML = `<span class="xplv">Lv <b>${L.level}</b> ${esc(L.title)}</span> <span class="xptot">${(this.stats.xp || 0).toLocaleString("en-US")} XP</span><div class="pcbar"><i style="width:${pct.toFixed(1)}%"></i></div>`;
+      $("pcShip").textContent = `${this.ship.def.name} \xB7 ${machineName(this.machine)}`;
+      const tot = [["Metres", C.metres.toLocaleString("en-US") + " m"], ["Time", fmtHM(C.time)], ["Sessions", C.sessions], ["Races", `${C.races}${C.wins ? ` \xB7 ${C.wins} won` : ""}`]];
+      $("pcTotals").innerHTML = tot.map(([a, b]) => `<div>${a}<b>${b}</b></div>`).join("");
+      $("pcPer").innerHTML = Object.entries(C.per).map(([m, P2]) => `<span>${machineName(m)} <b>${Math.round(P2.metres).toLocaleString("en-US")} m</b> \xB7 ${P2.sessions}</span>`).join("") || "<span>No rows yet</span>";
+      const pbs = personalBests(h.filter((r) => (r.machine || "row") === this.machine)).filter((x) => x.kind === "dist");
+      $("pcPbT").textContent = `Personal bests \xB7 ${machineName(this.machine)}`;
+      $("pcPbs").innerHTML = pbs.map((x) => `<div class="${x.value != null ? "got" : ""}"><span>${esc(x.label)}</span><b>${x.text}</b></div>`).join("");
+      const rec = h.slice().sort((a, b) => (b.date || "").localeCompare(a.date || "")).slice(0, 6);
+      $("pcRecent").innerHTML = rec.length ? rec.map((r) => `<div><span class="d">${esc(new Date(r.date).toLocaleDateString("en-GB", { day: "numeric", month: "short" }))}</span><span class="n">${esc(r.name || "")}</span><span class="m">${machineName(r.machine)}</span><b>${r.kind === "time" ? Math.round(r.dist) + " m" : fmtTime(r.time || 0).replace(/\.\d$/, "")}</b>${r.place ? `<span class="pl">${esc(r.place)}</span>` : ""}</div>`).join("") : '<div class="note">Your last races show up here.</div>';
+      $("pcShips").innerHTML = SHIP_ORDER.map((id) => {
+        const got = this._unlocked("ship", id), d = shipById(id);
+        return `<span class="${got ? "got" : ""}" title="${got ? "Unlocked" : "Locked"}">${got ? "" : "\u{1F512} "}${esc(d.secret && !got ? "???" : d.name)}</span>`;
+      }).join("");
+      const B = earnedBadges(C);
+      $("pcBadgeN").textContent = `${B.filter((b) => b.got).length} / ${B.length}`;
+      $("pcBadges").innerHTML = B.map((b) => `<div class="bd${b.got ? " got" : ""}" title="${esc(b.text)}"><i>${b.icon}</i><b>${esc(b.name)}</b><span>${esc(b.text)}</span></div>`).join("");
+      const A = accountState();
+      $("pcAcct").innerHTML = A.available ? `<button class="small" id="pcSignIn">Sign in with ${esc(A.name)}</button>` : "Local profile - no login. Everything stays in this browser.";
+      if (A.available) $("pcSignIn").onclick = () => accountProvider().signIn().then(() => this.toast("Signed in")).catch((e) => this.toast("Sign-in failed: " + e.message));
+      this._card = buildPilotCard({ profile: p, level: L.level, xp: this.stats.xp || 0, career: C, pbs, ships: SHIP_ORDER.filter((id) => this._unlocked("ship", id)) });
     }
     _paintStatsTab() {
       this._paintPilot();
@@ -34674,7 +35341,7 @@ ${pts}
         return "W" + isoWeek(d).slice(-2);
       });
       drawBars($("pfWeek"), wm, labels);
-      const pbs = personalBests(h);
+      const pbs = personalBests(h.filter((r) => (r.machine || "row") === this.machine));
       $("pfPBs").innerHTML = "<tr><td>Piece</td><td>Best</td><td>Split</td><td>Date</td></tr>" + pbs.map((x) => `<tr><td>${x.label}</td><td><b>${x.text}</b></td><td>${x.split ? x.split + "/500m" : ""}</td><td>${x.date ? esc(new Date(x.date).toLocaleDateString([], { day: "numeric", month: "short" })) : ""}</td></tr>`).join("");
     }
     _paintHistory() {
@@ -34746,8 +35413,8 @@ ${pts}
       const base = this._srvBase();
       if (base) {
         const sc = new SocialClient(base), tok = this._lgTok = (this._lgTok || 0) + 1;
-        (me.m > 0 ? sc.submitWeek(p, wk, me.m).catch(() => {
-        }) : Promise.resolve()).then(() => sc.league(wk, this.ui.lgAge, this.ui.lgWc)).then((j) => {
+        (me.m > 0 ? sc.submitWeek(p, wk, me.m, this.machine).catch(() => {
+        }) : Promise.resolve()).then(() => sc.league(wk, this.ui.lgAge, this.ui.lgWc, this.machine)).then((j) => {
           if (this.ui.pfTabs !== "league" || tok !== this._lgTok) return;
           const rows = (j.rows || []).filter((r) => r.id !== p.id);
           render(rows, false);
@@ -35021,7 +35688,7 @@ ${pts}
         return rr2;
       });
       if (this.opts.olGhosts !== false && list.length) {
-        const D = w.segs[0].value, pb = personalBests().find((x) => x.key === "d" + D), mine = this._loadPB()[String(D)], ghost = loadGhosts()[String(D)] || null;
+        const D = w.segs[0].value, pb = personalBests(this._hist()).find((x) => x.key === "d" + D), mine = this._loadPB()[mkey(this.machine, String(D))], ghost = loadGhosts()[mkey(this.machine, String(D))] || null;
         const pbT = pb && pb.value ? pb.value : mine ? mine.time : 0;
         list.push(...pbGhosts(list.length + 1, D, ghost, pbT ? pbT / D * 500 : 0, 6).map((g) => {
           g.wall = true;
@@ -35812,12 +36479,13 @@ ${pts}
         this._engTmp = this._engTmp || new Color();
         this._engApplied = -1;
       }
-      const z = this.state === "race" || this.state === "title" || this.state === "summary" ? this._engZone() : null;
+      const p10 = this.state === "race" && this.session && this.session.p10 && this.session.p10.on;
+      const z = p10 ? { color: "#ffd04a", label: "Power 10" } : this.state === "race" || this.state === "title" || this.state === "summary" ? this._engZone() : null;
       if (z) {
         this._engTgt.set(z.color);
         if (this._engM < 0.01) this._engCur.copy(this._engTgt);
       }
-      this._engM += ((z ? 1 : 0) - this._engM) * Math.min(1, dt * 1.6);
+      this._engM += ((z ? 1 : 0) - this._engM) * Math.min(1, dt * (p10 ? 6 : 1.6));
       this._engCur.lerp(this._engTgt, Math.min(1, dt * 1.4));
       const m = this._engM < 4e-3 ? 0 : this._engM, c = this._engCur, t = this._engTmp;
       if (m === 0 && this._engApplied === 0) return;
@@ -35936,7 +36604,7 @@ ${pts}
         s.hrMax = Math.max(s.hrMax, src.heartRate);
       }
       const pace = src === this.pm5 && isFinite(src.paceSec) ? src.paceSec : splitFromSpeed(s.smooth);
-      const pmPace = src === this.pm5 && isFinite(src.paceSec) && src.paceSec > 0, watts2 = pmPace ? wattsFromPace(src.paceSec) : wattsFromSpeed(s.smooth);
+      const pmPace = src === this.pm5 && this.machine !== "bike" && isFinite(src.paceSec) && src.paceSec > 0, watts2 = pmPace ? wattsFromPace(src.paceSec) : wattsForSpeed(this.machine, s.smooth);
       this._effW = watts2;
       const sdt = s.time - s.lastTime;
       s.lastTime = s.time;
@@ -35963,6 +36631,7 @@ ${pts}
           this.hud.flash("DONE \u2713 \xB7 COOL-DOWN");
         }
       }
+      this._p10Tick(sdt, watts2, r, w);
       if (r.phase === "work" && s.strokes !== s.lastStrokes) {
         s.lastStrokes = s.strokes;
         const per = w.kind === "intervals";
@@ -36004,7 +36673,7 @@ ${pts}
         }
       }
       const g = r.seg, rem = r.remaining(), hud = {
-        splitSec: pmPace || s.smooth > 0.4 ? pace : NaN,
+        splitSec: pmPace || s.smooth > 0.4 ? showPace(this.machine, pace) : NaN,
         spm: src.spm,
         watts: watts2,
         heartRate: src.heartRate,
@@ -36090,8 +36759,22 @@ ${pts}
           this.hud.chip(this.hud.el.chipGhost, `\u{1F47B} GHOST ${scoredOnTime(w) ? (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(1) + " s" : (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(0) + " m"}`, "ghost");
         }
       }
+      if (this.echoShip) {
+        const mt = s.time - r.warmT, ed = ghostDistanceAt(this.echo, mt), z = -(ed - r.workD) * WORLD_UNITS_PER_M, es = this.echoShip.group;
+        es.visible = s.started && z > -900 && z < 1.5;
+        es.position.set(this.ghostShip ? 2.8 : -5.5, 0.25 + Math.sin(this.timer.getElapsed() * 1.7 + 2) * 0.1, z);
+        if (s.started) {
+          const ahead = scoredOnTime(w) ? ghostTimeAt(this.echo, r.workD) - mt : r.workD - ed;
+          if (gapL == null) {
+            gapL = "ECHO";
+            gapM = r.workD - ed;
+          }
+          if (goalD) marks.push({ f: ed / goalD, c: "ghost" });
+          this.hud.chip(document.getElementById("chipEcho"), `\u25CC ECHO ${scoredOnTime(w) ? (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(1) + " s" : (ahead >= 0 ? "+" : "\u2212") + Math.abs(ahead).toFixed(0) + " m"}`, "echo");
+        }
+      }
       if (this.paceShip) {
-        const P2 = this._plan, pd = P2 ? planDistanceAt(P2.segs, r.workT) : 500 / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
+        const P2 = this._plan, pd = P2 ? planDistanceAt(P2.segs, r.workT) : 500 * this._pf() / this.opts.paceSplit * r.workT, z = -(pd - r.workD) * WORLD_UNITS_PER_M, ps = this.paceShip.group;
         if (P2) marks.push({ f: pd / P2.D, c: "pace" });
         ps.visible = s.started && z > -900 && z < 1.5;
         ps.position.set(5.5, 0.1 + Math.sin(this.timer.getElapsed() * 1.1 + 1) * 0.08, z);
@@ -36144,6 +36827,10 @@ ${pts}
     _frame() {
       this.timer.update();
       const dt = Math.min(0.25, this.timer.getDelta());
+      if (this.photo) {
+        this._photoFrame(dt);
+        return;
+      }
       const src = this.source;
       this.acc += dt;
       const STEP = 1 / 120;
@@ -36193,8 +36880,8 @@ ${pts}
           this.env.trackMat.uniforms.uCol.value.copy(this.trackNow);
         }
       }
-      const units = metres * WORLD_UNITS_PER_M;
-      for (const k of ["ghostShip", "paceShip"]) if (this[k] && this.state !== "race") this[k].group.visible = false;
+      const units = metres * WORLD_UNITS_PER_M * (this.state === "race" ? machineById(this.machine).visScale : 1);
+      for (const k of ["ghostShip", "paceShip", "echoShip"]) if (this[k] && this.state !== "race") this[k].group.visible = false;
       this.env.update(dt, units, speed);
       this.burst.update(dt);
       this._animate(dt, speed, this.state === "race" ? src.power : 0.3);
@@ -36253,6 +36940,18 @@ ${pts}
         this.camera.position.set((Math.random() - 0.5) * shake, 1.85 + (Math.random() - 0.5) * shake, -0.2);
         this.camera.lookAt(0, 0.2, -40);
         fovTarget = this.baseFov + 6 + sp * 12;
+      } else if (this.bridge && this.state === "race") {
+        const shake = sp * 0.015 * feel.shake;
+        this.camera.position.set((Math.random() - 0.5) * shake, 0.75 + Math.sin(t * 1.1) * 0.025 * feel.hover + (Math.random() - 0.5) * shake, -0.4);
+        this.camera.lookAt(0, 0.15, -40);
+        fovTarget = this.baseFov + 4 + sp * 10;
+        {
+          const ck = this._ckEl || (this._ckEl = document.getElementById("cockpit")), pv = Math.max(0, Math.min(1, power));
+          if (Math.abs(pv - (this._pullV || 0)) > 0.02) {
+            this._pullV = pv;
+            ck.style.setProperty("--pull", pv.toFixed(2));
+          }
+        }
       } else if (this.cockpit && this.state === "race") {
         const shake = sp * 0.02 * feel.shake;
         this.camera.position.set((Math.random() - 0.5) * shake, 0.35 + Math.sin(t * 1.3) * 0.03 * feel.hover + (Math.random() - 0.5) * shake, -1.2);
@@ -36279,6 +36978,7 @@ ${pts}
           this.platform.userData.disc.rotation.y = t * 0.2;
         }
       }
+      if (this.session && this.session.p10 && this.session.p10.on && this.state === "race") fovTarget += 5;
       if (Math.abs(this.camera.fov - fovTarget) > 0.01) {
         this.camera.fov += (fovTarget - this.camera.fov) * Math.min(1, dt * 3);
         this.camera.updateProjectionMatrix();

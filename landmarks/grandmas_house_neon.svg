@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="570" viewBox="0 0 720 570">
+<defs><linearGradient id="r" x2="1" y2=".3"><stop stop-color="#e44370"/><stop offset="1" stop-color="#8c244b"/></linearGradient><linearGradient id="b" x2="1" y2="1"><stop stop-color="#29364d"/><stop offset="1" stop-color="#12192b"/></linearGradient><filter id="glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="4" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<!-- front and side: geometry taken from two prominent gables and visible grey foundation -->
+<path d="M112 281 L390 251 L598 294 L598 499 L379 529 L112 493Z" fill="url(#b)" stroke="#6befff" stroke-width="4"/>
+<path d="M112 278 L112 191 L185 102 L279 154 L279 257 L390 237 L462 99 L598 287 L598 415 L379 443 L379 412 L112 423Z" fill="url(#r)" stroke="#ff5f9d" stroke-width="5"/>
+<!-- roof planes and distinctive left and right gables -->
+<path d="M102 194 L183 85 L280 147 L391 116 L463 81 L612 288 L598 299 L461 111 L398 246 L278 273 L278 164 L185 116 L119 209Z" fill="#0b1733" stroke="#7eeaff" stroke-width="5"/>
+<path d="M278 154 L390 115 L463 81 L389 246 L279 269Z" fill="#17213b" stroke="#4b9dc2" stroke-width="3"/>
+<path d="M176 100 L186 83 L287 147" fill="none" stroke="#ffb6c8" stroke-width="5"/>
+<path d="M461 95 L464 79 L613 288" fill="none" stroke="#ffb6c8" stroke-width="5"/>
+<!-- chimney behind roof -->
+<path d="M331 113 L331 67 L354 60 L369 67 L369 112" fill="#4c2839" stroke="#ff8c98" stroke-width="3"/>
+<!-- actual arrangement of visible windows, approximated from photo -->
+<g fill="#10243d" stroke="#b7ecff" stroke-width="6">
+<rect x="147" y="197" width="35" height="57"/><rect x="205" y="186" width="34" height="59"/>
+<rect x="138" y="314" width="38" height="70"/><rect x="197" y="310" width="38" height="67"/>
+<rect x="296" y="299" width="34" height="66"/><rect x="342" y="292" width="35" height="65"/>
+<rect x="476" y="189" width="34" height="59"/><rect x="540" y="215" width="34" height="57"/>
+<rect x="533" y="349" width="35" height="25"/>
+<rect x="159" y="444" width="30" height="48"/><rect x="307" y="444" width="32" height="49"/>
+<rect x="427" y="446" width="31" height="54"/><rect x="539" y="429" width="34" height="60"/>
+</g>
+<g stroke="#65ddff" stroke-width="2" opacity=".8"><path d="M164 197v57 M221 186v59 M155 314v70 M215 310v67 M313 299v66 M359 292v65 M493 189v59 M557 215v57"/></g>
+<path d="M491 491 L491 415 L526 413 L526 488" fill="#241c33" stroke="#ffb6c8" stroke-width="4"/>
+<!-- perimeter walls and yard, characteristic to the real house -->
+<path d="M48 502 L380 540 L668 489 L696 514 L380 565 L48 532Z" fill="#35445b" stroke="#b9d8e8" stroke-width="3"/>
+<path d="M48 502 L380 540 L380 565 L48 532Z" fill="#394658" stroke="#ff4fbb" stroke-width="3"/>
+<path d="M380 540 L668 489 L668 518 L380 565Z" fill="#263449" stroke="#ff4fbb" stroke-width="3"/>
+<path d="M82 499 L379 529 L600 496" stroke="#ff2b8d" stroke-width="3" fill="none" filter="url(#glow)"/>
+</svg>

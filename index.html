@@ -57,8 +57,37 @@
 #callCut #callNext:active {filter:brightness(1.3)}
 @media (prefers-reduced-motion:reduce) { #callCut .crt::after {animation:none !important} }
 </style>
+<style>
+/* SKÁLAVÍK CALLING // 1988 ARCADE PRESENTATION v3
+   Cosmetic only. Does not touch Concept2, physics, gameplay, scoring or saves. */
+:root { --arcade-gold:#ffe36c; --arcade-hot:#ff5c83; --arcade-ice:#70f8ff; }
+#callCut { background: radial-gradient(ellipse at center,rgba(15,25,44,.88) 0%,rgba(2,4,15,.98) 80%) !important; }
+#callCut::before {content:'INSERT COIN  •  SKÁLAVÍK CALLING  •  1988';position:absolute;z-index:5;top:max(10px,env(safe-area-inset-top));left:0;right:0;text-align:center;pointer-events:none;color:var(--arcade-gold);font:700 clamp(9px,1.6vw,13px)/1.4 monospace;letter-spacing:.18em;text-shadow:2px 2px #ad345f,0 0 16px #f9c86a;animation:crBlink 1.9s steps(1,end) infinite;}
+#callCut .crt {border:4px solid #ffe36c !important;border-radius:2px !important;box-shadow:0 0 0 4px #15152b,0 0 0 7px #ff5c83,0 0 35px #ff5c8366,inset 0 0 24px #001629 !important;}
+#callCut .kicker {color:var(--arcade-gold) !important;font-family:'Courier New',monospace !important;font-weight:900 !important;letter-spacing:.13em !important;text-transform:uppercase !important;text-shadow:3px 3px #ad345f,0 0 12px #ffaf45 !important;}
+#callCut .line {font-family:'Courier New',monospace !important;font-weight:700 !important;line-height:1.52 !important;letter-spacing:.02em !important;color:#eaf9ff !important;text-shadow:2px 2px #17385b !important;}
+#callCut .frame {border:3px solid #70f8ff !important;border-radius:1px !important;box-shadow:5px 5px 0 #1c1b46 !important;image-rendering:pixelated;}
+#callCut #callNext {font-family:'Courier New',monospace !important;font-weight:900 !important;text-transform:uppercase !important;letter-spacing:.15em !important;color:#11142b !important;background:#ffe36c !important;border:3px solid #fff4b0 !important;border-radius:1px !important;box-shadow:4px 4px 0 #a52f6a !important;}
+#callCut #callNext:active {transform:translate(3px,3px);box-shadow:1px 1px 0 #a52f6a !important;}
+#callCut img {image-rendering:auto;filter:contrast(1.12) saturate(1.16);}
+#callCut .crt::after {content:'';position:absolute;inset:0;pointer-events:none;z-index:4;background:repeating-linear-gradient(0deg,transparent 0px,transparent 3px,rgba(0,0,0,.17) 4px,rgba(0,0,0,.17) 5px);opacity:.5;}
+#storyBtn .rl, .storybtn .rl {font-family:'Courier New',monospace !important;font-weight:900 !important;letter-spacing:.075em !important;text-shadow:2px 2px #a82e67;}
+@keyframes crBlink {50%{opacity:.4}}
+@media(max-width:560px){#callCut::before{top:6px;font-size:9px;letter-spacing:.07em}#callCut .line{font-size:clamp(13px,3.2vw,17px) !important}}
+@media(prefers-reduced-motion:reduce){#callCut::before{animation:none}}
+</style>
+<style id="skalavikLandmarkStyle">
+/* Scenic overlay does not alter rowing, rendering, or PM5 integration. */
+#skalavikScenery{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;opacity:0;transition:opacity 1.2s ease}
+#skalavikScenery.active{opacity:1}
+#skalavikScenery .mountain{position:absolute;top:3%;right:-4%;width:80vw;height:52vh;background:url('landmarks/skalavik_fixed_mountain.svg') center bottom/100% 100% no-repeat;opacity:.87;filter:drop-shadow(0 0 15px #0ce4ff44)}
+#skalavikScenery .house{position:absolute;left:0;bottom:18%;width:clamp(145px,19vw,340px);aspect-ratio:1.26;background:url('landmarks/grandmas_house_neon.svg') center center/contain no-repeat;filter:drop-shadow(0 0 12px #ff3fd8);opacity:.88;transform:translateX(var(--house-x,-120vw)) scale(var(--house-scale,.4));transition:transform .15s linear}
+#skalavikLandmarkToggle{position:fixed;left:10px;bottom:10px;z-index:31;font:10px monospace;letter-spacing:.1em;padding:6px 8px;border:1px solid #f39;background:#09051cdd;color:#ffd3ed;cursor:pointer;opacity:.7}
+#skalavikLandmarkToggle[aria-pressed="true"]{opacity:1;border-color:#3ff6ff}
+@media(max-width:640px){#skalavikScenery .mountain{width:100vw;right:0;top:9%;height:36vh}#skalavikScenery .house{bottom:20%}}
+</style>
 </head>
-<body data-build="cosmicrow-v14.2.2">
+<body data-build="cosmicrow-v14.2.2-story-1988-landmarks-v3">
 <canvas id="gl"></canvas>
 <div id="jrFade"></div>
 <div id="mirrorBadge" class="hidden">⇋ MIRRORED</div>
@@ -986,5 +1015,29 @@ var RH=UZ=>document['getElementById'](UZ);function RI(UZ){const aGI=Ym;return nu
   sync();
 })();
 </script>
+<div id="skalavikScenery" aria-hidden="true"><div class="mountain"></div><div class="house"></div></div>
+<button id="skalavikLandmarkToggle" type="button" aria-pressed="false" title="Preview the fixed Skálavík mountain and house Easter egg">SKÁLAVÍK LANDMARKS: OFF</button>
+<script id="skalavikLandmarkController">(()=>{
+'use strict';
+const btn=document.getElementById('skalavikLandmarkToggle');
+const scene=document.getElementById('skalavikScenery');
+const house=scene.querySelector('.house');
+let enabled=false, start=null, last=0;
+btn.addEventListener('click',()=>{enabled=!enabled;start=null;btn.setAttribute('aria-pressed',String(enabled));btn.textContent='SKÁLAVÍK LANDMARKS: '+(enabled?'ON':'OFF');scene.classList.toggle('active',enabled)});
+function update(t){
+ if(enabled){
+  const distEl=document.getElementById('hDist');
+  const n=distEl?Number((distEl.textContent||'').replace(/[^0-9.]/g,'')):NaN;
+  if(Number.isFinite(n)&&n>0){if(start===null||n<last-10)start=n;last=n;}
+  const traveled=(Number.isFinite(n)&&start!==null)?Math.max(0,n-start):0;
+  // A real rowing distance drives the foreground landmark; mountain remains fixed.
+  const progress=Math.min(1,traveled/950);
+  house.style.setProperty('--house-x',(-45+progress*160)+'vw');
+  house.style.setProperty('--house-scale',String(.32+progress*1.5));
+ }
+ requestAnimationFrame(update);
+}
+requestAnimationFrame(update);
+})();</script>
 </body>
 </html>

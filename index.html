@@ -1076,11 +1076,17 @@ const events=[
  [690,'ECHO','Turn toward the old houses. I have a clear route through.','PASS THE VILLAGE · FOLLOW THE BEAM'],
  [850,'ECHO','That house is still standing. Remember this place.','HOUSE EASTER EGG · LOOK TO PORT'],
  [1060,'TJ PACER','The carrier is retreating. Do not stop now.','DRIVE THE INVADERS BACK'],
- [1290,'ECHO','Skálavík is still here. The signal is coming from orbit.','MISSION COMPLETE · ORBITAL SIGNAL FOUND']
+ [1290,'ECHO','The harbour is lost. The signal is coming from orbit. Stay with me.','HARBOUR LOST · FOLLOW THE ORBITAL SIGNAL'],
+ [1460,'ECHO','They took TJ Pacer. Keep rowing. I will find a way to free him.','TJ PACER CAPTURED · KEEP ROWING'],
+ [1760,'ECHO','Pull hard. Your pace is what breaks the tractor beam.','BREAK THE TRACTOR BEAM · HOLD A FAST SPLIT']
 ];
 let origin=null,last=0,step=-1,shownAt=0,active=false;
 function stageIsSkalavik(){const selected=document.querySelector('.stagecard.sel');return !!(selected&&selected.getAttribute('data-stage')==='skalavik');}
 function show(index){step=index;const e=events[index];who.textContent=e[1];txt.textContent=e[2];objective.textContent=e[3];radio.classList.add('on');shownAt=performance.now();}
+function note(speaker,line,goal){who.textContent=speaker;txt.textContent=line;objective.textContent=goal;radio.classList.add('on');shownAt=performance.now();}
+// The comet fight and the TJ rescue announce their result with an event; reflect it in the story radio and objective.
+document.addEventListener('cosmicrow:comet-result',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);won?note('TJ PACER','Blockade broken. I will take it from here.','BLOCKADE BROKEN · DRIVE THE INVADERS BACK'):note('ECHO','We missed the window. Fall back. The village route is still open.','COMET WINDOW MISSED · KEEP ROWING')});
+document.addEventListener('cosmicrow:v9-rescue',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);won?note('TJ PACER','The beam is broken. Thank you. Let us go home.','TJ PACER RELEASED · RETURN TO SKÁLAVÍK'):note('ECHO','The beam held. Keep rowing. We are not done.','RESCUE INCOMPLETE · KEEP ROWING')});
 function tick(t){
  const race=body.classList.contains('inrace')&&!hud.classList.contains('hidden');
  const should=race&&stageIsSkalavik();

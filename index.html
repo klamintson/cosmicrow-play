@@ -62,7 +62,7 @@
    Cosmetic only. Does not touch Concept2, physics, gameplay, scoring or saves. */
 :root { --arcade-gold:#ffe36c; --arcade-hot:#ff5c83; --arcade-ice:#70f8ff; }
 #callCut { background: radial-gradient(ellipse at center,rgba(15,25,44,.88) 0%,rgba(2,4,15,.98) 80%) !important; }
-#callCut::before {content:'INSERT COIN  •  SKÁLAVÍK CALLING  •  1988';position:absolute;z-index:5;top:max(10px,env(safe-area-inset-top));left:0;right:0;text-align:center;pointer-events:none;color:var(--arcade-gold);font:700 clamp(9px,1.6vw,13px)/1.4 monospace;letter-spacing:.18em;text-shadow:2px 2px #ad345f,0 0 16px #f9c86a;animation:crBlink 1.9s steps(1,end) infinite;}
+#callCut::before {content:'INSERT COIN  •  SK3LAV11K CALLING  •  1988';position:absolute;z-index:5;top:max(10px,env(safe-area-inset-top));left:0;right:0;text-align:center;pointer-events:none;color:var(--arcade-gold);font:700 clamp(9px,1.6vw,13px)/1.4 monospace;letter-spacing:.18em;text-shadow:2px 2px #ad345f,0 0 16px #f9c86a;animation:crBlink 1.9s steps(1,end) infinite;}
 #callCut .crt {border:4px solid #ffe36c !important;border-radius:2px !important;box-shadow:0 0 0 4px #15152b,0 0 0 7px #ff5c83,0 0 35px #ff5c8366,inset 0 0 24px #001629 !important;}
 #callCut .kicker {color:var(--arcade-gold) !important;font-family:'Courier New',monospace !important;font-weight:900 !important;letter-spacing:.13em !important;text-transform:uppercase !important;text-shadow:3px 3px #ad345f,0 0 12px #ffaf45 !important;}
 #callCut .line {font-family:'Courier New',monospace !important;font-weight:700 !important;line-height:1.52 !important;letter-spacing:.02em !important;color:#eaf9ff !important;text-shadow:2px 2px #17385b !important;}
@@ -278,7 +278,7 @@ body.sk-story-active #skalavikScenery{opacity:1}body.sk-story-active #skalavikLa
 <h1 class="logo">CosmicRow</h1>
 <div class="tag">Row through the neon void</div>
 <button class="racebtn" id="startBtn"><span class="rl">▶ Race</span><span class="rs" id="raceSub">2000 m</span></button>
-<button class="storybtn" id="storyBtn" type="button"><span class="rl">Skálavík Calling</span><span class="rs">Story · hold the pace</span></button>
+<button class="storybtn" id="storyBtn" type="button"><span class="rl">SK3LAV11K Calling</span><span class="rs">Story · hold the pace</span></button>
 <div class="racepick" id="racePick" role="group" aria-label="Who you race">
 <button type="button" data-k="ghost" id="rpGhost">Ghost</button>
 <button type="button" data-k="pace" id="rpPace">Pace</button>
@@ -1059,40 +1059,60 @@ function update(t){
 requestAnimationFrame(update);
 })();</script>
 
-<div id="skStoryMission"><b>01 / THE LAST SIGNAL</b><span id="skMissionObjective">FOLLOW ECHO'S BEACON · REACH SKÁLAVÍK</span></div>
-<div id="skStoryRadio" aria-live="polite"><b id="skRadioWho">ECHO</b><p id="skRadioText">The signal is coming from the mountain.</p></div>
+<div id="skStoryMission"><b>01 / THE LAST SIGNAL</b><span id="skMissionObjective">FOLLOW ECHO'S BEACON</span></div>
+<div id="skStoryRadio" aria-live="polite"><b id="skRadioWho">ECHO</b><p id="skRadioText">Signal confirmed. SK3LAV11K.</p></div>
 <div id="skStoryInvasion" aria-hidden="true"><div class="carrier"></div><div class="beam"></div><div class="laser"></div><div class="pacer">◈</div></div>
 <script id="skStoryGameplay">(()=>{
 'use strict';
-// Presentation only: never write to PM5 data, race timers, distances, or pace calculations.
-const body=document.body, radio=document.getElementById('skStoryRadio'),who=document.getElementById('skRadioWho'),txt=document.getElementById('skRadioText'),objective=document.getElementById('skMissionObjective');
-const hud=document.getElementById('hud'), dist=document.getElementById('hDist'),scene=document.getElementById('skalavikScenery'), house=scene?.querySelector('.house');
+// SK3LAV11K Calling story radio and objectives. Presentation only: never writes PM5 data,
+// race timers, distances or pace calculations. Publishes the story distance in SK3State.
+const body=document.body,radio=document.getElementById('skStoryRadio'),who=document.getElementById('skRadioWho'),txt=document.getElementById('skRadioText'),objective=document.getElementById('skMissionObjective'),chapterEl=document.querySelector('#skStoryMission b');
+const hud=document.getElementById('hud'),dist=document.getElementById('hDist'),scene=document.getElementById('skalavikScenery'),house=scene&&scene.querySelector('.house');
+const S=globalThis.SK3State=globalThis.SK3State||{};
+const RADIO_MS=4200;
+// [metres, chapter label, objective, speaker, line]. A null speaker only updates the chapter and objective;
+// a null objective keeps the current one (the finale writes its own shield count).
 const events=[
- [0,'ECHO','Skálavík control has gone silent. Follow the beacon toward the mountain.',"FOLLOW ECHO'S BEACON · REACH SKÁLAVÍK"],
- [90,'ECHO','Blue corridor ahead. Keep the mountain on your horizon. I will mark the route.','FOLLOW THE BLUE CORRIDOR'],
- [220,'ECHO','Multiple contacts above the village. Those are not fishing boats.','UNKNOWN CONTACTS · MAINTAIN COURSE'],
- [350,'TJ PACER','You keep rowing. I will clear the sky.','ESCORT TJ PACER · HOLD YOUR PACE'],
- [500,'ECHO','The harbour lights are failing. Something is cutting the power.','PROTECT THE HARBOUR'],
- [690,'ECHO','Turn toward the old houses. I have a clear route through.','PASS THE VILLAGE · FOLLOW THE BEAM'],
- [850,'ECHO','That house is still standing. Remember this place.','HOUSE EASTER EGG · LOOK TO PORT'],
- [1060,'TJ PACER','The carrier is retreating. Do not stop now.','DRIVE THE INVADERS BACK'],
- [1290,'ECHO','The harbour is lost. The signal is coming from orbit. Stay with me.','HARBOUR LOST · FOLLOW THE ORBITAL SIGNAL'],
- [1460,'ECHO','They took TJ Pacer. Keep rowing. I will find a way to free him.','TJ PACER CAPTURED · KEEP ROWING'],
- [1760,'ECHO','Pull hard. Your pace is what breaks the tractor beam.','BREAK THE TRACTOR BEAM · HOLD A FAST SPLIT']
+ [0,'01 / THE LAST SIGNAL',"FOLLOW ECHO'S BEACON",null,null],
+ [90,'01 / THE LAST SIGNAL',"FOLLOW ECHO'S BEACON",'ECHO','One beacon left. I will mark the route.'],
+ [200,'02 / FIRST CONTACT','STAY IN FORMATION',null,null],
+ [320,'02 / FIRST CONTACT','STAY IN FORMATION','ECHO','Those contacts are not ours. Hold your pace.'],
+ [500,'03 / ARCADE COMET','CHASE THE COMET',null,null],
+ [1000,'04 / THE RETURN','HOLD THE APPROACH CORRIDOR',null,null],
+ [1090,'04 / THE RETURN','HOLD THE APPROACH CORRIDOR','ECHO','Enemy craft over the village. Keep the corridor open.'],
+ [1200,'05 / THE DEFENDER',"MATCH TJ PACER'S LINE",null,null],
+ [1280,'05 / THE DEFENDER',"MATCH TJ PACER'S LINE",'TJ PACER','Keep up, pilot. I am not slowing down.'],
+ [1380,'06 / IRON RAIN','CLEAR THE DEBRIS LANES',null,null],
+ [1460,'06 / IRON RAIN','CLEAR THE DEBRIS LANES','ECHO','Phoenix is down. Titan is holding the road.'],
+ [1550,'07 / BROKEN FORMATION','HOLD YOUR LINE',null,null],
+ [1620,'07 / BROKEN FORMATION','HOLD YOUR LINE','ECHO','They are driving at the Harbour Relay.'],
+ [1700,'08 / SKÁLHØVDI','HOLD A STEADY LINE',null,null],
+ [1770,'08 / SKÁLHØVDI','HOLD A STEADY LINE','INES','That was not me. I am with you.'],
+ [1830,'FINAL / WARDEN-9','BREAK THE SHIELDS',null,null],
+ [1870,'FINAL / WARDEN-9',null,'ECHO','Warden-9 is over the harbour. Everything you have.']
 ];
-let origin=null,last=0,step=-1,shownAt=0,active=false;
+let origin=null,last=0,step=-1,shownAt=-1e9,active=false;
 function stageIsSkalavik(){const selected=document.querySelector('.stagecard.sel');return !!(selected&&selected.getAttribute('data-stage')==='skalavik');}
-function show(index){step=index;const e=events[index];who.textContent=e[1];txt.textContent=e[2];objective.textContent=e[3];radio.classList.add('on');shownAt=performance.now();}
-function note(speaker,line,goal){who.textContent=speaker;txt.textContent=line;objective.textContent=goal;radio.classList.add('on');shownAt=performance.now();}
-// The comet fight and the TJ rescue announce their result with an event; reflect it in the story radio and objective.
-document.addEventListener('cosmicrow:comet-result',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);won?note('TJ PACER','Blockade broken. I will take it from here.','BLOCKADE BROKEN · DRIVE THE INVADERS BACK'):note('ECHO','We missed the window. Fall back. The village route is still open.','COMET WINDOW MISSED · KEEP ROWING')});
-document.addEventListener('cosmicrow:v9-rescue',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);won?note('TJ PACER','The beam is broken. Thank you. Let us go home.','TJ PACER RELEASED · RETURN TO SKÁLAVÍK'):note('ECHO','The beam held. Keep rowing. We are not done.','RESCUE INCOMPLETE · KEEP ROWING')});
+function now(){return typeof performance!=='undefined'?performance.now():Date.now();}
+function say(speaker,line){who.textContent=speaker;txt.textContent=line;radio.classList.add('on');shownAt=now();}
+function setObjective(text){objective.textContent=text;}
+function apply(index){step=index;const e=events[index];if(chapterEl)chapterEl.textContent=e[1];if(e[2])setObjective(e[2]);S.chapter=e[1];if(e[3])say(e[3],e[4]);}
+document.addEventListener('cosmicrow:comet-result',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);S.cometWon=won;
+ won?say('ECHO','Comet down. The route is open.'):say('ECHO','It got past us. It hit the harbour.');});
+document.addEventListener('cosmicrow:warden-result',e=>{if(!active)return;const won=!!(e.detail&&e.detail.success);S.wardenWon=won;
+ if(won){say('ECHO','Warden-9 is down. Bring it home.');setObjective('WARDEN-9 DOWN · CROSS THE LINE');}
+ else{say('ECHO','Signal unstable.');setObjective('WARDEN-9 HOLDS');}});
 function tick(t){
  const race=body.classList.contains('inrace')&&!hud.classList.contains('hidden');
  const should=race&&stageIsSkalavik();
- if(should!==active){active=should;body.classList.toggle('sk-story-active',active);if(active){origin=null;last=0;step=-1;scene.classList.add('active');}else{radio.classList.remove('on');scene.classList.remove('active');}}
- if(active){const n=Number((dist?.textContent||'').replace(/[^0-9.]/g,''));if(Number.isFinite(n)){if(origin===null||n<last-10){origin=n;step=-1;}last=n;const traveled=Math.max(0,n-origin);let idx=0;for(let i=0;i<events.length;i++)if(traveled>=events[i][0])idx=i;if(idx!==step)show(idx);const progress=Math.min(1,traveled/950);if(house){house.style.setProperty('--house-x',(-45+progress*160)+'vw');house.style.setProperty('--house-scale',String(.32+progress*1.5));}}
- if(t-shownAt>6700)radio.classList.remove('on');}
+ if(should!==active){active=should;S.active=active;body.classList.toggle('sk-story-active',active);
+  if(active){origin=null;last=0;step=-1;S.metres=0;S.cometWon=undefined;S.wardenWon=undefined;if(scene)scene.classList.add('active');}
+  else{radio.classList.remove('on');if(scene)scene.classList.remove('active');}}
+ if(active){const n=Number((dist&&dist.textContent||'').replace(/[^0-9.]/g,''));
+  if(Number.isFinite(n)){if(origin===null||n<last-10){origin=n;step=-1;}last=n;const traveled=Math.max(0,n-origin);S.metres=traveled;
+   let idx=0;for(let i=0;i<events.length;i++)if(traveled>=events[i][0])idx=i;if(idx!==step)apply(idx);
+   const progress=Math.min(1,traveled/950);if(house){house.style.setProperty('--house-x',(-45+progress*160)+'vw');house.style.setProperty('--house-scale',String(.32+progress*1.5));}}
+  if(now()-shownAt>RADIO_MS)radio.classList.remove('on');}
  requestAnimationFrame(tick);
 }
 requestAnimationFrame(tick);
@@ -1118,7 +1138,7 @@ body.sk-story-active #skV5Cockpit{display:block}
 @media(max-width:650px){#skV5Cockpit{bottom:6px;right:5px;width:145px;padding:6px;font-size:9px;opacity:.83}#skV5Radar{height:20px}#skV5Alert{top:22%}}
 @media(prefers-reduced-motion:reduce){#skV5Radar .sweep{animation:none}}
 </style>
-<div id="skV5Field" aria-hidden="true"><canvas id="skV5Canvas"></canvas><div id="skV5Alert">INCOMING COMET FIELD</div><div id="skV5Cockpit"><div class="skv-head">SKÁLAVÍK // COMBAT LINK</div><div class="skv-line"><span>GUIDE</span><strong>ECHO</strong></div><div class="skv-line"><span>ESCORT</span><strong>TJ PACER</strong></div><div class="skv-line"><span>SECTOR</span><strong id="skV5Sector">APPROACH</strong></div><div id="skV5Radar"><i class="blip"></i><i class="blip"></i><i class="blip"></i><i class="sweep"></i></div><div class="skv-line"><span>THREATS</span><strong id="skV5Threats">CLEAR</strong></div></div></div>
+<div id="skV5Field" aria-hidden="true"><canvas id="skV5Canvas"></canvas><div id="skV5Alert">INCOMING COMET FIELD</div><div id="skV5Cockpit"><div class="skv-head">SK3LAV11K // COMBAT LINK</div><div class="skv-line"><span>GUIDE</span><strong>ECHO</strong></div><div class="skv-line"><span>WING</span><strong>FORMATION</strong></div><div class="skv-line"><span>SECTOR</span><strong id="skV5Sector">APPROACH</strong></div><div id="skV5Radar"><i class="blip"></i><i class="blip"></i><i class="blip"></i><i class="sweep"></i></div><div class="skv-line"><span>THREATS</span><strong id="skV5Threats">CLEAR</strong></div></div></div>
 <script id="skV5Gameplay">(()=>{
 'use strict';
 // This encounter reads the on-screen distance only. It never changes PM5, physics, scoring or results.
@@ -1135,8 +1155,8 @@ function frame(now){requestAnimationFrame(frame);const active=document.body.clas
  activeBefore=true;if(!w||canvas.width!==Math.round(innerWidth*scale)||canvas.height!==Math.round(innerHeight*scale))resize();
  const n=Number((dist?.textContent||'').replace(/[^0-9.]/g,''));if(Number.isFinite(n)){if(origin===null||n<previous-10){origin=n;objects=[];phase=''}previous=n}
  const meters=origin===null?0:Math.max(0,previous-origin);
- const encounter=meters>=400&&meters<1080;const nextPhase=meters<400?'APPROACH':meters<720?'COMET FIELD':meters<1080?'ENEMY CARRIER':'ORBITAL SIGNAL';
- if(nextPhase!==phase){phase=nextPhase;sector.textContent=phase;if(phase==='COMET FIELD')notify('COMET FIELD // ECHO: FOLLOW MY BEAM');else if(phase==='ENEMY CARRIER')notify('TJ PACER // CLEARING THE SKY');else if(phase==='ORBITAL SIGNAL')notify('SECTOR SECURED')}
+ const encounter=meters>=500&&meters<1000;const nextPhase=meters<500?'APPROACH':meters<1000?'ARCADE COMET':meters<1830?'SK3LAV11K':'WARDEN-9';
+ if(nextPhase!==phase){phase=nextPhase;sector.textContent=phase;if(phase==='ARCADE COMET')notify('ARCADE COMET INBOUND');else if(phase==='WARDEN-9')notify('WARDEN-9')}
  threats.textContent=encounter?'HOSTILE':'CLEAR';
  if(now-announceAt>3800)alertEl.classList.remove('on');
  const dt=Math.min(.06,Math.max(0,(now-last)/1000||0));last=now;ctx.clearRect(0,0,w,h);
@@ -1181,16 +1201,16 @@ const overlay=document.getElementById('skCinematicV7'),dist=document.getElementB
 const fields={kicker:overlay.querySelector('.kicker'),heading:overlay.querySelector('.heading'),subtitle:overlay.querySelector('.subtitle'),speaker:overlay.querySelector('.speaker'),line:overlay.querySelector('.line'),portrait:overlay.querySelector('.portrait')};
 const flash=overlay.querySelector('.flash');
 const scenes=[
- {at:0,duration:5000,kicker:'CHAPTER 01 · SKÁLAVÍK',heading:'THE LAST SIGNAL',subtitle:'THE MOUNTAIN IS OUR BEACON',speaker:'ECHO',line:'Skálavík has gone dark. Stay on course. I will guide you through.',portrait:'◈'},
- {at:220,duration:4600,kicker:'WARNING · UNIDENTIFIED CONTACT',heading:'THE SKY OPENS',subtitle:'HOSTILE CARRIER ABOVE THE VILLAGE',speaker:'ECHO',line:'Enemy contacts descending over the harbour. Keep rowing. Do not break rhythm.',portrait:'◈',impact:true},
- {at:350,duration:4800,kicker:'FRIENDLY CONTACT · INBOUND',heading:'TJ PACER',subtitle:'WAVEBOARD DEFENDER ONLINE',speaker:'TJ PACER',line:'I have your six. You row — I will clear the sky!',portrait:'◆',pacer:true,impact:true},
- {at:500,duration:4500,kicker:'ARCADE COMET · ENCOUNTER',heading:'IRON STORM',subtitle:'DODGE THE INCOMING DEBRIS',speaker:'ECHO',line:'Comet field ahead. Follow my navigation corridor.',portrait:'◈',impact:true},
- {at:850,duration:4400,kicker:'SKÁLAVÍK · HOMEWARD SIGNAL',heading:'STILL STANDING',subtitle:'THE HARBOUR BURNS THROUGH THE SMOKE',speaker:'ECHO',line:'The city is still fighting down there. Remember why we fight.',portrait:'◈'},
- {at:1290,duration:3600,kicker:'CHAPTER 02 · SIEGE',heading:'THE HARBOUR FALLS',subtitle:'EVACUATION ROUTE DESTROYED',speaker:'GHOST',line:'The docks are gone. I am bringing my ship alongside yours.',portrait:'⛨',impact:true},
- {at:1460,duration:3600,kicker:'EMERGENCY · STAR RIDER',heading:'TJ PACER TAKEN',subtitle:'HOSTILE TRACTOR BEAM DETECTED',speaker:'TJ PACER',line:'They have locked onto my board! Keep rowing — do not come after me!',portrait:'◈',impact:true},
- {at:1600,duration:3500,kicker:'CHAPTER 03 · COUNTERATTACK',heading:'THREE AGAINST ONE',subtitle:'SK3LHOVD1 · GHOST · SPECTRE',speaker:'SPECTRE',line:'Ghost, cover the left flank. SK3LHOVD1, break the flagship shields!',portrait:'⛨',impact:true},
- {at:1760,duration:3800,kicker:'FINAL ENGAGEMENT · ECHO',heading:'TUG OF WAR',subtitle:'ROW TO BREAK THE TRACTOR BEAM',speaker:'ECHO',line:'Your drive is our only weapon. Pull harder — TJ Pacer is still aboard!',portrait:'◈',impact:true},
- {at:1930,duration:4200,kicker:'FINAL CHAPTER · SK3LAV11K',heading:'THE LAST PUSH',subtitle:'THE CITY IS WATCHING',speaker:'GHOST',line:'We are with you. One last drive. Bring him home!',portrait:'⛨',impact:true}
+ {at:0,duration:2800,kicker:'CHAPTER 01',heading:'THE LAST SIGNAL',subtitle:'THE NETWORK IS GOING DARK',speaker:'ECHO',line:'Signal confirmed. SK3LAV11K.',portrait:'◈'},
+ {at:200,duration:2800,kicker:'CHAPTER 02',heading:'FIRST CONTACT',subtitle:'AURORA · RAVEN · NEBULA · TEMPEST',speaker:'ECHO',line:'Four ships answering. Stay with them.',portrait:'◈',impact:true},
+ {at:500,duration:2800,kicker:'CHAPTER 03',heading:'ARCADE COMET',subtitle:'SOMETHING FAST IN THE CORRIDOR',speaker:'ECHO',line:'Something fast. It is cutting the corridor.',portrait:'◈',impact:true},
+ {at:1000,duration:2800,kicker:'CHAPTER 04',heading:'THE RETURN',subtitle:'SK3LAV11K',speaker:'ECHO',line:'There. That is Skálavík.',portrait:'◈'},
+ {at:1200,duration:2800,kicker:'CHAPTER 05',heading:'THE DEFENDER',subtitle:'TJ PACER · STAR RIDER',speaker:'ECHO',line:'Local defender. TJ Pacer. Do not lose him.',portrait:'◈',pacer:true,impact:true},
+ {at:1380,duration:2800,kicker:'CHAPTER 06',heading:'IRON RAIN',subtitle:'TITAN HOLDS THE ROAD',speaker:'ECHO',line:'Debris lanes over the village. Surge through.',portrait:'◈',impact:true},
+ {at:1550,duration:2800,kicker:'CHAPTER 07',heading:'BROKEN FORMATION',subtitle:'ECLIPSE IS NOT ANSWERING',speaker:'ECHO',line:'Eclipse is not answering me. Hold your line.',portrait:'◈',impact:true},
+ {at:1700,duration:2800,kicker:'CHAPTER 08',heading:'SKÁLHØVDI',subtitle:'CAPTAIN JOHAN',speaker:'ECHO',line:'I am reaching her through the old beacons.',portrait:'◈'},
+ {at:1830,duration:2600,kicker:'FINAL',heading:'WARDEN-9',subtitle:'OVER THE HARBOUR',speaker:'WARDEN-9',line:'YOUR RESISTANCE IS MATHEMATICALLY POINTLESS.',portrait:'⛨',impact:true},
+ {at:1831,duration:2400,kicker:'FINAL',heading:'WARDEN-9',subtitle:'SKÁLHØVDI · ALL GUNS',speaker:'CAPTAIN JOHAN',line:'Then you better check your calculations.',portrait:'◆'}
 ];
 let origin=null,lastMeters=0,next=0,active=false,playingUntil=0,queue=[],lastTick=0;
 function present(scene,now){fields.kicker.textContent=scene.kicker;fields.heading.textContent=scene.heading;fields.subtitle.textContent=scene.subtitle;fields.speaker.textContent=scene.speaker;fields.line.textContent=scene.line;fields.portrait.textContent=scene.portrait;overlay.classList.toggle('pacer',!!scene.pacer);overlay.classList.add('playing');overlay.setAttribute('aria-hidden','false');playingUntil=now+scene.duration;if(scene.impact){flash.classList.add('on');setTimeout(()=>flash.classList.remove('on'),170)} }
@@ -1254,19 +1274,27 @@ body.sk-story-active #skV5Cockpit::before{content:attr(data-ship);display:block;
   <span>COMET TAIL</span><strong id="skCometTail">0.0 / 8 m</strong>
  </div>
  <div class="comet-track"><div class="comet-fill" id="skCometFill"></div></div>
- <div class="comet-message" id="skCometMessage">ECHO: Row toward the harbour. I will mark the blockade.</div>
+ <div class="comet-message" id="skCometMessage">ECHO: Something fast ahead.</div>
 </div>
 <script id="skCometMissionController">(()=>{
 'use strict';
-const panel=document.getElementById('skCometMission');
+// Arcade Comet: three rowing waves from 500 m to 1,000 m (chase, dodge, break).
+// Reads the HUD distance and split only; never writes PM5 data, timers or results.
 const get=id=>document.getElementById(id);
-const meter=get('hDist'),split=get('hSplit'),ship=get('shipLine');
+const panel=get('skCometMission'),meter=get('hDist'),split=get('hSplit'),ship=get('shipLine');
 const ui={sector:get('skCometSector'),target:get('skCometTarget'),split:get('skCometSplit'),
  waves:get('skCometWaves'),tail:get('skCometTail'),fill:get('skCometFill'),
- message:get('skCometMessage'),ship:get('skCometShip')};
-const START=500,END=1100,WAVES=3,TAIL_METRES=8;
-let active=false,origin=null,lastDistance=0,lastRaw=null,baseline=[],target=null;
-let tail=0,waves=0,result='',lastUpdate=0,lastMessage='';
+ message:get('skCometMessage'),ship:get('skCometShip'),head:panel&&panel.querySelector('.comet-head')};
+const S=globalThis.SK3State=globalThis.SK3State||{};
+const START=500,END=1000,CHARGE=8,SURGE_MARGIN=2,SURGE_FAST_METRES=20; // the PM5 split lags a few strokes, so 20 of 45 m
+const WAVES=[
+ {name:'CHASE',from:500,to:650,kind:'hold',tol:6},
+ {name:'DODGE',from:650,to:800,kind:'surge'},
+ {name:'BREAK',from:800,to:1000,kind:'hold',tol:4}
+];
+const SURGES=[{from:670,to:715},{from:735,to:780}];
+let active=false,origin=null,lastMeters=0,lastRaw=null,lastNow=0,baseline=[],target=null;
+let tail=0,gap=1,wave=-1,won=[],surgeFast=[0,0],surgeHit=[null,null],lastSurge=-1,result='',lastMessage='';
 let selectedShip='',combatHud=get('skV5Cockpit');
 function shipSkin(name){
  if(name===selectedShip||!combatHud)return;
@@ -1278,10 +1306,7 @@ function shipSkin(name){
  combatHud.dataset.frame=String((hash>>>8)&3);
  combatHud.style.setProperty('--ship-accent','hsl('+hue+' 94% 70%)');
 }
-function parseDistance(s){
- const m=String(s||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);
- return m?Number(m[0]):null;
-}
+function parseDistance(s){const m=String(s||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?Number(m[0]):null;}
 function parseSplit(s){
  const m=String(s||'').match(/(\d{1,2}):(\d{2})(?:\.(\d+))?/);
  if(!m)return null;
@@ -1292,62 +1317,97 @@ function formatSplit(v){
  if(!Number.isFinite(v))return '—';
  return Math.floor(v/60)+':'+String(Math.floor(v%60)).padStart(2,'0')+'.'+Math.floor((v%1)*10);
 }
-function reset(){
- origin=null;lastDistance=0;lastRaw=null;baseline=[];target=null;
- tail=0;waves=0;result='';lastMessage='';panel.classList.remove('won','lost');
+function currentSurge(m){for(let i=0;i<SURGES.length;i++)if(m>=SURGES[i].from&&m<SURGES[i].to)return i;return -1;}
+function publish(meters){
+ S.comet={active:meters>=START-30&&meters<END+60,wave,waveName:wave>=0?WAVES[wave].name:'',
+  won:won.slice(),tail:tail/CHARGE,gap,surge:currentSurge(meters),result,target};
 }
-function say(message){if(message!==lastMessage){lastMessage=message;ui.message.textContent=message;}}
-function finish(won){
- result=won?'won':'lost';panel.classList.add(result);
- say(won?'ECHO: Blockade shattered! TJ Pacer is clearing the way.':
- 'ECHO: We missed the comet window. Fall back; the village route remains open.');
+function reset(){
+ origin=null;lastMeters=0;lastRaw=null;lastNow=0;baseline=[];target=null;
+ tail=0;gap=1;wave=-1;won=[];surgeFast=[0,0];surgeHit=[null,null];lastSurge=-1;result='';lastMessage='';
+ if(panel)panel.classList.remove('won','lost','live');
+ publish(0);
+}
+function say(message){if(message!==lastMessage){lastMessage=message;if(ui.message)ui.message.textContent=message;}}
+function closeWave(i){
+ if(won[i]!==undefined)return;
+ const w=WAVES[i];
+ if(w.kind==='hold')won[i]=tail>=CHARGE;
+ else{
+  for(let k=0;k<SURGES.length;k++)if(surgeHit[k]===null)surgeHit[k]=surgeFast[k]>=SURGE_FAST_METRES;
+  won[i]=surgeHit.filter(Boolean).length>=1;
+ }
+ tail=0;
+}
+function intro(i){
+ const before=won[i-1]?'Wave '+i+' cleared. ':'Hit taken. ';
+ if(i===1)return 'ECHO: '+before+'Debris lanes. Surge on my call.';
+ return 'ECHO: '+before+'Last run. Hold '+formatSplit(target)+' tight.';
+}
+function finish(){
+ for(let i=0;i<WAVES.length;i++)closeWave(i);
+ const count=won.filter(Boolean).length,success=count>=2;
+ result=success?'won':'lost';
+ if(panel)panel.classList.add(result);
+ say(success?'ECHO: Comet down. The route is open.':'ECHO: It got past us. The route is still open.');
  document.dispatchEvent(new CustomEvent('cosmicrow:comet-result',{
-  detail:{success:won,waves,source:'rowing',targetSplit:target}
+  detail:{success,waves:count,source:'rowing',targetSplit:target}
  }));
 }
 function frame(now){
  requestAnimationFrame(frame);
- if(now-lastUpdate<100)return;
- lastUpdate=now;
+ if(lastNow&&now-lastNow<100)return;
+ const dt=lastNow?Math.min(1,(now-lastNow)/1000):0;
+ lastNow=now;
  const racing=document.body.classList.contains('sk-story-active');
  if(!racing){if(active)reset();active=false;return}
- if(!active){reset();active=true}
- const raw=parseDistance(meter?.textContent),pace=parseSplit(split?.textContent);
+ if(!active){reset();active=true;lastNow=now}
+ const raw=parseDistance(meter&&meter.textContent),pace=parseSplit(split&&split.textContent);
  if(raw===null)return;
- if(origin===null||lastRaw!==null&&raw<lastRaw-10){reset();origin=raw}
+ if(origin===null||(lastRaw!==null&&raw<lastRaw-10)){reset();origin=raw;lastNow=now}
  const meters=Math.max(0,raw-origin);
- const moved=Math.min(20,Math.max(0,meters-lastDistance));
- lastRaw=raw;lastDistance=meters;
- const shipName=(ship?.textContent||'STARFIGHTER').trim().slice(0,32)||'STARFIGHTER';
- ui.ship.textContent=shipName.toUpperCase()+' · DEFENCE CONTROL';
+ const moved=Math.min(20,Math.max(0,meters-lastMeters));
+ lastRaw=raw;lastMeters=meters;
+ const shipName=(ship&&ship.textContent||'STARFIGHTER').trim().slice(0,32)||'STARFIGHTER';
+ if(ui.ship)ui.ship.textContent=shipName.toUpperCase()+' · DEFENCE CONTROL';
  shipSkin(shipName);
- ui.split.textContent=formatSplit(pace);
- if(meters<START&&pace!==null&&moved>0){
-  baseline.push(pace);if(baseline.length>20)baseline.shift();
- }
- if(meters>=START&&!target){
+ if(ui.split)ui.split.textContent=formatSplit(pace);
+ if(meters<START&&pace!==null&&moved>0){baseline.push(pace);if(baseline.length>20)baseline.shift();}
+ if(meters>=START&&target===null){
   const sorted=baseline.slice().sort((a,b)=>a-b);
   target=sorted.length?sorted[Math.floor(sorted.length/2)]:(pace||120);
-  say('ECHO: Hold '+formatSplit(target)+'/500 m to charge the Comet Tail. Three waves incoming.');
+  say('ECHO: Hold '+formatSplit(target)+'. Close the gap.');
  }
  if(meters>=START&&meters<END&&!result){
-  const onPace=pace!==null&&Math.abs(pace-target)<=6;
-  if(moved>0)tail=Math.max(0,Math.min(TAIL_METRES,tail+(onPace ? 0.10 : -0.08)*moved));
-  if(tail>=TAIL_METRES){
-   waves++;tail=0;
-   if(waves===WAVES)finish(true);
-   else say('ECHO: Comet wave '+waves+' destroyed! Charge again. TJ Pacer has your six.');
-  }else if(!lastMessage||lastMessage.startsWith('ECHO: Row')){
-   say('ECHO: Keep moving. Match the target split to charge your defence.');
+  const w=WAVES.findIndex(x=>meters>=x.from&&meters<x.to);
+  while(wave<w){if(wave>=0)closeWave(wave);wave++;if(wave>0)say(intro(wave));}
+  const W=WAVES[wave],moving=moved>0;
+  if(W.kind==='hold'){
+   const onPace=pace!==null&&Math.abs(pace-target)<=W.tol;
+   if(moving)tail=Math.max(0,Math.min(CHARGE,tail+(onPace?0.10:-0.08)*moved));
+   gap=moving&&onPace?Math.max(0,gap-0.006*moved):Math.min(1,gap+(moving?0.004*moved:0.05*dt));
+  }else{
+   const s=currentSurge(meters),fast=moving&&pace!==null&&pace<=target-SURGE_MARGIN;
+   if(s>=0){if(fast)surgeFast[s]+=moved;if(s!==lastSurge)say('ECHO: Surge. Ten strokes. Now.');}
+   lastSurge=s;
+   for(let i=0;i<SURGES.length;i++)if(surgeHit[i]===null&&meters>=SURGES[i].to){
+    surgeHit[i]=surgeFast[i]>=SURGE_FAST_METRES;
+    say(surgeHit[i]?'ECHO: Clean. Lane cleared.':'ECHO: Hit taken. Close the gap.');
+   }
+   gap=fast?Math.max(0,gap-0.006*moved):Math.min(1,gap+(moving?0.002*moved:0.05*dt));
   }
  }
- if(meters>=END&&!result)finish(false);
- ui.sector.textContent=result==='won'?'CLEAR':result==='lost'?'BREACHED':
-  meters<START?'APPROACH':meters<END?'COMET FIELD':'ORBIT';
- ui.target.textContent=formatSplit(target);
- ui.waves.textContent=waves+' / '+WAVES;
- ui.tail.textContent=tail.toFixed(1)+' / 8 m';
- ui.fill.style.width=(100*tail/TAIL_METRES).toFixed(1)+'%';
+ if(meters>=END&&!result)finish();
+ const label=result==='won'?'COMET DOWN':result==='lost'?'COMET ESCAPED':
+  wave>=0?'WAVE '+(wave+1)+'/3 · '+WAVES[wave].name:'APPROACH';
+ if(ui.sector)ui.sector.textContent=label;
+ if(ui.head)ui.head.textContent='ARCADE COMET · '+label;
+ if(ui.target)ui.target.textContent=formatSplit(target);
+ if(ui.waves)ui.waves.textContent=won.filter(Boolean).length+' / 3';
+ if(ui.tail)ui.tail.textContent=tail.toFixed(1)+' / 8 m';
+ if(ui.fill)ui.fill.style.width=(100*tail/CHARGE).toFixed(1)+'%';
+ if(panel)panel.classList.toggle('live',meters>=START-10&&meters<END+60);
+ publish(meters);
 }
 requestAnimationFrame(frame);
 })();</script>
@@ -1396,14 +1456,261 @@ body.sk-story-active #skV9Finale.active{display:block}
 #skV9BossArt{width:100%;height:100px;display:block;filter:drop-shadow(0 0 7px #e45)}
 @media(max-width:650px){#skV9Finale{top:90px;right:5px;width:140px;padding:5px;font-size:9px}#skV9BossArt{height:55px}#skV9Finale .subtitle{font-size:8px}}
 </style>
-<div id="skV9Finale" aria-live="off"><svg id="skV9BossArt" viewBox="0 0 260 110" role="img" aria-label="Mechanical enemy flagship with articulated claws and glowing core"><g stroke="#ff6586" stroke-width="3" fill="#182033"><path d="M126 14 L175 27 192 55 172 86 127 101 82 86 62 55 83 27Z"/><path d="M82 30 L43 8 16 23 46 42 12 70 40 87 82 73Z"/><path d="M174 30 L215 8 244 23 212 42 248 70 220 87 174 73Z"/><path d="M90 40 L124 24 163 40 166 73 130 94 94 73Z" fill="#070c1b"/><circle cx="130" cy="56" r="21" fill="#ff356a" stroke="#ffd1df"/><circle cx="130" cy="56" r="11" fill="#ffdda2"/><path d="M30 35 L3 6 M229 35 L257 6 M32 74 L3 101 M228 74 L257 101" stroke-width="6"/></g></svg><div>ENEMY FLAGSHIP · TRACTOR LOCK</div><div class="meter"><div class="fill"></div></div><div class="subtitle">SK3LHOVD1 + GHOST + SPECTRE<br>ROW TO BREAK THE LOCK</div></div>
+<div id="skV9Finale" aria-live="off"><svg id="skV9BossArt" viewBox="0 0 260 110" role="img" aria-label="Mechanical enemy flagship with articulated claws and glowing core"><g stroke="#ff6586" stroke-width="3" fill="#182033"><path d="M126 14 L175 27 192 55 172 86 127 101 82 86 62 55 83 27Z"/><path d="M82 30 L43 8 16 23 46 42 12 70 40 87 82 73Z"/><path d="M174 30 L215 8 244 23 212 42 248 70 220 87 174 73Z"/><path d="M90 40 L124 24 163 40 166 73 130 94 94 73Z" fill="#070c1b"/><circle cx="130" cy="56" r="21" fill="#ff356a" stroke="#ffd1df"/><circle cx="130" cy="56" r="11" fill="#ffdda2"/><path d="M30 35 L3 6 M229 35 L257 6 M32 74 L3 101 M228 74 L257 101" stroke-width="6"/></g></svg><div>WARDEN-9</div><div class="meter"><div class="fill"></div></div><div class="subtitle">BREAK THE SHIELDS</div></div>
 <script id="skV9FinaleController">(()=>{'use strict';
-const dist=document.getElementById('hDist'),pace=document.getElementById('hSplit'),panel=document.getElementById('skV9Finale'),fill=panel.querySelector('.fill'),caption=panel.querySelector('.subtitle');let active=false,start=null,previous=0,charge=50,finished=false,lastTick=0;
-function parse(s){let m=String(s||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?+m[0]:null}
-function split(s){let m=String(s||'').match(/(\d+):(\d{2})(?:\.(\d+))?/);return m?+m[1]*60 + +m[2]+ +( '0.'+(m[3]||'0')):null}
-function tick(now){requestAnimationFrame(tick);if(now-lastTick<180)return;lastTick=now;const racing=document.body.classList.contains('sk-story-active');if(!racing){active=false;start=null;previous=0;charge=50;finished=false;panel.classList.remove('active');return}const d=parse(dist?.textContent);if(d===null)return;if(!active||d<previous-10){active=true;start=d;charge=50;finished=false}const progressed=Math.max(0,Math.min(20,d-previous));previous=d;const meters=d-start;panel.classList.toggle('active',meters>=1760&&meters<=2100);if(meters>=1760&&!finished){const p=split(pace?.textContent);if(p!==null&&p>55&&p<350){if(progressed>0)charge=Math.min(100,Math.max(0,charge+progressed*(125-p)*.018));}fill.style.width=charge.toFixed(1)+'%';if(charge>=100){finished=true;caption.textContent='TRACTOR BEAM BROKEN · TJ PACER RELEASED';document.dispatchEvent(new CustomEvent('cosmicrow:v9-rescue',{detail:{success:true}}))}else if(meters>=2000){finished=true;caption.textContent='TRACTOR BEAM HOLDS · RESCUE INCOMPLETE';document.dispatchEvent(new CustomEvent('cosmicrow:v9-rescue',{detail:{success:false}}))}}}
+// Warden-9 finale, 1,830 m to 2,000 m. Three shield layers break only while the player holds a split
+// 2 s faster than their own race median; slowing repairs them, stopping repairs them over time.
+// A final strike follows. Reads the HUD only; never writes PM5 data, timers or results.
+const get=id=>document.getElementById(id);
+const dist=get('hDist'),pace=get('hSplit'),objective=get('skMissionObjective');
+const S=globalThis.SK3State=globalThis.SK3State||{};
+const START=1830,FAIL_AT=1990,LAYERS=3,LAYER_METRES=35,STRIKE_METRES=15,MARGIN=2;
+let active=false,origin=null,previous=0,lastNow=0,baseline=[],target=null,layer=0,charge=0,finished=false,result='';
+function parse(s){const m=String(s||'').replace(/,/g,'').match(/\d+(?:\.\d+)?/);return m?+m[0]:null}
+function split(s){const m=String(s||'').match(/(\d+):(\d{2})(?:\.(\d+))?/);if(!m)return null;const v=+m[1]*60+ +m[2]+ +('0.'+(m[3]||'0'));return v>=50&&v<=600?v:null}
+function formatSplit(v){if(!Number.isFinite(v))return '—';return Math.floor(v/60)+':'+String(Math.floor(v%60)).padStart(2,'0')}
+function need(){return layer<LAYERS?LAYER_METRES:STRIKE_METRES}
+function publish(meters){S.warden={active:meters>=START-40,layer:Math.min(layer,LAYERS),strike:layer>=LAYERS&&!finished,
+ charge:Math.min(1,charge/need()),result,target:target===null?null:target-MARGIN}}
+function reset(){origin=null;previous=0;lastNow=0;baseline=[];target=null;layer=0;charge=0;finished=false;result='';publish(0)}
+function setObjective(t){if(objective&&objective.textContent!==t)objective.textContent=t}
+function finish(success){finished=true;result=success?'won':'lost';
+ document.dispatchEvent(new CustomEvent('cosmicrow:warden-result',{detail:{success,layers:Math.min(layer,LAYERS)}}))}
+function tick(now){requestAnimationFrame(tick);
+ if(lastNow&&now-lastNow<150)return;
+ const dt=lastNow?Math.min(1,(now-lastNow)/1000):0;lastNow=now;
+ if(!document.body.classList.contains('sk-story-active')){if(active)reset();active=false;return}
+ const d=parse(dist&&dist.textContent);if(d===null)return;
+ if(!active||d<previous-10){reset();active=true;origin=d;previous=d;lastNow=now}
+ const moved=Math.max(0,Math.min(20,d-previous));previous=d;
+ const meters=d-origin,p=split(pace&&pace.textContent);
+ if(meters<START){if(p!==null&&moved>0){baseline.push(p);if(baseline.length>80)baseline.shift()}publish(meters);return}
+ if(target===null){const s=baseline.slice().sort((a,b)=>a-b);target=s.length?s[Math.floor(s.length/2)]:(p||120)}
+ if(!finished){
+  const fast=moved>0&&p!==null&&p<=target-MARGIN;
+  if(fast)charge+=moved;else if(moved>0)charge-=moved*0.5;else charge-=dt*3;
+  charge=Math.max(0,charge);
+  if(charge>=need()){charge=0;layer++;if(layer>LAYERS)finish(true)}
+  if(!finished&&meters>=FAIL_AT)finish(false);
+  if(!finished)setObjective(layer<LAYERS?'SHIELD '+(layer+1)+' OF 3 · HOLD '+formatSplit(target-MARGIN):'FINAL STRIKE · BURST NOW');
+ }
+ publish(meters);
+}
 requestAnimationFrame(tick);
-const portrait=document.querySelector('#skCinematicV7 .portrait'),speaker=document.querySelector('#skCinematicV7 .speaker');new MutationObserver(()=>{if(portrait&&speaker)portrait.dataset.speaker=speaker.textContent.trim()}).observe(speaker,{childList:true,subtree:true});
+const portrait=document.querySelector('#skCinematicV7 .portrait'),speaker=document.querySelector('#skCinematicV7 .speaker');
+if(portrait&&speaker&&typeof MutationObserver!=='undefined')new MutationObserver(()=>{portrait.dataset.speaker=speaker.textContent.trim()}).observe(speaker,{childList:true,subtree:true});
+})();</script>
+<!-- SK3LAV11K Calling in-world layer: formation, Arcade Comet, TJ Pacer, Iron Rain, Warden-9.
+     Drawn on its own canvas from SK3State; never touches PM5 data, physics, timers or results. -->
+<style id="skSK3VisualStyles">
+#skSK3Canvas{position:fixed;inset:0;width:100%;height:100%;z-index:43;pointer-events:none;display:none}
+body.sk-story-active #skSK3Canvas{display:block}
+#skCometMission{display:none!important}
+body.sk-story-active #skCometMission.live{display:block!important}
+#skCometMission .comet-grid,#skCometMission .comet-track,#skCometMission .comet-sub{display:none!important}
+#skCometMission{width:auto!important;max-width:min(300px,60vw)!important;padding:6px 10px!important}
+#skCometMission .comet-head{font-size:11px!important}
+#skCometMission .comet-message{min-height:0!important;font-size:12px}
+#skV9Finale{display:none!important}
+#skCinematicV7 .portrait[data-speaker="WARDEN-9"]::before{border-color:#ff4d6d;border-radius:20%;background:radial-gradient(circle,#ff356a 18%,#3a0a18 46%,#0a0610 70%);clip-path:none}
+#skCinematicV7 .portrait[data-speaker="CAPTAIN JOHAN"]::before{border-color:#ffd98a;background:linear-gradient(165deg,#3a2c14 25%,#ffb84a 42%,#1a1206 53%,#2a2010 70%)}
+#skCinematicV7 .portrait[data-speaker="INES"]::before{border-color:#c79bff;background:linear-gradient(165deg,#24163a 25%,#a46bff 42%,#100a1c 53%,#1e1530 70%)}
+@media(max-width:650px){#skCometMission .comet-head{font-size:9px!important}#skCometMission .comet-message{font-size:10px}}
+</style>
+<canvas id="skSK3Canvas" aria-hidden="true"></canvas>
+<script id="skSK3Visuals">(()=>{'use strict';
+const cv=document.getElementById('skSK3Canvas');if(!cv)return;
+const ctx=cv.getContext('2d');if(!ctx)return;
+const S=globalThis.SK3State=globalThis.SK3State||{};
+const reduce=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'):{matches:false};
+let w=0,h=0,dpr=1,last=0,cometEnd=-1,wardenEnd=-1,wasCometResult='',wasWardenResult='';
+const FORMATION=[{c:'#62f7ff',x:-.30,y:.62},{c:'#b98cff',x:.30,y:.62},{c:'#5dffb4',x:-.20,y:.74},{c:'#6ea8ff',x:.20,y:.74}];
+function resize(){dpr=Math.min(2,globalThis.devicePixelRatio||1);w=globalThis.innerWidth||800;h=globalThis.innerHeight||600;
+ cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0)}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function fade(m,a,b,edge){return clamp(Math.min((m-a)/edge,(b-m)/edge),0,1)}
+function rnd(i){const x=Math.sin(i*127.1+311.7)*43758.5453;return x-Math.floor(x)}
+function glow(x,y,r,color,alpha){const g=ctx.createRadialGradient(x,y,0,x,y,r);g.addColorStop(0,color);g.addColorStop(1,'rgba(0,0,0,0)');
+ ctx.globalAlpha=alpha;ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1}
+function ship(x,y,s,color,alpha,tilt){ctx.save();ctx.translate(x,y);ctx.rotate(tilt||0);ctx.globalAlpha=alpha;
+ glow(0,s*.9,s*1.4,color,.55*alpha);ctx.globalAlpha=alpha;
+ ctx.fillStyle='#0b1424';ctx.strokeStyle=color;ctx.lineWidth=1.6;ctx.beginPath();
+ ctx.moveTo(0,-s);ctx.lineTo(s*.9,s*.7);ctx.lineTo(0,s*.35);ctx.lineTo(-s*.9,s*.7);ctx.closePath();ctx.fill();ctx.stroke();ctx.restore();ctx.globalAlpha=1}
+function bolt(x1,y1,x2,y2,color,alpha){ctx.globalAlpha=alpha;ctx.strokeStyle=color;ctx.lineWidth=2.2;ctx.shadowColor=color;ctx.shadowBlur=10;
+ ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.shadowBlur=0;ctx.globalAlpha=1}
+function carrier(x,y,s,alpha){ctx.save();ctx.translate(x,y);ctx.globalAlpha=alpha;ctx.fillStyle='#141b2c';ctx.strokeStyle='#ff4d6d';ctx.lineWidth=1.4;
+ ctx.beginPath();ctx.moveTo(-s,0);ctx.lineTo(-s*.4,-s*.32);ctx.lineTo(s*.6,-s*.22);ctx.lineTo(s,0);ctx.lineTo(s*.4,s*.3);ctx.lineTo(-s*.5,s*.24);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.fillStyle='#ff3b6b';ctx.fillRect(-s*.4,s*.06,s*.8,s*.06);ctx.restore();ctx.globalAlpha=1}
+function formation(t,m){
+ let a=fade(m,200,1830,60);if(a<=0)return;
+ const scatter=m>=1550&&m<1780?clamp((m-1550)/60,0,1)*(1-clamp((m-1720)/60,0,1)):0;
+ FORMATION.forEach((f,i)=>{
+  if(i===0&&m>=1380&&m<1830)return; // Aurora moves up to cover Titan during Iron Rain
+  const x=w/2+f.x*w*(1+scatter*1.4)+Math.sin(t*1.3+i)*6,y=h*f.y+Math.cos(t*1.1+i*2)*5+scatter*h*.08;
+  ship(x,y,Math.max(9,w*.014),f.c,a*(1-scatter*.4),Math.sin(t+i)*.08);
+ });
+ // Eclipse: hijacked from 1,550 m (red, firing at Titan), freed at 1,780 m (back on the wing)
+ if(m>=1550){const freed=m>=1780,x=freed?w*.5+w*.38:w*.78+Math.sin(t*2)*10,y=freed?h*.68:h*.4;
+  ship(x,y,Math.max(10,w*.015),freed?'#c79bff':'#ff3b6b',1,freed?0:2.5);
+  if(!freed&&Math.sin(t*5)>.6)bolt(x,y,w*.16,h*.78,'#ff3b6b',.8)}
+}
+function comet(t,m){
+ const C=S.comet;if(!C||!C.active)return;
+ if(C.result&&C.result!==wasCometResult){wasCometResult=C.result;cometEnd=t}
+ if(!C.result)wasCometResult='';
+ const gap=clamp(C.gap==null?1:C.gap,0,1),x=w*.5+Math.sin(t*.7)*w*.2,y=h*(.16+.06*Math.sin(t*.9)),r=8+(1-gap)*Math.min(w,h)*.05;
+ if(C.result&&cometEnd>=0){const k=t-cometEnd;if(k>2.2)return;
+  if(C.result==='won'){glow(x,y,r*(2+k*6),'#fff2c4',clamp(1-k/2.2,0,1));return}
+  ctx.globalAlpha=clamp(1-k/2.2,0,1);bolt(x,y,w*.5,h*.95,'#ffad6c',ctx.globalAlpha);ctx.globalAlpha=1;return}
+ // tail
+ const tx=x+r*7,ty=y-r*3,g=ctx.createLinearGradient(x,y,tx,ty);g.addColorStop(0,'rgba(255,214,140,.9)');g.addColorStop(1,'rgba(255,90,60,0)');
+ ctx.strokeStyle=g;ctx.lineWidth=r*1.3;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(tx,ty);ctx.stroke();ctx.lineCap='butt';
+ glow(x,y,r*2.6,'#ffad6c',.8);glow(x,y,r,'#ffffff',1);
+ // debris shed toward the player
+ for(let i=0;i<10;i++){const k=(t*.45+rnd(i))%1,dx=(rnd(i+9)-.5)*w*.9,px=x+dx*k,py=y+(h*.8-y)*k,s=2+k*9;
+  ctx.globalAlpha=.25+k*.6;ctx.fillStyle='#5e3b49';ctx.strokeStyle='#ffad6c';ctx.lineWidth=1;ctx.beginPath();ctx.arc(px,py,s,0,Math.PI*2);ctx.fill();ctx.stroke()}
+ ctx.globalAlpha=1;
+ // surge: a debris lane sweeping across
+ if(C.surge>=0){const lane=h*(.42+.12*C.surge),sweep=((t*.6)%1)*w*1.4-w*.2;
+  ctx.fillStyle='rgba(255,90,60,.12)';ctx.fillRect(0,lane-18,w,36);
+  for(let i=0;i<7;i++){const px=(sweep+i*w*.18)%(w*1.2)-w*.1;glow(px,lane+Math.sin(i+t*3)*8,14,'#ff6c3b',.85)}}
+ // comet tail charge as a ring around the player's flight line
+ if(C.wave===0||C.wave===2){ctx.strokeStyle='rgba(98,247,255,.75)';ctx.lineWidth=3;ctx.beginPath();
+  ctx.arc(w/2,h*.72,Math.min(w,h)*.07,-Math.PI/2,-Math.PI/2+Math.PI*2*clamp(C.tail||0,0,1));ctx.stroke()}
+}
+function pacer(t,m,finale){
+ const a=finale?1:fade(m,1200,1550,40);if(a<=0)return;
+ const period=3.4,k=(t%period)/period,run=Math.floor(t/period);
+ const fromLeft=run%2===0,x=fromLeft?-80+k*(w+160):w+80-k*(w+160),y=finale?h*(.34+.22*k):h*(.5-.18*Math.sin(k*Math.PI));
+ // trail
+ for(let i=1;i<9;i++){const tk=k-i*.012,tx=fromLeft?-80+tk*(w+160):w+80-tk*(w+160);glow(tx,y+i,10-i,'#62f7ff',(.5-i*.05)*a)}
+ ctx.save();ctx.translate(x,y);ctx.globalAlpha=a;ctx.rotate(fromLeft?-.12:.12);
+ ctx.fillStyle='#ffd98a';ctx.beginPath();ctx.ellipse(0,8,22,4,0,0,Math.PI*2);ctx.fill();          // Star Rider board
+ ctx.strokeStyle='#e9fbff';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(0,6);ctx.lineTo(0,-10);ctx.stroke(); // rider
+ ctx.fillStyle='#0b1424';ctx.strokeStyle='#ffd98a';ctx.lineWidth=2;ctx.beginPath();ctx.arc(0,-15,6,0,Math.PI*2);ctx.fill();ctx.stroke(); // helmet
+ ctx.restore();ctx.globalAlpha=1;
+ if(!finale&&k>.3&&k<.55)bolt(x,y,w*.8,h*.17,'#62f7ff',.8*a);
+}
+function carriers(t,m){const a=fade(m,1000,1830,60);if(a<=0)return;const s=Math.max(26,w*.05);
+ carrier(w*.8+Math.sin(t*.3)*12,h*.17,s,a*.9);carrier(w*.24+Math.cos(t*.25)*10,h*.22,s*.75,a*.8)}
+function ironRain(t,m){const a=fade(m,1380,1700,40);if(a<=0)return;
+ for(let i=0;i<16;i++){const k=(t*.5+rnd(i))%1,x=rnd(i+3)*w,y=-20+k*(h+40);
+  ctx.globalAlpha=a*.7;ctx.strokeStyle='#ff8a4a';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x-14,y-38);ctx.stroke();glow(x,y,6,'#ffd2a0',a)}
+ ctx.globalAlpha=1;
+ // Titan holds the road, lower left, with a pulsing shield
+ const tx=w*.16,ty=h*.8,s=Math.max(18,w*.03),ta=fade(m,1380,1600,30);
+ if(ta>0){ctx.save();ctx.globalAlpha=ta;ctx.fillStyle='#1a2436';ctx.strokeStyle='#ffd98a';ctx.lineWidth=2;ctx.fillRect(tx-s,ty-s*.5,s*2,s);ctx.strokeRect(tx-s,ty-s*.5,s*2,s);
+  ctx.strokeStyle='rgba(255,217,138,'+(.35+.25*Math.sin(t*4))+')';ctx.lineWidth=3;ctx.beginPath();ctx.arc(tx,ty,s*2.2,Math.PI*1.1,Math.PI*1.9);ctx.stroke();ctx.restore();ctx.globalAlpha=1}
+}
+function warden(t,m){
+ const W=S.warden;if(!W||!W.active)return;
+ if(W.result&&W.result!==wasWardenResult){wasWardenResult=W.result;wardenEnd=t}
+ if(!W.result)wasWardenResult='';
+ const a=fade(m,1790,3000,40),cx=w/2,cy=h*.2,R=Math.min(w,h)*.075;
+ let alpha=a;
+ if(W.result==='won'){const k=t-wardenEnd;glow(cx,cy,R*(2+k*7),'#fff2c4',clamp(1-k/2.5,0,1));alpha=clamp(1-k/1.2,0,1)}
+ if(alpha<=0)return;
+ ctx.save();ctx.globalAlpha=alpha;
+ // tethers down to the harbour
+ ctx.strokeStyle='rgba(255,77,109,.45)';ctx.lineWidth=1.5;[-.32,-.12,.12,.32].forEach(o=>{ctx.beginPath();ctx.moveTo(cx+o*R*3,cy+R);ctx.lineTo(cx+o*w,h);ctx.stroke()});
+ // claws and hull
+ ctx.fillStyle='#182033';ctx.strokeStyle='#ff6586';ctx.lineWidth=2.5;
+ [[-1,1],[1,1]].forEach(([sx])=>{ctx.beginPath();ctx.moveTo(cx+sx*R*.8,cy-R*.5);ctx.lineTo(cx+sx*R*2.4,cy-R*1.1);ctx.lineTo(cx+sx*R*2.9,cy-R*.3);ctx.lineTo(cx+sx*R*2.2,cy+R*.2);ctx.lineTo(cx+sx*R*2.8,cy+R*.9);ctx.lineTo(cx+sx*R*.9,cy+R*.7);ctx.closePath();ctx.fill();ctx.stroke()});
+ ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill();ctx.stroke();
+ const pulse=W.strike?.5+.5*Math.sin(t*12):.5+.2*Math.sin(t*3);
+ glow(cx,cy,R*.9,'#ff356a',.9);glow(cx,cy,R*.45*(1+pulse*.4),'#ffdda2',1);
+ // three shield rings: broken rings fade, the ring under attack fills with the player's charge
+ for(let i=0;i<3;i++){const rr=R*(1.5+i*.4),broken=i<W.layer,attacking=i===W.layer&&!W.result;
+  ctx.globalAlpha=alpha*(broken?.12:1);ctx.strokeStyle=W.result==='lost'?'#ff2d55':'#ff6586';ctx.lineWidth=broken?1:2.5;
+  if(broken)ctx.setLineDash([4,8]);ctx.beginPath();ctx.arc(cx,cy,rr,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+  if(attacking){ctx.globalAlpha=alpha;ctx.strokeStyle='#62f7ff';ctx.lineWidth=4;ctx.shadowColor='#62f7ff';ctx.shadowBlur=12;
+   ctx.beginPath();ctx.arc(cx,cy,rr,-Math.PI/2,-Math.PI/2+Math.PI*2*clamp(W.charge||0,0,1));ctx.stroke();ctx.shadowBlur=0}}
+ ctx.restore();ctx.globalAlpha=1;
+ // the player's guns and the defenders' fire
+ if(!W.result&&W.charge>0)bolt(w/2,h*.72,cx,cy+R*1.6,'#62f7ff',.5+.5*clamp(W.charge,0,1));
+ if(!W.result&&Math.sin(t*3)>.4){bolt(w*.16,h*.8,cx-R,cy+R,'#ffd98a',.6);bolt(w*.88,h*.68,cx+R,cy+R,'#c79bff',.6)}
+}
+function draw(t){
+ const m=S.metres||0;
+ carriers(t,m);ironRain(t,m);formation(t,m);comet(t,m);
+ const W=S.warden;
+ if(m>=1830&&W&&W.active)pacer(t,m,true);else pacer(t,m,false);
+ warden(t,m);
+}
+function frame(now){requestAnimationFrame(frame);
+ if(last&&now-last<33)return;last=now;
+ const on=document.body.classList.contains('sk-story-active')&&document.visibilityState!=='hidden';
+ if(!on){if(w)ctx.clearRect(0,0,w,h);return}
+ if(!w||cv.width!==Math.round((globalThis.innerWidth||800)*dpr)||cv.height!==Math.round((globalThis.innerHeight||600)*dpr))resize();
+ ctx.clearRect(0,0,w,h);
+ try{draw(reduce.matches?0:now/1000)}catch(err){S.visualError=String(err&&err.message||err)}
+}
+requestAnimationFrame(frame);
+})();</script>
+<!-- SK3LAV11K Calling ending: shown after the story race ends, over the result screen. Tap to close. -->
+<style id="skEndingStyles">
+#skEnding{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;overflow:hidden;background:#02040a;color:#e9fbff;font-family:Orbitron,system-ui,sans-serif;text-align:center;padding:max(16px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(16px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left))}
+#skEnding[hidden]{display:none}
+#skEnding .sk-end-art{position:absolute;inset:0;background:#02040a url('cosmicrow-art/stages/cutscene_home_skalavik.jpg') center/cover no-repeat;filter:brightness(.12) saturate(.3)}
+#skEnding.play.won .sk-end-art{animation:skEndLights 6s ease-out .6s forwards}
+#skEnding.lost .sk-end-art{filter:brightness(.22) saturate(.5) hue-rotate(-30deg)}
+#skEnding .sk-end-lights{position:absolute;left:8%;right:8%;bottom:26%;display:flex;justify-content:space-between}
+#skEnding .sk-end-lights i{width:7px;height:7px;border-radius:50%;background:#ffd98a;box-shadow:0 0 12px #ffcf6a,0 0 26px #ffb84a;opacity:0}
+#skEnding.play.won .sk-end-lights i{animation:skEndOn .5s ease-out forwards}
+#skEnding .sk-end-lights i:nth-child(1){animation-delay:1.2s}#skEnding .sk-end-lights i:nth-child(2){animation-delay:1.6s}#skEnding .sk-end-lights i:nth-child(3){animation-delay:2s}#skEnding .sk-end-lights i:nth-child(4){animation-delay:2.3s}#skEnding .sk-end-lights i:nth-child(5){animation-delay:2.6s}#skEnding .sk-end-lights i:nth-child(6){animation-delay:2.9s}#skEnding .sk-end-lights i:nth-child(7){animation-delay:3.2s}#skEnding .sk-end-lights i:nth-child(8){animation-delay:3.5s}#skEnding .sk-end-lights i:nth-child(9){animation-delay:3.8s}#skEnding .sk-end-lights i:nth-child(10){animation-delay:4.1s}#skEnding .sk-end-lights i:nth-child(11){animation-delay:4.4s}
+#skEnding .sk-end-lights i:last-child{width:12px;height:12px;background:#9ff6ff;box-shadow:0 0 16px #5ff0ff,0 0 40px #19d4ff;animation-delay:5.2s!important}
+#skEnding .sk-end-text{position:relative;display:grid;gap:14px;justify-items:center;max-width:36rem}
+#skEnding .sk-end-echo{margin:0;font:600 clamp(14px,2.4vw,20px)/1.4 monospace;letter-spacing:.12em;color:#9ff6ff;text-shadow:0 0 14px #0af;opacity:0}
+#skEnding .sk-end-card{display:grid;gap:6px;opacity:0}
+#skEnding .sk-end-card b{font-size:clamp(26px,6vw,56px);letter-spacing:.18em;font-weight:900;text-shadow:0 0 22px #19d4ff}
+#skEnding .sk-end-card span{font-size:clamp(13px,2.4vw,22px);letter-spacing:.3em;color:#ffd98a}
+#skEnding .sk-end-card small{font:600 clamp(11px,1.6vw,14px) monospace;letter-spacing:.2em;color:#bfe9f5}
+#skEnding.play .sk-end-echo{animation:skEndFade .8s ease-out forwards}
+#skEnding.play.won .sk-end-echo{animation-delay:5.8s}
+#skEnding.play .sk-end-card{animation:skEndFade 1s ease-out forwards}
+#skEnding.play.won .sk-end-card{animation-delay:7.4s}
+#skEnding.play.lost .sk-end-card{animation-delay:1s}
+#skEnding.lost .sk-end-lights{display:none}
+#skEnding .sk-end-close{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(16px,env(safe-area-inset-bottom));font:700 12px monospace;letter-spacing:.14em;color:#9ff6ff;background:#04101ccc;border:1px solid #3ad2eb;border-radius:6px;padding:10px 16px;cursor:pointer}
+#skEnding .sk-end-close:focus-visible{outline:2px solid #ffd98a;outline-offset:2px}
+@keyframes skEndLights{to{filter:brightness(.85) saturate(1)}}
+@keyframes skEndOn{to{opacity:1}}
+@keyframes skEndFade{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#skEnding *{animation:none!important}#skEnding .sk-end-echo,#skEnding .sk-end-card,#skEnding .sk-end-lights i{opacity:1}#skEnding.won .sk-end-art{filter:brightness(.85)}}
+</style>
+<div id="skEnding" hidden aria-live="polite">
+ <div class="sk-end-art"></div>
+ <div class="sk-end-lights" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+ <div class="sk-end-text">
+  <p class="sk-end-echo">ECHO: SK3LAV11K signal restored.</p>
+  <div class="sk-end-card"><b>COSMICROW</b><span>SK3LAV11K CALLING</span><small>Campaign complete.</small></div>
+ </div>
+ <button type="button" class="sk-end-close">Continue</button>
+</div>
+<script id="skEndingController">(()=>{'use strict';
+const el=document.getElementById('skEnding');if(!el)return;
+const S=globalThis.SK3State=globalThis.SK3State||{};
+const echo=el.querySelector('.sk-end-echo'),card=el.querySelector('.sk-end-card');
+let outcome=null,wasActive=false,lastMeters=0,shown=false,timer=0;
+document.addEventListener('cosmicrow:warden-result',e=>{outcome=!!(e.detail&&e.detail.success)});
+function show(win){
+ shown=true;el.classList.remove('play','won','lost');el.classList.add(win?'won':'lost');
+ echo.textContent=win?'ECHO: SK3LAV11K signal restored.':'ECHO: Signal unstable.';
+ card.innerHTML=win?'<b>COSMICROW</b><span>SK3LAV11K CALLING</span><small>Campaign complete.</small>'
+  :'<b>WARDEN-9 HOLDS</b><span>SK3LAV11K CALLING</span><small>Row again to retry.</small>';
+ el.hidden=false;void el.offsetWidth;el.classList.add('play');
+ clearTimeout(timer);timer=setTimeout(hide,win?18000:8000);
+}
+function hide(){el.hidden=true;el.classList.remove('play')}
+el.querySelector('.sk-end-close').addEventListener('click',hide);
+el.addEventListener('click',e=>{if(e.target===el||e.target.classList.contains('sk-end-art'))hide()});
+function tick(){requestAnimationFrame(tick);
+ const on=document.body.classList.contains('sk-story-active');
+ if(on){if(!wasActive){outcome=null;shown=false}wasActive=true;lastMeters=S.metres||0;
+  if(!shown&&outcome!==null&&lastMeters>=1999.5)show(outcome);return}
+ if(wasActive){wasActive=false;if(!shown&&outcome!==null&&lastMeters>=1950)show(outcome);outcome=null}
+}
+requestAnimationFrame(tick);
 })();</script>
 </body>
 </html>

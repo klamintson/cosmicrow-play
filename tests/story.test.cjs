@@ -1,10 +1,10 @@
+// Arcade Comet (chapter 3): three rowing waves from 500 m to 1,000 m.
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const fs = require('node:fs');
-const path = require('node:path');
 const vm = require('node:vm');
+const { html, scenario } = require('./sim.cjs');
 
-const html = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
+const STORY = ['skStoryGameplay', 'skCometMissionController'];
 
 test('every inline game script parses successfully', () => {
   let count = 0;
@@ -12,77 +12,69 @@ test('every inline game script parses successfully', () => {
     if (!match[1].trim()) continue;
     assert.doesNotThrow(() => new vm.Script(match[1], { filename: `inline-${++count}.js` }));
   }
-  assert.ok(count >= 7);
+  assert.ok(count >= 10);
 });
 
-function scenario() {
-  const script = html.match(/<script id="skCometMissionController">([\s\S]*?)<\/script>/)[1];
-  const nodes = new Map();
-  const classList = () => {
-    const values = new Set();
-    return {
-      add: (...items) => items.forEach(x => values.add(x)),
-      remove: (...items) => items.forEach(x => values.delete(x)),
-      contains: x => values.has(x),
-    };
-  };
-  function get(id) {
-    if (!nodes.has(id)) nodes.set(id, {
-      textContent: '',
-      dataset: {},
-      style: { setProperty() {} },
-      classList: classList(),
-    });
-    return nodes.get(id);
+// Hold 1:50 to set the target, then row each wave as described.
+function comet({ chase = '1:50.0', surge = '1:46.0', between = '1:50.0', brk = '1:50.0' } = {}) {
+  const g = scenario(STORY);
+  g.rowRange(0, 490, '1:50.0');
+  g.rowRange(500, 650, chase);
+  for (let d = 660; d <= 800; d += 10) {
+    const inSurge = (d >= 670 && d < 715) || (d >= 735 && d < 780);
+    g.row(d, inSurge ? surge : between);
   }
-  const body = { classList: classList() };
-  body.classList.add('sk-story-active');
-  const events = [];
-  let nextFrame;
-  const document = {
-    body,
-    getElementById: get,
-    dispatchEvent: evt => events.push(evt),
-  };
-  const context = vm.createContext({
-    document,
-    requestAnimationFrame: cb => { nextFrame = cb; },
-    CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options.detail; } },
-  });
-  vm.runInContext(script, context);
-  let now = 0;
-  function row(distance, pace) {
-    get('hDist').textContent = String(distance) + ' m';
-    get('hSplit').textContent = pace;
-    nextFrame(now += 120);
-  }
-  return { get, row, events, body };
+  g.rowRange(810, 1000, brk);
+  return g;
 }
 
-test('good rowing pace defeats all three comet waves', () => {
-  const game = scenario();
-  for (let d = 0; d <= 850; d += 10) game.row(d, '1:50.0');
-  assert.equal(game.get('skCometSector').textContent, 'CLEAR');
-  assert.equal(game.get('skCometWaves').textContent, '3 / 3');
-  assert.equal(game.events.length, 1);
-  assert.equal(game.events[0].detail.success, true);
+test('rowing every wave well defeats the comet', () => {
+  const g = comet();
+  const done = g.events('cosmicrow:comet-result');
+  assert.equal(done.length, 1);
+  assert.equal(done[0].detail.success, true);
+  assert.equal(done[0].detail.waves, 3);
+  assert.deepEqual([...g.state().comet.won], [true, true, true]);
 });
 
-test('off-target rowing fails, and the event fires only once', () => {
-  const game = scenario();
-  for (let d = 0; d < 500; d += 10) game.row(d, '1:50.0');
-  for (let d = 500; d <= 1250; d += 10) game.row(d, '2:10.0');
-  assert.equal(game.get('skCometSector').textContent, 'BREACHED');
-  assert.equal(game.events.length, 1);
-  assert.equal(game.events[0].detail.success, false);
+test('missing both surges loses the dodge wave but two waves still win', () => {
+  const g = comet({ surge: '1:50.0' });
+  assert.deepEqual([...g.state().comet.won], [true, false, true]);
+  assert.equal(g.events('cosmicrow:comet-result')[0].detail.success, true);
 });
 
-test('remaining still does not charge the comet tail', () => {
-  const game = scenario();
-  for (let d = 0; d < 500; d += 10) game.row(d, '1:50.0');
-  game.row(510, '1:50.0');
-  const before = game.get('skCometTail').textContent;
-  for (let tick = 0; tick < 50; tick++) game.row(510, '1:50.0');
-  assert.equal(game.get('skCometWaves').textContent, '0 / 3');
-  assert.equal(game.get('skCometTail').textContent, before);
+test('rowing off pace lets the comet escape, and the result fires once', () => {
+  const g = comet({ chase: '2:10.0', surge: '2:10.0', between: '2:10.0', brk: '2:10.0' });
+  const done = g.events('cosmicrow:comet-result');
+  assert.equal(done.length, 1);
+  assert.equal(done[0].detail.success, false);
+  assert.match(g.get('skCometMessage').textContent, /got past us/);
+});
+
+test('the break wave has a tighter tolerance than the chase', () => {
+  // 1:55 is 5 s off a 1:50 target: inside the chase tolerance (6 s), outside the break tolerance (4 s).
+  const g = comet({ chase: '1:55.0', brk: '1:55.0' });
+  assert.deepEqual([...g.state().comet.won], [true, true, false]);
+});
+
+test('sitting still charges nothing and the gap to the comet grows', () => {
+  const g = scenario(STORY);
+  g.rowRange(0, 520, '1:50.0');
+  const before = g.state().comet;
+  for (let i = 0; i < 80; i++) g.row(520, '1:50.0');
+  const after = g.state().comet;
+  assert.equal(after.tail, before.tail);
+  assert.ok(after.gap > before.gap, `gap ${before.gap} -> ${after.gap}`);
+  assert.equal(g.events('cosmicrow:comet-result').length, 0);
+});
+
+test('the comet panel only shows during the encounter and Echo calls the surges', () => {
+  const g = scenario(STORY);
+  g.rowRange(0, 400, '1:50.0');
+  assert.equal(g.get('skCometMission').classList.contains('live'), false);
+  g.rowRange(410, 670, '1:50.0');
+  assert.equal(g.get('skCometMission').classList.contains('live'), true);
+  assert.match(g.get('skCometMessage').textContent, /Surge/);
+  g.rowRange(680, 1100, '1:50.0');
+  assert.equal(g.get('skCometMission').classList.contains('live'), false);
 });
